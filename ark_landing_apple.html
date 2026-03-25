@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARK Investor Program</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --white: #ffffff;
+    --off-white: #fbfbfd;
+    --light-gray: #f5f5f7;
+    --mid-gray: #e8e8ed;
+    --text-primary: #1d1d1f;
+    --text-secondary: #6e6e73;
+    --text-tertiary: #aeaeb2;
+    --accent: #0071e3;
+    --accent-hover: #0077ed;
+    --border: rgba(0,0,0,0.08);
+    --radius: 18px;
+    --radius-lg: 28px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--white);
+    color: var(--text-primary);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 17px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    height: 52px; display: flex; align-items: center;
+    justify-content: space-between; padding: 0 20px;
+    background: rgba(255,255,255,0.88);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { font-size: 16px; font-weight: 600; letter-spacing: -0.01em; }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a { font-size: 13px; color: var(--text-secondary); text-decoration: none; transition: color .15s; }
+  .nav-links a:hover { color: var(--text-primary); }
+  .nav-cta { font-size: 13px; font-weight: 500; color: var(--accent); text-decoration: none; white-space: nowrap; }
+
+  /* ARK LOGO */
+  #ark-logo {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: clamp(52px, 15vw, 140px);
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    color: var(--text-primary);
+    line-height: 1;
+    margin-bottom: 24px;
+    will-change: filter, opacity;
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.05s forwards;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; padding: 100px 20px 60px;
+    background: var(--off-white);
+  }
+  .hero-eyebrow { font-size: 12px; font-weight: 500; color: var(--accent); letter-spacing: 0.04em; margin-bottom: 16px; opacity: 0; animation: fadeUp 0.7s ease 0.2s forwards; }
+  .hero-title { font-size: clamp(34px, 7.5vw, 88px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 20px; max-width: 820px; opacity: 0; animation: fadeUp 0.7s ease 0.3s forwards; }
+  .hero-title .accent { color: var(--accent); }
+  .hero-sub { font-size: clamp(15px, 2.5vw, 21px); font-weight: 300; color: var(--text-secondary); max-width: 500px; line-height: 1.6; margin-bottom: 36px; opacity: 0; animation: fadeUp 0.7s ease 0.4s forwards; }
+  .hero-actions { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; justify-content: center; opacity: 0; animation: fadeUp 0.7s ease 0.5s forwards; }
+  .hero-footnote { margin-top: 40px; font-size: 12px; color: var(--text-tertiary); line-height: 1.9; opacity: 0; animation: fadeUp 0.7s ease 0.6s forwards; }
+
+  /* BUTTONS */
+  .btn-primary { font-size: 16px; font-weight: 500; background: var(--accent); color: #fff; padding: 14px 26px; border-radius: 980px; text-decoration: none; transition: all .2s; display: inline-block; white-space: nowrap; }
+  .btn-primary:hover { background: var(--accent-hover); transform: scale(1.02); }
+  .btn-ghost { font-size: 16px; font-weight: 500; color: var(--accent); text-decoration: none; }
+  .btn-ghost::after { content: ' →'; }
+  .btn-ghost:hover { opacity: .7; }
+
+  /* STATEMENT */
+  .statement { background: var(--text-primary); padding: 80px 20px; text-align: center; }
+  .statement-text { font-size: clamp(18px, 4vw, 44px); font-weight: 500; letter-spacing: -0.02em; line-height: 1.35; color: var(--white); max-width: 700px; margin: 0 auto; }
+  .statement-text em { color: #86c7f5; font-style: normal; }
+
+  /* SECTIONS */
+  .section { padding: 80px 20px; }
+  .section-center { text-align: center; }
+  .section-bg { background: var(--light-gray); }
+  .inner { max-width: 1000px; margin: 0 auto; }
+  .inner-sm { max-width: 680px; margin: 0 auto; }
+
+  .section-eyebrow { font-size: 12px; font-weight: 500; color: var(--accent); letter-spacing: 0.04em; margin-bottom: 10px; }
+  .section-title { font-size: clamp(26px, 5vw, 56px); font-weight: 600; letter-spacing: -0.025em; line-height: 1.08; margin-bottom: 14px; }
+  .section-sub { font-size: clamp(15px, 2vw, 19px); font-weight: 300; color: var(--text-secondary); line-height: 1.6; max-width: 520px; margin: 0 auto; }
+
+  /* STATS */
+  .stats-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--mid-gray); border-radius: var(--radius-lg); overflow: hidden; max-width: 860px; margin: 48px auto 0; }
+  .stat-cell { background: var(--white); padding: 40px 20px; text-align: center; }
+  .stat-val { font-size: clamp(32px, 6vw, 52px); font-weight: 600; letter-spacing: -0.03em; line-height: 1; margin-bottom: 8px; }
+  .stat-label { font-size: 13px; color: var(--text-secondary); font-weight: 300; }
+
+  /* MANIFESTO */
+  .manifesto-block { max-width: 720px; margin: 0 auto; text-align: center; }
+  .manifesto-quote { font-size: clamp(17px, 2.8vw, 28px); font-weight: 400; letter-spacing: -0.015em; line-height: 1.55; margin-bottom: 28px; }
+  .manifesto-quote strong { font-weight: 600; }
+  .manifesto-body { font-size: clamp(14px, 1.8vw, 17px); color: var(--text-secondary); line-height: 1.75; font-weight: 300; }
+
+  /* MODULES */
+  .modules-wrap { margin-top: 40px; }
+  .module-row { display: grid; grid-template-columns: 44px 1fr; gap: 16px; border-bottom: 1px solid var(--mid-gray); padding: 26px 0; align-items: start; }
+  .module-row:first-child { border-top: 1px solid var(--mid-gray); }
+  .module-index { font-size: 12px; color: var(--text-tertiary); font-weight: 500; padding-top: 3px; }
+  .module-title { font-size: clamp(15px, 2vw, 19px); font-weight: 600; letter-spacing: -0.01em; margin-bottom: 6px; }
+  .module-desc { font-size: 14px; color: var(--text-secondary); font-weight: 300; line-height: 1.6; margin-bottom: 10px; }
+  .module-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .module-tag { font-size: 11px; font-weight: 500; color: var(--accent); background: rgba(0,113,227,0.07); padding: 3px 9px; border-radius: 980px; }
+
+  /* FOR WHO */
+  .forwho-grid { max-width: 520px; margin: 48px auto 0; }
+  .forwho-card { border-radius: var(--radius-lg); padding: 36px 28px; }
+  .forwho-card.yes { background: var(--text-primary); }
+  .forwho-card-label { font-size: 11px; font-weight: 500; letter-spacing: 0.08em; color: #86c7f5; margin-bottom: 24px; }
+  .forwho-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+  .forwho-list li { font-size: 15px; line-height: 1.5; display: flex; gap: 12px; align-items: flex-start; color: rgba(255,255,255,0.85); }
+  .fi { flex-shrink: 0; color: #86c7f5; font-size: 13px; margin-top: 2px; }
+
+  /* PHILOSOPHY */
+  .philosophy-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; max-width: 960px; margin: 48px auto 0; }
+  .philosophy-card { background: var(--white); border-radius: var(--radius-lg); padding: 28px 24px; border: 1px solid var(--mid-gray); }
+  .phil-icon { width: 40px; height: 40px; border-radius: 10px; background: rgba(0,113,227,0.08); display: flex; align-items: center; justify-content: center; font-size: 18px; margin-bottom: 14px; }
+  .phil-title { font-size: 16px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 8px; }
+  .phil-text { font-size: 13px; color: var(--text-secondary); line-height: 1.7; font-weight: 300; }
+
+  /* PRICING */
+  .pricing-inner { max-width: 860px; margin: 48px auto 0; display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: center; }
+  .price-card { border-radius: var(--radius-lg); padding: 32px 28px; border: 1px solid var(--mid-gray); background: var(--white); position: relative; }
+  .price-card.featured { border-color: var(--accent); background: var(--text-primary); }
+  .price-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--accent); color: #fff; font-size: 11px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; padding: 4px 14px; border-radius: 980px; white-space: nowrap; }
+  .price-tier { font-size: 11px; font-weight: 500; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+  .price-row-amount { display: flex; align-items: baseline; gap: 12px; margin-bottom: 4px; flex-wrap: wrap; }
+  .price-amount { font-size: clamp(38px, 6vw, 52px); font-weight: 600; letter-spacing: -0.03em; color: var(--white); line-height: 1; }
+  .price-strikethrough { font-size: 22px; font-weight: 500; color: rgba(255,255,255,0.3); text-decoration: line-through; }
+  .price-period { font-size: 12px; color: rgba(255,255,255,0.4); margin-bottom: 24px; font-weight: 300; }
+  .price-divider { height: 1px; background: rgba(255,255,255,0.1); margin-bottom: 20px; }
+  .price-features { list-style: none; display: flex; flex-direction: column; gap: 11px; margin-bottom: 28px; }
+  .price-features li { font-size: 14px; display: flex; gap: 10px; align-items: flex-start; color: rgba(255,255,255,0.75); line-height: 1.4; }
+  .check { color: #86c7f5; flex-shrink: 0; font-size: 13px; }
+  .price-cta { display: block; text-align: center; font-size: 15px; font-weight: 500; padding: 14px; border-radius: 980px; text-decoration: none; transition: all .2s; background: var(--accent); color: #fff; }
+  .price-cta:hover { background: var(--accent-hover); }
+  .price-small { font-size: 11px; color: rgba(255,255,255,0.3); text-align: center; margin-top: 12px; font-weight: 300; }
+  .price-note-bottom { text-align: center; margin-top: 32px; font-size: 13px; color: var(--text-tertiary); font-weight: 300; }
+
+  /* BOOK */
+  .book-wrap { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+  .book-caption { font-size: 12px; color: var(--text-tertiary); font-style: italic; text-align: center; font-family: 'Times New Roman', Times, serif; line-height: 1.6; }
+
+  /* AUTHOR */
+  .author-section { background: var(--light-gray); }
+  .author-inner { max-width: 640px; margin: 0 auto; padding: 80px 20px; text-align: center; }
+  .author-avatar { width: 88px; height: 88px; border-radius: 50%; background: var(--mid-gray); margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 28px; border: 3px solid var(--white); box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+  .author-name { font-size: clamp(22px, 4vw, 32px); font-weight: 600; letter-spacing: -0.02em; margin-bottom: 4px; }
+  .author-title { font-size: 14px; color: var(--text-secondary); font-weight: 300; margin-bottom: 24px; }
+  .author-bio { font-size: clamp(14px, 2vw, 17px); font-weight: 300; line-height: 1.8; color: var(--text-secondary); margin-bottom: 28px; }
+  .author-bio strong { color: var(--text-primary); font-weight: 500; }
+  .author-tags { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+  .author-tag { font-size: 12px; color: var(--text-secondary); background: var(--white); border: 1px solid var(--mid-gray); padding: 5px 13px; border-radius: 980px; }
+
+  /* FAQ */
+  .faq-wrap { max-width: 640px; margin: 48px auto 0; }
+  .faq-item { border-bottom: 1px solid var(--mid-gray); padding: 20px 0; cursor: pointer; }
+  .faq-item:first-child { border-top: 1px solid var(--mid-gray); }
+  .faq-q { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+  .faq-q-text { font-size: clamp(14px, 2vw, 17px); font-weight: 500; letter-spacing: -0.01em; line-height: 1.4; }
+  .faq-icon { font-size: 22px; color: var(--text-tertiary); flex-shrink: 0; transition: transform .25s; line-height: 1; }
+  .faq-item.open .faq-icon { transform: rotate(45deg); }
+  .faq-a { font-size: 14px; color: var(--text-secondary); font-weight: 300; line-height: 1.7; max-height: 0; overflow: hidden; transition: max-height .3s ease, padding .3s; }
+  .faq-item.open .faq-a { max-height: 240px; padding-top: 12px; }
+
+  /* FOOTER CTA */
+  .footer-cta { padding: 100px 20px; text-align: center; background: var(--off-white); }
+  .footer-cta-title { font-size: clamp(30px, 7vw, 72px); font-weight: 600; letter-spacing: -0.035em; line-height: 1.05; margin-bottom: 16px; }
+  .footer-cta-title span { color: var(--accent); }
+  .footer-cta-sub { font-size: clamp(14px, 2vw, 18px); font-weight: 300; color: var(--text-secondary); margin-bottom: 36px; max-width: 400px; margin-left: auto; margin-right: auto; line-height: 1.5; }
+
+  footer { padding: 20px; border-top: 1px solid var(--mid-gray); text-align: center; }
+  footer p { font-size: 11px; color: var(--text-tertiary); font-weight: 300; line-height: 1.8; }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── TABLET ── */
+  @media (max-width: 900px) {
+    .philosophy-grid { grid-template-columns: 1fr 1fr; }
+    .pricing-inner { grid-template-columns: 1fr; max-width: 460px; }
+    .book-wrap { display: none; }
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 640px) {
+    nav { padding: 0 16px; }
+    .nav-links { display: none; }
+
+    .hero { padding: 90px 16px 52px; }
+    .hero-actions { flex-direction: column; width: 100%; gap: 12px; }
+    .btn-primary { width: 100%; text-align: center; padding: 16px 20px; font-size: 17px; }
+    .btn-ghost { font-size: 15px; }
+
+    .section { padding: 56px 16px; }
+    .author-inner { padding: 56px 16px; }
+    .footer-cta { padding: 72px 16px; }
+    .statement { padding: 56px 16px; }
+
+    .stats-row { grid-template-columns: 1fr; border-radius: var(--radius); }
+    .stat-cell { padding: 28px 20px; border-bottom: 1px solid var(--mid-gray); }
+    .stat-cell:last-child { border-bottom: none; }
+
+    .philosophy-grid { grid-template-columns: 1fr; gap: 10px; }
+    .philosophy-card { padding: 22px 18px; }
+
+    .module-row { grid-template-columns: 36px 1fr; gap: 12px; padding: 20px 0; }
+    .module-title { font-size: 15px; }
+    .module-desc { font-size: 13px; }
+
+    .forwho-card { padding: 26px 20px; border-radius: var(--radius); }
+    .forwho-list li { font-size: 14px; }
+
+    .pricing-inner { max-width: 100%; }
+    .price-card { padding: 28px 20px; }
+
+    .faq-q-text { font-size: 14px; }
+
+    .author-avatar { width: 72px; height: 72px; font-size: 24px; }
+    .author-tags { gap: 6px; }
+    .author-tag { font-size: 11px; padding: 4px 11px; }
+
+    footer p { font-size: 10px; }
+  }
+
+  /* ── VERY SMALL ── */
+  @media (max-width: 380px) {
+    #ark-logo { font-size: 44px; letter-spacing: 0.08em; }
+    .hero-title { font-size: 30px; }
+    .section-title { font-size: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">ARK</div>
+  <ul class="nav-links">
+    <li><a href="#programme">Programme</a></li>
+    <li><a href="#philosophie">Philosophie</a></li>
+    <li><a href="#pricing">Tarifs</a></li>
+  </ul>
+  <a href="#pricing" class="nav-cta">Accéder →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div id="ark-logo">A.R.K</div>
+  <div class="hero-eyebrow">Investor Program · Édition 2025</div>
+  <h1 class="hero-title">Comprendre les marchés.<br><span class="accent">Reprendre le contrôle.</span></h1>
+  <p class="hero-sub">La formation que l'école ne t'a jamais donnée. Des bases solides, une méthode claire, zéro bullshit.</p>
+  <div class="hero-actions">
+    <a href="#pricing" class="btn-primary">Commencer maintenant</a>
+    <a href="#programme" class="btn-ghost">Voir le programme</a>
+  </div>
+  <p class="hero-footnote">Accès à vie · Mises à jour incluses · Commence quand tu veux</p>
+</section>
+
+<!-- STATEMENT -->
+<div class="statement">
+  <p class="statement-text reveal">"Dans ce jeu à somme nulle, il y a deux catégories.<br><em>Ceux qui prennent. Et ceux qui donnent.</em>"</p>
+</div>
+
+<!-- STATS -->
+<section class="section section-center">
+  <div class="inner-sm">
+    <div class="section-eyebrow reveal">Ce que tu obtiens</div>
+    <h2 class="section-title reveal">Tout ce dont tu as besoin.<br>Rien de superflu.</h2>
+  </div>
+  <div class="stats-row reveal">
+    <div class="stat-cell"><div class="stat-val">12</div><div class="stat-label">Modules de formation</div></div>
+    <div class="stat-cell"><div class="stat-val">∞</div><div class="stat-label">Accès à vie</div></div>
+    <div class="stat-cell"><div class="stat-val">0€</div><div class="stat-label">Prérequis financiers</div></div>
+  </div>
+</section>
+
+<!-- MANIFESTO -->
+<section class="section section-bg section-center">
+  <div class="manifesto-block">
+    <p class="manifesto-quote reveal">La majorité des gens entretiennent avec l'argent une relation qui ressemble à de la <strong>servitude.</strong> Ils travaillent pour en avoir assez — jamais pour ne plus en avoir besoin.</p>
+    <p class="manifesto-body reveal">Ce n'est pas une fatalité. C'est le résultat d'une ignorance volontairement entretenue. ARK n'est pas une formation de trading de plus. C'est une grille de lecture — pour comprendre les mécanismes qui régissent les marchés, les patrimoines, et in fine, ta liberté.</p>
+  </div>
+</section>
+
+<!-- PROGRAMME -->
+<section class="section" id="programme">
+  <div class="inner">
+    <div class="section-eyebrow reveal">Programme</div>
+    <h2 class="section-title reveal" style="max-width:480px">Ce que tu vas apprendre</h2>
+    <div class="modules-wrap">
+      <div class="module-row reveal"><div class="module-index">01</div><div class="module-right"><div class="module-title">Introduction au Macro Trading</div><div class="module-desc">Comprendre ce qu'est le macro trading, comment les grandes thèses se construisent et pourquoi cette approche surperforme sur le long terme.</div><div class="module-tags"><span class="module-tag">Macro</span><span class="module-tag">Thèses d'investissement</span></div></div></div>
+      <div class="module-row reveal"><div class="module-index">02</div><div class="module-right"><div class="module-title">Les Marchés Financiers</div><div class="module-desc">Structure des marchés, acteurs, mécanismes de prix, liquidité. Ce que personne ne t'a expliqué sur le fonctionnement réel de la bourse.</div><div class="module-tags"><span class="module-tag">Structure</span><span class="module-tag">Liquidité</span><span class="module-tag">Acteurs</span></div></div></div>
+      <div class="module-row reveal"><div class="module-index">03</div><div class="module-right"><div class="module-title">Analyse Macroéconomique</div><div class="module-desc">Lire les cycles économiques, interpréter les indicateurs macro, comprendre le rôle des banques centrales et anticiper les grands mouvements de marché.</div><div class="module-tags"><span class="module-tag">Cycles</span><span class="module-tag">Banques centrales</span><span class="module-tag">Indicateurs</span></div></div></div>
+      <div class="module-row reveal"><div class="module-index">04</div><div class="module-right"><div class="module-title">Analyse des Actifs</div><div class="module-desc">Actions, obligations, devises, matières premières — comprendre chaque classe d'actif, ses drivers et son comportement dans différents régimes de marché.</div><div class="module-tags"><span class="module-tag">Actions</span><span class="module-tag">Obligations</span><span class="module-tag">Forex</span><span class="module-tag">Matières premières</span></div></div></div>
+      <div class="module-row reveal"><div class="module-index">05</div><div class="module-right"><div class="module-title">Construction d'une Thèse</div><div class="module-desc">Méthodologie pour construire une thèse macro de A à Z : identifier le catalyseur, définir l'horizon, choisir le véhicule d'expression et calibrer la conviction.</div><div class="module-tags"><span class="module-tag">Méthodologie</span><span class="module-tag">Catalyseurs</span><span class="module-tag">Conviction</span></div></div></div>
+      <div class="module-row reveal"><div class="module-index">06</div><div class="module-right"><div class="module-title">Analyse Technique Appliquée</div><div class="module-desc">Lire un graphique, identifier les structures de prix, utiliser les indicateurs comme confirmation — pas comme signal principal.</div><div class="module-tags"><span class="module-tag">Chartisme</span><span class="module-tag">Indicateurs</span><span class="module-tag">Structures de prix</span></div></div></div>
+      <div class="module-row reveal"><div class="module-index">07</div><div class="module-right"><div class="module-title">Prise de Position</div><div class="module-desc">Timing d'entrée, choix de l'instrument, sizing initial. Comment passer d'une thèse convaincante à une position concrète sur les marchés.</div><div class="module-tags"><span class="module-tag">Entrée</span><span class="module-tag">Timing</span><span class="module-tag">Sizing</span></div></div></div>
+      <div class="module-row reveal"><div class="module-index">08</div><div class="module-right"><div class="module-title">Gestion du Risque</div><div class="module-desc">Stop loss, position sizing, corrélations entre positions — construire un système de protection qui survit aux marchés adverses sans tuer la performance.</div><div class="module-tags"><span class="module-tag">Stop loss</span><span class="module-tag">Position sizing</span><span class="module-tag">Corrélations</span></div></div></div>
+      <div class="module-row reveal"><div class="module-index">09</div><div class="module-right"><div class="module-title">Management de Portfolio</div><div class="module-desc">Diversification sans dilution des convictions, allocation par thèse et horizon, suivi et réévaluation du portefeuille sans réagir au bruit.</div><div class="module-tags"><span class="module-tag">Allocation</span><span class="module-tag">Diversification</span><span class="module-tag">Réévaluation</span></div></div></div>
+      <div class="module-row reveal"><div class="module-index">10</div><div class="module-right"><div class="module-title">Psychologie & Discipline</div><div class="module-desc">Biais cognitifs, tenir une position sous pression, savoir avoir tort sans ego, et comprendre pourquoi on n'entend parler que des gagnants.</div><div class="module-tags"><span class="module-tag">Biais cognitifs</span><span class="module-tag">Discipline</span><span class="module-tag">Psychologie</span></div></div></div>
+      <div class="module-row reveal"><div class="module-index">11</div><div class="module-right"><div class="module-title">Métriques de Trading</div><div class="module-desc">Win rate, risk/reward, expectancy, drawdown, Sharpe ratio — les indicateurs qui permettent d'évaluer objectivement une stratégie et de tenir un journal de trading rigoureux.</div><div class="module-tags"><span class="module-tag">Win rate</span><span class="module-tag">Drawdown</span><span class="module-tag">Sharpe ratio</span><span class="module-tag">Journal</span></div></div></div>
+      <div class="module-row reveal"><div class="module-index">12</div><div class="module-right"><div class="module-title">Fiscalité & Cadre Juridique</div><div class="module-desc">Flat tax, PEA, CTO, assurance-vie, déclaration des comptes étrangers et optimisation légale — tout ce qu'il faut savoir pour trader dans les règles et garder un maximum de ses gains.</div><div class="module-tags"><span class="module-tag">Flat tax</span><span class="module-tag">PEA · CTO</span><span class="module-tag">Optimisation</span></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOR WHO -->
+<section class="section section-bg section-center">
+  <div class="inner-sm">
+    <div class="section-eyebrow reveal">Pour qui</div>
+    <h2 class="section-title reveal">ARK est fait pour toi si —</h2>
+    <div class="forwho-grid">
+      <div class="forwho-card yes reveal">
+        <div class="forwho-card-label">ARK EST POUR TOI</div>
+        <ul class="forwho-list">
+          <li><span class="fi">✓</span>Tu veux comprendre comment fonctionne l'argent — vraiment</li>
+          <li><span class="fi">✓</span>Tu en as marre de subir sans comprendre pourquoi</li>
+          <li><span class="fi">✓</span>Tu as 0€ ou 10 000€ d'épargne — ça ne change rien pour commencer</li>
+          <li><span class="fi">✓</span>Tu veux une méthode, pas des conseils de comptoir</li>
+          <li><span class="fi">✓</span>Tu es prêt à penser par toi-même plutôt que de suivre la masse</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHILOSOPHY -->
+<section class="section section-center" id="philosophie">
+  <div class="inner">
+    <div class="section-eyebrow reveal">Philosophie</div>
+    <h2 class="section-title reveal">Trois principes fondateurs</h2>
+    <div class="philosophy-grid">
+      <div class="philosophy-card reveal"><div class="phil-icon">🔍</div><div class="phil-title">La lucidité avant tout</div><div class="phil-text">Comprendre le système dans lequel tu évolues est la première forme de liberté. L'ignorance financière n'est pas un manque d'intelligence — c'est le résultat d'une éducation incomplète.</div></div>
+      <div class="philosophy-card reveal"><div class="phil-icon">🧠</div><div class="phil-title">Penser par soi-même</div><div class="phil-text">Les marchés récompensent ceux qui pensent contre la foule. Le troupeau se trompe collectivement parce qu'il pense collectivement. ARK t'apprend à construire un jugement indépendant.</div></div>
+      <div class="philosophy-card reveal"><div class="phil-icon">🌍</div><div class="phil-title">L'indépendance comme horizon</div><div class="phil-text">La finance n'est pas une fin en soi — c'est un outil pour réduire ta dépendance à une source de revenu unique, à un employeur, à une géographie. ARK est une formation sur la liberté.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="section section-bg section-center" id="pricing">
+  <div class="inner-sm">
+    <div class="section-eyebrow reveal">Tarifs</div>
+    <h2 class="section-title reveal">Accéder à ARK</h2>
+    <p class="section-sub reveal">Paiement unique. Accès à vie. Prix de lancement limité.</p>
+  </div>
+  <div class="pricing-inner reveal">
+    <div class="price-card featured">
+      <div class="price-badge">Prix de lancement</div>
+      <div class="price-tier">Accès complet</div>
+      <div class="price-row-amount">
+        <div class="price-amount">590€</div>
+        <div class="price-strikethrough">1 490€</div>
+      </div>
+      <div class="price-period">Économie de 900€ · Offre de lancement</div>
+      <div class="price-divider"></div>
+      <ul class="price-features">
+        <li><span class="check">✓</span>Accès complet aux 12 modules</li>
+        <li><span class="check">✓</span>Accès à vie + toutes les mises à jour</li>
+        <li><span class="check">✓</span>Support par email</li>
+        <li><span class="check">✓</span>Accès immédiat après achat</li>
+      </ul>
+      <a href="#" class="price-cta">Rejoindre ARK maintenant →</a>
+      <p class="price-small">Le prix reviendra à 1 490€ à la fin du lancement</p>
+    </div>
+    <div class="book-wrap">
+      <svg viewBox="0 0 280 360" width="230" height="295" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 14px 32px rgba(0,0,0,0.14));">
+        <ellipse cx="148" cy="354" rx="106" ry="7" fill="rgba(0,0,0,0.1)"/>
+        <rect x="20" y="10" width="28" height="340" rx="2" fill="#1a1a1a"/>
+        <rect x="20" y="10" width="4" height="340" rx="2" fill="#3a3a3a"/>
+        <rect x="44" y="10" width="216" height="340" rx="3" fill="#f8f6f0"/>
+        <rect x="52" y="18" width="200" height="324" rx="1" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+        <rect x="58" y="24" width="188" height="312" rx="1" fill="none" stroke="#1a1a1a" stroke-width="0.5"/>
+        <line x1="70" y1="42" x2="230" y2="42" stroke="#1a1a1a" stroke-width="0.75"/>
+        <line x1="70" y1="46" x2="230" y2="46" stroke="#1a1a1a" stroke-width="0.25"/>
+        <path d="M66,28 L80,28 L80,30 L68,30 L68,42 L66,42 Z" fill="#1a1a1a"/>
+        <path d="M234,28 L220,28 L220,30 L232,30 L232,42 L234,42 Z" fill="#1a1a1a"/>
+        <path d="M66,318 L80,318 L80,316 L68,316 L68,304 L66,304 Z" fill="#1a1a1a"/>
+        <path d="M234,318 L220,318 L220,316 L232,316 L232,304 L234,304 Z" fill="#1a1a1a"/>
+        <line x1="140" y1="55" x2="140" y2="67" stroke="#1a1a1a" stroke-width="0.75"/>
+        <circle cx="140" cy="70" r="3" fill="none" stroke="#1a1a1a" stroke-width="0.75"/>
+        <line x1="120" y1="62" x2="160" y2="62" stroke="#1a1a1a" stroke-width="0.5"/>
+        <text x="150" y="155" font-family="'Times New Roman', Times, serif" font-size="22" font-weight="700" fill="#1a1a1a" text-anchor="middle" letter-spacing="3">ARK</text>
+        <line x1="90" y1="163" x2="210" y2="163" stroke="#1a1a1a" stroke-width="0.75"/>
+        <text x="150" y="187" font-family="'Times New Roman', Times, serif" font-size="13" font-weight="400" fill="#1a1a1a" text-anchor="middle" letter-spacing="1.5">MACRO TRADER</text>
+        <text x="150" y="205" font-family="'Times New Roman', Times, serif" font-size="13" font-weight="400" fill="#1a1a1a" text-anchor="middle" letter-spacing="1.5">PROGRAM</text>
+        <line x1="100" y1="216" x2="200" y2="216" stroke="#1a1a1a" stroke-width="0.5"/>
+        <polygon points="150,226 155,233 150,240 145,233" fill="none" stroke="#1a1a1a" stroke-width="0.75"/>
+        <rect x="256" y="12" width="3" height="336" fill="#e8e4d8"/>
+        <rect x="259" y="12" width="2" height="336" fill="#ddd8cc"/>
+      </svg>
+      <p class="book-caption">Support de formation complet<br>inclus dans votre programme</p>
+    </div>
+  </div>
+  <p class="price-note-bottom reveal">Paiement sécurisé · Accès immédiat · Prix en euros TTC</p>
+</section>
+
+<!-- AUTHOR -->
+<section class="author-section">
+  <div class="author-inner">
+    <div class="author-avatar reveal">👤</div>
+    <div class="author-name reveal">Quentin</div>
+    <div class="author-title reveal">Fondateur · ARK Investor Program</div>
+    <p class="author-bio reveal">Investisseur et trader depuis plus de 5 ans. Diplômé en économie-gestion avec une spécialisation dans les affaires en Amérique du Nord. J'ai passé des années à essayer de comprendre pourquoi personne ne nous apprend à gérer notre argent — et surtout, ce qu'on peut faire quand on décide de prendre ça en main soi-même.<br><br>ARK est né d'une conviction simple : <strong>l'ignorance financière n'est pas une fatalité.</strong> Ce programme est ce que j'aurais voulu avoir à 18 ans.</p>
+    <div class="author-tags reveal">
+      <span class="author-tag">Économie-Gestion</span>
+      <span class="author-tag">Marchés financiers</span>
+      <span class="author-tag">Analyse technique</span>
+      <span class="author-tag">Indépendance financière</span>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section section-center">
+  <div class="inner-sm">
+    <div class="section-eyebrow reveal">FAQ</div>
+    <h2 class="section-title reveal">Questions fréquentes</h2>
+    <div class="faq-wrap">
+      <div class="faq-item reveal" onclick="toggleFaq(this)"><div class="faq-q"><span class="faq-q-text">Il faut combien d'argent pour commencer ?</span><span class="faq-icon">+</span></div><div class="faq-a">Aucun minimum. ARK est une formation sur la compréhension des marchés — pas un fonds d'investissement. Tu peux commencer avec 0€ d'épargne et appliquer les bases quand tu es prêt.</div></div>
+      <div class="faq-item reveal" onclick="toggleFaq(this)"><div class="faq-q"><span class="faq-q-text">C'est quoi la différence avec les autres formations ?</span><span class="faq-icon">+</span></div><div class="faq-a">ARK ne te promet pas des rendements. On ne te vend pas un "système secret". L'objectif c'est de te donner une vraie compréhension des mécanismes financiers — pour que tu puisses prendre tes propres décisions, de façon autonome et éclairée.</div></div>
+      <div class="faq-item reveal" onclick="toggleFaq(this)"><div class="faq-q"><span class="faq-q-text">L'accès à vie ça veut dire quoi concrètement ?</span><span class="faq-icon">+</span></div><div class="faq-a">Tu paies une fois, tu accèdes pour toujours. Toutes les mises à jour futures sont incluses — si un module est enrichi ou qu'un nouveau contenu est ajouté, tu y accèdes automatiquement sans frais supplémentaires.</div></div>
+      <div class="faq-item reveal" onclick="toggleFaq(this)"><div class="faq-q"><span class="faq-q-text">Pourquoi le prix augmente-t-il ?</span><span class="faq-icon">+</span></div><div class="faq-a">Le prix de lancement récompense les premiers. À chaque promotion, le tarif augmente parce que la formation s'enrichit, la communauté grandit, et la valeur augmente objectivement. Si tu es là maintenant, c'est le meilleur moment d'entrer.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER CTA -->
+<section class="footer-cta">
+  <h2 class="footer-cta-title reveal">Le meilleur moment<br>pour commencer<br>était <span>hier.</span></h2>
+  <p class="footer-cta-sub reveal">Le deuxième meilleur moment, c'est maintenant.</p>
+  <a href="#pricing" class="btn-primary reveal" style="font-size:17px;padding:16px 36px">Accéder à ARK</a>
+</section>
+
+<footer>
+  <p>© 2025 ARK Investor Program · Tous droits réservés<br>Les performances passées ne préjugent pas des performances futures</p>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 55);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  const arkLogo = document.getElementById('ark-logo');
+  window.addEventListener('scroll', () => {
+    const progress = Math.min(window.scrollY / (window.innerHeight * 0.55), 1);
+    arkLogo.style.filter = `blur(${progress * 16}px)`;
+    arkLogo.style.opacity = 1 - progress * 0.85;
+  }, { passive: true });
+
+  function toggleFaq(el) {
+    const isOpen = el.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(f => f.classList.remove('open'));
+    if (!isOpen) el.classList.add('open');
+  }
+</script>
+</body>
+</html>
