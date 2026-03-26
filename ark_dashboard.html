@@ -475,7 +475,7 @@ body { background: var(--off-white); color: var(--text-primary); font-family: 'I
         <div class="page-welcome-sub">Entre ton code pour débloquer la formation complète ARK</div>
       </div>
     </div>
-    <div class="card" style="max-width:520px;">
+    <div class="card">
       <div class="card-title" style="margin-bottom:4px;">🔑 Code d'accès</div>
       <div class="card-sub" style="margin-bottom:20px;">Débloque l'accès à la formation complète</div>
       <div id="acces-content">
@@ -618,7 +618,7 @@ async function loadAccessStatus() {
     el.innerHTML =
       '<div class="set-row">' +
         '<div><div class="set-name">Formation complète</div>' +
-        '<div class="set-desc">Activé le ' + date + ' · Code : ' + data.promo_code + '</div></div>' +
+        '<div class="set-desc">Activé le ' + date + '</div></div>' +
         '<span style="font-size:11px;font-weight:600;color:var(--green);background:rgba(52,199,89,0.1);padding:4px 10px;border-radius:980px;">Actif ✓</span>' +
       '</div>' +
       '<button onclick="window.location.href=\'ark_platform.html\'" ' +
