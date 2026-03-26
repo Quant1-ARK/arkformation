@@ -31,7 +31,22 @@ body { background: var(--off-white); color: var(--text-primary); font-family: 'I
 .sidebar { width: var(--sidebar-w); flex-shrink: 0; background: var(--accent); display: flex; flex-direction: column; height: 100vh; position: fixed; top: 0; left: 0; z-index: 60; }
 .sidebar-logo { padding: 22px 20px 18px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid rgba(255,255,255,0.07); flex-shrink: 0; }
 .logo-mark { font-family: 'Times New Roman', Times, serif; font-size: 20px; letter-spacing: 0.2em; color: #fff; font-weight: 400; }
-.logo-badge { font-size: 9px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(255,255,255,0.9); background: rgba(7,57,92,0.324); padding: 2px 8px; border-radius: 980px; }
+
+/* Badge plan */
+.logo-badge { font-size: 9px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; padding: 2px 8px; border-radius: 980px; transition: all .4s ease; }
+.logo-badge.free { color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.08); }
+.logo-badge.paid {
+  color: #7a4f00;
+  background: linear-gradient(90deg, #f5d06a, #fceea0, #c9a84c, #fceea0, #f5d06a);
+  background-size: 200% auto;
+  animation: shine 2.5s linear infinite;
+  box-shadow: 0 0 8px rgba(201,168,76,0.5);
+}
+@keyframes shine {
+  0%   { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
 .sidebar-nav { flex: 1; padding: 12px; display: flex; flex-direction: column; gap: 1px; overflow-y: auto; }
 .sidebar-nav::-webkit-scrollbar { display: none; }
 .nav-label { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.25); padding: 10px 10px 4px; margin-top: 4px; }
@@ -182,7 +197,7 @@ body { background: var(--off-white); color: var(--text-primary); font-family: 'I
 <aside class="sidebar" id="sidebar">
   <div class="sidebar-logo">
     <span class="logo-mark">ARK</span>
-    <span class="logo-badge">Fondateur</span>
+    <span class="logo-badge" id="plan-badge">Gratuit</span>
   </div>
   <nav class="sidebar-nav">
     <div class="nav-label">Principal</div>
@@ -574,6 +589,9 @@ async function loadAccessStatus() {
     .single();
 
   if (data) {
+    // Badge doré
+    const badge = document.getElementById('plan-badge');
+    if (badge) { badge.textContent = 'Fondateur'; badge.className = 'logo-badge paid'; }
     const date = new Date(data.created_at).toLocaleDateString('fr-FR');
     el.innerHTML =
       '<div class="set-row">' +
@@ -587,6 +605,9 @@ async function loadAccessStatus() {
         'Accéder à la formation →' +
       '</button>';
   } else {
+    // Badge gris
+    const badge = document.getElementById('plan-badge');
+    if (badge) { badge.textContent = 'Gratuit'; badge.className = 'logo-badge free'; }
     el.innerHTML =
       '<div id="acces-msg" style="display:none;margin-bottom:14px;padding:10px 14px;background:rgba(255,149,0,0.08);border:1px solid rgba(255,149,0,0.2);border-radius:8px;font-size:13px;color:#b86e00;line-height:1.5;">' +
         'Entre ton code pour débloquer la formation.' +
