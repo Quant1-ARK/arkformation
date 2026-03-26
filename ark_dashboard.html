@@ -206,6 +206,7 @@ body { background: var(--off-white); color: var(--text-primary); font-family: 'I
     <div class="nav-item" onclick="nav('revision',this)"><span class="nav-icon">◈</span> Révision</div>
     <div class="nav-label">Contenu</div>
     <div class="nav-item" onclick="nav('bonus',this)"><span class="nav-icon">✦</span> Bonus <span class="nav-pill">2</span></div>
+    <div class="nav-item" id="nav-membre" onclick="nav('membre',this)"><span class="nav-icon">★</span> Deviens membre</div>
     <div class="nav-label">Compte</div>
     <div class="nav-item" id="nav-reglages" onclick="nav('reglages',this)"><span class="nav-icon">◎</span> Réglages</div>
     <div class="nav-item" onclick="window.location.href='index.html'"><span class="nav-icon">⤶</span> Sortir</div>
@@ -449,15 +450,6 @@ body { background: var(--off-white); color: var(--text-primary); font-family: 'I
           <div class="set-row"><div><div class="set-name">Membre depuis</div><div class="set-desc">Mars 2026</div></div></div>
         </div>
 
-        <!-- CODE D'ACCÈS -->
-        <div class="card">
-          <div class="card-title" style="margin-bottom:4px;">🔑 Code d'accès</div>
-          <div class="card-sub" style="margin-bottom:16px;">Débloque l'accès à la formation complète</div>
-          <div id="acces-content">
-            <div style="font-size:13px;color:var(--text-secondary);font-weight:300;">Chargement…</div>
-          </div>
-        </div>
-
         <div class="card">
           <div class="card-title" style="margin-bottom:14px;">Support</div>
           <div class="set-row"><div><div class="set-name">Contacter ARK</div><div class="set-desc">Une question sur la formation ?</div></div><button class="sml-btn">Email →</button></div>
@@ -474,6 +466,23 @@ body { background: var(--off-white); color: var(--text-primary); font-family: 'I
       </div>
     </div>
   </div>
+
+  <!-- DEVIENS MEMBRE -->
+  <div class="content" id="page-membre">
+    <div class="page-header">
+      <div>
+        <div class="page-welcome">★ Deviens membre</div>
+        <div class="page-welcome-sub">Entre ton code pour débloquer la formation complète ARK</div>
+      </div>
+    </div>
+    <div class="card" style="max-width:520px;">
+      <div class="card-title" style="margin-bottom:4px;">🔑 Code d'accès</div>
+      <div class="card-sub" style="margin-bottom:20px;">Débloque l'accès à la formation complète</div>
+      <div id="acces-content">
+        <div style="font-size:13px;color:var(--text-secondary);font-weight:300;">Chargement…</div>
+      </div>
+    </div>
+  </div><!-- /membre -->
 
 </div><!-- /main -->
 
