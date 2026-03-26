@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ARK — Dashboard</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root {
   --white: #ffffff;
@@ -27,55 +26,146 @@
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { height: 100%; }
-body { background: var(--off-white); color: var(--text-primary); font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 15px; line-height: 1.5; -webkit-font-smoothing: antialiased; display: flex; height: 100vh; overflow: hidden; }
-.sidebar { width: var(--sidebar-w); flex-shrink: 0; background: var(--accent); display: flex; flex-direction: column; height: 100vh; position: fixed; top: 0; left: 0; z-index: 60; }
-.sidebar-logo { padding: 22px 20px 18px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid rgba(255,255,255,0.07); flex-shrink: 0; }
-.logo-mark { font-family: 'Times New Roman', Times, serif; font-size: 20px; letter-spacing: 0.2em; color: #fff; font-weight: 400; }
-
-/* Badge plan */
-.logo-badge { font-size: 9px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; padding: 2px 8px; border-radius: 980px; transition: all .4s ease; }
-.logo-badge.free { color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.08); }
-.logo-badge.paid {
-  color: #7a4f00;
-  background: linear-gradient(90deg, #f5d06a, #fceea0, #c9a84c, #fceea0, #f5d06a);
-  background-size: 200% auto;
-  animation: shine 2.5s linear infinite;
-  box-shadow: 0 0 8px rgba(201,168,76,0.5);
-}
-@keyframes shine {
-  0%   { background-position: 0% center; }
-  100% { background-position: 200% center; }
+body {
+  background: var(--off-white);
+  color: var(--text-primary);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
 }
 
-.sidebar-nav { flex: 1; padding: 12px; display: flex; flex-direction: column; gap: 1px; overflow-y: auto; }
+/* SIDEBAR */
+.sidebar {
+  width: var(--sidebar-w);
+  flex-shrink: 0;
+  background: var(--accent);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: fixed;
+  top: 0; left: 0;
+  z-index: 60;
+}
+.sidebar-logo {
+  padding: 22px 20px 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  flex-shrink: 0;
+  
+}
+.logo-mark {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 20px;
+  letter-spacing: 0.2em;
+  color: #fff;
+  font-weight: 400;
+}
+.logo-badge { font-size:9px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; padding:2px 8px; border-radius:980px; transition:all .4s; }
+.logo-badge.free { color:rgba(255,255,255,0.45); background:rgba(255,255,255,0.08); }
+.logo-badge.paid { color:#7a4f00; background:linear-gradient(90deg,#f5d06a,#fceea0,#c9a84c,#fceea0,#f5d06a); background-size:200% auto; animation:shine 2.5s linear infinite; box-shadow:0 0 8px rgba(201,168,76,0.5); }
+@keyframes shine { 0%{background-position:0% center} 100%{background-position:200% center} }
+.sidebar-nav {
+  flex: 1;
+  padding: 12px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  overflow-y: auto;
+}
 .sidebar-nav::-webkit-scrollbar { display: none; }
-.nav-label { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.25); padding: 10px 10px 4px; margin-top: 4px; }
-.nav-item { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: 10px; font-size: 14px; font-weight: 400; color: rgba(255,255,255,0.6); cursor: pointer; transition: background .15s, color .15s; user-select: none; }
+.nav-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.25);
+  padding: 10px 10px 4px;
+  margin-top: 4px;
+}
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(255,255,255,0.6);
+  cursor: pointer;
+  transition: background .15s, color .15s;
+  user-select: none;
+}
 .nav-item:hover { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.9); }
 .nav-item.active { background: rgba(255,255,255,0.11); color: #fff; font-weight: 500; }
 .nav-icon { width: 18px; text-align: center; font-size: 14px; flex-shrink: 0; }
-.nav-pill { margin-left: auto; font-size: 10px; font-weight: 600; padding: 1px 7px; border-radius: 980px; background: rgba(255,255,255,0.11); color: rgba(255,255,255,0.6); }
+.nav-pill {
+  margin-left: auto;
+  font-size: 10px; font-weight: 600;
+  padding: 1px 7px; border-radius: 980px;
+  background: rgba(255,255,255,0.11);
+  color: rgba(255,255,255,0.6);
+}
 .nav-pill.blue { background: rgba(0,113,227,0.3); color: #86c7f5; }
-.sidebar-user { padding: 12px; border-top: 1px solid rgba(255,255,255,0.07); flex-shrink: 0; }
-.user-row { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 10px; cursor: pointer; transition: background .15s; }
+.sidebar-user {
+  padding: 12px 12px;
+  border-top: 1px solid rgba(255,255,255,0.07);
+  flex-shrink: 0;
+}
+.user-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 10px; border-radius: 10px;
+  cursor: pointer; transition: background .15s;
+}
 .user-row:hover { background: rgba(255,255,255,0.06); }
-.user-av { width: 30px; height: 30px; border-radius: 50%; background: rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; color: #fff; flex-shrink: 0; }
+.user-av {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 600; color: #fff; flex-shrink: 0;
+}
 .user-name { font-size: 13px; font-weight: 500; color: #fff; }
 .user-plan { font-size: 11px; color: rgba(255,255,255,0.35); font-weight: 300; }
+
+/* MAIN */
 .main { margin-left: var(--sidebar-w); flex: 1; display: flex; flex-direction: column; height: 100vh; overflow: hidden; min-width: 0; }
+
+/* CONTENT */
 .content { flex: 1; overflow-y: auto; padding: 26px 30px 40px; display: none; flex-direction: column; gap: 20px; }
 .content.active { display: flex; animation: pageIn .28s ease; }
 .content::-webkit-scrollbar { width: 5px; }
 .content::-webkit-scrollbar-thumb { background: var(--mid-gray); border-radius: 3px; }
 @keyframes pageIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
-.page-header { background: var(--white); border-radius: var(--radius-lg); border: 1px solid var(--border); padding: 22px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+/* PAGE HEADER */
+.page-header {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  padding: 22px 24px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+}
 .page-welcome { font-size: 21px; font-weight: 600; letter-spacing: -0.02em; }
 .page-welcome span { color: var(--accent); }
 .page-welcome-sub { font-size: 13px; color: var(--text-tertiary); font-weight: 300; margin-top: 2px; }
 .header-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
-.header-tab { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; padding: 8px 16px; border-radius: 980px; border: 1px solid var(--mid-gray); cursor: pointer; background: var(--white); color: var(--text-secondary); transition: all .15s; font-family: inherit; }
+.header-tab {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 13px; font-weight: 500;
+  padding: 8px 16px; border-radius: 980px;
+  border: 1px solid var(--mid-gray);
+  cursor: pointer; background: var(--white); color: var(--text-secondary);
+  transition: all .15s; font-family: inherit;
+}
 .header-tab:hover { border-color: var(--accent); color: var(--accent); }
 .header-tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+/* CARDS */
 .card { background: var(--white); border-radius: var(--radius-lg); border: 1px solid var(--border); padding: 22px 24px; }
 .card-title { font-size: 16px; font-weight: 600; letter-spacing: -0.015em; display: flex; align-items: center; gap: 7px; }
 .card-sub { font-size: 12px; color: var(--text-tertiary); font-weight: 300; margin-top: 2px; }
@@ -83,26 +173,50 @@ body { background: var(--off-white); color: var(--text-primary); font-family: 'I
 .card-link { font-size: 13px; color: var(--accent); cursor: pointer; }
 .card-link:hover { opacity: .7; }
 .card-chev { color: var(--text-tertiary); font-size: 14px; cursor: pointer; padding: 2px 4px; }
+
+/* KPI TRIO */
 .kpi-trio { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--mid-gray); border-radius: var(--radius); overflow: hidden; margin-top: 18px; }
 .kpi-cell { background: var(--off-white); padding: 20px 18px; display: flex; align-items: center; gap: 14px; }
 .kpi-ico { width: 38px; height: 38px; border-radius: 10px; background: var(--accent-light); display: flex; align-items: center; justify-content: center; font-size: 17px; flex-shrink: 0; }
 .kpi-val { font-size: 24px; font-weight: 600; letter-spacing: -0.03em; line-height: 1; }
 .kpi-lbl { font-size: 12px; color: var(--text-tertiary); font-weight: 300; margin-top: 3px; }
-.cta-banner { background: var(--text-primary); border-radius: var(--radius-lg); padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+/* CTA BANNER */
+.cta-banner {
+  background: var(--text-primary);
+  border-radius: var(--radius-lg);
+  padding: 20px 24px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+}
 .cta-title { font-size: 16px; font-weight: 600; color: #fff; letter-spacing: -0.01em; display: flex; align-items: center; gap: 8px; }
 .cta-sub { font-size: 13px; color: rgba(255,255,255,0.42); font-weight: 300; margin-top: 3px; }
-.cta-btn { display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 500; background: #fff; color: var(--text-primary); padding: 10px 20px; border-radius: 980px; border: none; cursor: pointer; white-space: nowrap; transition: opacity .15s; flex-shrink: 0; font-family: inherit; }
+.cta-btn {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 14px; font-weight: 500;
+  background: #fff; color: var(--text-primary);
+  padding: 10px 20px; border-radius: 980px;
+  border: none; cursor: pointer; white-space: nowrap;
+  transition: opacity .15s; flex-shrink: 0; font-family: inherit;
+}
 .cta-btn:hover { opacity: .88; }
+.cta-btn.blue { background: var(--accent); color: #fff; }
+.cta-btn.blue:hover { background: var(--accent-hover); opacity: 1; }
+
+/* RANK BAR */
 .rank-wrap { margin: 16px 0 22px; }
 .rank-lbl-row { display: flex; justify-content: center; margin-bottom: 8px; }
 .rank-lbl { font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 6px; background: var(--white); border: 1px solid var(--mid-gray); padding: 4px 14px; border-radius: 980px; }
 .rank-track { height: 8px; background: var(--mid-gray); border-radius: 980px; overflow: hidden; }
 .rank-fill { height: 100%; background: linear-gradient(90deg, var(--accent), #86c7f5); border-radius: 980px; width: 0; transition: width 1.2s cubic-bezier(.4,0,.2,1); }
 .rank-ends { display: flex; justify-content: space-between; margin-top: 5px; font-size: 11px; color: var(--text-tertiary); font-weight: 300; }
+
+/* RINGS */
 .rings-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
 .ring-cell { display: flex; flex-direction: column; align-items: center; gap: 8px; }
 .ring-name { font-size: 13px; font-weight: 500; text-align: center; }
 .ring-note { font-size: 11px; color: var(--text-tertiary); font-weight: 300; text-align: center; margin-top: -4px; }
+
+/* PROGRESS */
 .prog-wrap { display: flex; flex-direction: column; gap: 5px; }
 .prog-row { display: flex; justify-content: space-between; font-size: 13px; }
 .prog-row span:last-child { color: var(--text-tertiary); font-weight: 300; }
@@ -110,18 +224,22 @@ body { background: var(--off-white); color: var(--text-primary); font-family: 'I
 .prog-fill { height: 100%; border-radius: 980px; background: var(--accent); transition: width 1s cubic-bezier(.4,0,.2,1); }
 .prog-fill.g { background: var(--green); }
 .prog-fill.o { background: var(--orange); }
+
+/* MODULE LIST */
 .mod-item { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--mid-gray); cursor: pointer; transition: opacity .15s; }
 .mod-item:last-child { border-bottom: none; }
 .mod-item:hover { opacity: .7; }
 .mod-num { width: 28px; height: 28px; border-radius: 8px; background: var(--light-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--text-secondary); flex-shrink: 0; }
 .mod-num.done { background: rgba(52,199,89,0.12); color: var(--green); }
-.mod-num.cur { background: var(--accent-light); color: var(--accent); }
+.mod-num.cur  { background: var(--accent-light); color: var(--accent); }
 .mod-title { font-size: 14px; font-weight: 500; flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.mod-meta { font-size: 12px; color: var(--text-tertiary); font-weight: 300; }
+.mod-meta  { font-size: 12px; color: var(--text-tertiary); font-weight: 300; }
 .mod-badge { font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 980px; white-space: nowrap; flex-shrink: 0; }
 .bd-done { background: rgba(52,199,89,0.1); color: var(--green); }
-.bd-wip { background: var(--accent-light); color: var(--accent); }
+.bd-wip  { background: var(--accent-light); color: var(--accent); }
 .bd-lock { background: var(--light-gray); color: var(--text-tertiary); }
+
+/* ACTIVITY */
 .act-item { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--mid-gray); align-items: flex-start; }
 .act-item:last-child { border-bottom: none; }
 .act-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); margin-top: 5px; flex-shrink: 0; }
@@ -130,18 +248,22 @@ body { background: var(--off-white); color: var(--text-primary); font-family: 'I
 .act-text { font-size: 13px; color: var(--text-secondary); font-weight: 300; }
 .act-text strong { color: var(--text-primary); font-weight: 500; }
 .act-time { font-size: 11px; color: var(--text-tertiary); margin-top: 1px; }
+
+/* QUIZ */
 .quiz-q { font-size: 17px; font-weight: 500; letter-spacing: -0.01em; line-height: 1.55; margin-bottom: 20px; }
 .quiz-opts { display: flex; flex-direction: column; gap: 9px; }
 .quiz-opt { padding: 13px 18px; border-radius: 12px; border: 1.5px solid var(--mid-gray); font-size: 14px; cursor: pointer; transition: all .15s; background: var(--white); text-align: left; font-family: inherit; }
 .quiz-opt:hover { border-color: var(--accent); background: var(--accent-light); color: var(--accent); }
 .quiz-opt.correct { border-color: var(--green); background: rgba(52,199,89,0.08); color: #2aa34a; font-weight: 500; }
-.quiz-opt.wrong { border-color: #ff3b30; background: rgba(255,59,48,0.07); color: #d93025; }
+.quiz-opt.wrong   { border-color: #ff3b30; background: rgba(255,59,48,0.07); color: #d93025; }
 .quiz-actions { display: flex; gap: 10px; align-items: center; margin-top: 18px; flex-wrap: wrap; }
 .btn-p { font-size: 14px; font-weight: 500; background: var(--accent); color: #fff; padding: 10px 22px; border-radius: 980px; border: none; cursor: pointer; transition: background .15s; font-family: inherit; }
 .btn-p:hover { background: var(--accent-hover); }
 .btn-g { font-size: 14px; font-weight: 400; color: var(--text-secondary); padding: 10px 16px; border-radius: 980px; border: none; cursor: pointer; background: var(--light-gray); font-family: inherit; }
 .btn-g:hover { background: var(--mid-gray); }
 .quiz-score { font-size: 12px; color: var(--text-tertiary); margin-left: auto; font-weight: 300; }
+
+/* BONUS */
 .bonus-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
 .bonus-card { background: var(--white); border-radius: var(--radius); border: 1px solid var(--border); padding: 20px; display: flex; flex-direction: column; gap: 10px; cursor: pointer; transition: all .2s; }
 .bonus-card:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(0,0,0,0.08); }
@@ -150,9 +272,11 @@ body { background: var(--off-white); color: var(--text-primary); font-family: 'I
 .bonus-title { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.35; }
 .bonus-desc { font-size: 12px; color: var(--text-secondary); font-weight: 300; line-height: 1.6; }
 .badge { font-size: 10px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; padding: 3px 9px; border-radius: 980px; align-self: flex-start; }
-.badge.new { background: rgba(52,199,89,0.1); color: var(--green); }
+.badge.new   { background: rgba(52,199,89,0.1); color: var(--green); }
 .badge.exclu { background: var(--accent-light); color: var(--accent); }
-.badge.lock { background: var(--light-gray); color: var(--text-tertiary); }
+.badge.lock  { background: var(--light-gray); color: var(--text-tertiary); }
+
+/* SETTINGS */
 .set-row { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; border-bottom: 1px solid var(--mid-gray); gap: 20px; }
 .set-row:last-child { border-bottom: none; }
 .set-name { font-size: 14px; font-weight: 500; }
@@ -164,18 +288,77 @@ body { background: var(--off-white); color: var(--text-primary); font-family: 'I
 .sel { font-size: 13px; color: var(--text-secondary); background: var(--light-gray); border: none; border-radius: 8px; padding: 7px 12px; cursor: pointer; font-family: inherit; outline: none; }
 .sml-btn { font-size: 13px; font-weight: 400; color: var(--text-secondary); padding: 7px 14px; border-radius: 980px; border: none; cursor: pointer; background: var(--light-gray); font-family: inherit; white-space: nowrap; }
 .sml-btn:hover { background: var(--mid-gray); }
-.cours-pill { font-size: 13px; font-weight: 400; color: rgba(255,255,255,0.75); padding: 8px 18px; border-radius: 980px; border: 1px solid rgba(255,255,255,0.25); background: rgba(255,255,255,0.08); cursor: pointer; transition: all .15s; font-family: inherit; }
+
+/* COURS PILLS */
+.cours-pill {
+  font-size: 13px; font-weight: 400; color: rgba(255,255,255,0.75);
+  padding: 8px 18px; border-radius: 980px;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.08);
+  cursor: pointer; transition: all .15s; font-family: inherit;
+}
 .cours-pill:hover { background: rgba(255,255,255,0.15); color: #fff; }
 .cours-pill.active-pill { background: rgba(255,255,255,0.18); color: #fff; border-color: rgba(255,255,255,0.45); }
+
+/* COURS CARDS */
+.cours-card {
+  background: var(--off-white);
+  border-radius: var(--radius);
+  border: 1px solid var(--mid-gray);
+  overflow: hidden;
+  display: flex; flex-direction: column;
+  transition: transform .2s, box-shadow .2s;
+  cursor: pointer;
+}
+.cours-card:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(0,0,0,0.08); }
+.cours-card.cours-lock { pointer-events: none; opacity: .7; }
+.cours-card-top {
+  position: relative;
+  background: linear-gradient(140deg, #dce9ff, #eef3ff);
+  height: 110px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 40px;
+}
+.cours-card.cours-done .cours-card-top { background: linear-gradient(140deg, #d4f0de, #e8f8ee); }
+.cours-card.cours-wip .cours-card-top  { background: linear-gradient(140deg, #dce9ff, #eef3ff); }
+.cours-card.cours-lock .cours-card-top { background: linear-gradient(140deg, #ebebeb, #f5f5f5); }
+.cours-price-badge {
+  position: absolute; top: 10px; right: 10px;
+  font-size: 11px; font-weight: 600;
+  background: rgba(255,255,255,0.82); color: var(--text-secondary);
+  padding: 3px 10px; border-radius: 980px;
+}
+.cours-price-badge.wip-badge  { background: var(--accent); color: #fff; }
+.cours-price-badge.lock-badge { background: var(--light-gray); color: var(--text-tertiary); }
+.cours-card-meta {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 9px 14px 0;
+  font-size: 12px; color: var(--text-tertiary); font-weight: 300;
+}
+.cours-access { font-size: 11px; font-weight: 600; color: var(--text-tertiary); }
+.done-access { color: var(--green); }
+.wip-access  { color: var(--accent); }
+.lock-access { color: var(--text-tertiary); }
+.cours-card-title {
+  font-size: 14px; font-weight: 600; letter-spacing: -0.01em;
+  color: var(--text-primary); padding: 8px 14px 0; line-height: 1.3;
+}
+.cours-card-desc {
+  font-size: 12px; color: var(--text-secondary); font-weight: 300;
+  padding: 6px 14px 16px; line-height: 1.6;
+}
+
+/* TAGS */
 .tag { font-size: 11px; font-weight: 500; color: var(--accent); background: var(--accent-light); padding: 3px 9px; border-radius: 980px; display: inline-block; }
-.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+.divider { height: 1px; background: var(--mid-gray); margin: 14px 0; }
+
+/* GRIDS */
+.grid2   { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
 .grid2-1 { display: grid; grid-template-columns: 2fr 1fr; gap: 18px; }
 .col { display: flex; flex-direction: column; gap: 18px; }
 
-/* Segments code promo */
-.promo-seg { flex: 1; padding: 10px; border: 1.5px solid var(--mid-gray); border-radius: 10px; font-size: 16px; font-family: 'Courier New', monospace; font-weight: 700; text-align: center; outline: none; text-transform: uppercase; letter-spacing: .1em; transition: border-color .15s; background: var(--white); }
-.promo-seg:focus { border-color: var(--accent); }
-
+/* RESPONSIVE */
 @media (max-width: 860px) {
   .sidebar { transform: translateX(-100%); transition: transform .25s; }
   .sidebar.open { transform: translateX(0); box-shadow: 4px 0 24px rgba(0,0,0,0.18); }
@@ -191,13 +374,15 @@ body { background: var(--off-white); color: var(--text-primary); font-family: 'I
   .header-tabs { display: none; }
 }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
+<!-- SIDEBAR -->
 <aside class="sidebar" id="sidebar">
   <div class="sidebar-logo">
     <span class="logo-mark">ARK</span>
-    <span class="logo-badge" id="plan-badge">Gratuit</span>
+    <span class="logo-badge free" id="plan-badge">Gratuit</span>
   </div>
   <nav class="sidebar-nav">
     <div class="nav-label">Principal</div>
@@ -221,8 +406,10 @@ body { background: var(--off-white); color: var(--text-primary); font-family: 'I
 
 <div class="main">
 
-  <!-- DASHBOARD -->
+  <!-- ════ DASHBOARD ════ -->
   <div class="content active" id="page-dashboard">
+
+    <!-- Page header with tabs -->
     <div class="page-header">
       <div>
         <div class="page-welcome">Bienvenue, <span>Quentin</span> 👋</div>
@@ -235,29 +422,41 @@ body { background: var(--off-white); color: var(--text-primary); font-family: 'I
         <button class="header-tab" onclick="tabSwitch(this)"><span>🗺</span> Roadmap</button>
       </div>
     </div>
+
+    <!-- Performance overview -->
     <div class="card">
       <div class="card-top">
-        <div><div class="card-title">📈 Aperçu des performances</div><div class="card-sub">Ton activité récente et ta progression</div></div>
+        <div>
+          <div class="card-title">📈 Aperçu des performances</div>
+          <div class="card-sub">Ton activité récente et ta progression</div>
+        </div>
         <span class="card-chev" id="perf-chev" onclick="toggleCard('perf-body','perf-chev')">∨</span>
       </div>
       <div id="perf-body">
         <div class="kpi-trio">
           <div class="kpi-cell"><div class="kpi-ico">🎯</div><div><div class="kpi-val" id="kpi-progression">0%</div><div class="kpi-lbl">Progression</div></div></div>
           <div class="kpi-cell"><div class="kpi-ico">📝</div><div><div class="kpi-val">38</div><div class="kpi-lbl">Questions tentées</div></div></div>
-          <div class="kpi-cell"><div class="kpi-ico">🔖</div><div><div class="kpi-val" id="kpi-modules">0 / 12</div><div class="kpi-lbl">Modules terminés</div></div></div>
+          <div class="kpi-cell"><div class="kpi-ico">🔖</div><div><div class="kpi-val" id="kpi-modules">0/12</div><div class="kpi-lbl">Modules terminés</div></div></div>
         </div>
       </div>
     </div>
+
+    <!-- CTA Banner -->
     <div class="cta-banner">
       <div>
         <div class="cta-title" id="cta-title">🚀 Chargement…</div>
         <div class="cta-sub" id="cta-sub"></div>
       </div>
-      <button class="cta-btn" onclick="goToFormation()">▶ Continuer le module 05</button>
+      <button class="cta-btn" onclick="goToFormation()">▶ Continuer</button>
     </div>
+
+    <!-- Rang ARK -->
     <div class="card">
       <div class="card-top" style="margin-bottom:0;">
-        <div><div class="card-title">🏆 Rang ARK & Métriques</div><div class="card-sub">Progression dans le programme et indicateurs clés</div></div>
+        <div>
+          <div class="card-title">🏆 Rang ARK & Métriques</div>
+          <div class="card-sub">Progression dans le programme et indicateurs clés</div>
+        </div>
       </div>
       <div class="rank-wrap">
         <div class="rank-lbl-row"><div class="rank-lbl" id="rank-label">🎓 Chargement…</div></div>
@@ -266,29 +465,50 @@ body { background: var(--off-white); color: var(--text-primary); font-family: 'I
       </div>
       <div class="rings-row">
         <div class="ring-cell">
-          <svg width="80" height="80" viewBox="0 0 80 80"><circle cx="40" cy="40" r="32" fill="none" stroke="#e8e8ed" stroke-width="8"/><circle id="ring-circle-prog" cx="40" cy="40" r="32" fill="none" stroke="#0071e3" stroke-width="8" stroke-dasharray="201" stroke-dashoffset="201" stroke-linecap="round" transform="rotate(-90 40 40)"/><text id="ring-pct-prog" x="40" y="45" text-anchor="middle" font-family="Inter,sans-serif" font-size="15" font-weight="600" fill="#1d1d1f">0%</text></svg>
-          <div class="ring-name">Progression</div><div id="ring-note-prog" class="ring-note">0 / 12 modules</div>
+          <svg width="80" height="80" viewBox="0 0 80 80">
+            <circle cx="40" cy="40" r="32" fill="none" stroke="#e8e8ed" stroke-width="8"/>
+            <circle id="ring-circle-prog" cx="40" cy="40" r="32" fill="none" stroke="#0071e3" stroke-width="8" stroke-dasharray="201" stroke-dashoffset="201" stroke-linecap="round" transform="rotate(-90 40 40)"/>
+            <text id="ring-pct-prog" x="40" y="45" text-anchor="middle" font-family="Inter,sans-serif" font-size="15" font-weight="600" fill="#1d1d1f">0%</text>
+          </svg>
+          <div class="ring-name">Progression</div>
+          <div id="ring-note-prog" class="ring-note">0 / 12 modules</div>
         </div>
         <div class="ring-cell">
-          <svg width="80" height="80" viewBox="0 0 80 80"><circle cx="40" cy="40" r="32" fill="none" stroke="#e8e8ed" stroke-width="8"/><circle cx="40" cy="40" r="32" fill="none" stroke="#34c759" stroke-width="8" stroke-dasharray="201" stroke-dashoffset="52" stroke-linecap="round" transform="rotate(-90 40 40)"/><text x="40" y="45" text-anchor="middle" font-family="Inter,sans-serif" font-size="15" font-weight="600" fill="#1d1d1f">74%</text></svg>
-          <div class="ring-name">Score moyen</div><div class="ring-note">Quiz & révisions</div>
+          <svg width="80" height="80" viewBox="0 0 80 80">
+            <circle cx="40" cy="40" r="32" fill="none" stroke="#e8e8ed" stroke-width="8"/>
+            <circle cx="40" cy="40" r="32" fill="none" stroke="#34c759" stroke-width="8" stroke-dasharray="201" stroke-dashoffset="52" stroke-linecap="round" transform="rotate(-90 40 40)"/>
+            <text x="40" y="45" text-anchor="middle" font-family="Inter,sans-serif" font-size="15" font-weight="600" fill="#1d1d1f">74%</text>
+          </svg>
+          <div class="ring-name">Score moyen</div>
+          <div class="ring-note">Quiz & révisions</div>
         </div>
         <div class="ring-cell">
-          <svg width="80" height="80" viewBox="0 0 80 80"><circle cx="40" cy="40" r="32" fill="none" stroke="#e8e8ed" stroke-width="8"/><circle cx="40" cy="40" r="32" fill="none" stroke="#ff9500" stroke-width="8" stroke-dasharray="201" stroke-dashoffset="90" stroke-linecap="round" transform="rotate(-90 40 40)"/><text x="40" y="45" text-anchor="middle" font-family="Inter,sans-serif" font-size="15" font-weight="600" fill="#1d1d1f">55%</text></svg>
-          <div class="ring-name">Assiduité</div><div class="ring-note">Sessions cette semaine</div>
+          <svg width="80" height="80" viewBox="0 0 80 80">
+            <circle cx="40" cy="40" r="32" fill="none" stroke="#e8e8ed" stroke-width="8"/>
+            <circle cx="40" cy="40" r="32" fill="none" stroke="#ff9500" stroke-width="8" stroke-dasharray="201" stroke-dashoffset="90" stroke-linecap="round" transform="rotate(-90 40 40)"/>
+            <text x="40" y="45" text-anchor="middle" font-family="Inter,sans-serif" font-size="15" font-weight="600" fill="#1d1d1f">55%</text>
+          </svg>
+          <div class="ring-name">Assiduité</div>
+          <div class="ring-note">Sessions cette semaine</div>
         </div>
       </div>
     </div>
+
+    <!-- Modules + activité -->
     <div class="grid2-1">
       <div class="card">
         <div class="card-top">
           <div><div class="card-title">Avancement modules</div><div class="card-sub">Progression par module</div></div>
-          <span class="card-link" onclick="goToFormation()">Voir tout →</span>
+          <span class="card-link" onclick="nav('cours', document.querySelectorAll('.nav-item')[1])">Voir tout →</span>
         </div>
-        <div id="prog-list" style="display:flex;flex-direction:column;gap:12px;margin-top:16px;"></div>
+        <div style="display:flex;flex-direction:column;gap:12px;margin-top:16px;">
+          <div id="prog-list"></div>
+        </div>
       </div>
       <div class="card">
-        <div class="card-top" style="margin-bottom:8px;"><div class="card-title">Activité récente</div></div>
+        <div class="card-top" style="margin-bottom:8px;">
+          <div class="card-title">Activité récente</div>
+        </div>
         <div class="act-item"><div class="act-dot g"></div><div><div class="act-text"><strong>Module 04 terminé</strong></div><div class="act-time">Il y a 2 jours</div></div></div>
         <div class="act-item"><div class="act-dot"></div><div><div class="act-text"><strong>Module 05 débuté</strong></div><div class="act-time">Il y a 2 jours</div></div></div>
         <div class="act-item"><div class="act-dot o"></div><div><div class="act-text"><strong>Quiz Macro</strong> · 74%</div><div class="act-time">Il y a 5 jours</div></div></div>
@@ -296,13 +516,17 @@ body { background: var(--off-white); color: var(--text-primary); font-family: 'I
         <div class="act-item"><div class="act-dot"></div><div><div class="act-text"><strong>Bonus Journal</strong> téléchargé</div><div class="act-time">Il y a 1 sem.</div></div></div>
       </div>
     </div>
-  </div>
 
-  <!-- COURS -->
+  </div><!-- /dashboard -->
+
+
+  <!-- ════ COURS ════ -->
   <div class="content" id="page-cours">
+
+    <!-- HERO BANNER -->
     <div style="background:var(--accent);border-radius:var(--radius-lg);padding:34px 28px 28px;text-align:center;">
       <div style="font-size:28px;font-weight:700;color:#fff;letter-spacing:-0.02em;margin-bottom:8px;">🎓 ARK — Formation Macro Trading</div>
-      <div style="font-size:14px;color:rgba(255,255,255,0.65);font-weight:300;max-width:520px;margin:0 auto 22px;">Maîtrise l'analyse macro de zéro jusqu'au niveau institutionnel</div>
+      <div style="font-size:14px;color:rgba(255,255,255,0.65);font-weight:300;max-width:520px;margin:0 auto 22px;">Maîtrise l'analyse macro de zéro jusqu'au niveau institutionnel avec un programme complet et structuré</div>
       <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
         <button class="cours-pill active-pill">🗺 Roadmap</button>
         <button class="cours-pill">▶ Vidéos</button>
@@ -312,53 +536,85 @@ body { background: var(--off-white); color: var(--text-primary); font-family: 'I
         <button class="cours-pill">🏆 Certificat</button>
       </div>
     </div>
+
+    <!-- BANNIÈRE EN COURS -->
     <div style="background:#0a1f44;border-radius:var(--radius-lg);padding:20px 26px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
       <div>
-        <div style="font-size:16px;font-weight:600;color:#fff;">🚀 Module 05 en cours — Construction d'une Thèse</div>
-        <div style="font-size:13px;color:rgba(255,255,255,0.42);font-weight:300;margin-top:3px;">Tu es à 65% · Continue pour débloquer le Module 06</div>
+        <div style="font-size:16px;font-weight:600;color:#fff;display:flex;align-items:center;gap:8px;">🚀 Module 05 en cours — Construction d'une Thèse</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.42);font-weight:300;margin-top:3px;">Tu es à 65% · Chapitre 4/6 · Continue pour débloquer le Module 06</div>
       </div>
-      <button class="cta-btn" style="background:#fff;color:#0a1f44;font-weight:600;" onclick="goToFormation()">▶ Reprendre</button>
+      <button class="cta-btn" style="background:#fff;color:#0a1f44;font-weight:600;">▶ Reprendre</button>
     </div>
+
+    <!-- FORMATIONS DISPONIBLES -->
     <div style="background:var(--white);border-radius:var(--radius-lg);border:1px solid var(--border);padding:26px 24px;">
-      <div style="font-size:20px;font-weight:700;letter-spacing:-0.02em;margin-bottom:4px;">🎓 Formations disponibles</div>
+      <div style="font-size:20px;font-weight:700;letter-spacing:-0.02em;margin-bottom:4px;display:flex;align-items:center;gap:8px;">🎓 Formations disponibles</div>
       <div style="font-size:13px;color:var(--text-tertiary);font-weight:300;margin-bottom:24px;">Accède à ta formation et reprends là où tu t'es arrêté</div>
+
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+
+        <!-- CARD ARK MACRO PROGRAM -->
         <div style="border:1px solid var(--mid-gray);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s;cursor:pointer;" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 10px 28px rgba(0,0,0,0.08)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+          <!-- Image placeholder -->
           <div style="background:linear-gradient(140deg,#c8daff,#ddeaff);height:160px;display:flex;align-items:center;justify-content:center;position:relative;">
             <span style="font-size:48px;">📈</span>
             <span style="position:absolute;top:12px;right:12px;background:rgba(255,255,255,0.85);font-size:11px;font-weight:600;color:var(--text-secondary);padding:3px 10px;border-radius:980px;">Fondateur</span>
-            <span style="position:absolute;bottom:10px;left:12px;font-size:11px;color:var(--accent);font-weight:500;">⏱ 40+ heures</span>
-            <span style="position:absolute;bottom:10px;right:12px;font-size:11px;color:var(--accent);font-weight:500;">🏆 Accès à vie</span>
+            <span style="position:absolute;bottom:10px;left:12px;font-size:11px;color:var(--accent);font-weight:500;display:flex;align-items:center;gap:5px;">⏱ 40+ heures</span>
+            <span style="position:absolute;bottom:10px;right:12px;font-size:11px;color:var(--accent);font-weight:500;display:flex;align-items:center;gap:4px;">🏆 Accès à vie</span>
           </div>
+          <!-- Contenu -->
           <div style="padding:16px 18px 18px;display:flex;flex-direction:column;gap:10px;flex:1;">
-            <div style="font-size:16px;font-weight:700;color:var(--accent);">ARK Macro Program</div>
-            <div style="font-size:13px;color:var(--text-secondary);font-weight:300;line-height:1.6;">Maîtrise l'analyse macroéconomique, construis des thèses solides et prends des positions avec conviction.</div>
-            <div style="display:flex;justify-content:space-between;font-size:12px;margin-top:2px;">
+            <div style="font-size:16px;font-weight:700;color:var(--accent);letter-spacing:-0.01em;">ARK Macro Program</div>
+            <div style="font-size:13px;color:var(--text-secondary);font-weight:300;line-height:1.6;">Maîtrise l'analyse macroéconomique, construis des thèses solides et prends des positions avec conviction — du contexte global jusqu'à l'exécution.</div>
+            <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;margin-top:2px;">
               <span style="font-weight:600;color:var(--accent);">Fondateur</span>
               <span style="color:var(--text-tertiary);font-weight:300;">12 modules</span>
             </div>
-            <button onclick="goToFormation()" style="display:flex;align-items:center;justify-content:center;gap:7px;background:var(--accent);color:#fff;font-size:13px;font-weight:600;padding:11px 18px;border-radius:10px;border:none;cursor:pointer;font-family:inherit;transition:background .15s;" onmouseover="this.style.background='#0077ed'" onmouseout="this.style.background='var(--accent)'">▶ Accéder à la formation</button>
+            <button onclick="goToFormation()" style="display:flex;align-items:center;justify-content:center;gap:7px;background:var(--accent);color:#fff;font-size:13px;font-weight:600;padding:11px 18px;border-radius:10px;border:none;cursor:pointer;margin-top:4px;width:100%;font-family:inherit;transition:background .15s" onmouseover="this.style.background='#0077ed'" onmouseout="this.style.background='var(--accent)'">▶ Accéder à la formation</button>
           </div>
         </div>
-        <div style="border:1px solid var(--mid-gray);border-radius:var(--radius);overflow:hidden;opacity:.55;">
-          <div style="background:linear-gradient(140deg,#e8e8ed,#f5f5f7);height:160px;display:flex;align-items:center;justify-content:center;"><span style="font-size:48px;opacity:.4;">🔒</span></div>
-          <div style="padding:16px 18px 18px;">
-            <div style="font-size:16px;font-weight:700;color:var(--text-tertiary);">Prochaine formation</div>
-            <div style="font-size:13px;color:var(--text-tertiary);font-weight:300;line-height:1.6;margin-top:8px;">Bientôt disponible pour les membres Fondateurs.</div>
+
+        <!-- CARD PLACEHOLDER 2 — À venir -->
+        <div style="border:1px solid var(--mid-gray);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;opacity:.55;">
+          <div style="background:linear-gradient(140deg,#e8e8ed,#f5f5f7);height:160px;display:flex;align-items:center;justify-content:center;position:relative;">
+            <span style="font-size:48px;opacity:.4;">🔒</span>
+            <span style="position:absolute;bottom:10px;right:12px;font-size:11px;color:var(--text-tertiary);font-weight:500;">Bientôt</span>
+          </div>
+          <div style="padding:16px 18px 18px;display:flex;flex-direction:column;gap:10px;flex:1;">
+            <div style="font-size:16px;font-weight:700;color:var(--text-tertiary);letter-spacing:-0.01em;">Prochaine formation</div>
+            <div style="font-size:13px;color:var(--text-tertiary);font-weight:300;line-height:1.6;">Une nouvelle formation ARK arrive prochainement. Réservé aux membres Fondateurs en priorité.</div>
+            <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;margin-top:2px;">
+              <span style="font-weight:600;color:var(--text-tertiary);">À confirmer</span>
+              <span style="color:var(--text-tertiary);font-weight:300;">— modules</span>
+            </div>
+            <button disabled style="display:flex;align-items:center;justify-content:center;gap:7px;background:var(--mid-gray);color:var(--text-tertiary);font-size:13px;font-weight:500;padding:11px 18px;border-radius:10px;border:none;margin-top:4px;cursor:not-allowed;font-family:inherit;">⏳ Bientôt disponible</button>
           </div>
         </div>
-        <div style="border:1px solid var(--mid-gray);border-radius:var(--radius);overflow:hidden;opacity:.55;">
-          <div style="background:linear-gradient(140deg,#e8e8ed,#f5f5f7);height:160px;display:flex;align-items:center;justify-content:center;"><span style="font-size:48px;opacity:.4;">🔒</span></div>
-          <div style="padding:16px 18px 18px;">
-            <div style="font-size:16px;font-weight:700;color:var(--text-tertiary);">Prochaine formation</div>
-            <div style="font-size:13px;color:var(--text-tertiary);font-weight:300;line-height:1.6;margin-top:8px;">Bientôt disponible pour les membres Fondateurs.</div>
+
+        <!-- CARD PLACEHOLDER 3 — À venir -->
+        <div style="border:1px solid var(--mid-gray);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;opacity:.55;">
+          <div style="background:linear-gradient(140deg,#e8e8ed,#f5f5f7);height:160px;display:flex;align-items:center;justify-content:center;position:relative;">
+            <span style="font-size:48px;opacity:.4;">🔒</span>
+            <span style="position:absolute;bottom:10px;right:12px;font-size:11px;color:var(--text-tertiary);font-weight:500;">Bientôt</span>
+          </div>
+          <div style="padding:16px 18px 18px;display:flex;flex-direction:column;gap:10px;flex:1;">
+            <div style="font-size:16px;font-weight:700;color:var(--text-tertiary);letter-spacing:-0.01em;">Prochaine formation</div>
+            <div style="font-size:13px;color:var(--text-tertiary);font-weight:300;line-height:1.6;">Une nouvelle formation ARK arrive prochainement. Réservé aux membres Fondateurs en priorité.</div>
+            <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;margin-top:2px;">
+              <span style="font-weight:600;color:var(--text-tertiary);">À confirmer</span>
+              <span style="color:var(--text-tertiary);font-weight:300;">— modules</span>
+            </div>
+            <button disabled style="display:flex;align-items:center;justify-content:center;gap:7px;background:var(--mid-gray);color:var(--text-tertiary);font-size:13px;font-weight:500;padding:11px 18px;border-radius:10px;border:none;margin-top:4px;cursor:not-allowed;font-family:inherit;">⏳ Bientôt disponible</button>
           </div>
         </div>
+
       </div>
     </div>
-  </div>
 
-  <!-- RÉVISION -->
+  </div><!-- /cours -->
+
+
+  <!-- ════ RÉVISION ════ -->
   <div class="content" id="page-revision">
     <div class="page-header">
       <div><div class="page-welcome">Révision</div><div class="page-welcome-sub">Quiz · Flashcards · Résumés</div></div>
@@ -405,9 +661,10 @@ body { background: var(--off-white); color: var(--text-primary); font-family: 'I
         </div>
       </div>
     </div>
-  </div>
+  </div><!-- /revision -->
 
-  <!-- BONUS -->
+
+  <!-- ════ BONUS ════ -->
   <div class="content" id="page-bonus">
     <div class="page-header">
       <div><div class="page-welcome">Bonus & Ressources</div><div class="page-welcome-sub">Contenu exclusif inclus dans ton accès Fondateur</div></div>
@@ -420,9 +677,10 @@ body { background: var(--off-white); color: var(--text-primary); font-family: 'I
       <div class="bonus-card locked"><span class="badge lock">🔒 Verrouillé</span><div class="bonus-ico">📚</div><div class="bonus-title">Bibliothèque ARK</div><div class="bonus-desc">12 lectures fondamentales avec résumés. Dispo à partir du module 6.</div></div>
       <div class="bonus-card locked"><span class="badge lock">🔒 Verrouillé</span><div class="bonus-ico">⚡</div><div class="bonus-title">Live Trading — Replay</div><div class="bonus-desc">Session live avec analyse en temps réel d'une thèse macro complète.</div></div>
     </div>
-  </div>
+  </div><!-- /bonus -->
 
-  <!-- RÉGLAGES -->
+
+  <!-- ════ RÉGLAGES ════ -->
   <div class="content" id="page-reglages">
     <div class="page-header">
       <div><div class="page-welcome">Réglages</div><div class="page-welcome-sub">Préférences et informations de compte</div></div>
@@ -442,23 +700,17 @@ body { background: var(--off-white); color: var(--text-primary); font-family: 'I
           <div class="set-row"><div><div class="set-name">Accès</div><div class="set-desc">Fondateur · Accès à vie</div></div><span style="font-size:11px;font-weight:600;color:var(--green);background:rgba(52,199,89,0.1);padding:4px 10px;border-radius:980px;">Actif</span></div>
           <div class="set-row"><div><div class="set-name">Membre depuis</div><div class="set-desc">Mars 2026</div></div></div>
         </div>
-
         <div class="card">
           <div class="card-title" style="margin-bottom:14px;">Support</div>
           <div class="set-row"><div><div class="set-name">Contacter ARK</div><div class="set-desc">Une question sur la formation ?</div></div><button class="sml-btn">Email →</button></div>
           <div class="set-row"><div><div class="set-name">Communauté Skool</div><div class="set-desc">Groupe privé des membres</div></div><button class="sml-btn">Rejoindre →</button></div>
-          <div class="set-row" style="border-bottom:none;padding-top:18px;margin-top:4px;">
-            <button onclick="logout()"
-              style="width:100%;padding:10px;background:rgba(255,59,48,0.08);color:#d93025;font-size:13px;font-weight:600;border:1px solid rgba(255,59,48,0.2);border-radius:980px;cursor:pointer;font-family:inherit;transition:all .2s;"
-              onmouseover="this.style.background='rgba(255,59,48,0.15)'"
-              onmouseout="this.style.background='rgba(255,59,48,0.08)'">
-              Se déconnecter
-            </button>
+          <div class="set-row" style="border-bottom:none;padding-top:18px;">
+            <button onclick="logout()" style="width:100%;padding:10px;background:rgba(255,59,48,0.08);color:#d93025;font-size:13px;font-weight:600;border:1px solid rgba(255,59,48,0.2);border-radius:980px;cursor:pointer;font-family:inherit;transition:all .2s" onmouseover="this.style.background='rgba(255,59,48,0.15)'" onmouseout="this.style.background='rgba(255,59,48,0.08)'">Se déconnecter</button>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </div><!-- /reglages -->
 
   <!-- DEVIENS MEMBRE -->
   <div class="content" id="page-membre">
@@ -471,21 +723,41 @@ body { background: var(--off-white); color: var(--text-primary); font-family: 'I
     <div class="card" style="flex:1;display:flex;flex-direction:column;">
       <div class="card-title" style="margin-bottom:4px;">🔑 Code d'accès</div>
       <div class="card-sub" style="margin-bottom:20px;">Débloque l'accès à la formation complète</div>
-      <div id="acces-content" style="flex:1;display:flex;flex-direction:column;">
-        <div style="font-size:13px;color:var(--text-secondary);font-weight:300;">Chargement…</div>
+      <div id="acces-content" style="flex:1;">
+        <div style="font-size:13px;color:var(--text-secondary);">Chargement…</div>
       </div>
     </div>
   </div><!-- /membre -->
 
+
 </div><!-- /main -->
 
-<script>
-// ── Navigation ──
-async function logout() {
-  await db.auth.signOut();
-  window.location.href = 'login.html';
-}
 
+<script>
+const SUPABASE_URL = 'https://wlwwkqijedhxmwjktqvj.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indsd3drcWlqZWRoeG13amt0cXZqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1NDY0NDcsImV4cCI6MjA5MDEyMjQ0N30.x4nGTPYfLbkPz0tAejhde_RO4Oto5scGSW8H72FwKOU';
+const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+
+let currentUser = null;
+let promoValid = false;
+let promoTimer = null;
+
+const MODULE_NAMES = [
+  "Introduction : Le Cadre de Pensée",
+  "Les Marchés Financiers",
+  "Analyse Macroéconomique",
+  "Analyse des Actifs",
+  "Construction d’une Thèse",
+  "Analyse Technique Appliquée",
+  "Prise de Position",
+  "Gestion du Risque",
+  "Management de Portfolio",
+  "Psychologie & Discipline",
+  "Métriques de Trading",
+  "Fiscalité & Cadre Juridique"
+];
+
+// ── Navigation ──
 function nav(id, el) {
   document.querySelectorAll('.content').forEach(p => p.classList.remove('active'));
   const pg = document.getElementById('page-' + id);
@@ -495,10 +767,12 @@ function nav(id, el) {
   document.getElementById('sidebar').classList.remove('open');
   if (id === 'dashboard') animProgress();
 }
+
 function tabSwitch(btn) {
   btn.closest('.header-tabs').querySelectorAll('.header-tab').forEach(t => t.classList.remove('active'));
   btn.classList.add('active');
 }
+
 function toggleCard(bodyId, chevId) {
   const body = document.getElementById(bodyId);
   const chev = document.getElementById(chevId);
@@ -506,140 +780,50 @@ function toggleCard(bodyId, chevId) {
   body.style.display = hidden ? '' : 'none';
   if (chev) chev.style.transform = hidden ? '' : 'rotate(-90deg)';
 }
-const MODULE_NAMES = ["Introduction : Le Cadre de Pensée", "Les Marchés Financiers", "Analyse Macroéconomique", "Analyse des Actifs", "Construction d"une Thèse", "Analyse Technique Appliquée", "Prise de Position", "Gestion du Risque", "Management de Portfolio", "Psychologie & Discipline", "Métriques de Trading", "Fiscalité & Cadre Juridique"];
 
-function getArkProgress() {
-  try { return JSON.parse(localStorage.getItem('ark_progress')) || { current: 0, done: [] }; }
-  catch(e) { return { current: 0, done: [] }; }
-}
-
-async function loadProgressFromSupabase() {
-  try {
-    const { data } = await db.from('user_progress')
-      .select('current, done').eq('user_id', currentUser.id).single();
-    if (data) {
-      const done = Array.isArray(data.done) ? data.done : [];
-      // Mettre à jour localStorage avec les données serveur
-      localStorage.setItem('ark_progress', JSON.stringify({ current: data.current, done }));
-      return { current: data.current, done };
-    }
-  } catch(e) {}
-  return getArkProgress();
-}
-
-function animProgress() {
-  const progress = getArkProgress();
-  const done = progress.done || [];
-  const current = progress.current || 0;
-  const total = 12;
-  const pct = Math.round((done.length / total) * 100);
-
-  setTimeout(() => {
-    // Barre de progression en haut
-    document.querySelectorAll('.prog-fill').forEach(el => {
-      el.style.width = '0';
-      requestAnimationFrame(() => requestAnimationFrame(() => { el.style.width = el.getAttribute('data-w') || el.style.width; }));
-    });
-    const rf = document.getElementById('rank-fill');
-    if (rf) { rf.style.width = '0'; setTimeout(() => rf.style.width = pct + '%', 80); }
-  }, 60);
-
-  updateDashboard(progress);
-}
-
-function updateDashboard(progress) {
-  const done = progress.done || [];
-  const current = progress.current || 0;
-  const total = 12;
-  const pct = Math.round((done.length / total) * 100);
-  const currentName = MODULE_NAMES[current] || MODULE_NAMES[0];
-  const nextIdx = done.length < total ? (done.includes(current) ? current + 1 : current) : total - 1;
-  const nextName = MODULE_NAMES[Math.min(nextIdx, total - 1)];
-  const padded = n => String(n + 1).padStart(2, '0');
-
-  // ── KPIs ──
-  const kpiProg = document.getElementById('kpi-progression');
-  if (kpiProg) kpiProg.textContent = pct + '%';
-  const kpiMod = document.getElementById('kpi-modules');
-  if (kpiMod) kpiMod.textContent = done.length + ' / ' + total;
-
-  // ── Anneau progression ──
-  const ringPct = document.getElementById('ring-pct-prog');
-  if (ringPct) ringPct.textContent = pct + '%';
-  const ringNote = document.getElementById('ring-note-prog');
-  if (ringNote) ringNote.textContent = done.length + ' / ' + total + ' modules';
-  const ringCircle = document.getElementById('ring-circle-prog');
-  if (ringCircle) {
-    const offset = Math.round(201 - (pct / 100) * 201);
-    ringCircle.setAttribute('stroke-dashoffset', offset);
-  }
-
-  // ── Bandeau CTA ──
-  const ctaTitle = document.getElementById('cta-title');
-  if (ctaTitle) ctaTitle.textContent = '🚀 Module ' + padded(nextIdx) + ' — ' + nextName;
-  const ctaSub = document.getElementById('cta-sub');
-  if (ctaSub) {
-    if (done.length === 0) {
-      ctaSub.textContent = 'Tu n'as pas encore commencé. Lance-toi !';
-    } else if (done.length === total) {
-      ctaSub.textContent = 'Tu as terminé tous les modules. Félicitations !';
-    } else {
-      ctaSub.textContent = done.length + ' module' + (done.length > 1 ? 's' : '') + ' terminé' + (done.length > 1 ? 's' : '') + ' sur ' + total + '.';
-    }
-  }
-
-  // ── Liste modules ──
-  const progList = document.getElementById('prog-list');
-  if (progList) {
-    progList.innerHTML = '';
-    for (let i = 0; i < Math.min(6, total); i++) {
-      const isDone = done.includes(i);
-      const isCur = i === current;
-      const pctMod = isDone ? 100 : (isCur ? 50 : 0);
-      const colorClass = isDone ? 'g' : '';
-      progList.innerHTML += \`
-        <div class="prog-wrap\${isDone ? '' : isCur ? '' : ' '}" style="\${i >= done.length + 1 ? 'opacity:.5;' : ''}">
-          <div class="prog-row"><span>\${padded(i)} · \${MODULE_NAMES[i]}</span><span>\${isDone ? '100' : isCur ? '—' : '0'}%</span></div>
-          <div class="prog-track"><div class="prog-fill \${colorClass}" style="width:\${isDone ? 100 : 0}%"></div></div>
-        </div>\`;
-    }
-  }
-
-  // ── Rang ──
-  const rankLabel = document.getElementById('rank-label');
-  if (rankLabel) {
-    let rang = 'Novice';
-    if (pct >= 80) rang = 'Stratège Macro';
-    else if (pct >= 60) rang = 'Analyste Macro — Niveau III';
-    else if (pct >= 40) rang = 'Analyste Macro — Niveau II';
-    else if (pct >= 20) rang = 'Analyste Macro — Niveau I';
-    else if (pct >= 1) rang = 'Apprenti';
-    rankLabel.textContent = '🎓 ' + rang;
-  }
-  const rankPct = document.getElementById('rank-pct');
-  if (rankPct) rankPct.textContent = pct + '% vers le niveau suivant';
-  const rankFill = document.getElementById('rank-fill');
-  if (rankFill) rankFill.style.width = pct + '%';
+// ── Déconnexion ──
+async function logout() {
+  await db.auth.signOut();
+  window.location.href = 'login.html';
 }
 
 // ── Quiz ──
 let answered = false, score = 2, total = 2, qIdx = 0;
 const QS = [
-  { q: "Qu'est-ce que le 'carry trade' dans le contexte du Forex ?", opts: [{t:"Acheter une devise qui se déprécie rapidement",ok:false},{t:"Emprunter dans une devise à faible taux pour investir dans une devise à taux élevé",ok:true},{t:"Vendre à découvert une paire de devises corrélées",ok:false},{t:"Arbitrer deux marchés obligataires de zones différentes",ok:false}] },
-  { q: "Quel indicateur mesure le rapport entre rendement excédentaire et volatilité ?", opts: [{t:"Le ratio de Calmar",ok:false},{t:"Le win rate",ok:false},{t:"Le ratio de Sharpe",ok:true},{t:"Le maximum drawdown",ok:false}] },
-  { q: "Qu'est-ce qu'un régime de marché 'risk-off' ?", opts: [{t:"Un marché où les actifs risqués surperforment",ok:false},{t:"Une phase où les investisseurs fuient vers les actifs refuges",ok:true},{t:"Volatilité inférieure à 10%",ok:false},{t:"Période de taux d'intérêt négatifs",ok:false}] },
+  { q: "Qu'est-ce que le 'carry trade' dans le contexte du Forex ?", opts: [
+    {t:"Acheter une devise qui se déprécie rapidement",ok:false},
+    {t:"Emprunter dans une devise à faible taux pour investir dans une devise à taux élevé",ok:true},
+    {t:"Vendre à découvert une paire de devises corrélées",ok:false},
+    {t:"Arbitrer deux marchés obligataires de zones différentes",ok:false}
+  ]},
+  { q: "Quel indicateur mesure le rapport entre rendement excédentaire et volatilité ?", opts: [
+    {t:"Le ratio de Calmar",ok:false},
+    {t:"Le win rate",ok:false},
+    {t:"Le ratio de Sharpe",ok:true},
+    {t:"Le maximum drawdown",ok:false}
+  ]},
+  { q: "Qu'est-ce qu'un régime de marché 'risk-off' ?", opts: [
+    {t:"Un marché où les actifs risqués surperforment",ok:false},
+    {t:"Une phase où les investisseurs fuient vers les actifs refuges",ok:true},
+    {t:"Volatilité inférieure à 10%",ok:false},
+    {t:"Période de taux d'intérêt négatifs",ok:false}
+  ]},
 ];
+
 function answer(btn, ok) {
   if (answered) return;
   answered = true;
   if (ok) { btn.classList.add('correct'); score++; }
   else {
     btn.classList.add('wrong');
-    document.querySelectorAll('#quiz-opts .quiz-opt').forEach((b,i) => { if (QS[qIdx].opts[i] && QS[qIdx].opts[i].ok) b.classList.add('correct'); });
+    document.querySelectorAll('#quiz-opts .quiz-opt').forEach((b,i) => {
+      if (QS[qIdx].opts[i] && QS[qIdx].opts[i].ok) b.classList.add('correct');
+    });
   }
   total++;
-  document.getElementById('quiz-score').textContent = `Score : ${score}/${total}`;
+  document.getElementById('quiz-score').textContent = "Score : " + score + "/" + total;
 }
+
 function nextQ() {
   qIdx = (qIdx + 1) % QS.length;
   answered = false;
@@ -657,31 +841,194 @@ function nextQ() {
   });
 }
 
-// ── Supabase ──
-const SUPABASE_URL = 'https://wlwwkqijedhxmwjktqvj.supabase.co';
-const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indsd3drcWlqZWRoeG13amt0cXZqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1NDY0NDcsImV4cCI6MjA5MDEyMjQ0N30.x4nGTPYfLbkPz0tAejhde_RO4Oto5scGSW8H72FwKOU';
-const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+// ── Progression ──
+function getLocalProgress() {
+  try { return JSON.parse(localStorage.getItem('ark_progress')) || { current: 0, done: [] }; }
+  catch(e) { return { current: 0, done: [] }; }
+}
 
-let currentUser = null;
-let promoValid = false;
-let promoTimer = null;
+async function loadProgressFromDB() {
+  try {
+    const { data } = await db.from('user_progress')
+      .select('current, done').eq('user_id', currentUser.id).single();
+    if (data) {
+      const done = Array.isArray(data.done) ? data.done : [];
+      localStorage.setItem('ark_progress', JSON.stringify({ current: data.current, done }));
+      return { current: data.current, done };
+    }
+  } catch(e) {}
+  return getLocalProgress();
+}
 
-window.addEventListener('load', async () => {
-  const { data: { session } } = await db.auth.getSession();
-  if (!session) { window.location.href = 'login.html'; return; }
-  currentUser = session.user;
+function animProgress() {
+  const p = getLocalProgress();
+  updateDashboard(p);
+}
 
-  await loadAccessStatus();
+function updateDashboard(p) {
+  const done = Array.isArray(p.done) ? p.done : [];
+  const current = p.current || 0;
+  const total = 12;
+  const pct = Math.round((done.length / total) * 100);
+  const pad = n => String(n + 1).padStart(2, '0');
 
-  // Charger la progression depuis Supabase
-  const remoteProgress = await loadProgressFromSupabase();
-  animProgress();
+  // KPIs
+  const kpiP = document.getElementById('kpi-progression');
+  if (kpiP) kpiP.textContent = pct + '%';
+  const kpiM = document.getElementById('kpi-modules');
+  if (kpiM) kpiM.textContent = done.length + '/12';
 
-  if (window.location.hash === '#reglages') {
-    window.history.replaceState(null, '', window.location.pathname);
-    nav('reglages', document.getElementById('nav-reglages'));
+  // Anneau
+  const circle = document.getElementById('ring-circle-prog');
+  if (circle) circle.setAttribute('stroke-dashoffset', Math.round(201 - (pct/100)*201));
+  const ringPct = document.getElementById('ring-pct-prog');
+  if (ringPct) ringPct.textContent = pct + '%';
+  const ringNote = document.getElementById('ring-note-prog');
+  if (ringNote) ringNote.textContent = done.length + ' / 12 modules';
+
+  // CTA
+  const nextIdx = Math.min(done.length, total - 1);
+  const ctaTitle = document.getElementById('cta-title');
+  if (ctaTitle) ctaTitle.textContent = '🚀 Module ' + pad(nextIdx) + ' — ' + MODULE_NAMES[nextIdx];
+  const ctaSub = document.getElementById('cta-sub');
+  if (ctaSub) {
+    if (done.length === 0) ctaSub.textContent = "Tu n'as pas encore commencé. Lance-toi !";
+    else if (done.length === total) ctaSub.textContent = "Tu as terminé tous les modules. Félicitations !";
+    else ctaSub.textContent = done.length + " module" + (done.length > 1 ? "s" : "") + " terminé" + (done.length > 1 ? "s" : "") + " sur 12.";
   }
-});
+
+  // Rang
+  const rankLabel = document.getElementById('rank-label');
+  if (rankLabel) {
+    let rang = 'Novice';
+    if (pct >= 80) rang = 'Stratège Macro';
+    else if (pct >= 60) rang = 'Analyste Macro — Niveau III';
+    else if (pct >= 40) rang = 'Analyste Macro — Niveau II';
+    else if (pct >= 20) rang = 'Analyste Macro — Niveau I';
+    else if (pct >= 1) rang = 'Apprenti';
+    rankLabel.textContent = '🎓 ' + rang;
+  }
+  const rankPct = document.getElementById('rank-pct');
+  if (rankPct) rankPct.textContent = pct + '% accompli';
+  const rankFill = document.getElementById('rank-fill');
+  if (rankFill) { rankFill.style.width = '0'; setTimeout(() => rankFill.style.width = pct + '%', 80); }
+
+  // Liste modules
+  const progList = document.getElementById('prog-list');
+  if (progList) {
+    progList.innerHTML = '';
+    progList.style.cssText = 'display:flex;flex-direction:column;gap:12px;margin-top:16px;';
+    for (let i = 0; i < Math.min(6, total); i++) {
+      const isDone = done.includes(i);
+      const div = document.createElement('div');
+      div.className = 'prog-wrap';
+      if (i >= done.length + 1) div.style.opacity = '0.5';
+      const row = document.createElement('div');
+      row.className = 'prog-row';
+      const s1 = document.createElement('span');
+      s1.textContent = pad(i) + ' · ' + MODULE_NAMES[i];
+      const s2 = document.createElement('span');
+      s2.textContent = isDone ? '100%' : '0%';
+      row.appendChild(s1); row.appendChild(s2);
+      const track = document.createElement('div');
+      track.className = 'prog-track';
+      const fill = document.createElement('div');
+      fill.className = isDone ? 'prog-fill g' : 'prog-fill';
+      fill.style.width = isDone ? '100%' : '0%';
+      track.appendChild(fill);
+      div.appendChild(row); div.appendChild(track);
+      progList.appendChild(div);
+    }
+  }
+}
+
+// ── Accès formation ──
+async function loadAccessStatus() {
+  const el = document.getElementById('acces-content');
+  if (!el || !currentUser) return;
+
+  const { data } = await db.from('user_access')
+    .select('created_at').eq('user_id', currentUser.id).eq('active', true).single();
+
+  el.innerHTML = '';
+
+  const badge = document.getElementById('plan-badge');
+
+  if (data) {
+    if (badge) { badge.textContent = 'Fondateur'; badge.className = 'logo-badge paid'; }
+    const date = new Date(data.created_at).toLocaleDateString('fr-FR');
+
+    const row = document.createElement('div');
+    row.className = 'set-row';
+    const left = document.createElement('div');
+    const name = document.createElement('div');
+    name.className = 'set-name';
+    name.textContent = 'Formation complète';
+    const desc = document.createElement('div');
+    desc.className = 'set-desc';
+    desc.textContent = 'Activé le ' + date;
+    left.appendChild(name); left.appendChild(desc);
+    const tag = document.createElement('span');
+    tag.textContent = 'Actif ✓';
+    tag.style.cssText = 'font-size:11px;font-weight:600;color:var(--green);background:rgba(52,199,89,0.1);padding:4px 10px;border-radius:980px;';
+    row.appendChild(left); row.appendChild(tag);
+    el.appendChild(row);
+
+    const btn = document.createElement('button');
+    btn.textContent = 'Accéder à la formation →';
+    btn.style.cssText = 'width:100%;margin-top:14px;padding:10px;background:var(--accent);color:#fff;font-size:13px;font-weight:600;border:none;border-radius:980px;cursor:pointer;font-family:inherit;';
+    btn.onclick = () => window.location.href = 'ark_platform.html';
+    el.appendChild(btn);
+
+  } else {
+    if (badge) { badge.textContent = 'Gratuit'; badge.className = 'logo-badge free'; }
+
+    const desc = document.createElement('div');
+    desc.style.cssText = 'font-size:13px;color:var(--text-secondary);font-weight:300;margin-bottom:16px;line-height:1.5;';
+    desc.textContent = "Tu n'as pas encore accès à la formation. Entre ton code ci-dessous.";
+    el.appendChild(desc);
+
+    const segRow = document.createElement('div');
+    segRow.style.cssText = 'display:flex;align-items:center;gap:8px;margin-bottom:12px;';
+
+    const seg1 = document.createElement('input');
+    seg1.id = 'seg1'; seg1.className = 'promo-seg'; seg1.maxLength = 3; seg1.placeholder = 'XXX';
+    seg1.oninput = () => onSegInput(seg1, 1); seg1.onkeydown = e => onSegKey(e, 1);
+
+    const sep1 = document.createElement('span');
+    sep1.textContent = '—'; sep1.style.cssText = 'color:var(--text-tertiary);font-size:18px;';
+
+    const seg2 = document.createElement('input');
+    seg2.id = 'seg2'; seg2.className = 'promo-seg'; seg2.maxLength = 3; seg2.placeholder = 'XXX';
+    seg2.oninput = () => onSegInput(seg2, 2); seg2.onkeydown = e => onSegKey(e, 2);
+
+    const sep2 = document.createElement('span');
+    sep2.textContent = '—'; sep2.style.cssText = 'color:var(--text-tertiary);font-size:18px;';
+
+    const seg3 = document.createElement('input');
+    seg3.id = 'seg3'; seg3.className = 'promo-seg'; seg3.maxLength = 3; seg3.placeholder = 'XXX';
+    seg3.oninput = () => onSegInput(seg3, 3); seg3.onkeydown = e => onSegKey(e, 3);
+
+    const status = document.createElement('span');
+    status.id = 'code-status'; status.style.cssText = 'font-size:18px;width:24px;text-align:center;flex-shrink:0;';
+
+    segRow.appendChild(seg1); segRow.appendChild(sep1);
+    segRow.appendChild(seg2); segRow.appendChild(sep2);
+    segRow.appendChild(seg3); segRow.appendChild(status);
+    el.appendChild(segRow);
+
+    const btn = document.createElement('button');
+    btn.id = 'activate-btn'; btn.textContent = 'Activer →';
+    btn.style.cssText = 'width:100%;padding:10px;background:var(--accent);color:#fff;font-size:13px;font-weight:600;border:none;border-radius:980px;cursor:pointer;font-family:inherit;';
+    btn.onclick = activateCode;
+    el.appendChild(btn);
+
+    const alertDiv = document.createElement('div');
+    alertDiv.id = 'acces-alert'; alertDiv.style.display = 'none';
+    alertDiv.style.cssText = 'margin-top:10px;padding:10px 14px;border-radius:8px;font-size:12px;line-height:1.5;';
+    el.appendChild(alertDiv);
+  }
+}
 
 async function goToFormation() {
   if (!currentUser) return;
@@ -690,69 +1037,11 @@ async function goToFormation() {
   if (data) {
     window.location.href = 'ark_platform.html';
   } else {
-    nav('reglages', document.getElementById('nav-reglages'));
-    setTimeout(() => {
-      const msg = document.getElementById('acces-msg');
-      if (msg) { msg.style.display = 'block'; msg.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
-      document.getElementById('seg1') && document.getElementById('seg1').focus();
-    }, 150);
+    nav('membre', document.getElementById('nav-membre'));
   }
 }
 
-async function loadAccessStatus() {
-  const el = document.getElementById('acces-content');
-  if (!el || !currentUser) return;
-
-  const { data } = await db.from('user_access')
-    .select('promo_code, created_at')
-    .eq('user_id', currentUser.id)
-    .eq('active', true)
-    .single();
-
-  if (data) {
-    // Badge doré
-    const badge = document.getElementById('plan-badge');
-    if (badge) { badge.textContent = 'Fondateur'; badge.className = 'logo-badge paid'; }
-    const date = new Date(data.created_at).toLocaleDateString('fr-FR');
-    el.innerHTML =
-      '<div class="set-row">' +
-        '<div><div class="set-name">Formation complète</div>' +
-        '<div class="set-desc">Activé le ' + date + '</div></div>' +
-        '<span style="font-size:11px;font-weight:600;color:var(--green);background:rgba(52,199,89,0.1);padding:4px 10px;border-radius:980px;">Actif ✓</span>' +
-      '</div>' +
-      '<button onclick="window.location.href=\'ark_platform.html\'" ' +
-        'style="width:100%;margin-top:14px;padding:10px;background:var(--accent);color:#fff;font-size:13px;font-weight:600;border:none;border-radius:980px;cursor:pointer;font-family:inherit;transition:background .15s" ' +
-        'onmouseover="this.style.background=\'#0077ed\'" onmouseout="this.style.background=\'var(--accent)\'">' +
-        'Accéder à la formation →' +
-      '</button>';
-  } else {
-    // Badge gris
-    const badge = document.getElementById('plan-badge');
-    if (badge) { badge.textContent = 'Gratuit'; badge.className = 'logo-badge free'; }
-    el.innerHTML =
-      '<div id="acces-msg" style="display:none;margin-bottom:14px;padding:10px 14px;background:rgba(255,149,0,0.08);border:1px solid rgba(255,149,0,0.2);border-radius:8px;font-size:13px;color:#b86e00;line-height:1.5;">' +
-        'Entre ton code pour débloquer la formation.' +
-      '</div>' +
-      '<div style="font-size:13px;color:var(--text-secondary);font-weight:300;margin-bottom:16px;line-height:1.5;">' +
-        'Tu n\'as pas encore accès à la formation. Entre ton code ci-dessous.' +
-      '</div>' +
-      '<div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">' +
-        '<input id="seg1" class="promo-seg" type="text" maxlength="3" placeholder="XXX" oninput="onSegInput(this,1)" onkeydown="onSegKey(event,1)">' +
-        '<span style="color:var(--text-tertiary);font-size:18px;font-weight:300;">—</span>' +
-        '<input id="seg2" class="promo-seg" type="text" maxlength="3" placeholder="XXX" oninput="onSegInput(this,2)" onkeydown="onSegKey(event,2)">' +
-        '<span style="color:var(--text-tertiary);font-size:18px;font-weight:300;">—</span>' +
-        '<input id="seg3" class="promo-seg" type="text" maxlength="3" placeholder="XXX" oninput="onSegInput(this,3)" onkeydown="onSegKey(event,3)">' +
-        '<span id="code-status" style="font-size:18px;width:24px;text-align:center;flex-shrink:0;"></span>' +
-      '</div>' +
-      '<button id="activate-btn" onclick="activateCode()" ' +
-        'style="width:100%;padding:10px;background:var(--accent);color:#fff;font-size:13px;font-weight:600;border:none;border-radius:980px;cursor:pointer;font-family:inherit;transition:background .15s" ' +
-        'onmouseover="this.style.background=\'#0077ed\'" onmouseout="this.style.background=\'var(--accent)\'">' +
-        'Activer →' +
-      '</button>' +
-      '<div id="acces-alert" style="display:none;margin-top:10px;padding:10px 14px;border-radius:8px;font-size:12px;line-height:1.5;"></div>';
-  }
-}
-
+// ── Segments code promo ──
 function onSegInput(input, seg) {
   input.value = input.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
   if (input.value.length === 3 && seg < 3) {
@@ -772,11 +1061,11 @@ function checkFullCode() {
   const s1 = (document.getElementById('seg1') || {}).value || '';
   const s2 = (document.getElementById('seg2') || {}).value || '';
   const s3 = (document.getElementById('seg3') || {}).value || '';
-  const status = document.getElementById('code-status');
-  if (!status) return;
+  const statusEl = document.getElementById('code-status');
+  if (!statusEl) return;
 
   if (s1.length === 3 && s2.length === 3 && s3.length === 3) {
-    status.textContent = '…';
+    statusEl.textContent = '…';
     clearTimeout(promoTimer);
     promoTimer = setTimeout(async () => {
       const code = s1 + '-' + s2 + '-' + s3;
@@ -787,11 +1076,11 @@ function checkFullCode() {
         const el = document.getElementById(id);
         if (el) el.style.borderColor = color;
       });
-      status.textContent = ok ? '✓' : '✗';
+      statusEl.textContent = ok ? '✓' : '✗';
     }, 400);
   } else {
     promoValid = false;
-    status.textContent = '';
+    if (statusEl) statusEl.textContent = '';
     ['seg1','seg2','seg3'].forEach(id => {
       const el = document.getElementById(id);
       if (el) el.style.borderColor = 'var(--mid-gray)';
@@ -818,16 +1107,15 @@ async function activateCode() {
   const btn = document.getElementById('activate-btn');
 
   if (!promoValid) {
-    alertEl.textContent = 'Code invalide, expiré ou déjà utilisé.';
-    alertEl.style.display = 'block';
-    alertEl.style.background = 'rgba(255,59,48,.08)';
-    alertEl.style.color = '#d93025';
-    alertEl.style.border = '1px solid rgba(255,59,48,.15)';
+    if (alertEl) {
+      alertEl.textContent = 'Code invalide, expiré ou déjà utilisé.';
+      alertEl.style.display = 'block';
+      alertEl.style.cssText = 'display:block;margin-top:10px;padding:10px 14px;border-radius:8px;font-size:12px;line-height:1.5;background:rgba(255,59,48,.08);color:#d93025;border:1px solid rgba(255,59,48,.15);';
+    }
     return;
   }
 
-  btn.disabled = true;
-  btn.textContent = 'Activation…';
+  if (btn) { btn.disabled = true; btn.textContent = 'Activation…'; }
 
   const { data: promoData } = await db.from('promo_codes')
     .select('id, used_count').eq('code', code).single();
@@ -837,25 +1125,36 @@ async function activateCode() {
   }
 
   const { error } = await db.from('user_access').insert({
-    user_id: currentUser.id,
-    email: currentUser.email,
-    promo_code: code,
-    active: true,
+    user_id: currentUser.id, email: currentUser.email, promo_code: code, active: true,
   });
 
   if (error && error.code !== '23505') {
-    btn.disabled = false;
-    btn.textContent = 'Activer →';
-    alertEl.textContent = 'Erreur : ' + error.message;
-    alertEl.style.display = 'block';
-    alertEl.style.background = 'rgba(255,59,48,.08)';
-    alertEl.style.color = '#d93025';
-    alertEl.style.border = '1px solid rgba(255,59,48,.15)';
+    if (btn) { btn.disabled = false; btn.textContent = 'Activer →'; }
+    if (alertEl) {
+      alertEl.textContent = 'Erreur : ' + error.message;
+      alertEl.style.display = 'block';
+    }
     return;
   }
 
   await loadAccessStatus();
 }
+
+// ── Init ──
+window.addEventListener('load', async () => {
+  const { data: { session } } = await db.auth.getSession();
+  if (!session) { window.location.href = 'login.html'; return; }
+  currentUser = session.user;
+
+  await loadAccessStatus();
+  const progress = await loadProgressFromDB();
+  updateDashboard(progress);
+
+  if (window.location.hash === '#reglages') {
+    window.history.replaceState(null, '', window.location.pathname);
+    nav('reglages', document.getElementById('nav-reglages'));
+  }
+});
 </script>
 </body>
 </html>
