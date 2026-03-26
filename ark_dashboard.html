@@ -242,16 +242,16 @@ body { background: var(--off-white); color: var(--text-primary); font-family: 'I
       </div>
       <div id="perf-body">
         <div class="kpi-trio">
-          <div class="kpi-cell"><div class="kpi-ico">🎯</div><div><div class="kpi-val">74%</div><div class="kpi-lbl">Score moyen révisions</div></div></div>
+          <div class="kpi-cell"><div class="kpi-ico">🎯</div><div><div class="kpi-val" id="kpi-progression">0%</div><div class="kpi-lbl">Progression</div></div></div>
           <div class="kpi-cell"><div class="kpi-ico">📝</div><div><div class="kpi-val">38</div><div class="kpi-lbl">Questions tentées</div></div></div>
-          <div class="kpi-cell"><div class="kpi-ico">🔖</div><div><div class="kpi-val">7</div><div class="kpi-lbl">Chapitres en favoris</div></div></div>
+          <div class="kpi-cell"><div class="kpi-ico">🔖</div><div><div class="kpi-val" id="kpi-modules">0 / 12</div><div class="kpi-lbl">Modules terminés</div></div></div>
         </div>
       </div>
     </div>
     <div class="cta-banner">
       <div>
-        <div class="cta-title">🚀 Module 06 — Analyse Technique Appliquée</div>
-        <div class="cta-sub">Tu as terminé 65% du module 05. Encore un effort pour débloquer la suite.</div>
+        <div class="cta-title" id="cta-title">🚀 Chargement…</div>
+        <div class="cta-sub" id="cta-sub"></div>
       </div>
       <button class="cta-btn" onclick="goToFormation()">▶ Continuer le module 05</button>
     </div>
@@ -260,14 +260,14 @@ body { background: var(--off-white); color: var(--text-primary); font-family: 'I
         <div><div class="card-title">🏆 Rang ARK & Métriques</div><div class="card-sub">Progression dans le programme et indicateurs clés</div></div>
       </div>
       <div class="rank-wrap">
-        <div class="rank-lbl-row"><div class="rank-lbl">🎓 Analyste Macro — Niveau II</div></div>
+        <div class="rank-lbl-row"><div class="rank-lbl" id="rank-label">🎓 Chargement…</div></div>
         <div class="rank-track"><div class="rank-fill" id="rank-fill"></div></div>
-        <div class="rank-ends"><span>Analyste I</span><span>42% vers Niveau III</span><span>Stratège Macro</span></div>
+        <div class="rank-ends"><span>Novice</span><span id="rank-pct">0%</span><span>Stratège Macro</span></div>
       </div>
       <div class="rings-row">
         <div class="ring-cell">
-          <svg width="80" height="80" viewBox="0 0 80 80"><circle cx="40" cy="40" r="32" fill="none" stroke="#e8e8ed" stroke-width="8"/><circle cx="40" cy="40" r="32" fill="none" stroke="#0071e3" stroke-width="8" stroke-dasharray="201" stroke-dashoffset="116" stroke-linecap="round" transform="rotate(-90 40 40)"/><text x="40" y="45" text-anchor="middle" font-family="Inter,sans-serif" font-size="15" font-weight="600" fill="#1d1d1f">42%</text></svg>
-          <div class="ring-name">Progression</div><div class="ring-note">5 / 12 modules</div>
+          <svg width="80" height="80" viewBox="0 0 80 80"><circle cx="40" cy="40" r="32" fill="none" stroke="#e8e8ed" stroke-width="8"/><circle id="ring-circle-prog" cx="40" cy="40" r="32" fill="none" stroke="#0071e3" stroke-width="8" stroke-dasharray="201" stroke-dashoffset="201" stroke-linecap="round" transform="rotate(-90 40 40)"/><text id="ring-pct-prog" x="40" y="45" text-anchor="middle" font-family="Inter,sans-serif" font-size="15" font-weight="600" fill="#1d1d1f">0%</text></svg>
+          <div class="ring-name">Progression</div><div id="ring-note-prog" class="ring-note">0 / 12 modules</div>
         </div>
         <div class="ring-cell">
           <svg width="80" height="80" viewBox="0 0 80 80"><circle cx="40" cy="40" r="32" fill="none" stroke="#e8e8ed" stroke-width="8"/><circle cx="40" cy="40" r="32" fill="none" stroke="#34c759" stroke-width="8" stroke-dasharray="201" stroke-dashoffset="52" stroke-linecap="round" transform="rotate(-90 40 40)"/><text x="40" y="45" text-anchor="middle" font-family="Inter,sans-serif" font-size="15" font-weight="600" fill="#1d1d1f">74%</text></svg>
@@ -285,14 +285,7 @@ body { background: var(--off-white); color: var(--text-primary); font-family: 'I
           <div><div class="card-title">Avancement modules</div><div class="card-sub">Progression par module</div></div>
           <span class="card-link" onclick="goToFormation()">Voir tout →</span>
         </div>
-        <div style="display:flex;flex-direction:column;gap:12px;margin-top:16px;">
-          <div class="prog-wrap"><div class="prog-row"><span>01 · Introduction Macro</span><span>100%</span></div><div class="prog-track"><div class="prog-fill g" style="width:100%"></div></div></div>
-          <div class="prog-wrap"><div class="prog-row"><span>02 · Marchés Financiers</span><span>100%</span></div><div class="prog-track"><div class="prog-fill g" style="width:100%"></div></div></div>
-          <div class="prog-wrap"><div class="prog-row"><span>03 · Analyse Macro</span><span>100%</span></div><div class="prog-track"><div class="prog-fill g" style="width:100%"></div></div></div>
-          <div class="prog-wrap"><div class="prog-row"><span>04 · Analyse des Actifs</span><span>100%</span></div><div class="prog-track"><div class="prog-fill g" style="width:100%"></div></div></div>
-          <div class="prog-wrap"><div class="prog-row"><span>05 · Construction d'une Thèse</span><span>65%</span></div><div class="prog-track"><div class="prog-fill" style="width:65%"></div></div></div>
-          <div class="prog-wrap" style="opacity:.5;"><div class="prog-row"><span>06 · Analyse Technique</span><span>0%</span></div><div class="prog-track"><div class="prog-fill" style="width:0%"></div></div></div>
-        </div>
+        <div id="prog-list" style="display:flex;flex-direction:column;gap:12px;margin-top:16px;"></div>
       </div>
       <div class="card">
         <div class="card-top" style="margin-bottom:8px;"><div class="card-title">Activité récente</div></div>
@@ -513,15 +506,106 @@ function toggleCard(bodyId, chevId) {
   body.style.display = hidden ? '' : 'none';
   if (chev) chev.style.transform = hidden ? '' : 'rotate(-90deg)';
 }
+const MODULE_NAMES = ["Introduction : Le Cadre de Pensée", "Les Marchés Financiers", "Analyse Macroéconomique", "Analyse des Actifs", "Construction d"une Thèse", "Analyse Technique Appliquée", "Prise de Position", "Gestion du Risque", "Management de Portfolio", "Psychologie & Discipline", "Métriques de Trading", "Fiscalité & Cadre Juridique"];
+
+function getArkProgress() {
+  try { return JSON.parse(localStorage.getItem('ark_progress')) || { current: 0, done: [] }; }
+  catch(e) { return { current: 0, done: [] }; }
+}
+
 function animProgress() {
+  const progress = getArkProgress();
+  const done = progress.done || [];
+  const current = progress.current || 0;
+  const total = 12;
+  const pct = Math.round((done.length / total) * 100);
+
   setTimeout(() => {
+    // Barre de progression en haut
     document.querySelectorAll('.prog-fill').forEach(el => {
-      const w = el.style.width; el.style.width = '0';
-      requestAnimationFrame(() => requestAnimationFrame(() => { el.style.width = w; }));
+      el.style.width = '0';
+      requestAnimationFrame(() => requestAnimationFrame(() => { el.style.width = el.getAttribute('data-w') || el.style.width; }));
     });
     const rf = document.getElementById('rank-fill');
-    if (rf) { rf.style.width = '0'; setTimeout(() => rf.style.width = '42%', 80); }
+    if (rf) { rf.style.width = '0'; setTimeout(() => rf.style.width = pct + '%', 80); }
   }, 60);
+
+  updateDashboard(progress);
+}
+
+function updateDashboard(progress) {
+  const done = progress.done || [];
+  const current = progress.current || 0;
+  const total = 12;
+  const pct = Math.round((done.length / total) * 100);
+  const currentName = MODULE_NAMES[current] || MODULE_NAMES[0];
+  const nextIdx = done.length < total ? (done.includes(current) ? current + 1 : current) : total - 1;
+  const nextName = MODULE_NAMES[Math.min(nextIdx, total - 1)];
+  const padded = n => String(n + 1).padStart(2, '0');
+
+  // ── KPIs ──
+  const kpiProg = document.getElementById('kpi-progression');
+  if (kpiProg) kpiProg.textContent = pct + '%';
+  const kpiMod = document.getElementById('kpi-modules');
+  if (kpiMod) kpiMod.textContent = done.length + ' / ' + total;
+
+  // ── Anneau progression ──
+  const ringPct = document.getElementById('ring-pct-prog');
+  if (ringPct) ringPct.textContent = pct + '%';
+  const ringNote = document.getElementById('ring-note-prog');
+  if (ringNote) ringNote.textContent = done.length + ' / ' + total + ' modules';
+  const ringCircle = document.getElementById('ring-circle-prog');
+  if (ringCircle) {
+    const offset = Math.round(201 - (pct / 100) * 201);
+    ringCircle.setAttribute('stroke-dashoffset', offset);
+  }
+
+  // ── Bandeau CTA ──
+  const ctaTitle = document.getElementById('cta-title');
+  if (ctaTitle) ctaTitle.textContent = '🚀 Module ' + padded(nextIdx) + ' — ' + nextName;
+  const ctaSub = document.getElementById('cta-sub');
+  if (ctaSub) {
+    if (done.length === 0) {
+      ctaSub.textContent = 'Tu n'as pas encore commencé. Lance-toi !';
+    } else if (done.length === total) {
+      ctaSub.textContent = 'Tu as terminé tous les modules. Félicitations !';
+    } else {
+      ctaSub.textContent = done.length + ' module' + (done.length > 1 ? 's' : '') + ' terminé' + (done.length > 1 ? 's' : '') + ' sur ' + total + '.';
+    }
+  }
+
+  // ── Liste modules ──
+  const progList = document.getElementById('prog-list');
+  if (progList) {
+    progList.innerHTML = '';
+    for (let i = 0; i < Math.min(6, total); i++) {
+      const isDone = done.includes(i);
+      const isCur = i === current;
+      const pctMod = isDone ? 100 : (isCur ? 50 : 0);
+      const colorClass = isDone ? 'g' : '';
+      progList.innerHTML += \`
+        <div class="prog-wrap\${isDone ? '' : isCur ? '' : ' '}" style="\${i >= done.length + 1 ? 'opacity:.5;' : ''}">
+          <div class="prog-row"><span>\${padded(i)} · \${MODULE_NAMES[i]}</span><span>\${isDone ? '100' : isCur ? '—' : '0'}%</span></div>
+          <div class="prog-track"><div class="prog-fill \${colorClass}" style="width:\${isDone ? 100 : 0}%"></div></div>
+        </div>\`;
+    }
+  }
+
+  // ── Rang ──
+  const rankLabel = document.getElementById('rank-label');
+  if (rankLabel) {
+    let rang = 'Novice';
+    if (pct >= 80) rang = 'Stratège Macro';
+    else if (pct >= 60) rang = 'Analyste Macro — Niveau III';
+    else if (pct >= 40) rang = 'Analyste Macro — Niveau II';
+    else if (pct >= 20) rang = 'Analyste Macro — Niveau I';
+    else if (pct >= 1) rang = 'Apprenti';
+    rankLabel.textContent = '🎓 ' + rang;
+  }
+  const rankPct = document.getElementById('rank-pct');
+  if (rankPct) rankPct.textContent = pct + '% vers le niveau suivant';
+  const rankFill = document.getElementById('rank-fill');
+  if (rankFill) rankFill.style.width = pct + '%';
 }
 
 // ── Quiz ──
