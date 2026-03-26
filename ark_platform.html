@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARK — Programme</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f5f5;
+    --border: rgba(19,18,18,.41);
+    --border-active: rgba(255,255,255,.14);
+    --text-1: #000;
+    --text-2: #59595e;
+    --text-3: #48484c;
+    --accent: #0071e3;
+    --accent-glow: rgba(0,113,227,.18);
+    --accent-soft: rgba(0,113,227,.12);
+    --gold: #c9a84c;
+    --gold-soft: rgba(201,168,76,.1);
+    --sidebar-w: 280px;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;overflow:hidden}
+  body{background:var(--bg);color:var(--text-1);font-family:'DM Sans',-apple-system,sans-serif;font-size:15px;-webkit-font-smoothing:antialiased;display:flex;flex-direction:column}
+
+  /* TOP BAR */
+  .topbar{height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;border-bottom:1px solid var(--border);background:#fcfcfc;backdrop-filter:blur(20px);flex-shrink:0;z-index:50}
+  .topbar-left,.topbar-right{display:flex;align-items:center;gap:12px}
+  .topbar-left{gap:16px}
+  .topbar-logo{font-family:'Times New Roman',serif;font-size:17px;letter-spacing:.2em}
+  .topbar-sep{width:1px;height:16px;background:var(--border)}
+  .topbar-label{font-size:12px;color:var(--text-3);letter-spacing:.02em}
+  .progress-ring-wrap{display:flex;align-items:center;gap:8px}
+  .progress-label{font-size:12px;color:var(--text-2)}
+  .progress-bar{width:80px;height:3px;background:var(--bg);border-radius:2px;overflow:hidden}
+  .progress-fill{height:100%;width:8.33%;background:linear-gradient(90deg,var(--accent),#5ac8fa);border-radius:2px;transition:width .5s ease}
+  .btn-back{font-size:12px;color:var(--text-2);text-decoration:none;display:flex;align-items:center;gap:5px;transition:color .15s}
+  .btn-back:hover{color:var(--text-1)}
+
+  /* LAYOUT */
+  .layout{display:flex;flex:1;overflow:hidden}
+
+  /* SIDEBAR */
+  .sidebar{width:var(--sidebar-w);flex-shrink:0;border-right:1px solid var(--border);background:var(--bg);display:flex;flex-direction:column;overflow:hidden;transition:width .25s ease,opacity .25s ease}
+  .sidebar.collapsed{width:0;opacity:0;border-right:none}
+  .sidebar-header{padding:20px 20px 14px 52px;border-bottom:1px solid var(--border);flex-shrink:0;display:flex;align-items:center}
+  .sidebar-eyebrow{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:4px}
+  .sidebar-title{font-size:14px;font-weight:600}
+  .sidebar-list{overflow-y:auto;flex:1;padding:10px 0}
+  .sidebar-list::-webkit-scrollbar{width:4px}
+  .sidebar-list::-webkit-scrollbar-track{background:transparent}
+  .sidebar-list::-webkit-scrollbar-thumb{background:var(--bg);border-radius:2px}
+
+  .sidebar-item{display:flex;align-items:center;gap:12px;padding:10px 16px;cursor:pointer;transition:background .15s;position:relative}
+  .sidebar-item:hover{background:var(--bg)}
+  .sidebar-item.active{background:var(--accent-soft)}
+  .sidebar-item.active::before{content:'';position:absolute;left:0;top:6px;bottom:6px;width:2px;background:var(--accent);border-radius:1px}
+  .sidebar-item.done .item-index{color:#30d158}
+  .sidebar-item.done .item-index::after{content:'✓';font-size:9px}
+
+  .item-index{font-size:10px;font-weight:600;color:var(--text-3);letter-spacing:.04em;width:22px;flex-shrink:0;transition:color .15s}
+  .sidebar-item.active .item-index{color:var(--accent)}
+  .item-info{flex:1;min-width:0}
+  .item-name{font-size:13px;font-weight:500;color:var(--text-2);line-height:1.3;transition:color .15s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .sidebar-item:hover .item-name,.sidebar-item.active .item-name{color:var(--text-1)}
+  .item-dot{width:6px;height:6px;border-radius:50%;border:1px solid var(--text-3);flex-shrink:0;transition:all .15s}
+  .sidebar-item.active .item-dot{background:var(--accent);border-color:var(--accent)}
+  .sidebar-item.done .item-dot{background:#30d158;border-color:#30d158}
+
+  /* SUBNAV */
+  .sidebar-subnav{display:flex;flex-direction:column;background:rgba(0,113,227,.04);border-left:2px solid rgba(0,113,227,.2);margin:0 0 4px 38px;max-height:0;overflow:hidden;transition:max-height .28s cubic-bezier(.4,0,.2,1),opacity .22s ease;opacity:0}
+  .sidebar-subnav.open{max-height:400px;opacity:1}
+  .sidebar-subitem{font-size:11.5px;color:var(--text-3);padding:6px 14px;cursor:pointer;transition:color .15s,background .15s;line-height:1.4}
+  .sidebar-subitem:hover{color:var(--accent);background:rgba(0,113,227,.06)}
+
+  /* MAIN */
+  .main{flex:1;overflow-y:auto;background:var(--bg);position:relative}
+  .main::-webkit-scrollbar{width:6px}
+  .main::-webkit-scrollbar-track{background:transparent}
+  .main::-webkit-scrollbar-thumb{background:var(--bg);border-radius:3px}
+
+  .module-content{width:100%;padding:48px clamp(24px,5vw,80px) 80px;display:none;animation:fadeIn .3s ease}
+  .module-content.active{display:block}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+  /* MODULE HEADER */
+  .mod-number{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .mod-number::before{content:'';display:inline-block;width:20px;height:1px;background:var(--accent)}
+  .mod-title{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(28px,4vw,44px);font-weight:400;line-height:1.15;letter-spacing:-.01em;margin-bottom:16px}
+  .mod-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:28px}
+  .mod-tag{font-size:11px;font-weight:500;color:var(--accent);background:var(--accent-soft);padding:3px 10px;border-radius:980px;border:1px solid rgba(0,113,227,.15)}
+  .mod-divider{height:1px;background:var(--border);margin:28px 0}
+  .mod-intro{font-size:17px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:36px;font-style:italic;border-left:2px solid var(--accent);padding-left:20px}
+  .mod-section-title{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:16px}
+
+  .mod-objectives{list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:36px}
+  .mod-objectives li{display:flex;align-items:flex-start;gap:12px;font-size:14px;color:var(--text-2);line-height:1.6}
+  .obj-check{width:18px;height:18px;border-radius:50%;border:1px solid var(--border-active);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--text-3)}
+
+  .mod-concepts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:36px}
+  .concept-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px;transition:border-color .2s}
+  .concept-card:hover{border-color:var(--border-active)}
+  .concept-icon{font-size:20px;margin-bottom:8px}
+  .concept-name{font-size:13px;font-weight:600;margin-bottom:4px}
+  .concept-desc{font-size:12px;color:var(--text-2);line-height:1.5;font-weight:300}
+
+  .mod-quote{background:var(--gold-soft);border:1px solid rgba(201,168,76,.15);border-radius:16px;padding:24px 28px;margin-bottom:36px}
+  .mod-quote-text{font-family:'DM Serif Display',Georgia,serif;font-size:18px;line-height:1.6;color:var(--gold);margin-bottom:8px;font-style:italic}
+  .mod-quote-source{font-size:11px;color:var(--text-3);letter-spacing:.05em;text-transform:uppercase}
+
+  /* FIGURES & TABLES */
+  .mod-figure{margin:28px 0;text-align:center}
+  .mod-figure img{max-width:100%;height:auto;border-radius:12px;border:1px solid var(--border);cursor:zoom-in;transition:opacity .2s,transform .2s}
+  .mod-figure img:hover{opacity:.9;transform:scale(1.01)}
+  .mod-figure figcaption{margin-top:10px;font-size:12px;color:var(--text-3);font-style:italic;line-height:1.5}
+
+  /* LIGHTBOX */
+  .lightbox{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:32px;opacity:0;pointer-events:none;transition:opacity .25s ease}
+  .lightbox.open{opacity:1;pointer-events:all}
+  .lightbox-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(4px)}
+  .lightbox-img-wrap{position:relative;z-index:1;max-width:90vw;max-height:88vh;display:flex;flex-direction:column;align-items:center;gap:14px;transform:scale(.94);transition:transform .25s ease}
+  .lightbox.open .lightbox-img-wrap{transform:scale(1)}
+  .lightbox-img-wrap img{max-width:100%;max-height:80vh;height:auto;border-radius:14px;box-shadow:0 32px 80px rgba(0,0,0,.5);display:block}
+  .lightbox-caption{font-size:13px;color:rgba(255,255,255,.65);font-style:italic;text-align:center;max-width:640px;line-height:1.5}
+  .lightbox-close{position:absolute;top:-14px;right:-14px;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s;line-height:1}
+  .lightbox-close:hover{background:rgba(255,255,255,.25)}
+
+  .mod-table-wrap{overflow-x:auto;margin:24px 0;border-radius:12px;border:1px solid var(--border)}
+  .mod-table{width:100%;border-collapse:collapse;font-size:13px}
+  .mod-table th{background:var(--accent-soft);color:var(--accent);font-weight:600;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:10px 14px;text-align:left;border-bottom:1px solid var(--border)}
+  .mod-table td{padding:10px 14px;color:var(--text-2);border-bottom:1px solid var(--border);vertical-align:top;line-height:1.6;font-weight:300}
+  .mod-table tr:last-child td{border-bottom:none}
+  .mod-table td strong{color:var(--text-1);font-weight:600}
+
+  /* MODULE BODY */
+  .mod-body{margin-top:40px}
+  .mod-body h2{font-family:'DM Serif Display',Georgia,serif;font-size:22px;font-weight:400;margin:44px 0 14px;padding-top:12px;border-top:1px solid var(--border)}
+  .mod-body h3{font-size:15px;font-weight:600;margin:28px 0 10px}
+  .mod-body p{font-size:15px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:16px}
+  .mod-body ul,.mod-body ol{margin:0 0 20px;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+  .mod-body li{position:relative;padding-left:22px;font-size:14px;font-weight:300;color:var(--text-2);line-height:1.7;overflow-wrap:break-word}
+  .mod-body li::before{content:'—';color:var(--accent);font-size:13px;position:absolute;left:0;top:0;line-height:1.7}
+  .mod-body li strong,.mod-body strong{color:var(--text-1);font-weight:600}
+  .mod-body blockquote{border-left:2px solid var(--accent);padding:10px 0 10px 20px;margin:20px 0;font-style:italic;font-weight:300;color:var(--text-2);font-size:14px;line-height:1.7}
+
+  .formula-box,.warning-box,.summary-box{border-radius:12px;padding:16px 20px;margin:20px 0;font-size:14px;line-height:1.7}
+  .formula-box{background:var(--accent-soft);border:1px solid rgba(0,113,227,.15);font-weight:500;font-style:italic}
+  .warning-box{background:rgba(255,149,0,.08);border:1px solid rgba(255,149,0,.2);color:var(--text-2)}
+  .summary-box{background:var(--gold-soft);border:1px solid rgba(201,168,76,.15);font-style:italic;color:var(--text-2)}
+
+  .profile-block{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:20px;margin:16px 0}
+  .profile-block h3{margin-top:0}
+  .profile-meta{font-size:12px;color:var(--accent);font-style:italic;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+
+  .mod-locked{background:var(--bg);border:1px solid var(--border);border-radius:20px;padding:48px 32px;text-align:center;margin-top:32px}
+  .lock-icon{font-size:32px;margin-bottom:16px;opacity:.5}
+  .lock-title{font-size:18px;font-weight:600;margin-bottom:8px;color:var(--text-2)}
+  .lock-desc{font-size:14px;color:var(--text-3);font-weight:300;line-height:1.6;max-width:320px;margin:0 auto 24px}
+  .lock-cta{display:inline-block;background:var(--accent);color:#fff;font-size:14px;font-weight:500;padding:12px 24px;border-radius:980px;text-decoration:none;transition:all .2s}
+  .lock-cta:hover{background:#0077ed;transform:scale(1.02)}
+
+  /* NAV */
+  .mod-nav{display:flex;justify-content:space-between;align-items:center;margin-top:52px;padding-top:24px;border-top:1px solid var(--border);gap:12px}
+  .mod-nav-btn{display:flex;align-items:center;gap:8px;padding:10px 16px;border:1px solid var(--border);border-radius:10px;background:var(--bg);color:var(--text-2);cursor:pointer;font-size:13px;font-weight:500;transition:all .15s;font-family:inherit}
+  .mod-nav-btn:hover{border-color:var(--border-active);color:var(--text-1)}
+  .mod-nav-btn:disabled{opacity:.3;cursor:default}
+  .mod-nav-label{font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em}
+
+  /* WELCOME */
+  .welcome-screen{width:100%;padding:64px clamp(24px,5vw,80px) 80px;animation:fadeIn .4s ease}
+  .welcome-kicker{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:16px}
+  .welcome-title{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(32px,5vw,52px);line-height:1.1;margin-bottom:20px}
+  .welcome-sub{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:40px;max-width:520px}
+  .welcome-stats{display:flex;gap:32px;margin-bottom:48px;flex-wrap:wrap}
+  .wstat-val{font-size:28px;font-weight:600;letter-spacing:-.02em;line-height:1;margin-bottom:4px}
+  .wstat-label{font-size:12px;color:var(--text-3);font-weight:300}
+  .welcome-start-btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;font-size:15px;font-weight:500;padding:14px 24px;border-radius:12px;cursor:pointer;border:none;font-family:inherit;transition:all .2s}
+  .welcome-start-btn:hover{background:#0077ed;transform:translateY(-1px);box-shadow:0 8px 24px rgba(0,113,227,.3)}
+
+  /* SIDEBAR TOGGLE */
+  .sidebar-toggle{position:fixed;top:77px;left:16px;z-index:50;display:flex;flex-direction:column;justify-content:center;gap:5px;width:22px;height:22px;padding:0;border:none;background:none;cursor:pointer}
+  .toggle-bar{display:block;width:100%;height:1.5px;background:var(--text-3);border-radius:2px;transition:all .2s ease;transform-origin:center}
+  .sidebar-toggle:hover .toggle-bar{background:var(--text-1)}
+  .sidebar-toggle.open .toggle-bar:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+  .sidebar-toggle.open .toggle-bar:nth-child(2){opacity:0;transform:scaleX(0)}
+  .sidebar-toggle.open .toggle-bar:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+
+  @media(max-width:768px){
+    .sidebar{position:fixed;left:0;top:52px;bottom:0;z-index:40;transform:translateX(-100%);transition:transform .3s ease;box-shadow:4px 0 24px rgba(0,0,0,.15);width:var(--sidebar-w)!important;opacity:1!important}
+    .sidebar.open{transform:translateX(0)}
+    .sidebar.collapsed{transform:translateX(-100%)}
+    .module-content,.welcome-screen{padding:32px 20px 60px}
+    .progress-ring-wrap{display:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-left">
+    <div class="topbar-logo">ARK</div>
+    <div class="topbar-sep"></div>
+    <div class="topbar-label">Investor Program</div>
+  </div>
+  <div class="topbar-right">
+    <div class="progress-ring-wrap">
+      <div class="progress-label" id="progressLabel">Module 1 / 12</div>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+    <a href="ark_dashboard.html" class="btn-back">← Retour</a>
+  </div>
+</div>
+
+<div class="layout">
+  <button class="sidebar-toggle" id="sidebarToggle" onclick="toggleSidebar()" title="Afficher/masquer le menu">
+    <span class="toggle-bar"></span>
+    <span class="toggle-bar"></span>
+    <span class="toggle-bar"></span>
+  </button>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-header-text">
+        <div class="sidebar-eyebrow">Programme</div>
+        <div class="sidebar-title">12 Modules</div>
+      </div>
+    </div>
+    <div class="sidebar-list" id="sidebarList"></div>
+  </aside>
+
+  <main class="main" id="mainContent">
+    <div class="welcome-screen" id="welcomeScreen">
+      <div class="welcome-kicker">Bienvenue dans ARK</div>
+      <h1 class="welcome-title">Reprends le<br>contrôle.</h1>
+      <p class="welcome-sub">Ton programme complet est ici. 12 modules pour comprendre les marchés, construire des thèses, gérer le risque et penser en investisseur indépendant.</p>
+      <button class="welcome-start-btn" onclick="selectModule(0)">Commencer le Module 01 →</button>
+    </div>
+    <div id="modulePages"></div>
+  </main>
+</div>
+
+
+<script src="modules/module01.js"></script>
+<script src="modules/module02.js"></script>
+<script src="modules/module03.js"></script>
+<script src="modules/module04.js"></script>
+<script src="modules/module05.js"></script>
+<script src="modules/module06.js"></script>
+<script src="modules/module07.js"></script>
+<script src="modules/module08.js"></script>
+<script src="modules/module09.js"></script>
+<script src="modules/module10.js"></script>
+<script src="modules/module11.js"></script>
+<script src="modules/module12.js"></script>
+<script>
+const modules = [
+  module01, module02, module03, module04,
+  module05, module06, module07, module08,
+  module09, module10, module11, module12,
+];
+let currentModule = null;
+
+function buildSidebar() {
+  const list = document.getElementById('sidebarList');
+  list.innerHTML = modules.map((m, i) => `
+    <div class="sidebar-item" id="sidebarItem${i}" onclick="selectModule(${i})">
+      <div class="item-index">${String(m.id).padStart(2, '0')}</div>
+      <div class="item-info">
+        <div class="item-name">${m.title}</div>
+      </div>
+      <div class="item-dot"></div>
+    </div>
+    <div class="sidebar-subnav" id="subnav${i}"></div>
+  `).join('');
+}
+
+function buildSubnav(moduleIndex) {
+  const subnav = document.getElementById(`subnav${moduleIndex}`);
+  if (!subnav) return;
+  const page = document.getElementById(`modulePage${moduleIndex}`);
+  if (!page) return;
+  page.querySelectorAll('.mod-body h2').forEach((h, j) => {
+    if (!h.id) h.id = `mod${moduleIndex}-section-${j}`;
+    const item = document.createElement('div');
+    item.className = 'sidebar-subitem';
+    item.textContent = h.textContent;
+    item.onclick = (e) => scrollToSection(h.id, moduleIndex, e);
+    subnav.appendChild(item);
+  });
+}
+
+function buildModules() {
+  const container = document.getElementById('modulePages');
+  container.innerHTML = modules.map((m, i) => `
+    <div class="module-content" id="modulePage${i}">
+      <div class="mod-number">Module ${String(m.id).padStart(2, '0')}</div>
+      <h1 class="mod-title">${m.title}</h1>
+      <div class="mod-tags">${m.tags.map(t => `<span class="mod-tag">${t}</span>`).join('')}</div>
+
+      <p class="mod-intro" id="mod${i}-intro">${m.intro}</p>
+
+      <div class="mod-section-title" id="mod${i}-objectives">Ce que tu vas apprendre</div>
+      <ul class="mod-objectives">
+        ${m.objectives.map(o => `<li><div class="obj-check">○</div><span>${o}</span></li>`).join('')}
+      </ul>
+
+      <div class="mod-divider"></div>
+
+      <div class="mod-section-title" id="mod${i}-concepts">Concepts clés</div>
+      <div class="mod-concepts-grid">
+        ${m.concepts.map(c => `
+          <div class="concept-card">
+            <div class="concept-icon">${c.icon}</div>
+            <div class="concept-name">${c.name}</div>
+            <div class="concept-desc">${c.desc}</div>
+          </div>
+        `).join('')}
+      </div>
+
+      <div class="mod-quote" id="mod${i}-quote">
+        <div class="mod-quote-text">"${m.quote.text}"</div>
+        <div class="mod-quote-source">— ${m.quote.source}</div>
+      </div>
+
+      ${m.body ? `<div class="mod-body">${m.body}</div>` : ''}
+
+      <div class="mod-nav">
+        <button class="mod-nav-btn" onclick="selectModule(${i - 1})" ${i === 0 ? 'disabled' : ''}>
+          ← Précédent
+        </button>
+        <span class="mod-nav-label">${i + 1} / ${modules.length}</span>
+        <button class="mod-nav-btn" onclick="selectModule(${i + 1}, true)" ${i === modules.length - 1 ? 'disabled' : ''}>
+          Suivant →
+        </button>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ── localStorage helpers ──
+function getProgress() {
+  try { return JSON.parse(localStorage.getItem('ark_progress')) || { current: 0, done: [] }; }
+  catch(e) { return { current: 0, done: [] }; }
+}
+function saveProgress(current, done) {
+  localStorage.setItem('ark_progress', JSON.stringify({ current, done }));
+}
+function refreshSidebarDone(done) {
+  document.querySelectorAll('.sidebar-item').forEach((el, i) => {
+    el.classList.toggle('done', done.includes(i));
+  });
+}
+
+function selectModule(index, markPreviousDone = false) {
+  if (index < 0 || index >= modules.length) return;
+
+  const progress = getProgress();
+
+  // Quand on clique "Suivant →", marquer le module précédent comme terminé
+  if (markPreviousDone && currentModule !== null && !progress.done.includes(currentModule)) {
+    progress.done.push(currentModule);
+  }
+  progress.current = index;
+  saveProgress(index, progress.done);
+
+  // Hide welcome
+  document.getElementById('welcomeScreen').style.display = 'none';
+
+  // Update sidebar active + done
+  document.querySelectorAll('.sidebar-item').forEach((el, i) => {
+    el.classList.toggle('active', i === index);
+  });
+  refreshSidebarDone(progress.done);
+
+  // Update pages
+  document.querySelectorAll('.module-content').forEach((el, i) => {
+    el.classList.toggle('active', i === index);
+  });
+
+  // Update progress bar (basé sur modules terminés)
+  const completed = progress.done.length;
+  const fill = Math.round((completed / modules.length) * 100);
+  document.getElementById('progressFill').style.width = fill + '%';
+  document.getElementById('progressLabel').textContent = `Module ${index + 1} / ${modules.length}`;
+
+  const wasAlreadyActive = currentModule === index;
+  currentModule = index;
+
+  // Toggle subnav : ferme si on reclique le même module, ouvre sinon
+  document.querySelectorAll('.sidebar-subnav').forEach((el, i) => {
+    if (i === index) {
+      if (wasAlreadyActive) {
+        el.classList.toggle('open'); // reclique → toggle
+      } else {
+        el.classList.add('open');    // nouveau module → toujours ouvrir
+      }
+    } else {
+      el.classList.remove('open');
+    }
+  });
+
+  // Scroll content to top
+  document.getElementById('mainContent').scrollTo({ top: 0, behavior: 'smooth' });
+
+  // Close sidebar on mobile
+  if (window.innerWidth <= 768) {
+    document.getElementById('sidebar').classList.remove('open');
+  }
+}
+
+function scrollToSection(sectionId, moduleIndex, event) {
+  event.stopPropagation();
+  const needSwitch = currentModule !== moduleIndex;
+  if (needSwitch) selectModule(moduleIndex);
+  setTimeout(() => {
+    const el = document.getElementById(sectionId);
+    if (el) {
+      const main = document.getElementById('mainContent');
+      const offset = el.getBoundingClientRect().top - main.getBoundingClientRect().top + main.scrollTop - 24;
+      main.scrollTo({ top: offset, behavior: 'smooth' });
+    }
+  }, needSwitch ? 350 : 0);
+}
+
+function toggleSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  const btn = document.getElementById('sidebarToggle');
+  if (window.innerWidth <= 768) {
+    sidebar.classList.toggle('open');
+  } else {
+    const isCollapsed = sidebar.classList.toggle('collapsed');
+    btn.classList.toggle('open', !isCollapsed);
+  }
+}
+
+// Check URL hash for direct module navigation, fallback to localStorage
+function checkHash() {
+  const hash = window.location.hash;
+  const matchSpecific = hash.match(/^#module-(\d+)$/);
+  if (matchSpecific) {
+    const moduleNum = parseInt(matchSpecific[1], 10);
+    const idx = modules.findIndex(m => m.id === moduleNum);
+    if (idx !== -1) { selectModule(idx); return; }
+  }
+  if (hash === '#module') { selectModule(0); return; }
+  // Fallback : reprendre là où on s'est arrêté
+  const progress = getProgress();
+  if (progress.current > 0 || progress.done.length > 0) {
+    selectModule(progress.current);
+  }
+}
+
+buildSidebar();
+buildModules();
+modules.forEach((m, i) => buildSubnav(i));
+
+// ── Lightbox ──
+document.body.insertAdjacentHTML('beforeend', `
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+    <div class="lightbox-backdrop" id="lightboxBackdrop"></div>
+    <div class="lightbox-img-wrap">
+      <button class="lightbox-close" id="lightboxClose" aria-label="Fermer">✕</button>
+      <img id="lightboxImg" src="" alt="" />
+      <div class="lightbox-caption" id="lightboxCaption"></div>
+    </div>
+  </div>
+`);
+
+function openLightbox(src, caption) {
+  const lb = document.getElementById('lightbox');
+  document.getElementById('lightboxImg').src = src;
+  document.getElementById('lightboxCaption').textContent = caption;
+  lb.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+document.getElementById('lightboxBackdrop').addEventListener('click', closeLightbox);
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+// Attach click handlers to all mod-figure images (including dynamically added ones)
+document.addEventListener('click', e => {
+  const img = e.target.closest('.mod-figure img');
+  if (!img) return;
+  const caption = img.closest('.mod-figure')?.querySelector('figcaption')?.textContent || '';
+  openLightbox(img.src, caption);
+});
+
+checkHash();
+</script>
+</body>
+</html>
