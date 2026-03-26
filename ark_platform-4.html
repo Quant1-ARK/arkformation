@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARK — Programme</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f5f5;
+    --surface: #f5f5f5;
+    --surface-2: #f5f5f5;
+    --surface-3: #f5f5f5;
+    --border: rgba(19, 18, 18, 0.411);
+    --border-active: rgba(255,255,255,0.14);
+    --text-primary: #000000;
+    --text-secondary: #59595e;
+    --text-tertiary: #48484c;
+    --accent: #0071e3;
+    --accent-glow: rgba(0,113,227,0.18);
+    --accent-soft: rgba(0,113,227,0.12);
+    --gold: #c9a84c;
+    --gold-soft: rgba(201,168,76,0.1);
+    --sidebar-w: 280px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; overflow: hidden; }
+
+  body {
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: 'DM Sans', -apple-system, sans-serif;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── TOP BAR ── */
+  .topbar {
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    border-bottom: 1px solid var(--border);
+    background: rgb(252, 252, 252);
+    backdrop-filter: blur(20px);
+    flex-shrink: 0;
+    z-index: 50;
+  }
+  .topbar-left { display: flex; align-items: center; gap: 16px; }
+  .topbar-logo {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 17px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    color: var(--text-primary);
+  }
+  .topbar-sep { width: 1px; height: 16px; background: var(--border); }
+  .topbar-label { font-size: 12px; color: var(--text-tertiary); letter-spacing: 0.02em; }
+
+  .topbar-right { display: flex; align-items: center; gap: 12px; }
+  .progress-ring-wrap { display: flex; align-items: center; gap: 8px; }
+  .progress-label { font-size: 12px; color: var(--text-secondary); }
+  .progress-bar { width: 80px; height: 3px; background: var(--surface-3); border-radius: 2px; overflow: hidden; }
+  .progress-fill { height: 100%; width: 8.33%; background: linear-gradient(90deg, var(--accent), #5ac8fa); border-radius: 2px; transition: width 0.5s ease; }
+
+  .btn-back {
+    font-size: 12px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: color .15s;
+  }
+  .btn-back:hover { color: var(--text-primary); }
+
+  /* ── LAYOUT ── */
+  .layout {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    width: var(--sidebar-w);
+    flex-shrink: 0;
+    border-right: 1px solid var(--border);
+    background: var(--surface);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: width .25s ease, opacity .25s ease;
+  }
+  .sidebar.collapsed {
+    width: 0;
+    opacity: 0;
+    border-right: none;
+  }
+  .sidebar-header {
+    padding: 20px 20px 14px 52px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+  }
+  .sidebar-header-text { flex: 1; }
+  .sidebar-eyebrow { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 4px; }
+  .sidebar-title { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+
+  .sidebar-list { overflow-y: auto; flex: 1; padding: 10px 0; }
+  .sidebar-list::-webkit-scrollbar { width: 4px; }
+  .sidebar-list::-webkit-scrollbar-track { background: transparent; }
+  .sidebar-list::-webkit-scrollbar-thumb { background: var(--surface-3); border-radius: 2px; }
+
+  .sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    cursor: pointer;
+    transition: background .15s;
+    position: relative;
+    border-radius: 0;
+  }
+  .sidebar-item:hover { background: var(--surface-2); }
+  .sidebar-item.active { background: var(--accent-soft); }
+  .sidebar-item.active::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 6px; bottom: 6px;
+    width: 2px;
+    background: var(--accent);
+    border-radius: 1px;
+  }
+  .sidebar-item.done .item-index { color: #30d158; }
+  .sidebar-item.done .item-index::after { content: '✓'; font-size: 9px; }
+
+  .item-index {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-tertiary);
+    letter-spacing: 0.04em;
+    width: 22px;
+    flex-shrink: 0;
+    transition: color .15s;
+  }
+  .sidebar-item.active .item-index { color: var(--accent); }
+
+  .item-info { flex: 1; min-width: 0; }
+  .item-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    line-height: 1.3;
+    transition: color .15s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .sidebar-item:hover .item-name,
+  .sidebar-item.active .item-name { color: var(--text-primary); }
+
+  .item-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    border: 1px solid var(--text-tertiary);
+    flex-shrink: 0;
+    transition: all .15s;
+  }
+  .sidebar-item.active .item-dot { background: var(--accent); border-color: var(--accent); }
+  .sidebar-item.done .item-dot { background: #30d158; border-color: #30d158; }
+
+  /* ── SIDEBAR SUBSECTIONS ── */
+  .sidebar-subnav {
+    display: none;
+    flex-direction: column;
+    background: rgba(0,113,227,0.04);
+    border-left: 2px solid rgba(0,113,227,0.2);
+    margin: 0 0 4px 38px;
+  }
+  .sidebar-subnav.open { display: flex; }
+  .sidebar-subitem {
+    font-size: 11.5px;
+    color: var(--text-tertiary);
+    padding: 6px 14px;
+    cursor: pointer;
+    transition: color .15s, background .15s;
+    line-height: 1.4;
+    border-radius: 0;
+  }
+  .sidebar-subitem:hover { color: var(--accent); background: rgba(0,113,227,0.06); }
+
+  /* ── MAIN CONTENT ── */
+  .main {
+    flex: 1;
+    overflow-y: auto;
+    background: var(--bg);
+    position: relative;
+  }
+  .main::-webkit-scrollbar { width: 6px; }
+  .main::-webkit-scrollbar-track { background: transparent; }
+  .main::-webkit-scrollbar-thumb { background: var(--surface-3); border-radius: 3px; }
+
+  .module-content {
+    width: 100%;
+    padding: 48px clamp(24px, 5vw, 80px) 80px;
+    display: none;
+    animation: fadeIn .3s ease;
+  }
+  .module-content.active { display: block; }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ── MODULE HEADER ── */
+  .mod-number {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .mod-number::before {
+    content: '';
+    display: inline-block;
+    width: 20px; height: 1px;
+    background: var(--accent);
+  }
+
+  .mod-title {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+  }
+
+  .mod-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 28px; }
+  .mod-tag {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--accent);
+    background: var(--accent-soft);
+    padding: 3px 10px;
+    border-radius: 980px;
+    border: 1px solid rgba(0,113,227,0.15);
+  }
+
+  .mod-divider { height: 1px; background: var(--border); margin: 28px 0; }
+
+  .mod-intro {
+    font-size: 17px;
+    font-weight: 300;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 36px;
+    font-style: italic;
+    border-left: 2px solid var(--accent);
+    padding-left: 20px;
+  }
+
+  .mod-section-title {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 16px;
+  }
+
+  .mod-objectives { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 36px; }
+  .mod-objectives li {
+    display: flex; align-items: flex-start; gap: 12px;
+    font-size: 14px; color: var(--text-secondary); line-height: 1.6;
+  }
+  .obj-check {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    border: 1px solid var(--border-active);
+    flex-shrink: 0;
+    margin-top: 2px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px;
+    color: var(--text-tertiary);
+  }
+
+  .mod-concepts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+    margin-bottom: 36px;
+  }
+  .concept-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    transition: border-color .2s, background .2s;
+  }
+  .concept-card:hover { border-color: var(--border-active); background: var(--surface-2); }
+  .concept-icon { font-size: 20px; margin-bottom: 8px; }
+  .concept-name { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+  .concept-desc { font-size: 12px; color: var(--text-secondary); line-height: 1.5; font-weight: 300; }
+
+  .mod-quote {
+    background: var(--gold-soft);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 16px;
+    padding: 24px 28px;
+    margin-bottom: 36px;
+  }
+  .mod-quote-text { font-family: 'DM Serif Display', Georgia, serif; font-size: 18px; line-height: 1.6; color: var(--gold); margin-bottom: 8px; font-style: italic; }
+  .mod-quote-source { font-size: 11px; color: var(--text-tertiary); letter-spacing: 0.05em; text-transform: uppercase; }
+
+  /* ── MODULE BODY (contenu long) ── */
+  .mod-body { margin-top: 40px; }
+  .mod-body h2 {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--text-primary);
+    margin: 44px 0 14px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+  }
+  .mod-body h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 28px 0 10px;
+  }
+  .mod-body p {
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: 16px;
+  }
+  .mod-body ul, .mod-body ol {
+    margin: 0 0 20px 0;
+    padding-left: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .mod-body li {
+    position: relative;
+    padding-left: 22px;
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  .mod-body li::before {
+    content: '—';
+    color: var(--accent);
+    font-size: 13px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    line-height: 1.7;
+  }
+  .mod-body li strong { color: var(--text-primary); font-weight: 600; }
+  .mod-body strong { color: var(--text-primary); font-weight: 600; }
+  .mod-body blockquote {
+    border-left: 2px solid var(--accent);
+    padding: 10px 0 10px 20px;
+    margin: 20px 0;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.7;
+  }
+  .mod-body .formula-box {
+    background: var(--accent-soft);
+    border: 1px solid rgba(0,113,227,0.15);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin: 20px 0;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-primary);
+    font-style: italic;
+    line-height: 1.7;
+  }
+  .mod-body .warning-box {
+    background: rgba(255,149,0,0.08);
+    border: 1px solid rgba(255,149,0,0.2);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin: 20px 0;
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+  .mod-body .summary-box {
+    background: var(--gold-soft);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin: 20px 0;
+    font-size: 14px;
+    font-style: italic;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+  .mod-body .profile-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 16px 0;
+  }
+  .mod-body .profile-block h3 { margin-top: 0; }
+  .mod-body .profile-meta {
+    font-size: 12px;
+    color: var(--accent);
+    font-style: italic;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border);
+  }
+
+  .mod-locked {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 48px 32px;
+    text-align: center;
+    margin-top: 32px;
+  }
+  .lock-icon { font-size: 32px; margin-bottom: 16px; opacity: 0.5; }
+  .lock-title { font-size: 18px; font-weight: 600; margin-bottom: 8px; color: var(--text-secondary); }
+  .lock-desc { font-size: 14px; color: var(--text-tertiary); font-weight: 300; line-height: 1.6; max-width: 320px; margin: 0 auto 24px; }
+  .lock-cta {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 12px 24px;
+    border-radius: 980px;
+    text-decoration: none;
+    transition: all .2s;
+  }
+  .lock-cta:hover { background: #0077ed; transform: scale(1.02); }
+
+  /* ── NAV PREV / NEXT ── */
+  .mod-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 52px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    gap: 12px;
+  }
+  .mod-nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--surface);
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all .15s;
+    font-family: inherit;
+  }
+  .mod-nav-btn:hover { border-color: var(--border-active); color: var(--text-primary); background: var(--surface-2); }
+  .mod-nav-btn:disabled { opacity: 0.3; cursor: default; }
+  .mod-nav-label { font-size: 11px; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.06em; }
+
+  /* ── WELCOME SCREEN ── */
+  .welcome-screen {
+    width: 100%;
+    padding: 64px clamp(24px, 5vw, 80px) 80px;
+    animation: fadeIn .4s ease;
+  }
+  .welcome-kicker { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; }
+  .welcome-title {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: clamp(32px, 5vw, 52px);
+    line-height: 1.1;
+    margin-bottom: 20px;
+    color: var(--text-primary);
+  }
+  .welcome-sub { font-size: 16px; font-weight: 300; color: var(--text-secondary); line-height: 1.7; margin-bottom: 40px; max-width: 520px; }
+  .welcome-stats { display: flex; gap: 32px; margin-bottom: 48px; flex-wrap: wrap; }
+  .wstat { }
+  .wstat-val { font-size: 28px; font-weight: 600; letter-spacing: -0.02em; color: var(--text-primary); line-height: 1; margin-bottom: 4px; }
+  .wstat-label { font-size: 12px; color: var(--text-tertiary); font-weight: 300; }
+  .welcome-start-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 14px 24px;
+    border-radius: 12px;
+    cursor: pointer;
+    border: none;
+    font-family: inherit;
+    transition: all .2s;
+  }
+  .welcome-start-btn:hover { background: #0077ed; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(0,113,227,0.3); }
+
+  /* ── SIDEBAR TOGGLE — always fixed ── */
+  .sidebar-toggle {
+    position: fixed;
+    top: 77px;
+    left: 16px;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 22px;
+    height: 22px;
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
+  .toggle-bar {
+    display: block;
+    width: 100%;
+    height: 1.5px;
+    background: var(--text-tertiary);
+    border-radius: 2px;
+    transition: all .2s ease;
+    transform-origin: center;
+  }
+  .sidebar-toggle:hover .toggle-bar { background: var(--text-primary); }
+  .sidebar-toggle.open .toggle-bar:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .sidebar-toggle.open .toggle-bar:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .sidebar-toggle.open .toggle-bar:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+  @media (max-width: 768px) {
+    .sidebar {
+      position: fixed;
+      left: 0; top: 52px; bottom: 0;
+      z-index: 40;
+      transform: translateX(-100%);
+      transition: transform .3s ease;
+      box-shadow: 4px 0 24px rgba(0,0,0,0.15);
+      width: var(--sidebar-w) !important;
+      opacity: 1 !important;
+    }
+    .sidebar.open { transform: translateX(0); }
+    .sidebar.collapsed { transform: translateX(-100%); }
+    .module-content, .welcome-screen { padding: 32px 20px 60px; }
+    .progress-ring-wrap { display: none; }
+    .main { overflow-y: auto; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <div class="topbar-logo">ARK</div>
+    <div class="topbar-sep"></div>
+    <div class="topbar-label">Investor Program</div>
+  </div>
+  <div class="topbar-right">
+    <div class="progress-ring-wrap">
+      <div class="progress-label" id="progressLabel">Module 1 / 12</div>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+    <a href="ark_dashboard-3.html" class="btn-back">← Retour</a>
+  </div>
+</div>
+
+<!-- LAYOUT -->
+<div class="layout">
+
+  <!-- TOGGLE (always fixed, always visible) -->
+  <button class="sidebar-toggle" id="sidebarToggle" onclick="toggleSidebar()" title="Afficher/masquer le menu">
+    <span class="toggle-bar"></span>
+    <span class="toggle-bar"></span>
+    <span class="toggle-bar"></span>
+  </button>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-header-text">
+        <div class="sidebar-eyebrow">Programme</div>
+        <div class="sidebar-title">12 Modules</div>
+      </div>
+    </div>
+    <div class="sidebar-list" id="sidebarList">
+      <!-- Populated by JS -->
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main" id="mainContent">
+
+    <!-- WELCOME -->
+    <div class="welcome-screen" id="welcomeScreen">
+      <div class="welcome-kicker">Bienvenue dans ARK</div>
+      <h1 class="welcome-title">Reprends le<br>contrôle.</h1>
+      <p class="welcome-sub">Ton programme complet est ici. 12 modules pour comprendre les marchés, construire des thèses, gérer le risque et penser en investisseur indépendant.</p>
+      <button class="welcome-start-btn" onclick="selectModule(0)">
+        Commencer le Module 01 →
+      </button>
+    </div>
+
+    <!-- MODULES (populated by JS) -->
+    <div id="modulePages"></div>
+
+  </main>
+</div>
+
+<script>
+const modules = [
+  {
+    id: 1,
+    title: "Introduction : Le Cadre de Pensée",
+    tags: ["Profils d'investisseurs", "Retail vs Institutionnel", "Gestion du risque", "Intérêts composés"],
+    intro: "Investisseur, Trader, Spéculateur : qui êtes-vous vraiment, et que cherchez-vous à construire ? Avant d'apprendre à lire un bilan ou anticiper un mouvement macro, il faut répondre à cette question fondamentale — elle conditionne tout : votre méthode, votre horizon de temps, votre gestion du risque, et votre état d'esprit face à l'incertitude.",
+    quote: { text: "Votre edge n'est pas la vitesse, ni le volume : c'est l'analyse, la patience et la discipline.", source: "ARK — Module 01" },
+    objectives: [
+      "Distinguer les trois profils d'intervenants : investisseur, trader et spéculateur",
+      "Comprendre les différences structurelles entre trader retail et institutionnel",
+      "Identifier les causes systématiques d'échec des particuliers sur les marchés",
+      "Calibrer ses objectifs de rendement et comprendre la puissance des intérêts composés",
+      "Découvrir les grandes classes d'actifs sur lesquelles s'applique la méthode",
+    ],
+    concepts: [
+      { icon: "🧭", name: "Les 3 profils", desc: "Investisseur (valeur long terme), Trader (thèse macro), Spéculateur (flux court terme)" },
+      { icon: "⚖️", name: "Retail vs Institutionnel", desc: "Agilité et liberté du retail face à l'infrastructure et aux contraintes des fonds" },
+      { icon: "📈", name: "Intérêts composés", desc: "Capital final = Capital initial × (1 + r)ⁿ — le temps est l'actif le plus précieux" },
+      { icon: "🛡️", name: "Gestion du risque", desc: "Sans garde-fou externe, le retail trader doit s'imposer ses propres règles de discipline" },
+    ],
+    body: `
+      <h2 id="section-profils">1. Les trois profils : état des lieux</h2>
+      <p>Il existe trois grands profils d'intervenants sur les marchés financiers. Cette formation se concentre sur le profil du trader — c'est celui que vous allez construire. Les deux autres profils sont présentés ici pour que vous sachiez exactement où vous vous situez, et pourquoi le trading représente une voie distincte avec ses propres exigences.</p>
+
+      <div class="profile-block">
+        <h3>L'investisseur</h3>
+        <p>L'investisseur achète de la valeur. Il s'intéresse à ce qu'un actif vaut fondamentalement — ses flux futurs, sa position compétitive, les dynamiques macro qui l'entourent — et parie sur la convergence entre prix et valeur sur un horizon long (plusieurs mois à plusieurs années). Il bouge peu, paie peu de frais, et laisse le temps travailler pour lui. La stratégie Buy and Hold, dont la rentabilité historique est solidement documentée, est l'expression la plus pure de cette approche. Exemples : Warren Buffett et Charlie Munger (Berkshire Hathaway), Peter Lynch avec le Fonds Magellan.</p>
+        <div class="profile-meta">Horizon : mois à années — Outil central : modélisation de valeur — Rapport au prix : secondaire</div>
+      </div>
+
+      <div class="profile-block">
+        <h3>Le trader — le profil que ce cours vous forme à développer</h3>
+        <p>Le trader construit des thèses fondamentales — macro, géopolitique, cycle sectoriel — et les exprime via des positions tenues de quelques jours à quelques mois. Il ne cherche pas à capter chaque mouvement, mais à se positionner sur des tendances de fond avant qu'elles ne soient pleinement intégrées par le marché. Son travail est de développer et d'exécuter des stratégies capables de battre le marché de façon répétable et documentée. C'est une activité hybride : mi-analyste, mi-gestionnaire de risque, et toujours ancrée dans une vision macro du monde. Exemples : George Soros (pari contre la livre sterling en 1992), Stanley Druckenmiller, Ray Dalio.</p>
+        <div class="profile-meta">Horizon : jours à mois — Outil central : thèse macro + timing d'entrée — Rapport au prix : point d'entrée et de sortie</div>
+      </div>
+
+      <div class="profile-block">
+        <h3>Le spéculateur</h3>
+        <p>Le spéculateur trade le prix, pas la valeur. Il cherche à profiter des déséquilibres à court terme : réactions à des annonces, flux de liquidité, microstructure de marché. C'est une activité légitime, mais qui requiert une infrastructure, une discipline d'exécution et une gestion du risque que la plupart des particuliers ne possèdent pas. Exemple : Paul Tudor Jones sur certaines stratégies court terme, ou les desks propriétaires des grandes banques d'investissement.</p>
+        <div class="profile-meta">Horizon : secondes à jours — Outil central : lecture du flux et du prix — Rapport à la valeur : inexistant ou marginal</div>
+      </div>
+
+      <h2 id="section-retail-instit">2. Trader Retail vs Trader Institutionnel</h2>
+      <p>Avant d'apprendre à trader, il faut comprendre dans quel environnement vous évoluez — et en quoi il diffère radicalement de celui des acteurs institutionnels. Cette distinction n'est pas anodine : elle conditionne votre stratégie, vos outils, vos horizons de temps, et surtout vos avantages et limitations réels.</p>
+
+      <h3>L'infrastructure : un monde radicalement différent</h3>
+      <p>Un trader institutionnel opère depuis une salle des marchés dotée d'une infrastructure technologique de pointe : connexions co-localisées aux bourses (latence inférieure à la milliseconde), flux de données Bloomberg et Reuters en temps réel, accès direct au marché (DMA), outils de risk management automatisés, et parfois des algorithmes d'exécution propriétaires. Le coût annuel d'une telle infrastructure se chiffre en centaines de milliers, voire en millions d'euros.</p>
+      <p>En tant que trader retail, votre infrastructure se résume à un ordinateur, une connexion internet correcte, un courtier en ligne, et un accès à des données publiques (TradingView, FRED, les sites des banques centrales, les rapports SEC). C'est peu — mais c'est suffisant, à condition de l'utiliser intelligemment. La révolution de l'information a considérablement réduit l'avantage informationnel des institutionnels sur les données macro publiques.</p>
+
+      <h3>Le capital et les attentes de performance</h3>
+      <p>Un fonds institutionnel gère des volumes qui rendent impossible toute agilité tactique. Un hedge fund gérant 5 milliards de dollars ne peut pas prendre une position sur une small cap sans déplacer le marché lui-même. Ses attentes de performance sont également contraintes : un fonds doit justifier ses frais de gestion (typiquement 2 % de l'actif géré + 20 % de la performance), respecter ses mandats, et rendre des comptes trimestriels à ses investisseurs.</p>
+      <p>Vous, en tant que retail trader, pouvez entrer et sortir d'une position en quelques secondes, sur n'importe quel actif liquide, sans impact sur le cours. C'est un avantage structurel considérable. Vous n'avez de comptes à rendre à personne, pas de mandat restrictif, pas de drawdown maximum contractuel qui vous force à liquider au pire moment.</p>
+
+      <h3>Les limitations du trader retail</h3>
+      <ul>
+        <li><strong>Le coût du capital :</strong> vous tradez votre propre argent, ce qui crée une pression psychologique absente chez un employé de banque qui risque le capital de son établissement.</li>
+        <li><strong>L'absence de flux propriétaire :</strong> les institutionnels voient les ordres avant leur exécution (order flow), ce qui leur confère une lecture de la microstructure du marché inaccessible au retail.</li>
+        <li><strong>La fiscalité :</strong> en France, les plus-values de cession sont imposées à la flat tax de 30 % (ou au barème progressif), ce qui nécessite une gestion rigoureuse de votre enveloppe fiscale.</li>
+        <li><strong>Le levier limité :</strong> la réglementation ESMA plafonne le levier disponible pour les retail traders européens sur CFD (5:1 sur les indices, 2:1 sur les cryptos).</li>
+      </ul>
+
+      <h3>Les avantages structurels du trader retail</h3>
+      <ul>
+        <li><strong>L'agilité :</strong> vous pouvez vous positionner sur des opportunités que les gros fonds ne peuvent physiquement pas toucher — les actifs à faible capitalisation, les marchés de niche, les situations spéciales.</li>
+        <li><strong>L'absence de contrainte de mandat :</strong> vous pouvez vendre à découvert un actif survalorisé, investir dans les cryptos, les matières premières, les devises émergentes, sans restriction.</li>
+        <li><strong>L'absence de pression de reporting :</strong> vous n'avez pas à montrer une performance positive chaque trimestre, ce qui vous permet de tenir des positions plus longtemps et d'éviter le forced selling.</li>
+        <li><strong>Un objectif personnel de rendement différent :</strong> 15 % annualisé sur 50 000 € peut transformer votre vie — ce même rendement serait insuffisant pour un fonds qui doit couvrir ses frais structurels.</li>
+      </ul>
+
+      <h3>La psychologie et la gestion du risque : des logiques opposées</h3>
+      <p>La gestion du risque institutionnelle est systématique et codée : Value at Risk (VaR), limites de concentration par actif, stress tests réglementaires, risk officers indépendants du trading desk. Le trader retail n'a rien de tout ça — il est juge et partie. C'est à la fois sa force (flexibilité totale) et son premier risque (aucun garde-fou extérieur). D'où l'importance capitale de se doter de règles de gestion du risque explicites, documentées, et d'une discipline d'exécution aussi rigoureuse que celle d'un professionnel.</p>
+
+      <blockquote>En résumé : vous n'êtes pas un institutionnel en miniature. Vous êtes un acteur différent, avec des contraintes différentes, des avantages différents — et une stratégie qui doit en tenir compte. Votre edge n'est pas la vitesse, ni le volume : c'est l'analyse, la patience et la discipline.</blockquote>
+
+      <h2 id="section-formation">3. Ce que ce cours vous forme à faire</h2>
+      <p>Cette formation vous prépare à devenir un trader à dominante fondamentale. Concrètement, cela signifie :</p>
+      <ul>
+        <li>Comprendre les dynamiques macro et géopolitiques qui créent des opportunités</li>
+        <li>Modéliser la valeur d'un actif pour distinguer une opportunité d'un piège</li>
+        <li>Construire une thèse d'investissement complète et chiffrée</li>
+        <li>Dimensionner correctement vos positions et gérer votre risque</li>
+        <li>Tenir vos convictions sous pression, et les abandonner quand les faits changent</li>
+      </ul>
+      <p>Notre travail en tant que particuliers s'assimile davantage à celui d'un chercheur et d'un quant qu'à celui d'un trader en salle des marchés. Nous ne sommes pas là pour prendre des positions en rafale — nous sommes là pour trouver un edge, un avantage compétitif sur les autres participants du marché.</p>
+      <p>Vous êtes à la fois trader, risk manager, analyste macro et gérant de portefeuille. C'est exigeant, mais c'est aussi ce qui rend cette activité intellectuellement stimulante. <strong>Vous êtes un fond d'investissement indépendant.</strong></p>
+
+      <h2 id="section-taux-horaire">4. Réfléchir en taux horaire</h2>
+      <p>Il n'existe aucune relation entre le nombre d'heures passées à ouvrir des positions et l'argent généré. Au contraire, plus vous tradez, plus vous payez de frais et plus vous vous exposez au bruit du marché. La formule du taux horaire réel est simple :</p>
+
+      <div class="formula-box">
+        Taux horaire réel = Revenus mensuels ÷ (Heures travaillées / semaine × 4,33)<br>
+        <small style="font-size:12px;opacity:0.7">Le 4,33 correspond au nombre moyen de semaines par mois : 52 semaines ÷ 12 mois. C'est le même coefficient utilisé en droit du travail français (35h × 4,33 = 151,67h).</small>
+      </div>
+
+      <p>Exemple concret : vous gagnez 5 000 € par mois grâce au trading actif, en travaillant 40 heures par semaine :</p>
+      <div class="formula-box">5 000 € ÷ (40h × 4,33) = 5 000 € ÷ 173h ≈ <strong>28,9 € / heure</strong> — soit environ le salaire médian français.</div>
+      <p>À l'inverse, un investisseur passif qui génère les mêmes 5 000 € par mois en consacrant 1 heure par semaine à son portefeuille a un taux horaire démentiel — et dort mieux la nuit. L'objectif n'est pas de passer le plus de temps possible sur les marchés. C'est de construire un processus de décision robuste qui vous permette de dégager du temps, pas d'en consommer.</p>
+
+      <h2 id="section-echecs">5. Pourquoi la majorité des particuliers échouent</h2>
+      <p>Les causes d'échec sont systématiques et prévisibles :</p>
+      <ul>
+        <li><strong>Absence de profil clair :</strong> confondre trading et investissement</li>
+        <li><strong>Frais et fiscalité ignorés :</strong> sous-estimer les frais de transaction qui rongent silencieusement la performance</li>
+        <li><strong>Overtrading émotionnel :</strong> trader trop souvent, trop vite, sous l'influence des émotions</li>
+        <li><strong>Biais cognitifs :</strong> couper les bonnes positions trop tôt, laisser courir les mauvaises trop longtemps</li>
+        <li><strong>Survivorship bias :</strong> s'inspirer des success stories sans voir les milliers de parcours similaires qui ont échoué</li>
+        <li><strong>Absence de méthode :</strong> ne pas avoir de processus documenté ni de critères d'entrée/sortie définis à l'avance</li>
+        <li><strong>Le piège du scalping et du day-trading :</strong> multiplier les trades augmente mécaniquement le stress, expose davantage au bruit du marché et fait exploser les frais de transaction. Chaque aller-retour coûte un spread, une commission, parfois un financement overnight. Nous privilégions le swing trading et le position trading : moins de positions, mieux construites, tenues le temps que la thèse fondamentale se réalise.</li>
+        <li><strong>Méthodes miracles :</strong> croire à des approches comme le SMC (Smart Money Concept) ou l'ICT, présentées comme des systèmes universels. Ces approches reposent souvent sur des concepts non falsifiables et une esthétique de la complexité qui donne l'illusion de maîtrise. Ce cours ne vous vend pas un système — il vous construit une méthode robuste d'analyse fondamentale et macro, applicable à n'importe quel actif et n'importe quel cycle de marché.</li>
+      </ul>
+
+      <h2 id="section-capital">6. Capital, objectifs et attentes réalistes</h2>
+      <p>Toute stratégie d'investissement sérieuse commence par une question honnête : avec quel capital je travaille, et quel rendement est réaliste ? La vraie variable, ce n'est pas le capital de départ — c'est le temps et la discipline.</p>
+
+      <h3>La puissance des intérêts composés</h3>
+      <div class="formula-box">Capital final = Capital initial × (1 + r)ⁿ<br><small style="font-size:12px;opacity:0.7">où r = rendement annuel, n = nombre d'années</small></div>
+      <ul>
+        <li>10 000 € investis à 12 % / an pendant 20 ans = <strong>96 462 €</strong> — soit presque 10× sans jamais rajouter un euro</li>
+        <li>Le même capital à 15 % / an pendant 20 ans = <strong>163 665 €</strong> — 3 points de rendement supplémentaires font plus que doubler le résultat final</li>
+        <li>Rajouter 500 € par mois à ce même portefeuille à 12 % sur 20 ans donne environ <strong>494 000 €</strong></li>
+      </ul>
+      <p>La conclusion est simple : le temps est votre actif le plus précieux, et un rendement régulier et documenté bat presque toujours une performance spectaculaire mais erratique.</p>
+
+      <h3>Le levier financier</h3>
+      <p>Si le temps long vous semble insuffisant, il existe des mécanismes pour accélérer le processus. Le principal est le levier financier : emprunter du capital pour amplifier l'exposition à un actif. Un exemple simplifié : avec 10 000 € et un levier de 3×, vous contrôlez une position de 30 000 €. Un mouvement de +10 % sur l'actif vous rapporte 3 000 € — soit 30 % de votre capital initial.</p>
+      <div class="warning-box">⚠️ Le levier amplifie les pertes exactement de la même façon qu'il amplifie les gains. Le même mouvement de -10 % efface 30 % de votre capital. C'est un outil puissant, pas une solution miracle. Nous lui consacrerons un module entier.</div>
+
+      <h3>Repères de capital pour calibrer vos objectifs</h3>
+      <ul>
+        <li><strong>2 000 – 10 000 € :</strong> vous apprenez et testez votre méthode en conditions réelles, avec un risque maîtrisé</li>
+        <li><strong>10 000 – 50 000 € :</strong> vous construisez un vrai portefeuille et commencez à voir les effets de la capitalisation</li>
+        <li><strong>50 000 €+ :</strong> vous gérez réellement un patrimoine et pouvez envisager des stratégies plus sophistiquées</li>
+      </ul>
+      <p>Le point de départ importe moins que la régularité et la rigueur du processus. Un investisseur avec 5 000 € et une méthode solide surpassera presque toujours un investisseur avec 100 000 € qui improvise.</p>
+
+      <h2 id="section-actifs">7. Les classes d'actifs : un panorama rapide</h2>
+      <p>La méthode que vous allez apprendre dans ce cours s'applique à l'ensemble des marchés financiers. Voici les grandes familles d'actifs que vous rencontrerez :</p>
+      <ul>
+        <li><strong>Actions :</strong> les entreprises cotées en bourse. L'actif le plus connu, et celui sur lequel la modélisation fondamentale est la plus directement applicable.</li>
+        <li><strong>Obligations :</strong> titres de dette émis par des États ou des entreprises. Très sensibles aux taux d'intérêt et aux cycles macro — un outil clé pour lire l'état de l'économie mondiale.</li>
+        <li><strong>Matières premières :</strong> pétrole, gaz, métaux, matières agricoles. Directement liées aux dynamiques géopolitiques et aux cycles d'offre/demande mondiaux.</li>
+        <li><strong>Forex :</strong> paires de devises comme EUR/USD ou USD/JPY. Le marché le plus liquide au monde, piloté par les politiques monétaires et les flux de capitaux internationaux.</li>
+        <li><strong>Indices et ETF :</strong> paniers d'actifs qui répliquent un indice (S&P 500, CAC 40…) ou une thématique. Utiles pour exprimer une thèse macro sans choisir un titre spécifique.</li>
+        <li><strong>Cryptomonnaies :</strong> Bitcoin, Ethereum et autres. Un marché jeune, volatil, mais de plus en plus intégré aux flux macro institutionnels.</li>
+      </ul>
+
+      <h2 id="section-conclusion">8. Ce que vous allez construire dans ce cours</h2>
+      <p>À l'issue de cette formation, vous aurez un cadre de pensée complet et personnel :</p>
+      <ul>
+        <li>Une compréhension des mécanismes économiques et géopolitiques qui meuvent les marchés</li>
+        <li>La capacité à modéliser la valeur d'un actif et à construire une thèse chiffrée</li>
+        <li>Un processus de prise de position, de dimensionnement et de gestion du risque</li>
+        <li>Une discipline psychologique pour tenir vos convictions et accepter vos erreurs</li>
+      </ul>
+      <div class="summary-box">Chaque module de ce cours est un outil supplémentaire dans ce cadre. Gardez toujours en tête le fil conducteur : <strong>comprendre le monde → lire la valeur → prendre position → protéger le capital.</strong></div>
+    `
+  },
+  {
+    id: 2,
+    title: "Les Marchés Financiers",
+    tags: ["Structure", "Liquidité", "Acteurs"],
+    intro: "Structure des marchés, acteurs, mécanismes de prix, liquidité. Ce que personne ne t'a expliqué sur le fonctionnement réel de la bourse.",
+    quote: { text: "Le marché n'est pas une machine à évaluer — c'est une machine à voter.", source: "Benjamin Graham" },
+    objectives: [
+      "Comprendre la microstructure des marchés et la formation des prix",
+      "Identifier les grands acteurs et leurs motivations respectives",
+      "Saisir le rôle de la liquidité dans les mouvements de marché",
+      "Démystifier le carnet d'ordres et les types d'ordres",
+    ],
+    concepts: [
+      { icon: "🏛️", name: "Marchés primaires", desc: "Émission de nouveaux titres — IPO, obligations souveraines" },
+      { icon: "🔄", name: "Marchés secondaires", desc: "Échanges entre investisseurs — NYSE, Euronext, etc." },
+      { icon: "💧", name: "Liquidité", desc: "Capacité à acheter/vendre rapidement sans impact de prix" },
+      { icon: "📋", name: "Carnet d'ordres", desc: "Livre des offres et demandes à différents prix" },
+    ]
+  },
+  {
+    id: 3,
+    title: "Analyse Macroéconomique",
+    tags: ["Cycles", "Banques centrales", "Indicateurs"],
+    intro: "Lire les cycles économiques, interpréter les indicateurs macro, comprendre le rôle des banques centrales et anticiper les grands mouvements de marché.",
+    quote: { text: "Quand les banques centrales changent de cap, les marchés tremblent pendant des années.", source: "Quentin — ARK" },
+    objectives: [
+      "Lire et interpréter les principaux indicateurs macro (PIB, inflation, emploi)",
+      "Identifier la position d'une économie dans le cycle économique",
+      "Décrypter les décisions des banques centrales et leurs effets sur les marchés",
+      "Anticiper les rotations sectorielles selon le régime macro",
+    ],
+    concepts: [
+      { icon: "📈", name: "PIB", desc: "Mesure de la production économique totale d'un pays" },
+      { icon: "🔥", name: "Inflation", desc: "Hausse généralisée des prix — ennemi ou signal ?" },
+      { icon: "🏦", name: "Banques centrales", desc: "Fed, BCE — les arbitres des marchés mondiaux" },
+      { icon: "🔁", name: "Cycles économiques", desc: "Expansion, pic, récession, reprise — le rythme des marchés" },
+    ]
+  },
+  {
+    id: 4,
+    title: "Analyse des Actifs",
+    tags: ["Actions", "Obligations", "Forex", "Matières premières"],
+    intro: "Actions, obligations, devises, matières premières — comprendre chaque classe d'actif, ses drivers et son comportement dans différents régimes de marché.",
+    quote: { text: "Chaque actif a sa propre logique. La maîtriser, c'est avoir une longueur d'avance.", source: "ARK — Module 04" },
+    objectives: [
+      "Analyser les drivers fondamentaux de chaque classe d'actif",
+      "Comprendre les relations entre actions, obligations et taux",
+      "Utiliser le marché des devises comme baromètre macro",
+      "Lire les marchés de matières premières comme indicateurs avancés",
+    ],
+    concepts: [
+      { icon: "📉", name: "Actions", desc: "Parts de propriété — valorisation par les flux futurs" },
+      { icon: "🪙", name: "Obligations", desc: "Dettes souveraines et corporates — le marché des taux" },
+      { icon: "💱", name: "Forex", desc: "Marché des devises — le plus liquide au monde" },
+      { icon: "🛢️", name: "Commodités", desc: "Or, pétrole, blé — actifs tangibles et refuges" },
+    ]
+  },
+  {
+    id: 5,
+    title: "Construction d'une Thèse",
+    tags: ["Méthodologie", "Catalyseurs", "Conviction"],
+    intro: "Méthodologie pour construire une thèse macro de A à Z : identifier le catalyseur, définir l'horizon, choisir le véhicule d'expression et calibrer la conviction.",
+    quote: { text: "Une thèse sans catalyseur, c'est une opinion. Avec un catalyseur, c'est un trade.", source: "ARK — Module 05" },
+    objectives: [
+      "Structurer une thèse macro en 5 étapes reproductibles",
+      "Identifier et hiérarchiser les catalyseurs d'un mouvement de marché",
+      "Choisir le meilleur véhicule pour exprimer une conviction",
+      "Définir les conditions d'invalidation de sa thèse",
+    ],
+    concepts: [
+      { icon: "🔍", name: "Catalyseur", desc: "L'événement qui va déclencher le mouvement anticipé" },
+      { icon: "🎯", name: "Véhicule", desc: "L'instrument utilisé pour exprimer la thèse" },
+      { icon: "⏱️", name: "Horizon temporel", desc: "La durée estimée pour que la thèse se réalise" },
+      { icon: "❌", name: "Invalidation", desc: "Les conditions qui prouvent que la thèse est fausse" },
+    ]
+  },
+  {
+    id: 6,
+    title: "Analyse Technique Appliquée",
+    tags: ["Chartisme", "Indicateurs", "Structures de prix"],
+    intro: "Lire un graphique, identifier les structures de prix, utiliser les indicateurs comme confirmation — pas comme signal principal.",
+    quote: { text: "L'analyse technique ne prédit pas le futur. Elle lit les traces laissées par le passé.", source: "ARK — Module 06" },
+    objectives: [
+      "Lire un graphique avec précision : bougies, volumes, structure",
+      "Identifier les supports, résistances et zones de valeur",
+      "Utiliser les indicateurs techniques comme filtre, pas comme oracle",
+      "Reconnaître les patterns de retournement et de continuation",
+    ],
+    concepts: [
+      { icon: "🕯️", name: "Chandeliers japonais", desc: "La représentation graphique de la psychologie des marchés" },
+      { icon: "📐", name: "Supports / Résistances", desc: "Zones où l'offre et la demande s'équilibrent" },
+      { icon: "📊", name: "Volume", desc: "La conviction derrière un mouvement de prix" },
+      { icon: "〰️", name: "Moyennes mobiles", desc: "Lisser le bruit pour voir la tendance de fond" },
+    ]
+  },
+  {
+    id: 7,
+    title: "Prise de Position",
+    tags: ["Entrée", "Timing", "Sizing"],
+    intro: "Timing d'entrée, choix de l'instrument, sizing initial. Comment passer d'une thèse convaincante à une position concrète sur les marchés.",
+    quote: { text: "Le timing parfait n'existe pas. Le bon timing, si.", source: "ARK — Module 07" },
+    objectives: [
+      "Définir un plan d'entrée basé sur la thèse et l'analyse technique",
+      "Calibrer la taille de position en fonction du risque accepté",
+      "Entrer en position de façon méthodique et sans émotion",
+      "Distinguer les opportunités de premier ordre des secondes chances",
+    ],
+    concepts: [
+      { icon: "⚡", name: "Point d'entrée", desc: "Le niveau de prix exact où la position est initiée" },
+      { icon: "⚖️", name: "Sizing", desc: "La taille de la position relative au capital total" },
+      { icon: "📍", name: "Zone d'invalidation", desc: "Le prix auquel la thèse est considérée comme fausse" },
+      { icon: "🏗️", name: "Echelle d'entrée", desc: "Construire une position progressivement pour réduire le risque" },
+    ]
+  },
+  {
+    id: 8,
+    title: "Gestion du Risque",
+    tags: ["Stop loss", "Position sizing", "Corrélations"],
+    intro: "Stop loss, position sizing, corrélations entre positions — construire un système de protection qui survit aux marchés adverses sans tuer la performance.",
+    quote: { text: "Les grands traders ne gagnent pas plus souvent. Ils perdent moins.", source: "Principe fondamental — ARK" },
+    objectives: [
+      "Concevoir un système de gestion du risque adapté à son profil",
+      "Placer des stop loss logiques et non arbitraires",
+      "Calculer l'exposition réelle d'un portefeuille en tenant compte des corrélations",
+      "Définir son risque maximal par trade et par mois",
+    ],
+    concepts: [
+      { icon: "🛑", name: "Stop loss", desc: "L'ordre qui protège le capital quand le marché va contre soi" },
+      { icon: "📏", name: "Risk/Reward", desc: "Le rapport entre le gain potentiel et la perte maximale" },
+      { icon: "🔗", name: "Corrélations", desc: "Deux positions corrélées, c'est le même risque déguisé" },
+      { icon: "💰", name: "Risque par trade", desc: "Le pourcentage du capital qu'on accepte de perdre" },
+    ]
+  },
+  {
+    id: 9,
+    title: "Management de Portfolio",
+    tags: ["Allocation", "Diversification", "Réévaluation"],
+    intro: "Diversification sans dilution des convictions, allocation par thèse et horizon, suivi et réévaluation du portefeuille sans réagir au bruit.",
+    quote: { text: "La diversification, c'est se protéger contre l'ignorance. Si tu sais ce que tu fais, concentre.", source: "Warren Buffett" },
+    objectives: [
+      "Construire un portefeuille diversifié sans diluer ses convictions",
+      "Allouer le capital en fonction du niveau de conviction et de l'horizon",
+      "Suivre et réévaluer les positions de façon disciplinée",
+      "Distinguer le bruit de marché des changements structurels",
+    ],
+    concepts: [
+      { icon: "🗺️", name: "Allocation d'actifs", desc: "La répartition stratégique du capital entre classes d'actifs" },
+      { icon: "📊", name: "Rebalancing", desc: "Rééquilibrer le portefeuille selon les évolutions du marché" },
+      { icon: "🎲", name: "Concentration vs. diversification", desc: "Trouver l'équilibre entre conviction et protection" },
+      { icon: "📓", name: "Suivi du portefeuille", desc: "Journal de positions, performance et apprentissages" },
+    ]
+  },
+  {
+    id: 10,
+    title: "Psychologie & Discipline",
+    tags: ["Biais cognitifs", "Discipline", "Psychologie"],
+    intro: "Biais cognitifs, tenir une position sous pression, savoir avoir tort sans ego, et comprendre pourquoi on n'entend parler que des gagnants.",
+    quote: { text: "Les marchés sont une machine à transférer l'argent des impatients vers les patients.", source: "Warren Buffett" },
+    objectives: [
+      "Identifier les biais cognitifs qui nuisent aux décisions d'investissement",
+      "Développer un système de décision qui court-circuite les émotions",
+      "Apprendre à tenir une position sous pression et à couper une perte sans ego",
+      "Comprendre le biais du survivant et son impact sur les croyances financières",
+    ],
+    concepts: [
+      { icon: "🧠", name: "Biais de confirmation", desc: "On cherche l'information qui confirme ce qu'on pense déjà" },
+      { icon: "😰", name: "FOMO", desc: "La peur de manquer une opportunité — source d'erreurs majeures" },
+      { icon: "🏆", name: "Biais du survivant", desc: "On ne voit que les gagnants — les perdants ont disparu" },
+      { icon: "⚙️", name: "Système vs. intuition", desc: "Pourquoi les règles systématiques battent l'improvisation" },
+    ]
+  },
+  {
+    id: 11,
+    title: "Métriques de Trading",
+    tags: ["Win rate", "Drawdown", "Sharpe ratio", "Journal"],
+    intro: "Win rate, risk/reward, expectancy, drawdown, Sharpe ratio — les indicateurs pour évaluer objectivement une stratégie et tenir un journal rigoureux.",
+    quote: { text: "Ce qui ne se mesure pas ne s'améliore pas.", source: "Peter Drucker" },
+    objectives: [
+      "Calculer et interpréter les métriques essentielles d'une stratégie de trading",
+      "Comprendre pourquoi un win rate élevé ne garantit pas la profitabilité",
+      "Tenir un journal de trading structuré et exploitable",
+      "Évaluer objectivement sa performance sur le long terme",
+    ],
+    concepts: [
+      { icon: "✅", name: "Win rate", desc: "Le pourcentage de trades gagnants — seul, il ne dit rien" },
+      { icon: "📉", name: "Drawdown", desc: "La perte maximale depuis un pic — mesure de la résistance" },
+      { icon: "📐", name: "Expectancy", desc: "Le gain moyen attendu par trade — la vraie métrique de performance" },
+      { icon: "📓", name: "Journal de trading", desc: "L'outil le plus sous-estimé pour progresser" },
+    ]
+  },
+  {
+    id: 12,
+    title: "Fiscalité & Cadre Juridique",
+    tags: ["Flat tax", "PEA · CTO", "Optimisation"],
+    intro: "Flat tax, PEA, CTO, assurance-vie, déclaration des comptes étrangers et optimisation légale — tout ce qu'il faut savoir pour garder un maximum de ses gains.",
+    quote: { text: "Gagner de l'argent, c'est bien. Savoir le garder, c'est mieux.", source: "ARK — Module 12" },
+    objectives: [
+      "Comprendre le traitement fiscal des gains en capital en France",
+      "Choisir le bon enveloppe fiscale selon son profil et ses objectifs",
+      "Déclarer correctement ses comptes et plus-values à l'étranger",
+      "Optimiser légalement sa fiscalité pour maximiser le capital investi",
+    ],
+    concepts: [
+      { icon: "🧾", name: "Flat tax (PFU)", desc: "Le prélèvement forfaitaire unique — 30% sur les gains" },
+      { icon: "💼", name: "PEA", desc: "Plan d'Épargne en Actions — avantages fiscaux à 5 ans" },
+      { icon: "📂", name: "CTO", desc: "Compte-Titres Ordinaire — flexibilité maximale" },
+      { icon: "🔒", name: "Assurance-vie", desc: "L'enveloppe préférée des épargnants français" },
+    ]
+  },
+];
+
+let currentModule = null;
+
+function buildSidebar() {
+  const list = document.getElementById('sidebarList');
+  list.innerHTML = modules.map((m, i) => `
+    <div class="sidebar-item" id="sidebarItem${i}" onclick="selectModule(${i})">
+      <div class="item-index">${String(m.id).padStart(2, '0')}</div>
+      <div class="item-info">
+        <div class="item-name">${m.title}</div>
+      </div>
+      <div class="item-dot"></div>
+    </div>
+    ${m.body ? `<div class="sidebar-subnav" id="subnav${i}"></div>` : ''}
+  `).join('');
+}
+
+function buildSubnav(moduleIndex) {
+  const subnav = document.getElementById(`subnav${moduleIndex}`);
+  if (!subnav) return;
+  const page = document.getElementById(`modulePage${moduleIndex}`);
+  if (!page) return;
+  const headings = page.querySelectorAll('.mod-body h2');
+  headings.forEach((h, j) => {
+    if (!h.id) h.id = `mod${moduleIndex}-section-${j}`;
+    const item = document.createElement('div');
+    item.className = 'sidebar-subitem';
+    item.textContent = h.textContent;
+    item.onclick = (e) => scrollToSection(h.id, e);
+    subnav.appendChild(item);
+  });
+}
+
+function buildModules() {
+  const container = document.getElementById('modulePages');
+  container.innerHTML = modules.map((m, i) => `
+    <div class="module-content" id="modulePage${i}">
+      <div class="mod-number">Module ${String(m.id).padStart(2, '0')}</div>
+      <h1 class="mod-title">${m.title}</h1>
+      <div class="mod-tags">${m.tags.map(t => `<span class="mod-tag">${t}</span>`).join('')}</div>
+
+      <p class="mod-intro">${m.intro}</p>
+
+      <div class="mod-section-title">Ce que tu vas apprendre</div>
+      <ul class="mod-objectives">
+        ${m.objectives.map(o => `<li><div class="obj-check">○</div><span>${o}</span></li>`).join('')}
+      </ul>
+
+      <div class="mod-divider"></div>
+
+      <div class="mod-section-title">Concepts clés</div>
+      <div class="mod-concepts-grid">
+        ${m.concepts.map(c => `
+          <div class="concept-card">
+            <div class="concept-icon">${c.icon}</div>
+            <div class="concept-name">${c.name}</div>
+            <div class="concept-desc">${c.desc}</div>
+          </div>
+        `).join('')}
+      </div>
+
+      <div class="mod-quote">
+        <div class="mod-quote-text">"${m.quote.text}"</div>
+        <div class="mod-quote-source">— ${m.quote.source}</div>
+      </div>
+
+      ${m.body ? `<div class="mod-body">${m.body}</div>` : ''}
+
+      <div class="mod-nav">
+        <button class="mod-nav-btn" onclick="selectModule(${i - 1})" ${i === 0 ? 'disabled' : ''}>
+          ← Précédent
+        </button>
+        <span class="mod-nav-label">${i + 1} / ${modules.length}</span>
+        <button class="mod-nav-btn" onclick="selectModule(${i + 1})" ${i === modules.length - 1 ? 'disabled' : ''}>
+          Suivant →
+        </button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function selectModule(index) {
+  if (index < 0 || index >= modules.length) return;
+
+  // Hide welcome
+  document.getElementById('welcomeScreen').style.display = 'none';
+
+  // Update sidebar
+  document.querySelectorAll('.sidebar-item').forEach((el, i) => {
+    el.classList.toggle('active', i === index);
+  });
+
+  // Update pages
+  document.querySelectorAll('.module-content').forEach((el, i) => {
+    el.classList.toggle('active', i === index);
+  });
+
+  // Update progress
+  const fill = Math.round(((index + 1) / modules.length) * 100);
+  document.getElementById('progressFill').style.width = fill + '%';
+  document.getElementById('progressLabel').textContent = `Module ${index + 1} / ${modules.length}`;
+
+  currentModule = index;
+
+  // Toggle subnav for modules with body content
+  document.querySelectorAll('.sidebar-subnav').forEach((el, i) => {
+    el.classList.toggle('open', i === index);
+  });
+
+  // Scroll content to top
+  document.getElementById('mainContent').scrollTo({ top: 0, behavior: 'smooth' });
+
+  // Close sidebar on mobile
+  if (window.innerWidth <= 768) {
+    document.getElementById('sidebar').classList.remove('open');
+  }
+}
+
+function scrollToSection(sectionId, event) {
+  event.stopPropagation();
+  // Make sure module 1 is active
+  if (currentModule !== 0) selectModule(0);
+  setTimeout(() => {
+    const el = document.getElementById(sectionId);
+    if (el) {
+      const main = document.getElementById('mainContent');
+      const offset = el.getBoundingClientRect().top - main.getBoundingClientRect().top + main.scrollTop - 24;
+      main.scrollTo({ top: offset, behavior: 'smooth' });
+    }
+  }, currentModule !== 0 ? 350 : 0);
+}
+
+function toggleSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  const btn = document.getElementById('sidebarToggle');
+  if (window.innerWidth <= 768) {
+    sidebar.classList.toggle('open');
+  } else {
+    const isCollapsed = sidebar.classList.toggle('collapsed');
+    btn.classList.toggle('open', !isCollapsed);
+  }
+}
+
+// Check URL hash for direct module navigation
+function checkHash() {
+  const hash = window.location.hash;
+  if (hash === '#module') {
+    selectModule(0);
+  }
+}
+
+buildSidebar();
+buildModules();
+modules.forEach((m, i) => { if (m.body) buildSubnav(i); });
+checkHash();
+</script>
+</body>
+</html>
