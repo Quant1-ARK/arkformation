@@ -208,6 +208,8 @@ body{background:var(--off-white);color:var(--text-1);font-family:'Inter',-apple-
   .header-tabs{display:none}
 }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="auth.js"></script>
 </head>
 <body>
 
@@ -225,7 +227,7 @@ body{background:var(--off-white);color:var(--text-1);font-family:'Inter',-apple-
     <div class="nav-item" onclick="nav('bonus',this)"><span class="nav-icon">✦</span> Bonus <span class="nav-pill">2</span></div>
     <div class="nav-label">Compte</div>
     <div class="nav-item" onclick="nav('reglages',this)"><span class="nav-icon">◎</span> Réglages</div>
-    <div class="nav-item" onclick="window.location.href='index.html'"><span class="nav-icon">⤶</span> Sortir</div>
+    <div class="nav-item" onclick="ARK.logout()"><span class="nav-icon">⤶</span> Sortir</div>
   </nav>
   <div class="sidebar-user">
     <div class="user-row">
