@@ -537,13 +537,13 @@ body {
       </div>
     </div>
 
-    <!-- BANNIÈRE EN COURS -->
-    <div style="background:#0a1f44;border-radius:var(--radius-lg);padding:20px 26px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+    <!-- BANNIÈRE EN COURS (dynamique) -->
+    <div id="cours-banner" style="background:#0a1f44;border-radius:var(--radius-lg);padding:20px 26px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
       <div>
-        <div style="font-size:16px;font-weight:600;color:#fff;display:flex;align-items:center;gap:8px;">🚀 Module 05 en cours — Construction d'une Thèse</div>
-        <div style="font-size:13px;color:rgba(255,255,255,0.42);font-weight:300;margin-top:3px;">Tu es à 65% · Chapitre 4/6 · Continue pour débloquer le Module 06</div>
+        <div id="cours-banner-title" style="font-size:16px;font-weight:600;color:#fff;">🚀 Chargement…</div>
+        <div id="cours-banner-sub" style="font-size:13px;color:rgba(255,255,255,0.42);font-weight:300;margin-top:3px;"></div>
       </div>
-      <button class="cta-btn" style="background:#fff;color:#0a1f44;font-weight:600;">▶ Reprendre</button>
+      <button class="cta-btn" style="background:#fff;color:#0a1f44;font-weight:600;" onclick="goToFormation()">▶ Continuer</button>
     </div>
 
     <!-- FORMATIONS DISPONIBLES -->
@@ -895,6 +895,16 @@ function updateDashboard(p) {
     if (done.length === 0) ctaSub.textContent = "Tu n'as pas encore commencé. Lance-toi !";
     else if (done.length === total) ctaSub.textContent = "Tu as terminé tous les modules. Félicitations !";
     else ctaSub.textContent = done.length + " module" + (done.length > 1 ? "s" : "") + " terminé" + (done.length > 1 ? "s" : "") + " sur 12.";
+  }
+
+  // Bannière cours
+  const coursBannerTitle = document.getElementById('cours-banner-title');
+  if (coursBannerTitle) coursBannerTitle.textContent = '🚀 Module ' + pad(nextIdx) + ' — ' + MODULE_NAMES[nextIdx];
+  const coursBannerSub = document.getElementById('cours-banner-sub');
+  if (coursBannerSub) {
+    if (done.length === 0) coursBannerSub.textContent = "Tu n'as pas encore commencé. Lance-toi !";
+    else if (done.length === total) coursBannerSub.textContent = "Tu as terminé tous les modules. Félicitations !";
+    else coursBannerSub.textContent = done.length + " module" + (done.length > 1 ? "s" : "") + " terminé" + (done.length > 1 ? "s" : "") + " sur 12.";
   }
 
   // Rang
