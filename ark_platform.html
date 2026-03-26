@@ -162,12 +162,49 @@ const modules = [
 
 let currentModule = null;
 
+const SUPABASE_URL = 'https://wlwwkqijedhxmwjktqvj.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indsd3drcWlqZWRoeG13amt0cXZqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1NDY0NDcsImV4cCI6MjA5MDEyMjQ0N30.x4nGTPYfLbkPz0tAejhde_RO4Oto5scGSW8H72FwKOU';
+
+function getDB() {
+  if (!window._arkDB) window._arkDB = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+  return window._arkDB;
+}
+
 function getProgress() {
   try { return JSON.parse(localStorage.getItem('ark_progress')) || { current: 0, done: [] }; }
   catch(e) { return { current: 0, done: [] }; }
 }
+
 function saveProgress(current, done) {
+  // 1. Sauvegarder localement (immédiat)
   localStorage.setItem('ark_progress', JSON.stringify({ current, done }));
+  // 2. Sync Supabase (async, sans bloquer)
+  syncProgressToSupabase(current, done);
+}
+
+async function syncProgressToSupabase(current, done) {
+  try {
+    const { data: { session } } = await getDB().auth.getSession();
+    if (!session) return;
+    await getDB().from('user_progress').upsert({
+      user_id: session.user.id,
+      current: current,
+      done: done,
+      updated_at: new Date().toISOString(),
+    }, { onConflict: 'user_id' });
+  } catch(e) {
+    // Silencieux — le localStorage reste la source de vérité locale
+  }
+}
+
+async function loadProgressFromSupabase() {
+  try {
+    const { data: { session } } = await getDB().auth.getSession();
+    if (!session) return null;
+    const { data } = await getDB().from('user_progress')
+      .select('current, done').eq('user_id', session.user.id).single();
+    return data || null;
+  } catch(e) { return null; }
 }
 
 function buildSidebar() {
@@ -236,8 +273,9 @@ window.addEventListener('message', e => {
 });
 
 // Restaurer la progression
-function init() {
+async function init() {
   buildSidebar();
+
   const hash = window.location.hash;
   const match = hash.match(/^#module-(\d+)$/);
   if (match) {
@@ -245,6 +283,24 @@ function init() {
     if (idx !== -1) { selectModule(idx); return; }
   }
   if (hash === '#module') { selectModule(0); return; }
+
+  // Essayer de charger depuis Supabase (données cross-session)
+  const remote = await loadProgressFromSupabase();
+  if (remote) {
+    // Fusionner : prendre le plus avancé entre local et remote
+    const local = getProgress();
+    const remoteDone = Array.isArray(remote.done) ? remote.done : [];
+    const localDone = Array.isArray(local.done) ? local.done : [];
+    const mergedDone = [...new Set([...remoteDone, ...localDone])];
+    const mergedCurrent = Math.max(remote.current || 0, local.current || 0);
+    // Sauvegarder la version fusionnée localement
+    localStorage.setItem('ark_progress', JSON.stringify({ current: mergedCurrent, done: mergedDone }));
+    if (mergedCurrent > 0 || mergedDone.length > 0) {
+      selectModule(mergedCurrent);
+      return;
+    }
+  }
+
   const progress = getProgress();
   if (progress.current > 0 || progress.done.length > 0) {
     selectModule(progress.current);
