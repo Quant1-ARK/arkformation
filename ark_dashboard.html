@@ -513,6 +513,20 @@ function getArkProgress() {
   catch(e) { return { current: 0, done: [] }; }
 }
 
+async function loadProgressFromSupabase() {
+  try {
+    const { data } = await db.from('user_progress')
+      .select('current, done').eq('user_id', currentUser.id).single();
+    if (data) {
+      const done = Array.isArray(data.done) ? data.done : [];
+      // Mettre à jour localStorage avec les données serveur
+      localStorage.setItem('ark_progress', JSON.stringify({ current: data.current, done }));
+      return { current: data.current, done };
+    }
+  } catch(e) {}
+  return getArkProgress();
+}
+
 function animProgress() {
   const progress = getArkProgress();
   const done = progress.done || [];
@@ -653,14 +667,15 @@ let promoValid = false;
 let promoTimer = null;
 
 window.addEventListener('load', async () => {
-  animProgress();
-  setTimeout(() => { const rf = document.getElementById('rank-fill'); if (rf) rf.style.width = '42%'; }, 500);
-
   const { data: { session } } = await db.auth.getSession();
   if (!session) { window.location.href = 'login.html'; return; }
   currentUser = session.user;
 
   await loadAccessStatus();
+
+  // Charger la progression depuis Supabase
+  const remoteProgress = await loadProgressFromSupabase();
+  animProgress();
 
   if (window.location.hash === '#reglages') {
     window.history.replaceState(null, '', window.location.pathname);
