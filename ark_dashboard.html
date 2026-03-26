@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ARK — Dashboard</title>
+<title>ARK â€” Dashboard</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -220,19 +220,19 @@ body{background:var(--off-white);color:var(--text-1);font-family:'Inter',-apple-
   </div>
   <nav class="sidebar-nav">
     <div class="nav-label">Principal</div>
-    <div class="nav-item active" onclick="nav('dashboard',this)"><span class="nav-icon">⊞</span> Dashboard</div>
-    <div class="nav-item" onclick="nav('cours',this)"><span class="nav-icon">▶</span> Cours <span class="nav-pill blue">3</span></div>
-    <div class="nav-item" onclick="nav('revision',this)"><span class="nav-icon">◈</span> Révision</div>
+    <div class="nav-item active" onclick="nav('dashboard',this)"><span class="nav-icon">âŠž</span> Dashboard</div>
+    <div class="nav-item" onclick="nav('cours',this)"><span class="nav-icon">â–¶</span> Cours <span class="nav-pill blue">3</span></div>
+    <div class="nav-item" onclick="nav('revision',this)"><span class="nav-icon">â—ˆ</span> RÃ©vision</div>
     <div class="nav-label">Contenu</div>
-    <div class="nav-item" onclick="nav('bonus',this)"><span class="nav-icon">✦</span> Bonus <span class="nav-pill">2</span></div>
+    <div class="nav-item" onclick="nav('bonus',this)"><span class="nav-icon">âœ¦</span> Bonus <span class="nav-pill">2</span></div>
     <div class="nav-label">Compte</div>
-    <div class="nav-item" onclick="nav('reglages',this)"><span class="nav-icon">◎</span> Réglages</div>
-    <div class="nav-item" onclick="ARK.logout()"><span class="nav-icon">⤶</span> Sortir</div>
+    <div class="nav-item" onclick="nav('reglages',this)"><span class="nav-icon">â—Ž</span> RÃ©glages</div>
+    <div class="nav-item" onclick="ARK.logout()"><span class="nav-icon">â¤¶</span> Sortir</div>
   </nav>
   <div class="sidebar-user">
     <div class="user-row">
       <div class="user-av">Q</div>
-      <div><div class="user-name">Quentin</div><div class="user-plan">Accès à vie · Fondateur</div></div>
+      <div><div class="user-name">Quentin</div><div class="user-plan">AccÃ¨s Ã  vie Â· Fondateur</div></div>
     </div>
   </div>
 </aside>
@@ -243,53 +243,53 @@ body{background:var(--off-white);color:var(--text-1);font-family:'Inter',-apple-
   <div class="content active" id="page-dashboard">
     <div class="page-header">
       <div>
-        <div class="page-welcome">Bienvenue, <span>Quentin</span> 👋</div>
+        <div class="page-welcome">Bienvenue, <span>Quentin</span> ðŸ‘‹</div>
         <div class="page-welcome-sub">Suis ta progression et continue ton parcours de formation</div>
       </div>
       <div class="header-tabs">
-        <button class="header-tab active" onclick="tabSwitch(this)"><span>📊</span> Dashboard</button>
-        <button class="header-tab" onclick="tabSwitch(this)"><span>🕐</span> Historique</button>
-        <button class="header-tab" onclick="tabSwitch(this)"><span>🔖</span> Favoris</button>
-        <button class="header-tab" onclick="tabSwitch(this)"><span>🗺</span> Roadmap</button>
+        <button class="header-tab active" onclick="tabSwitch(this)"><span>ðŸ“Š</span> Dashboard</button>
+        <button class="header-tab" onclick="tabSwitch(this)"><span>ðŸ•</span> Historique</button>
+        <button class="header-tab" onclick="tabSwitch(this)"><span>ðŸ”–</span> Favoris</button>
+        <button class="header-tab" onclick="tabSwitch(this)"><span>ðŸ—º</span> Roadmap</button>
       </div>
     </div>
 
     <div class="card">
       <div class="card-top">
         <div>
-          <div class="card-title">📈 Aperçu des performances</div>
-          <div class="card-sub">Ton activité récente et ta progression</div>
+          <div class="card-title">ðŸ“ˆ AperÃ§u des performances</div>
+          <div class="card-sub">Ton activitÃ© rÃ©cente et ta progression</div>
         </div>
-        <span class="card-chev" id="perf-chev" onclick="toggleCard('perf-body','perf-chev')">∨</span>
+        <span class="card-chev" id="perf-chev" onclick="toggleCard('perf-body','perf-chev')">âˆ¨</span>
       </div>
       <div id="perf-body">
         <div class="kpi-trio">
-          <div class="kpi-cell"><div class="kpi-ico">🎯</div><div><div class="kpi-val">74%</div><div class="kpi-lbl">Score moyen révisions</div></div></div>
-          <div class="kpi-cell"><div class="kpi-ico">📝</div><div><div class="kpi-val">38</div><div class="kpi-lbl">Questions tentées</div></div></div>
-          <div class="kpi-cell"><div class="kpi-ico">🔖</div><div><div class="kpi-val">7</div><div class="kpi-lbl">Chapitres en favoris</div></div></div>
+          <div class="kpi-cell"><div class="kpi-ico">ðŸŽ¯</div><div><div class="kpi-val">74%</div><div class="kpi-lbl">Score moyen rÃ©visions</div></div></div>
+          <div class="kpi-cell"><div class="kpi-ico">ðŸ“</div><div><div class="kpi-val">38</div><div class="kpi-lbl">Questions tentÃ©es</div></div></div>
+          <div class="kpi-cell"><div class="kpi-ico">ðŸ”–</div><div><div class="kpi-val">7</div><div class="kpi-lbl">Chapitres en favoris</div></div></div>
         </div>
       </div>
     </div>
 
     <div class="cta-banner">
       <div>
-        <div class="cta-title">🚀 Module 06 — Analyse Technique Appliquée</div>
-        <div class="cta-sub">Tu as terminé 65% du module 05. Encore un effort pour débloquer la suite.</div>
+        <div class="cta-title">ðŸš€ Module 06 â€” Analyse Technique AppliquÃ©e</div>
+        <div class="cta-sub">Tu as terminÃ© 65% du module 05. Encore un effort pour dÃ©bloquer la suite.</div>
       </div>
-      <button class="cta-btn" onclick="nav('cours', document.querySelectorAll('.nav-item')[1])">▶ Continuer le module 05</button>
+      <button class="cta-btn" onclick="nav('cours', document.querySelectorAll('.nav-item')[1])">â–¶ Continuer le module 05</button>
     </div>
 
     <div class="card">
       <div class="card-top" style="margin-bottom:0">
         <div>
-          <div class="card-title">🏆 Rang ARK & Métriques</div>
-          <div class="card-sub">Progression dans le programme et indicateurs clés</div>
+          <div class="card-title">ðŸ† Rang ARK & MÃ©triques</div>
+          <div class="card-sub">Progression dans le programme et indicateurs clÃ©s</div>
         </div>
       </div>
       <div class="rank-wrap">
-        <div class="rank-lbl-row"><div class="rank-lbl">🎓 Analyste Macro — Niveau II</div></div>
+        <div class="rank-lbl-row"><div class="rank-lbl">ðŸŽ“ Analyste Macro â€” Niveau II</div></div>
         <div class="rank-track"><div class="rank-fill" id="rank-fill"></div></div>
-        <div class="rank-ends"><span>Analyste I</span><span>42% vers Niveau III</span><span>Stratège Macro</span></div>
+        <div class="rank-ends"><span>Analyste I</span><span>42% vers Niveau III</span><span>StratÃ¨ge Macro</span></div>
       </div>
       <div class="rings-row">
         <div class="ring-cell">
@@ -308,7 +308,7 @@ body{background:var(--off-white);color:var(--text-1);font-family:'Inter',-apple-
             <text x="40" y="45" text-anchor="middle" font-family="Inter,sans-serif" font-size="15" font-weight="600" fill="#1d1d1f">74%</text>
           </svg>
           <div class="ring-name">Score moyen</div>
-          <div class="ring-note">Quiz & révisions</div>
+          <div class="ring-note">Quiz & rÃ©visions</div>
         </div>
         <div class="ring-cell">
           <svg width="80" height="80" viewBox="0 0 80 80">
@@ -316,7 +316,7 @@ body{background:var(--off-white);color:var(--text-1);font-family:'Inter',-apple-
             <circle cx="40" cy="40" r="32" fill="none" stroke="#ff9500" stroke-width="8" stroke-dasharray="201" stroke-dashoffset="90" stroke-linecap="round" transform="rotate(-90 40 40)"/>
             <text x="40" y="45" text-anchor="middle" font-family="Inter,sans-serif" font-size="15" font-weight="600" fill="#1d1d1f">55%</text>
           </svg>
-          <div class="ring-name">Assiduité</div>
+          <div class="ring-name">AssiduitÃ©</div>
           <div class="ring-note">Sessions cette semaine</div>
         </div>
       </div>
@@ -326,24 +326,24 @@ body{background:var(--off-white);color:var(--text-1);font-family:'Inter',-apple-
       <div class="card">
         <div class="card-top">
           <div><div class="card-title">Avancement modules</div><div class="card-sub">Progression par module</div></div>
-          <span class="card-link" onclick="nav('cours', document.querySelectorAll('.nav-item')[1])">Voir tout →</span>
+          <span class="card-link" onclick="nav('cours', document.querySelectorAll('.nav-item')[1])">Voir tout â†’</span>
         </div>
         <div style="display:flex;flex-direction:column;gap:12px;margin-top:16px">
-          <div class="prog-wrap"><div class="prog-row"><span>01 · Introduction Macro</span><span>100%</span></div><div class="prog-track"><div class="prog-fill g" style="width:100%"></div></div></div>
-          <div class="prog-wrap"><div class="prog-row"><span>02 · Marchés Financiers</span><span>100%</span></div><div class="prog-track"><div class="prog-fill g" style="width:100%"></div></div></div>
-          <div class="prog-wrap"><div class="prog-row"><span>03 · Analyse Macro</span><span>100%</span></div><div class="prog-track"><div class="prog-fill g" style="width:100%"></div></div></div>
-          <div class="prog-wrap"><div class="prog-row"><span>04 · Analyse des Actifs</span><span>100%</span></div><div class="prog-track"><div class="prog-fill g" style="width:100%"></div></div></div>
-          <div class="prog-wrap"><div class="prog-row"><span>05 · Construction d'une Thèse</span><span>65%</span></div><div class="prog-track"><div class="prog-fill" style="width:65%"></div></div></div>
-          <div class="prog-wrap" style="opacity:.5"><div class="prog-row"><span>06 · Analyse Technique</span><span>0%</span></div><div class="prog-track"><div class="prog-fill" style="width:0%"></div></div></div>
+          <div class="prog-wrap"><div class="prog-row"><span>01 Â· Introduction Macro</span><span>100%</span></div><div class="prog-track"><div class="prog-fill g" style="width:100%"></div></div></div>
+          <div class="prog-wrap"><div class="prog-row"><span>02 Â· MarchÃ©s Financiers</span><span>100%</span></div><div class="prog-track"><div class="prog-fill g" style="width:100%"></div></div></div>
+          <div class="prog-wrap"><div class="prog-row"><span>03 Â· Analyse Macro</span><span>100%</span></div><div class="prog-track"><div class="prog-fill g" style="width:100%"></div></div></div>
+          <div class="prog-wrap"><div class="prog-row"><span>04 Â· Analyse des Actifs</span><span>100%</span></div><div class="prog-track"><div class="prog-fill g" style="width:100%"></div></div></div>
+          <div class="prog-wrap"><div class="prog-row"><span>05 Â· Construction d'une ThÃ¨se</span><span>65%</span></div><div class="prog-track"><div class="prog-fill" style="width:65%"></div></div></div>
+          <div class="prog-wrap" style="opacity:.5"><div class="prog-row"><span>06 Â· Analyse Technique</span><span>0%</span></div><div class="prog-track"><div class="prog-fill" style="width:0%"></div></div></div>
         </div>
       </div>
       <div class="card">
-        <div class="card-top" style="margin-bottom:8px"><div class="card-title">Activité récente</div></div>
-        <div class="act-item"><div class="act-dot g"></div><div><div class="act-text"><strong>Module 04 terminé</strong></div><div class="act-time">Il y a 2 jours</div></div></div>
-        <div class="act-item"><div class="act-dot"></div><div><div class="act-text"><strong>Module 05 débuté</strong></div><div class="act-time">Il y a 2 jours</div></div></div>
-        <div class="act-item"><div class="act-dot o"></div><div><div class="act-text"><strong>Quiz Macro</strong> · 74%</div><div class="act-time">Il y a 5 jours</div></div></div>
-        <div class="act-item"><div class="act-dot g"></div><div><div class="act-text"><strong>Module 03 terminé</strong></div><div class="act-time">Il y a 1 sem.</div></div></div>
-        <div class="act-item"><div class="act-dot"></div><div><div class="act-text"><strong>Bonus Journal</strong> téléchargé</div><div class="act-time">Il y a 1 sem.</div></div></div>
+        <div class="card-top" style="margin-bottom:8px"><div class="card-title">ActivitÃ© rÃ©cente</div></div>
+        <div class="act-item"><div class="act-dot g"></div><div><div class="act-text"><strong>Module 04 terminÃ©</strong></div><div class="act-time">Il y a 2 jours</div></div></div>
+        <div class="act-item"><div class="act-dot"></div><div><div class="act-text"><strong>Module 05 dÃ©butÃ©</strong></div><div class="act-time">Il y a 2 jours</div></div></div>
+        <div class="act-item"><div class="act-dot o"></div><div><div class="act-text"><strong>Quiz Macro</strong> Â· 74%</div><div class="act-time">Il y a 5 jours</div></div></div>
+        <div class="act-item"><div class="act-dot g"></div><div><div class="act-text"><strong>Module 03 terminÃ©</strong></div><div class="act-time">Il y a 1 sem.</div></div></div>
+        <div class="act-item"><div class="act-dot"></div><div><div class="act-text"><strong>Bonus Journal</strong> tÃ©lÃ©chargÃ©</div><div class="act-time">Il y a 1 sem.</div></div></div>
       </div>
     </div>
   </div>
@@ -351,98 +351,98 @@ body{background:var(--off-white);color:var(--text-1);font-family:'Inter',-apple-
   <!-- COURS -->
   <div class="content" id="page-cours">
     <div style="background:var(--accent);border-radius:var(--r-lg);padding:34px 28px 28px;text-align:center">
-      <div style="font-size:28px;font-weight:700;color:#fff;letter-spacing:-.02em;margin-bottom:8px">🎓 ARK — Formation Macro Trading</div>
-      <div style="font-size:14px;color:rgba(255,255,255,.65);font-weight:300;max-width:520px;margin:0 auto 22px">Maîtrise l'analyse macro de zéro jusqu'au niveau institutionnel avec un programme complet et structuré</div>
+      <div style="font-size:28px;font-weight:700;color:#fff;letter-spacing:-.02em;margin-bottom:8px">ðŸŽ“ ARK â€” Formation Macro Trading</div>
+      <div style="font-size:14px;color:rgba(255,255,255,.65);font-weight:300;max-width:520px;margin:0 auto 22px">MaÃ®trise l'analyse macro de zÃ©ro jusqu'au niveau institutionnel avec un programme complet et structurÃ©</div>
       <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
-        <button class="cours-pill active-pill">🗺 Roadmap</button>
-        <button class="cours-pill">▶ Vidéos</button>
-        <button class="cours-pill">📋 Révision</button>
-        <button class="cours-pill">📝 Exercices</button>
-        <button class="cours-pill">✦ Bonus</button>
-        <button class="cours-pill">🏆 Certificat</button>
+        <button class="cours-pill active-pill">ðŸ—º Roadmap</button>
+        <button class="cours-pill">â–¶ VidÃ©os</button>
+        <button class="cours-pill">ðŸ“‹ RÃ©vision</button>
+        <button class="cours-pill">ðŸ“ Exercices</button>
+        <button class="cours-pill">âœ¦ Bonus</button>
+        <button class="cours-pill">ðŸ† Certificat</button>
       </div>
     </div>
 
     <div style="background:#0a1f44;border-radius:var(--r-lg);padding:20px 26px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
       <div>
-        <div style="font-size:16px;font-weight:600;color:#fff;display:flex;align-items:center;gap:8px">🚀 Module 05 en cours — Construction d'une Thèse</div>
-        <div style="font-size:13px;color:rgba(255,255,255,.42);font-weight:300;margin-top:3px">Tu es à 65% · Chapitre 4/6 · Continue pour débloquer le Module 06</div>
+        <div style="font-size:16px;font-weight:600;color:#fff;display:flex;align-items:center;gap:8px">ðŸš€ Module 05 en cours â€” Construction d'une ThÃ¨se</div>
+        <div style="font-size:13px;color:rgba(255,255,255,.42);font-weight:300;margin-top:3px">Tu es Ã  65% Â· Chapitre 4/6 Â· Continue pour dÃ©bloquer le Module 06</div>
       </div>
-      <button class="cta-btn" style="background:#fff;color:#0a1f44;font-weight:600">▶ Reprendre</button>
+      <button class="cta-btn" style="background:#fff;color:#0a1f44;font-weight:600">â–¶ Reprendre</button>
     </div>
 
     <div style="background:var(--white);border-radius:var(--r-lg);border:1px solid var(--border);padding:26px 24px">
-      <div style="font-size:20px;font-weight:700;letter-spacing:-.02em;margin-bottom:4px">🎓 Formations disponibles</div>
-      <div style="font-size:13px;color:var(--text-3);font-weight:300;margin-bottom:24px">Accède à ta formation et reprends là où tu t'es arrêté</div>
+      <div style="font-size:20px;font-weight:700;letter-spacing:-.02em;margin-bottom:4px">ðŸŽ“ Formations disponibles</div>
+      <div style="font-size:13px;color:var(--text-3);font-weight:300;margin-bottom:24px">AccÃ¨de Ã  ta formation et reprends lÃ  oÃ¹ tu t'es arrÃªtÃ©</div>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
         <!-- ARK MACRO PROGRAM -->
         <div style="border:1px solid var(--mid-gray);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s;cursor:pointer" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 10px 28px rgba(0,0,0,0.08)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
           <div style="background:linear-gradient(140deg,#c8daff,#ddeaff);height:160px;display:flex;align-items:center;justify-content:center;position:relative">
-            <span style="font-size:48px">📈</span>
+            <span style="font-size:48px">ðŸ“ˆ</span>
             <span style="position:absolute;top:12px;right:12px;background:rgba(255,255,255,.85);font-size:11px;font-weight:600;color:var(--text-2);padding:3px 10px;border-radius:980px">Fondateur</span>
-            <span style="position:absolute;bottom:10px;left:12px;font-size:11px;color:var(--accent);font-weight:500;display:flex;align-items:center;gap:5px">⏱ 40+ heures</span>
-            <span style="position:absolute;bottom:10px;right:12px;font-size:11px;color:var(--accent);font-weight:500">🏆 Accès à vie</span>
+            <span style="position:absolute;bottom:10px;left:12px;font-size:11px;color:var(--accent);font-weight:500;display:flex;align-items:center;gap:5px">â± 40+ heures</span>
+            <span style="position:absolute;bottom:10px;right:12px;font-size:11px;color:var(--accent);font-weight:500">ðŸ† AccÃ¨s Ã  vie</span>
           </div>
           <div style="padding:16px 18px 18px;display:flex;flex-direction:column;gap:10px;flex:1">
             <div style="font-size:16px;font-weight:700;color:var(--accent);letter-spacing:-.01em">ARK Macro Program</div>
-            <div style="font-size:13px;color:var(--text-2);font-weight:300;line-height:1.6">Maîtrise l'analyse macroéconomique, construis des thèses solides et prends des positions avec conviction — du contexte global jusqu'à l'exécution.</div>
+            <div style="font-size:13px;color:var(--text-2);font-weight:300;line-height:1.6">MaÃ®trise l'analyse macroÃ©conomique, construis des thÃ¨ses solides et prends des positions avec conviction â€” du contexte global jusqu'Ã  l'exÃ©cution.</div>
             <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;margin-top:2px">
               <span style="font-weight:600;color:var(--accent)">Fondateur</span>
               <span style="color:var(--text-3);font-weight:300">12 modules</span>
             </div>
-            <button onclick="openFormationAccess()" style="display:flex;align-items:center;justify-content:center;gap:7px;background:var(--accent);color:#fff;font-size:13px;font-weight:600;padding:11px 18px;border-radius:10px;border:none;cursor:pointer;margin-top:4px;width:100%;font-family:inherit;transition:background .15s" onmouseover="this.style.background='#0077ed'" onmouseout="this.style.background='var(--accent)'">            <button onclick="openFormationAccess()" style="display:flex;align-items:center;justify-content:center;gap:7px;background:var(--accent);color:#fff;font-size:13px;font-weight:600;padding:11px 18px;border-radius:10px;border:none;cursor:pointer;margin-top:4px;width:100%;font-family:inherit;transition:background .15s" onmouseover="this.style.background='#0077ed'" onmouseout="this.style.background='var(--accent)'">&#9654; Acc�der � la formation</button>#9654; Acc�der � la formation</button>
+            <button onclick="openFormationAccess()" style="display:flex;align-items:center;justify-content:center;gap:7px;background:var(--accent);color:#fff;font-size:13px;font-weight:600;padding:11px 18px;border-radius:10px;border:none;cursor:pointer;margin-top:4px;width:100%;font-family:inherit;transition:background .15s" onmouseover="this.style.background='#0077ed'" onmouseout="this.style.background='var(--accent)'">            <button onclick="openFormationAccess()" style="display:flex;align-items:center;justify-content:center;gap:7px;background:var(--accent);color:#fff;font-size:13px;font-weight:600;padding:11px 18px;border-radius:10px;border:none;cursor:pointer;margin-top:4px;width:100%;font-family:inherit;transition:background .15s" onmouseover="this.style.background='#0077ed'" onmouseout="this.style.background='var(--accent)'">&#9654; Accéder à la formation</button>#9654; Accéder à la formation</button>
           </div>
         </div>
         <!-- PLACEHOLDER 2 -->
         <div style="border:1px solid var(--mid-gray);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;opacity:.55">
           <div style="background:linear-gradient(140deg,#e8e8ed,#f5f5f7);height:160px;display:flex;align-items:center;justify-content:center;position:relative">
-            <span style="font-size:48px;opacity:.4">🔒</span>
-            <span style="position:absolute;bottom:10px;right:12px;font-size:11px;color:var(--text-3);font-weight:500">Bientôt</span>
+            <span style="font-size:48px;opacity:.4">ðŸ”’</span>
+            <span style="position:absolute;bottom:10px;right:12px;font-size:11px;color:var(--text-3);font-weight:500">BientÃ´t</span>
           </div>
           <div style="padding:16px 18px 18px;display:flex;flex-direction:column;gap:10px;flex:1">
             <div style="font-size:16px;font-weight:700;color:var(--text-3);letter-spacing:-.01em">Prochaine formation</div>
-            <div style="font-size:13px;color:var(--text-3);font-weight:300;line-height:1.6">Une nouvelle formation ARK arrive prochainement. Réservé aux membres Fondateurs en priorité.</div>
-            <button disabled style="display:flex;align-items:center;justify-content:center;background:var(--mid-gray);color:var(--text-3);font-size:13px;font-weight:500;padding:11px 18px;border-radius:10px;border:none;margin-top:auto;cursor:not-allowed;font-family:inherit">⏳ Bientôt disponible</button>
+            <div style="font-size:13px;color:var(--text-3);font-weight:300;line-height:1.6">Une nouvelle formation ARK arrive prochainement. RÃ©servÃ© aux membres Fondateurs en prioritÃ©.</div>
+            <button disabled style="display:flex;align-items:center;justify-content:center;background:var(--mid-gray);color:var(--text-3);font-size:13px;font-weight:500;padding:11px 18px;border-radius:10px;border:none;margin-top:auto;cursor:not-allowed;font-family:inherit">â³ BientÃ´t disponible</button>
           </div>
         </div>
         <!-- PLACEHOLDER 3 -->
         <div style="border:1px solid var(--mid-gray);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;opacity:.55">
           <div style="background:linear-gradient(140deg,#e8e8ed,#f5f5f7);height:160px;display:flex;align-items:center;justify-content:center;position:relative">
-            <span style="font-size:48px;opacity:.4">🔒</span>
-            <span style="position:absolute;bottom:10px;right:12px;font-size:11px;color:var(--text-3);font-weight:500">Bientôt</span>
+            <span style="font-size:48px;opacity:.4">ðŸ”’</span>
+            <span style="position:absolute;bottom:10px;right:12px;font-size:11px;color:var(--text-3);font-weight:500">BientÃ´t</span>
           </div>
           <div style="padding:16px 18px 18px;display:flex;flex-direction:column;gap:10px;flex:1">
             <div style="font-size:16px;font-weight:700;color:var(--text-3);letter-spacing:-.01em">Prochaine formation</div>
-            <div style="font-size:13px;color:var(--text-3);font-weight:300;line-height:1.6">Une nouvelle formation ARK arrive prochainement. Réservé aux membres Fondateurs en priorité.</div>
-            <button disabled style="display:flex;align-items:center;justify-content:center;background:var(--mid-gray);color:var(--text-3);font-size:13px;font-weight:500;padding:11px 18px;border-radius:10px;border:none;margin-top:auto;cursor:not-allowed;font-family:inherit">⏳ Bientôt disponible</button>
+            <div style="font-size:13px;color:var(--text-3);font-weight:300;line-height:1.6">Une nouvelle formation ARK arrive prochainement. RÃ©servÃ© aux membres Fondateurs en prioritÃ©.</div>
+            <button disabled style="display:flex;align-items:center;justify-content:center;background:var(--mid-gray);color:var(--text-3);font-size:13px;font-weight:500;padding:11px 18px;border-radius:10px;border:none;margin-top:auto;cursor:not-allowed;font-family:inherit">â³ BientÃ´t disponible</button>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- RÉVISION -->
+  <!-- RÃ‰VISION -->
   <div class="content" id="page-revision">
     <div class="page-header">
-      <div><div class="page-welcome">Révision</div><div class="page-welcome-sub">Quiz · Flashcards · Résumés</div></div>
+      <div><div class="page-welcome">RÃ©vision</div><div class="page-welcome-sub">Quiz Â· Flashcards Â· RÃ©sumÃ©s</div></div>
       <div class="header-tabs">
-        <button class="header-tab active" onclick="tabSwitch(this)">📋 Quiz</button>
-        <button class="header-tab" onclick="tabSwitch(this)">🃏 Flashcards</button>
-        <button class="header-tab" onclick="tabSwitch(this)">📝 Résumés</button>
+        <button class="header-tab active" onclick="tabSwitch(this)">ðŸ“‹ Quiz</button>
+        <button class="header-tab" onclick="tabSwitch(this)">ðŸƒ Flashcards</button>
+        <button class="header-tab" onclick="tabSwitch(this)">ðŸ“ RÃ©sumÃ©s</button>
       </div>
     </div>
     <div class="grid2-1">
       <div class="card">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
-          <span class="tag">Module 01 · Macro Trading</span>
+          <span class="tag">Module 01 Â· Macro Trading</span>
           <span style="font-size:12px;color:var(--text-3)">Q <span id="q-num">3</span>/8</span>
         </div>
         <div class="quiz-q" id="quiz-q">Qu'est-ce que le "carry trade" dans le contexte du Forex ?</div>
         <div class="quiz-opts" id="quiz-opts">
-          <button class="quiz-opt" onclick="answer(this,false)">Acheter une devise qui se déprécie rapidement</button>
-          <button class="quiz-opt" onclick="answer(this,true)">Emprunter dans une devise à faible taux pour investir dans une devise à taux élevé</button>
-          <button class="quiz-opt" onclick="answer(this,false)">Vendre à découvert une paire de devises corrélées</button>
-          <button class="quiz-opt" onclick="answer(this,false)">Arbitrer deux marchés obligataires de zones différentes</button>
+          <button class="quiz-opt" onclick="answer(this,false)">Acheter une devise qui se dÃ©prÃ©cie rapidement</button>
+          <button class="quiz-opt" onclick="answer(this,true)">Emprunter dans une devise Ã  faible taux pour investir dans une devise Ã  taux Ã©levÃ©</button>
+          <button class="quiz-opt" onclick="answer(this,false)">Vendre Ã  dÃ©couvert une paire de devises corrÃ©lÃ©es</button>
+          <button class="quiz-opt" onclick="answer(this,false)">Arbitrer deux marchÃ©s obligataires de zones diffÃ©rentes</button>
         </div>
         <div class="quiz-actions">
           <button class="btn-p" onclick="nextQ()">Question suivante</button>
@@ -454,7 +454,7 @@ body{background:var(--off-white);color:var(--text-1);font-family:'Inter',-apple-
         <div class="card">
           <div class="card-title" style="margin-bottom:12px">Modules disponibles</div>
           <div class="mod-item"><div class="mod-num cur">01</div><div style="flex:1"><div class="mod-title">Macro Trading</div><div class="mod-meta">8 questions</div></div><span class="mod-badge bd-done">74%</span></div>
-          <div class="mod-item"><div class="mod-num">02</div><div style="flex:1"><div class="mod-title">Marchés Financiers</div><div class="mod-meta">10 questions</div></div><span class="mod-badge bd-done">88%</span></div>
+          <div class="mod-item"><div class="mod-num">02</div><div style="flex:1"><div class="mod-title">MarchÃ©s Financiers</div><div class="mod-meta">10 questions</div></div><span class="mod-badge bd-done">88%</span></div>
           <div class="mod-item"><div class="mod-num">03</div><div style="flex:1"><div class="mod-title">Analyse Macro</div><div class="mod-meta">12 questions</div></div><span class="mod-badge bd-done">92%</span></div>
           <div class="mod-item"><div class="mod-num">04</div><div style="flex:1"><div class="mod-title">Analyse des Actifs</div><div class="mod-meta">9 questions</div></div><span class="mod-badge bd-wip">Nouveau</span></div>
         </div>
@@ -473,47 +473,47 @@ body{background:var(--off-white);color:var(--text-1);font-family:'Inter',-apple-
   <!-- BONUS -->
   <div class="content" id="page-bonus">
     <div class="page-header">
-      <div><div class="page-welcome">Bonus & Ressources</div><div class="page-welcome-sub">Contenu exclusif inclus dans ton accès Fondateur</div></div>
+      <div><div class="page-welcome">Bonus & Ressources</div><div class="page-welcome-sub">Contenu exclusif inclus dans ton accÃ¨s Fondateur</div></div>
     </div>
     <div class="bonus-grid">
-      <div class="bonus-card"><span class="badge new">Nouveau</span><div class="bonus-ico">📊</div><div class="bonus-title">Template Journal de Trading</div><div class="bonus-desc">Excel/Notion pour suivre tes positions, calculer ton expectancy et analyser tes biais.</div></div>
-      <div class="bonus-card"><span class="badge exclu">Exclusif</span><div class="bonus-ico">🌐</div><div class="bonus-title">Guide COT Report</div><div class="bonus-desc">Comment lire le rapport COT pour anticiper les retournements institutionnels.</div></div>
-      <div class="bonus-card"><span class="badge new">Nouveau</span><div class="bonus-ico">📉</div><div class="bonus-title">Simulateur Monte Carlo</div><div class="bonus-desc">Outil interactif pour simuler tes scénarios de drawdown selon win rate et R/R.</div></div>
-      <div class="bonus-card"><span class="badge exclu">Exclusif</span><div class="bonus-ico">🎙</div><div class="bonus-title">Interview Fund Manager</div><div class="bonus-desc">Session exclusive avec un gérant de fonds macro sur la construction de thèses.</div></div>
-      <div class="bonus-card locked"><span class="badge lock">🔒 Verrouillé</span><div class="bonus-ico">📚</div><div class="bonus-title">Bibliothèque ARK</div><div class="bonus-desc">12 lectures fondamentales avec résumés. Dispo à partir du module 6.</div></div>
-      <div class="bonus-card locked"><span class="badge lock">🔒 Verrouillé</span><div class="bonus-ico">⚡</div><div class="bonus-title">Live Trading — Replay</div><div class="bonus-desc">Session live avec analyse en temps réel d'une thèse macro complète.</div></div>
+      <div class="bonus-card"><span class="badge new">Nouveau</span><div class="bonus-ico">ðŸ“Š</div><div class="bonus-title">Template Journal de Trading</div><div class="bonus-desc">Excel/Notion pour suivre tes positions, calculer ton expectancy et analyser tes biais.</div></div>
+      <div class="bonus-card"><span class="badge exclu">Exclusif</span><div class="bonus-ico">ðŸŒ</div><div class="bonus-title">Guide COT Report</div><div class="bonus-desc">Comment lire le rapport COT pour anticiper les retournements institutionnels.</div></div>
+      <div class="bonus-card"><span class="badge new">Nouveau</span><div class="bonus-ico">ðŸ“‰</div><div class="bonus-title">Simulateur Monte Carlo</div><div class="bonus-desc">Outil interactif pour simuler tes scÃ©narios de drawdown selon win rate et R/R.</div></div>
+      <div class="bonus-card"><span class="badge exclu">Exclusif</span><div class="bonus-ico">ðŸŽ™</div><div class="bonus-title">Interview Fund Manager</div><div class="bonus-desc">Session exclusive avec un gÃ©rant de fonds macro sur la construction de thÃ¨ses.</div></div>
+      <div class="bonus-card locked"><span class="badge lock">ðŸ”’ VerrouillÃ©</span><div class="bonus-ico">ðŸ“š</div><div class="bonus-title">BibliothÃ¨que ARK</div><div class="bonus-desc">12 lectures fondamentales avec rÃ©sumÃ©s. Dispo Ã  partir du module 6.</div></div>
+      <div class="bonus-card locked"><span class="badge lock">ðŸ”’ VerrouillÃ©</span><div class="bonus-ico">âš¡</div><div class="bonus-title">Live Trading â€” Replay</div><div class="bonus-desc">Session live avec analyse en temps rÃ©el d'une thÃ¨se macro complÃ¨te.</div></div>
     </div>
   </div>
 
-  <!-- RÉGLAGES -->
+  <!-- RÃ‰GLAGES -->
   <div class="content" id="page-reglages">
     <div class="page-header">
-      <div><div class="page-welcome">Réglages</div><div class="page-welcome-sub">Préférences et informations de compte</div></div>
+      <div><div class="page-welcome">RÃ©glages</div><div class="page-welcome-sub">PrÃ©fÃ©rences et informations de compte</div></div>
     </div>
     <div class="grid2">
       <div class="card">
-        <div class="card-title" style="margin-bottom:14px">Préférences</div>
+        <div class="card-title" style="margin-bottom:14px">PrÃ©fÃ©rences</div>
         <div class="set-row"><div><div class="set-name">Notifications de progression</div><div class="set-desc">Rappels hebdomadaires et jalons</div></div><button class="toggle on" onclick="this.classList.toggle('on')"></button></div>
         <div class="set-row"><div><div class="set-name">Lecture automatique</div><div class="set-desc">Passer au chapitre suivant</div></div><button class="toggle" onclick="this.classList.toggle('on')"></button></div>
-        <div class="set-row"><div><div class="set-name">Sous-titres</div><div class="set-desc">Afficher sur les vidéos</div></div><button class="toggle on" onclick="this.classList.toggle('on')"></button></div>
-        <div class="set-row"><div><div class="set-name">Vitesse de lecture</div><div class="set-desc">Par défaut pour les vidéos</div></div><select class="sel"><option>1.0×</option><option selected>1.25×</option><option>1.5×</option><option>2.0×</option></select></div>
+        <div class="set-row"><div><div class="set-name">Sous-titres</div><div class="set-desc">Afficher sur les vidÃ©os</div></div><button class="toggle on" onclick="this.classList.toggle('on')"></button></div>
+        <div class="set-row"><div><div class="set-name">Vitesse de lecture</div><div class="set-desc">Par dÃ©faut pour les vidÃ©os</div></div><select class="sel"><option>1.0Ã—</option><option selected>1.25Ã—</option><option>1.5Ã—</option><option>2.0Ã—</option></select></div>
       </div>
       <div class="col">
         <div class="card">
           <div class="card-title" style="margin-bottom:14px">Mon compte</div>
           <div class="set-row"><div><div class="set-name">Nom</div><div class="set-desc">Quentin</div></div><button class="sml-btn">Modifier</button></div>
-          <div class="set-row"><div><div class="set-name">Accès</div><div class="set-desc">Fondateur · Accès à vie</div></div><span style="font-size:11px;font-weight:600;color:var(--green);background:rgba(52,199,89,.1);padding:4px 10px;border-radius:980px">Actif</span></div>
+          <div class="set-row"><div><div class="set-name">AccÃ¨s</div><div class="set-desc">Fondateur Â· AccÃ¨s Ã  vie</div></div><span style="font-size:11px;font-weight:600;color:var(--green);background:rgba(52,199,89,.1);padding:4px 10px;border-radius:980px">Actif</span></div>
           <div class="set-row"><div><div class="set-name">Membre depuis</div><div class="set-desc">Mars 2026</div></div></div>
         </div>
         <div class="card">
           <div class="card-title" style="margin-bottom:14px">Support</div>
-          <div class="set-row"><div><div class="set-name">Contacter ARK</div><div class="set-desc">Une question sur la formation ?</div></div><button class="sml-btn">Email →</button></div>
-          <div class="set-row"><div><div class="set-name">Communauté Skool</div><div class="set-desc">Groupe privé des membres</div></div><button class="sml-btn">Rejoindre →</button></div>
+          <div class="set-row"><div><div class="set-name">Contacter ARK</div><div class="set-desc">Une question sur la formation ?</div></div><button class="sml-btn">Email â†’</button></div>
+          <div class="set-row"><div><div class="set-name">CommunautÃ© Skool</div><div class="set-desc">Groupe privÃ© des membres</div></div><button class="sml-btn">Rejoindre â†’</button></div>
         </div>
 
         <div class="card">
-          <div class="card-title" style="margin-bottom:4px">🔑 Code d'accès</div>
-          <div class="card-sub" style="margin-bottom:16px">Entre un code pour débloquer la formation complète</div>
+          <div class="card-title" style="margin-bottom:4px">ðŸ”‘ Code d'accÃ¨s</div>
+          <div class="card-sub" style="margin-bottom:16px">Entre un code pour dÃ©bloquer la formation complÃ¨te</div>
           <div id="access-status-block">
             <!-- Rempli dynamiquement -->
           </div>
@@ -531,7 +531,7 @@ body{background:var(--off-white);color:var(--text-1);font-family:'Inter',-apple-
               id="settings-activate-btn"
               onmouseover="this.style.background='var(--accent-h)'"
               onmouseout="this.style.background='var(--accent)'">
-              Activer →
+              Activer â†’
             </button>
             <div id="settings-alert" style="display:none;margin-top:10px;padding:10px 14px;border-radius:8px;font-size:12px;line-height:1.5"></div>
           </div>
@@ -546,8 +546,8 @@ body{background:var(--off-white);color:var(--text-1);font-family:'Inter',-apple-
   <div onclick="closePromoPopup()" style="position:absolute;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(4px)"></div>
   <div style="position:relative;z-index:1;background:#fff;border-radius:20px;padding:32px 28px;width:100%;max-width:400px;box-shadow:0 24px 60px rgba(0,0,0,.15)">
     <div style="font-size:24px;text-align:center;margin-bottom:12px">&#128273;</div>
-    <div style="font-size:18px;font-weight:600;letter-spacing:-.01em;margin-bottom:6px;text-align:center">Accéder à la formation</div>
-    <div style="font-size:13px;color:var(--text-2);font-weight:300;margin-bottom:20px;text-align:center;line-height:1.5">Entre ton code d’accès pour débloquer la formation complète ARK.</div>
+    <div style="font-size:18px;font-weight:600;letter-spacing:-.01em;margin-bottom:6px;text-align:center">AccÃ©der Ã  la formation</div>
+    <div style="font-size:13px;color:var(--text-2);font-weight:300;margin-bottom:20px;text-align:center;line-height:1.5">Entre ton code dâ€™accÃ¨s pour dÃ©bloquer la formation complÃ¨te ARK.</div>
     <div id="popup-form">
       <div style="position:relative;margin-bottom:12px">
         <input type="text" id="popup-promo" placeholder="ARK-XXXX"
@@ -560,17 +560,17 @@ body{background:var(--off-white);color:var(--text-1);font-family:'Inter',-apple-
       <button onclick="activateFromPopup()" id="popup-btn"
         style="width:100%;padding:12px;background:var(--accent);color:#fff;font-size:14px;font-weight:600;border:none;border-radius:980px;cursor:pointer;font-family:inherit;transition:background .15s"
         onmouseover="this.style.background='#0077ed'" onmouseout="this.style.background='var(--accent)'">
-        Activer mon accès →
+        Activer mon accÃ¨s â†’
       </button>
       <div id="popup-alert" style="display:none;margin-top:10px;padding:10px 14px;border-radius:8px;font-size:12px;line-height:1.5;background:rgba(255,59,48,.08);color:#d93025;border:1px solid rgba(255,59,48,.15)"></div>
     </div>
     <div id="popup-success" style="display:none;text-align:center;padding:8px 0">
       <div style="font-size:32px;margin-bottom:12px">&#x2705;</div>
-      <div style="font-size:15px;font-weight:600;margin-bottom:8px">Accès activé !</div>
+      <div style="font-size:15px;font-weight:600;margin-bottom:8px">AccÃ¨s activÃ© !</div>
       <button onclick="window.location.href='ark_platform.html'"
         style="padding:12px 24px;background:var(--accent);color:#fff;font-size:14px;font-weight:600;border:none;border-radius:980px;cursor:pointer;font-family:inherit;margin-top:8px"
         onmouseover="this.style.background='#0077ed'" onmouseout="this.style.background='var(--accent)'">
-        Accéder à la formation →
+        AccÃ©der Ã  la formation â†’
       </button>
     </div>
     <button onclick="closePromoPopup()" style="position:absolute;top:14px;right:14px;width:28px;height:28px;border-radius:50%;background:var(--light-gray);border:none;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center">&#x2715;</button>
@@ -618,9 +618,9 @@ function animProgress() {
 
 let answered = false, score = 2, total = 2, qIdx = 0;
 const QS = [
-  { q: "Qu'est-ce que le 'carry trade' dans le contexte du Forex ?", opts: [{t:"Acheter une devise qui se déprécie rapidement",ok:false},{t:"Emprunter dans une devise à faible taux pour investir dans une devise à taux élevé",ok:true},{t:"Vendre à découvert une paire de devises corrélées",ok:false},{t:"Arbitrer deux marchés obligataires de zones différentes",ok:false}] },
-  { q: "Quel indicateur mesure le rapport entre rendement excédentaire et volatilité ?", opts: [{t:"Le ratio de Calmar",ok:false},{t:"Le win rate",ok:false},{t:"Le ratio de Sharpe",ok:true},{t:"Le maximum drawdown",ok:false}] },
-  { q: "Qu'est-ce qu'un régime de marché 'risk-off' ?", opts: [{t:"Un marché où les actifs risqués surperforment",ok:false},{t:"Une phase où les investisseurs fuient vers les actifs refuges",ok:true},{t:"Volatilité inférieure à 10%",ok:false},{t:"Période de taux d'intérêt négatifs",ok:false}] },
+  { q: "Qu'est-ce que le 'carry trade' dans le contexte du Forex ?", opts: [{t:"Acheter une devise qui se dÃ©prÃ©cie rapidement",ok:false},{t:"Emprunter dans une devise Ã  faible taux pour investir dans une devise Ã  taux Ã©levÃ©",ok:true},{t:"Vendre Ã  dÃ©couvert une paire de devises corrÃ©lÃ©es",ok:false},{t:"Arbitrer deux marchÃ©s obligataires de zones diffÃ©rentes",ok:false}] },
+  { q: "Quel indicateur mesure le rapport entre rendement excÃ©dentaire et volatilitÃ© ?", opts: [{t:"Le ratio de Calmar",ok:false},{t:"Le win rate",ok:false},{t:"Le ratio de Sharpe",ok:true},{t:"Le maximum drawdown",ok:false}] },
+  { q: "Qu'est-ce qu'un rÃ©gime de marchÃ© 'risk-off' ?", opts: [{t:"Un marchÃ© oÃ¹ les actifs risquÃ©s surperforment",ok:false},{t:"Une phase oÃ¹ les investisseurs fuient vers les actifs refuges",ok:true},{t:"VolatilitÃ© infÃ©rieure Ã  10%",ok:false},{t:"PÃ©riode de taux d'intÃ©rÃªt nÃ©gatifs",ok:false}] },
 ];
 
 function answer(btn, ok) {
@@ -664,8 +664,8 @@ window.addEventListener('load', () => {
   <div id="promo-backdrop" onclick="closePromoPopup()" style="position:absolute;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(4px)"></div>
   <div style="position:relative;z-index:1;background:#fff;border-radius:20px;padding:32px 28px;width:100%;max-width:400px;box-shadow:0 24px 60px rgba(0,0,0,.15)">
     <div style="font-size:24px;text-align:center;margin-bottom:12px">&#128273;</div>
-    <div style="font-size:18px;font-weight:600;letter-spacing:-.01em;margin-bottom:6px;text-align:center">Accéder à la formation</div>
-    <div id="popup-sub" style="font-size:13px;color:var(--text-2);font-weight:300;margin-bottom:20px;text-align:center;line-height:1.5">Entre ton code d'accès pour débloquer la formation complète ARK.</div>
+    <div style="font-size:18px;font-weight:600;letter-spacing:-.01em;margin-bottom:6px;text-align:center">AccÃ©der Ã  la formation</div>
+    <div id="popup-sub" style="font-size:13px;color:var(--text-2);font-weight:300;margin-bottom:20px;text-align:center;line-height:1.5">Entre ton code d'accÃ¨s pour dÃ©bloquer la formation complÃ¨te ARK.</div>
     <div id="popup-form">
       <div style="position:relative;margin-bottom:12px">
         <input type="text" id="popup-promo" placeholder="ARK-XXXX"
@@ -679,18 +679,18 @@ window.addEventListener('load', () => {
         style="width:100%;padding:12px;background:var(--accent);color:#fff;font-size:14px;font-weight:600;border:none;border-radius:980px;cursor:pointer;font-family:inherit;transition:background .15s"
         onmouseover="this.style.background='#0077ed'"
         onmouseout="this.style.background='var(--accent)'">
-        Activer mon accès →
+        Activer mon accÃ¨s â†’
       </button>
       <div id="popup-alert" style="display:none;margin-top:10px;padding:10px 14px;border-radius:8px;font-size:12px;line-height:1.5;background:rgba(255,59,48,.08);color:#d93025;border:1px solid rgba(255,59,48,.15)"></div>
     </div>
     <div id="popup-success" style="display:none;text-align:center">
       <div style="font-size:32px;margin-bottom:12px">&#x2705;</div>
-      <div style="font-size:15px;font-weight:600;margin-bottom:8px">Accès activé !</div>
+      <div style="font-size:15px;font-weight:600;margin-bottom:8px">AccÃ¨s activÃ© !</div>
       <button onclick="window.location.href='ark_platform.html'"
         style="padding:12px 24px;background:var(--accent);color:#fff;font-size:14px;font-weight:600;border:none;border-radius:980px;cursor:pointer;font-family:inherit;margin-top:8px;transition:background .15s"
         onmouseover="this.style.background='#0077ed'"
         onmouseout="this.style.background='var(--accent)'">
-        Accéder à la formation →
+        AccÃ©der Ã  la formation â†’
       </button>
     </div>
     <button onclick="closePromoPopup()" style="position:absolute;top:14px;right:14px;width:28px;height:28px;border-radius:50%;background:var(--light-gray);border:none;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;font-family:inherit">&#x2715;</button>
@@ -701,7 +701,7 @@ window.addEventListener('load', () => {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ARK — Dashboard</title>
+<title>ARK â€” Dashboard</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -918,19 +918,19 @@ body{background:var(--off-white);color:var(--text-1);font-family:'Inter',-apple-
   </div>
   <nav class="sidebar-nav">
     <div class="nav-label">Principal</div>
-    <div class="nav-item active" onclick="nav('dashboard',this)"><span class="nav-icon">⊞</span> Dashboard</div>
-    <div class="nav-item" onclick="nav('cours',this)"><span class="nav-icon">▶</span> Cours <span class="nav-pill blue">3</span></div>
-    <div class="nav-item" onclick="nav('revision',this)"><span class="nav-icon">◈</span> Révision</div>
+    <div class="nav-item active" onclick="nav('dashboard',this)"><span class="nav-icon">âŠž</span> Dashboard</div>
+    <div class="nav-item" onclick="nav('cours',this)"><span class="nav-icon">â–¶</span> Cours <span class="nav-pill blue">3</span></div>
+    <div class="nav-item" onclick="nav('revision',this)"><span class="nav-icon">â—ˆ</span> RÃ©vision</div>
     <div class="nav-label">Contenu</div>
-    <div class="nav-item" onclick="nav('bonus',this)"><span class="nav-icon">✦</span> Bonus <span class="nav-pill">2</span></div>
+    <div class="nav-item" onclick="nav('bonus',this)"><span class="nav-icon">âœ¦</span> Bonus <span class="nav-pill">2</span></div>
     <div class="nav-label">Compte</div>
-    <div class="nav-item" onclick="nav('reglages',this)"><span class="nav-icon">◎</span> Réglages</div>
-    <div class="nav-item" onclick="ARK.logout()"><span class="nav-icon">⤶</span> Sortir</div>
+    <div class="nav-item" onclick="nav('reglages',this)"><span class="nav-icon">â—Ž</span> RÃ©glages</div>
+    <div class="nav-item" onclick="ARK.logout()"><span class="nav-icon">â¤¶</span> Sortir</div>
   </nav>
   <div class="sidebar-user">
     <div class="user-row">
       <div class="user-av">Q</div>
-      <div><div class="user-name">Quentin</div><div class="user-plan">Accès à vie · Fondateur</div></div>
+      <div><div class="user-name">Quentin</div><div class="user-plan">AccÃ¨s Ã  vie Â· Fondateur</div></div>
     </div>
   </div>
 </aside>
@@ -941,53 +941,53 @@ body{background:var(--off-white);color:var(--text-1);font-family:'Inter',-apple-
   <div class="content active" id="page-dashboard">
     <div class="page-header">
       <div>
-        <div class="page-welcome">Bienvenue, <span>Quentin</span> 👋</div>
+        <div class="page-welcome">Bienvenue, <span>Quentin</span> ðŸ‘‹</div>
         <div class="page-welcome-sub">Suis ta progression et continue ton parcours de formation</div>
       </div>
       <div class="header-tabs">
-        <button class="header-tab active" onclick="tabSwitch(this)"><span>📊</span> Dashboard</button>
-        <button class="header-tab" onclick="tabSwitch(this)"><span>🕐</span> Historique</button>
-        <button class="header-tab" onclick="tabSwitch(this)"><span>🔖</span> Favoris</button>
-        <button class="header-tab" onclick="tabSwitch(this)"><span>🗺</span> Roadmap</button>
+        <button class="header-tab active" onclick="tabSwitch(this)"><span>ðŸ“Š</span> Dashboard</button>
+        <button class="header-tab" onclick="tabSwitch(this)"><span>ðŸ•</span> Historique</button>
+        <button class="header-tab" onclick="tabSwitch(this)"><span>ðŸ”–</span> Favoris</button>
+        <button class="header-tab" onclick="tabSwitch(this)"><span>ðŸ—º</span> Roadmap</button>
       </div>
     </div>
 
     <div class="card">
       <div class="card-top">
         <div>
-          <div class="card-title">📈 Aperçu des performances</div>
-          <div class="card-sub">Ton activité récente et ta progression</div>
+          <div class="card-title">ðŸ“ˆ AperÃ§u des performances</div>
+          <div class="card-sub">Ton activitÃ© rÃ©cente et ta progression</div>
         </div>
-        <span class="card-chev" id="perf-chev" onclick="toggleCard('perf-body','perf-chev')">∨</span>
+        <span class="card-chev" id="perf-chev" onclick="toggleCard('perf-body','perf-chev')">âˆ¨</span>
       </div>
       <div id="perf-body">
         <div class="kpi-trio">
-          <div class="kpi-cell"><div class="kpi-ico">🎯</div><div><div class="kpi-val">74%</div><div class="kpi-lbl">Score moyen révisions</div></div></div>
-          <div class="kpi-cell"><div class="kpi-ico">📝</div><div><div class="kpi-val">38</div><div class="kpi-lbl">Questions tentées</div></div></div>
-          <div class="kpi-cell"><div class="kpi-ico">🔖</div><div><div class="kpi-val">7</div><div class="kpi-lbl">Chapitres en favoris</div></div></div>
+          <div class="kpi-cell"><div class="kpi-ico">ðŸŽ¯</div><div><div class="kpi-val">74%</div><div class="kpi-lbl">Score moyen rÃ©visions</div></div></div>
+          <div class="kpi-cell"><div class="kpi-ico">ðŸ“</div><div><div class="kpi-val">38</div><div class="kpi-lbl">Questions tentÃ©es</div></div></div>
+          <div class="kpi-cell"><div class="kpi-ico">ðŸ”–</div><div><div class="kpi-val">7</div><div class="kpi-lbl">Chapitres en favoris</div></div></div>
         </div>
       </div>
     </div>
 
     <div class="cta-banner">
       <div>
-        <div class="cta-title">🚀 Module 06 — Analyse Technique Appliquée</div>
-        <div class="cta-sub">Tu as terminé 65% du module 05. Encore un effort pour débloquer la suite.</div>
+        <div class="cta-title">ðŸš€ Module 06 â€” Analyse Technique AppliquÃ©e</div>
+        <div class="cta-sub">Tu as terminÃ© 65% du module 05. Encore un effort pour dÃ©bloquer la suite.</div>
       </div>
-      <button class="cta-btn" onclick="nav('cours', document.querySelectorAll('.nav-item')[1])">▶ Continuer le module 05</button>
+      <button class="cta-btn" onclick="nav('cours', document.querySelectorAll('.nav-item')[1])">â–¶ Continuer le module 05</button>
     </div>
 
     <div class="card">
       <div class="card-top" style="margin-bottom:0">
         <div>
-          <div class="card-title">🏆 Rang ARK & Métriques</div>
-          <div class="card-sub">Progression dans le programme et indicateurs clés</div>
+          <div class="card-title">ðŸ† Rang ARK & MÃ©triques</div>
+          <div class="card-sub">Progression dans le programme et indicateurs clÃ©s</div>
         </div>
       </div>
       <div class="rank-wrap">
-        <div class="rank-lbl-row"><div class="rank-lbl">🎓 Analyste Macro — Niveau II</div></div>
+        <div class="rank-lbl-row"><div class="rank-lbl">ðŸŽ“ Analyste Macro â€” Niveau II</div></div>
         <div class="rank-track"><div class="rank-fill" id="rank-fill"></div></div>
-        <div class="rank-ends"><span>Analyste I</span><span>42% vers Niveau III</span><span>Stratège Macro</span></div>
+        <div class="rank-ends"><span>Analyste I</span><span>42% vers Niveau III</span><span>StratÃ¨ge Macro</span></div>
       </div>
       <div class="rings-row">
         <div class="ring-cell">
@@ -1006,7 +1006,7 @@ body{background:var(--off-white);color:var(--text-1);font-family:'Inter',-apple-
             <text x="40" y="45" text-anchor="middle" font-family="Inter,sans-serif" font-size="15" font-weight="600" fill="#1d1d1f">74%</text>
           </svg>
           <div class="ring-name">Score moyen</div>
-          <div class="ring-note">Quiz & révisions</div>
+          <div class="ring-note">Quiz & rÃ©visions</div>
         </div>
         <div class="ring-cell">
           <svg width="80" height="80" viewBox="0 0 80 80">
@@ -1014,7 +1014,7 @@ body{background:var(--off-white);color:var(--text-1);font-family:'Inter',-apple-
             <circle cx="40" cy="40" r="32" fill="none" stroke="#ff9500" stroke-width="8" stroke-dasharray="201" stroke-dashoffset="90" stroke-linecap="round" transform="rotate(-90 40 40)"/>
             <text x="40" y="45" text-anchor="middle" font-family="Inter,sans-serif" font-size="15" font-weight="600" fill="#1d1d1f">55%</text>
           </svg>
-          <div class="ring-name">Assiduité</div>
+          <div class="ring-name">AssiduitÃ©</div>
           <div class="ring-note">Sessions cette semaine</div>
         </div>
       </div>
@@ -1024,24 +1024,24 @@ body{background:var(--off-white);color:var(--text-1);font-family:'Inter',-apple-
       <div class="card">
         <div class="card-top">
           <div><div class="card-title">Avancement modules</div><div class="card-sub">Progression par module</div></div>
-          <span class="card-link" onclick="nav('cours', document.querySelectorAll('.nav-item')[1])">Voir tout →</span>
+          <span class="card-link" onclick="nav('cours', document.querySelectorAll('.nav-item')[1])">Voir tout â†’</span>
         </div>
         <div style="display:flex;flex-direction:column;gap:12px;margin-top:16px">
-          <div class="prog-wrap"><div class="prog-row"><span>01 · Introduction Macro</span><span>100%</span></div><div class="prog-track"><div class="prog-fill g" style="width:100%"></div></div></div>
-          <div class="prog-wrap"><div class="prog-row"><span>02 · Marchés Financiers</span><span>100%</span></div><div class="prog-track"><div class="prog-fill g" style="width:100%"></div></div></div>
-          <div class="prog-wrap"><div class="prog-row"><span>03 · Analyse Macro</span><span>100%</span></div><div class="prog-track"><div class="prog-fill g" style="width:100%"></div></div></div>
-          <div class="prog-wrap"><div class="prog-row"><span>04 · Analyse des Actifs</span><span>100%</span></div><div class="prog-track"><div class="prog-fill g" style="width:100%"></div></div></div>
-          <div class="prog-wrap"><div class="prog-row"><span>05 · Construction d'une Thèse</span><span>65%</span></div><div class="prog-track"><div class="prog-fill" style="width:65%"></div></div></div>
-          <div class="prog-wrap" style="opacity:.5"><div class="prog-row"><span>06 · Analyse Technique</span><span>0%</span></div><div class="prog-track"><div class="prog-fill" style="width:0%"></div></div></div>
+          <div class="prog-wrap"><div class="prog-row"><span>01 Â· Introduction Macro</span><span>100%</span></div><div class="prog-track"><div class="prog-fill g" style="width:100%"></div></div></div>
+          <div class="prog-wrap"><div class="prog-row"><span>02 Â· MarchÃ©s Financiers</span><span>100%</span></div><div class="prog-track"><div class="prog-fill g" style="width:100%"></div></div></div>
+          <div class="prog-wrap"><div class="prog-row"><span>03 Â· Analyse Macro</span><span>100%</span></div><div class="prog-track"><div class="prog-fill g" style="width:100%"></div></div></div>
+          <div class="prog-wrap"><div class="prog-row"><span>04 Â· Analyse des Actifs</span><span>100%</span></div><div class="prog-track"><div class="prog-fill g" style="width:100%"></div></div></div>
+          <div class="prog-wrap"><div class="prog-row"><span>05 Â· Construction d'une ThÃ¨se</span><span>65%</span></div><div class="prog-track"><div class="prog-fill" style="width:65%"></div></div></div>
+          <div class="prog-wrap" style="opacity:.5"><div class="prog-row"><span>06 Â· Analyse Technique</span><span>0%</span></div><div class="prog-track"><div class="prog-fill" style="width:0%"></div></div></div>
         </div>
       </div>
       <div class="card">
-        <div class="card-top" style="margin-bottom:8px"><div class="card-title">Activité récente</div></div>
-        <div class="act-item"><div class="act-dot g"></div><div><div class="act-text"><strong>Module 04 terminé</strong></div><div class="act-time">Il y a 2 jours</div></div></div>
-        <div class="act-item"><div class="act-dot"></div><div><div class="act-text"><strong>Module 05 débuté</strong></div><div class="act-time">Il y a 2 jours</div></div></div>
-        <div class="act-item"><div class="act-dot o"></div><div><div class="act-text"><strong>Quiz Macro</strong> · 74%</div><div class="act-time">Il y a 5 jours</div></div></div>
-        <div class="act-item"><div class="act-dot g"></div><div><div class="act-text"><strong>Module 03 terminé</strong></div><div class="act-time">Il y a 1 sem.</div></div></div>
-        <div class="act-item"><div class="act-dot"></div><div><div class="act-text"><strong>Bonus Journal</strong> téléchargé</div><div class="act-time">Il y a 1 sem.</div></div></div>
+        <div class="card-top" style="margin-bottom:8px"><div class="card-title">ActivitÃ© rÃ©cente</div></div>
+        <div class="act-item"><div class="act-dot g"></div><div><div class="act-text"><strong>Module 04 terminÃ©</strong></div><div class="act-time">Il y a 2 jours</div></div></div>
+        <div class="act-item"><div class="act-dot"></div><div><div class="act-text"><strong>Module 05 dÃ©butÃ©</strong></div><div class="act-time">Il y a 2 jours</div></div></div>
+        <div class="act-item"><div class="act-dot o"></div><div><div class="act-text"><strong>Quiz Macro</strong> Â· 74%</div><div class="act-time">Il y a 5 jours</div></div></div>
+        <div class="act-item"><div class="act-dot g"></div><div><div class="act-text"><strong>Module 03 terminÃ©</strong></div><div class="act-time">Il y a 1 sem.</div></div></div>
+        <div class="act-item"><div class="act-dot"></div><div><div class="act-text"><strong>Bonus Journal</strong> tÃ©lÃ©chargÃ©</div><div class="act-time">Il y a 1 sem.</div></div></div>
       </div>
     </div>
   </div>
@@ -1049,98 +1049,98 @@ body{background:var(--off-white);color:var(--text-1);font-family:'Inter',-apple-
   <!-- COURS -->
   <div class="content" id="page-cours">
     <div style="background:var(--accent);border-radius:var(--r-lg);padding:34px 28px 28px;text-align:center">
-      <div style="font-size:28px;font-weight:700;color:#fff;letter-spacing:-.02em;margin-bottom:8px">🎓 ARK — Formation Macro Trading</div>
-      <div style="font-size:14px;color:rgba(255,255,255,.65);font-weight:300;max-width:520px;margin:0 auto 22px">Maîtrise l'analyse macro de zéro jusqu'au niveau institutionnel avec un programme complet et structuré</div>
+      <div style="font-size:28px;font-weight:700;color:#fff;letter-spacing:-.02em;margin-bottom:8px">ðŸŽ“ ARK â€” Formation Macro Trading</div>
+      <div style="font-size:14px;color:rgba(255,255,255,.65);font-weight:300;max-width:520px;margin:0 auto 22px">MaÃ®trise l'analyse macro de zÃ©ro jusqu'au niveau institutionnel avec un programme complet et structurÃ©</div>
       <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
-        <button class="cours-pill active-pill">🗺 Roadmap</button>
-        <button class="cours-pill">▶ Vidéos</button>
-        <button class="cours-pill">📋 Révision</button>
-        <button class="cours-pill">📝 Exercices</button>
-        <button class="cours-pill">✦ Bonus</button>
-        <button class="cours-pill">🏆 Certificat</button>
+        <button class="cours-pill active-pill">ðŸ—º Roadmap</button>
+        <button class="cours-pill">â–¶ VidÃ©os</button>
+        <button class="cours-pill">ðŸ“‹ RÃ©vision</button>
+        <button class="cours-pill">ðŸ“ Exercices</button>
+        <button class="cours-pill">âœ¦ Bonus</button>
+        <button class="cours-pill">ðŸ† Certificat</button>
       </div>
     </div>
 
     <div style="background:#0a1f44;border-radius:var(--r-lg);padding:20px 26px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
       <div>
-        <div style="font-size:16px;font-weight:600;color:#fff;display:flex;align-items:center;gap:8px">🚀 Module 05 en cours — Construction d'une Thèse</div>
-        <div style="font-size:13px;color:rgba(255,255,255,.42);font-weight:300;margin-top:3px">Tu es à 65% · Chapitre 4/6 · Continue pour débloquer le Module 06</div>
+        <div style="font-size:16px;font-weight:600;color:#fff;display:flex;align-items:center;gap:8px">ðŸš€ Module 05 en cours â€” Construction d'une ThÃ¨se</div>
+        <div style="font-size:13px;color:rgba(255,255,255,.42);font-weight:300;margin-top:3px">Tu es Ã  65% Â· Chapitre 4/6 Â· Continue pour dÃ©bloquer le Module 06</div>
       </div>
-      <button class="cta-btn" style="background:#fff;color:#0a1f44;font-weight:600">▶ Reprendre</button>
+      <button class="cta-btn" style="background:#fff;color:#0a1f44;font-weight:600">â–¶ Reprendre</button>
     </div>
 
     <div style="background:var(--white);border-radius:var(--r-lg);border:1px solid var(--border);padding:26px 24px">
-      <div style="font-size:20px;font-weight:700;letter-spacing:-.02em;margin-bottom:4px">🎓 Formations disponibles</div>
-      <div style="font-size:13px;color:var(--text-3);font-weight:300;margin-bottom:24px">Accède à ta formation et reprends là où tu t'es arrêté</div>
+      <div style="font-size:20px;font-weight:700;letter-spacing:-.02em;margin-bottom:4px">ðŸŽ“ Formations disponibles</div>
+      <div style="font-size:13px;color:var(--text-3);font-weight:300;margin-bottom:24px">AccÃ¨de Ã  ta formation et reprends lÃ  oÃ¹ tu t'es arrÃªtÃ©</div>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
         <!-- ARK MACRO PROGRAM -->
         <div style="border:1px solid var(--mid-gray);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s;cursor:pointer" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 10px 28px rgba(0,0,0,0.08)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
           <div style="background:linear-gradient(140deg,#c8daff,#ddeaff);height:160px;display:flex;align-items:center;justify-content:center;position:relative">
-            <span style="font-size:48px">📈</span>
+            <span style="font-size:48px">ðŸ“ˆ</span>
             <span style="position:absolute;top:12px;right:12px;background:rgba(255,255,255,.85);font-size:11px;font-weight:600;color:var(--text-2);padding:3px 10px;border-radius:980px">Fondateur</span>
-            <span style="position:absolute;bottom:10px;left:12px;font-size:11px;color:var(--accent);font-weight:500;display:flex;align-items:center;gap:5px">⏱ 40+ heures</span>
-            <span style="position:absolute;bottom:10px;right:12px;font-size:11px;color:var(--accent);font-weight:500">🏆 Accès à vie</span>
+            <span style="position:absolute;bottom:10px;left:12px;font-size:11px;color:var(--accent);font-weight:500;display:flex;align-items:center;gap:5px">â± 40+ heures</span>
+            <span style="position:absolute;bottom:10px;right:12px;font-size:11px;color:var(--accent);font-weight:500">ðŸ† AccÃ¨s Ã  vie</span>
           </div>
           <div style="padding:16px 18px 18px;display:flex;flex-direction:column;gap:10px;flex:1">
             <div style="font-size:16px;font-weight:700;color:var(--accent);letter-spacing:-.01em">ARK Macro Program</div>
-            <div style="font-size:13px;color:var(--text-2);font-weight:300;line-height:1.6">Maîtrise l'analyse macroéconomique, construis des thèses solides et prends des positions avec conviction — du contexte global jusqu'à l'exécution.</div>
+            <div style="font-size:13px;color:var(--text-2);font-weight:300;line-height:1.6">MaÃ®trise l'analyse macroÃ©conomique, construis des thÃ¨ses solides et prends des positions avec conviction â€” du contexte global jusqu'Ã  l'exÃ©cution.</div>
             <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;margin-top:2px">
               <span style="font-weight:600;color:var(--accent)">Fondateur</span>
               <span style="color:var(--text-3);font-weight:300">12 modules</span>
             </div>
-            <button onclick="openFormationAccess()" style="display:flex;align-items:center;justify-content:center;gap:7px;background:var(--accent);color:#fff;font-size:13px;font-weight:600;padding:11px 18px;border-radius:10px;border:none;cursor:pointer;margin-top:4px;width:100%;font-family:inherit;transition:background .15s" onmouseover="this.style.background='#0077ed'" onmouseout="this.style.background='var(--accent)'">            <button onclick="openFormationAccess()" style="display:flex;align-items:center;justify-content:center;gap:7px;background:var(--accent);color:#fff;font-size:13px;font-weight:600;padding:11px 18px;border-radius:10px;border:none;cursor:pointer;margin-top:4px;width:100%;font-family:inherit;transition:background .15s" onmouseover="this.style.background='#0077ed'" onmouseout="this.style.background='var(--accent)'">&#9654; Acc�der � la formation</button>#9654; Acc�der � la formation</button>
+            <button onclick="openFormationAccess()" style="display:flex;align-items:center;justify-content:center;gap:7px;background:var(--accent);color:#fff;font-size:13px;font-weight:600;padding:11px 18px;border-radius:10px;border:none;cursor:pointer;margin-top:4px;width:100%;font-family:inherit;transition:background .15s" onmouseover="this.style.background='#0077ed'" onmouseout="this.style.background='var(--accent)'">            <button onclick="openFormationAccess()" style="display:flex;align-items:center;justify-content:center;gap:7px;background:var(--accent);color:#fff;font-size:13px;font-weight:600;padding:11px 18px;border-radius:10px;border:none;cursor:pointer;margin-top:4px;width:100%;font-family:inherit;transition:background .15s" onmouseover="this.style.background='#0077ed'" onmouseout="this.style.background='var(--accent)'">&#9654; Accéder à la formation</button>#9654; Accéder à la formation</button>
           </div>
         </div>
         <!-- PLACEHOLDER 2 -->
         <div style="border:1px solid var(--mid-gray);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;opacity:.55">
           <div style="background:linear-gradient(140deg,#e8e8ed,#f5f5f7);height:160px;display:flex;align-items:center;justify-content:center;position:relative">
-            <span style="font-size:48px;opacity:.4">🔒</span>
-            <span style="position:absolute;bottom:10px;right:12px;font-size:11px;color:var(--text-3);font-weight:500">Bientôt</span>
+            <span style="font-size:48px;opacity:.4">ðŸ”’</span>
+            <span style="position:absolute;bottom:10px;right:12px;font-size:11px;color:var(--text-3);font-weight:500">BientÃ´t</span>
           </div>
           <div style="padding:16px 18px 18px;display:flex;flex-direction:column;gap:10px;flex:1">
             <div style="font-size:16px;font-weight:700;color:var(--text-3);letter-spacing:-.01em">Prochaine formation</div>
-            <div style="font-size:13px;color:var(--text-3);font-weight:300;line-height:1.6">Une nouvelle formation ARK arrive prochainement. Réservé aux membres Fondateurs en priorité.</div>
-            <button disabled style="display:flex;align-items:center;justify-content:center;background:var(--mid-gray);color:var(--text-3);font-size:13px;font-weight:500;padding:11px 18px;border-radius:10px;border:none;margin-top:auto;cursor:not-allowed;font-family:inherit">⏳ Bientôt disponible</button>
+            <div style="font-size:13px;color:var(--text-3);font-weight:300;line-height:1.6">Une nouvelle formation ARK arrive prochainement. RÃ©servÃ© aux membres Fondateurs en prioritÃ©.</div>
+            <button disabled style="display:flex;align-items:center;justify-content:center;background:var(--mid-gray);color:var(--text-3);font-size:13px;font-weight:500;padding:11px 18px;border-radius:10px;border:none;margin-top:auto;cursor:not-allowed;font-family:inherit">â³ BientÃ´t disponible</button>
           </div>
         </div>
         <!-- PLACEHOLDER 3 -->
         <div style="border:1px solid var(--mid-gray);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;opacity:.55">
           <div style="background:linear-gradient(140deg,#e8e8ed,#f5f5f7);height:160px;display:flex;align-items:center;justify-content:center;position:relative">
-            <span style="font-size:48px;opacity:.4">🔒</span>
-            <span style="position:absolute;bottom:10px;right:12px;font-size:11px;color:var(--text-3);font-weight:500">Bientôt</span>
+            <span style="font-size:48px;opacity:.4">ðŸ”’</span>
+            <span style="position:absolute;bottom:10px;right:12px;font-size:11px;color:var(--text-3);font-weight:500">BientÃ´t</span>
           </div>
           <div style="padding:16px 18px 18px;display:flex;flex-direction:column;gap:10px;flex:1">
             <div style="font-size:16px;font-weight:700;color:var(--text-3);letter-spacing:-.01em">Prochaine formation</div>
-            <div style="font-size:13px;color:var(--text-3);font-weight:300;line-height:1.6">Une nouvelle formation ARK arrive prochainement. Réservé aux membres Fondateurs en priorité.</div>
-            <button disabled style="display:flex;align-items:center;justify-content:center;background:var(--mid-gray);color:var(--text-3);font-size:13px;font-weight:500;padding:11px 18px;border-radius:10px;border:none;margin-top:auto;cursor:not-allowed;font-family:inherit">⏳ Bientôt disponible</button>
+            <div style="font-size:13px;color:var(--text-3);font-weight:300;line-height:1.6">Une nouvelle formation ARK arrive prochainement. RÃ©servÃ© aux membres Fondateurs en prioritÃ©.</div>
+            <button disabled style="display:flex;align-items:center;justify-content:center;background:var(--mid-gray);color:var(--text-3);font-size:13px;font-weight:500;padding:11px 18px;border-radius:10px;border:none;margin-top:auto;cursor:not-allowed;font-family:inherit">â³ BientÃ´t disponible</button>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- RÉVISION -->
+  <!-- RÃ‰VISION -->
   <div class="content" id="page-revision">
     <div class="page-header">
-      <div><div class="page-welcome">Révision</div><div class="page-welcome-sub">Quiz · Flashcards · Résumés</div></div>
+      <div><div class="page-welcome">RÃ©vision</div><div class="page-welcome-sub">Quiz Â· Flashcards Â· RÃ©sumÃ©s</div></div>
       <div class="header-tabs">
-        <button class="header-tab active" onclick="tabSwitch(this)">📋 Quiz</button>
-        <button class="header-tab" onclick="tabSwitch(this)">🃏 Flashcards</button>
-        <button class="header-tab" onclick="tabSwitch(this)">📝 Résumés</button>
+        <button class="header-tab active" onclick="tabSwitch(this)">ðŸ“‹ Quiz</button>
+        <button class="header-tab" onclick="tabSwitch(this)">ðŸƒ Flashcards</button>
+        <button class="header-tab" onclick="tabSwitch(this)">ðŸ“ RÃ©sumÃ©s</button>
       </div>
     </div>
     <div class="grid2-1">
       <div class="card">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
-          <span class="tag">Module 01 · Macro Trading</span>
+          <span class="tag">Module 01 Â· Macro Trading</span>
           <span style="font-size:12px;color:var(--text-3)">Q <span id="q-num">3</span>/8</span>
         </div>
         <div class="quiz-q" id="quiz-q">Qu'est-ce que le "carry trade" dans le contexte du Forex ?</div>
         <div class="quiz-opts" id="quiz-opts">
-          <button class="quiz-opt" onclick="answer(this,false)">Acheter une devise qui se déprécie rapidement</button>
-          <button class="quiz-opt" onclick="answer(this,true)">Emprunter dans une devise à faible taux pour investir dans une devise à taux élevé</button>
-          <button class="quiz-opt" onclick="answer(this,false)">Vendre à découvert une paire de devises corrélées</button>
-          <button class="quiz-opt" onclick="answer(this,false)">Arbitrer deux marchés obligataires de zones différentes</button>
+          <button class="quiz-opt" onclick="answer(this,false)">Acheter une devise qui se dÃ©prÃ©cie rapidement</button>
+          <button class="quiz-opt" onclick="answer(this,true)">Emprunter dans une devise Ã  faible taux pour investir dans une devise Ã  taux Ã©levÃ©</button>
+          <button class="quiz-opt" onclick="answer(this,false)">Vendre Ã  dÃ©couvert une paire de devises corrÃ©lÃ©es</button>
+          <button class="quiz-opt" onclick="answer(this,false)">Arbitrer deux marchÃ©s obligataires de zones diffÃ©rentes</button>
         </div>
         <div class="quiz-actions">
           <button class="btn-p" onclick="nextQ()">Question suivante</button>
@@ -1152,7 +1152,7 @@ body{background:var(--off-white);color:var(--text-1);font-family:'Inter',-apple-
         <div class="card">
           <div class="card-title" style="margin-bottom:12px">Modules disponibles</div>
           <div class="mod-item"><div class="mod-num cur">01</div><div style="flex:1"><div class="mod-title">Macro Trading</div><div class="mod-meta">8 questions</div></div><span class="mod-badge bd-done">74%</span></div>
-          <div class="mod-item"><div class="mod-num">02</div><div style="flex:1"><div class="mod-title">Marchés Financiers</div><div class="mod-meta">10 questions</div></div><span class="mod-badge bd-done">88%</span></div>
+          <div class="mod-item"><div class="mod-num">02</div><div style="flex:1"><div class="mod-title">MarchÃ©s Financiers</div><div class="mod-meta">10 questions</div></div><span class="mod-badge bd-done">88%</span></div>
           <div class="mod-item"><div class="mod-num">03</div><div style="flex:1"><div class="mod-title">Analyse Macro</div><div class="mod-meta">12 questions</div></div><span class="mod-badge bd-done">92%</span></div>
           <div class="mod-item"><div class="mod-num">04</div><div style="flex:1"><div class="mod-title">Analyse des Actifs</div><div class="mod-meta">9 questions</div></div><span class="mod-badge bd-wip">Nouveau</span></div>
         </div>
@@ -1171,47 +1171,47 @@ body{background:var(--off-white);color:var(--text-1);font-family:'Inter',-apple-
   <!-- BONUS -->
   <div class="content" id="page-bonus">
     <div class="page-header">
-      <div><div class="page-welcome">Bonus & Ressources</div><div class="page-welcome-sub">Contenu exclusif inclus dans ton accès Fondateur</div></div>
+      <div><div class="page-welcome">Bonus & Ressources</div><div class="page-welcome-sub">Contenu exclusif inclus dans ton accÃ¨s Fondateur</div></div>
     </div>
     <div class="bonus-grid">
-      <div class="bonus-card"><span class="badge new">Nouveau</span><div class="bonus-ico">📊</div><div class="bonus-title">Template Journal de Trading</div><div class="bonus-desc">Excel/Notion pour suivre tes positions, calculer ton expectancy et analyser tes biais.</div></div>
-      <div class="bonus-card"><span class="badge exclu">Exclusif</span><div class="bonus-ico">🌐</div><div class="bonus-title">Guide COT Report</div><div class="bonus-desc">Comment lire le rapport COT pour anticiper les retournements institutionnels.</div></div>
-      <div class="bonus-card"><span class="badge new">Nouveau</span><div class="bonus-ico">📉</div><div class="bonus-title">Simulateur Monte Carlo</div><div class="bonus-desc">Outil interactif pour simuler tes scénarios de drawdown selon win rate et R/R.</div></div>
-      <div class="bonus-card"><span class="badge exclu">Exclusif</span><div class="bonus-ico">🎙</div><div class="bonus-title">Interview Fund Manager</div><div class="bonus-desc">Session exclusive avec un gérant de fonds macro sur la construction de thèses.</div></div>
-      <div class="bonus-card locked"><span class="badge lock">🔒 Verrouillé</span><div class="bonus-ico">📚</div><div class="bonus-title">Bibliothèque ARK</div><div class="bonus-desc">12 lectures fondamentales avec résumés. Dispo à partir du module 6.</div></div>
-      <div class="bonus-card locked"><span class="badge lock">🔒 Verrouillé</span><div class="bonus-ico">⚡</div><div class="bonus-title">Live Trading — Replay</div><div class="bonus-desc">Session live avec analyse en temps réel d'une thèse macro complète.</div></div>
+      <div class="bonus-card"><span class="badge new">Nouveau</span><div class="bonus-ico">ðŸ“Š</div><div class="bonus-title">Template Journal de Trading</div><div class="bonus-desc">Excel/Notion pour suivre tes positions, calculer ton expectancy et analyser tes biais.</div></div>
+      <div class="bonus-card"><span class="badge exclu">Exclusif</span><div class="bonus-ico">ðŸŒ</div><div class="bonus-title">Guide COT Report</div><div class="bonus-desc">Comment lire le rapport COT pour anticiper les retournements institutionnels.</div></div>
+      <div class="bonus-card"><span class="badge new">Nouveau</span><div class="bonus-ico">ðŸ“‰</div><div class="bonus-title">Simulateur Monte Carlo</div><div class="bonus-desc">Outil interactif pour simuler tes scÃ©narios de drawdown selon win rate et R/R.</div></div>
+      <div class="bonus-card"><span class="badge exclu">Exclusif</span><div class="bonus-ico">ðŸŽ™</div><div class="bonus-title">Interview Fund Manager</div><div class="bonus-desc">Session exclusive avec un gÃ©rant de fonds macro sur la construction de thÃ¨ses.</div></div>
+      <div class="bonus-card locked"><span class="badge lock">ðŸ”’ VerrouillÃ©</span><div class="bonus-ico">ðŸ“š</div><div class="bonus-title">BibliothÃ¨que ARK</div><div class="bonus-desc">12 lectures fondamentales avec rÃ©sumÃ©s. Dispo Ã  partir du module 6.</div></div>
+      <div class="bonus-card locked"><span class="badge lock">ðŸ”’ VerrouillÃ©</span><div class="bonus-ico">âš¡</div><div class="bonus-title">Live Trading â€” Replay</div><div class="bonus-desc">Session live avec analyse en temps rÃ©el d'une thÃ¨se macro complÃ¨te.</div></div>
     </div>
   </div>
 
-  <!-- RÉGLAGES -->
+  <!-- RÃ‰GLAGES -->
   <div class="content" id="page-reglages">
     <div class="page-header">
-      <div><div class="page-welcome">Réglages</div><div class="page-welcome-sub">Préférences et informations de compte</div></div>
+      <div><div class="page-welcome">RÃ©glages</div><div class="page-welcome-sub">PrÃ©fÃ©rences et informations de compte</div></div>
     </div>
     <div class="grid2">
       <div class="card">
-        <div class="card-title" style="margin-bottom:14px">Préférences</div>
+        <div class="card-title" style="margin-bottom:14px">PrÃ©fÃ©rences</div>
         <div class="set-row"><div><div class="set-name">Notifications de progression</div><div class="set-desc">Rappels hebdomadaires et jalons</div></div><button class="toggle on" onclick="this.classList.toggle('on')"></button></div>
         <div class="set-row"><div><div class="set-name">Lecture automatique</div><div class="set-desc">Passer au chapitre suivant</div></div><button class="toggle" onclick="this.classList.toggle('on')"></button></div>
-        <div class="set-row"><div><div class="set-name">Sous-titres</div><div class="set-desc">Afficher sur les vidéos</div></div><button class="toggle on" onclick="this.classList.toggle('on')"></button></div>
-        <div class="set-row"><div><div class="set-name">Vitesse de lecture</div><div class="set-desc">Par défaut pour les vidéos</div></div><select class="sel"><option>1.0×</option><option selected>1.25×</option><option>1.5×</option><option>2.0×</option></select></div>
+        <div class="set-row"><div><div class="set-name">Sous-titres</div><div class="set-desc">Afficher sur les vidÃ©os</div></div><button class="toggle on" onclick="this.classList.toggle('on')"></button></div>
+        <div class="set-row"><div><div class="set-name">Vitesse de lecture</div><div class="set-desc">Par dÃ©faut pour les vidÃ©os</div></div><select class="sel"><option>1.0Ã—</option><option selected>1.25Ã—</option><option>1.5Ã—</option><option>2.0Ã—</option></select></div>
       </div>
       <div class="col">
         <div class="card">
           <div class="card-title" style="margin-bottom:14px">Mon compte</div>
           <div class="set-row"><div><div class="set-name">Nom</div><div class="set-desc">Quentin</div></div><button class="sml-btn">Modifier</button></div>
-          <div class="set-row"><div><div class="set-name">Accès</div><div class="set-desc">Fondateur · Accès à vie</div></div><span style="font-size:11px;font-weight:600;color:var(--green);background:rgba(52,199,89,.1);padding:4px 10px;border-radius:980px">Actif</span></div>
+          <div class="set-row"><div><div class="set-name">AccÃ¨s</div><div class="set-desc">Fondateur Â· AccÃ¨s Ã  vie</div></div><span style="font-size:11px;font-weight:600;color:var(--green);background:rgba(52,199,89,.1);padding:4px 10px;border-radius:980px">Actif</span></div>
           <div class="set-row"><div><div class="set-name">Membre depuis</div><div class="set-desc">Mars 2026</div></div></div>
         </div>
         <div class="card">
           <div class="card-title" style="margin-bottom:14px">Support</div>
-          <div class="set-row"><div><div class="set-name">Contacter ARK</div><div class="set-desc">Une question sur la formation ?</div></div><button class="sml-btn">Email →</button></div>
-          <div class="set-row"><div><div class="set-name">Communauté Skool</div><div class="set-desc">Groupe privé des membres</div></div><button class="sml-btn">Rejoindre →</button></div>
+          <div class="set-row"><div><div class="set-name">Contacter ARK</div><div class="set-desc">Une question sur la formation ?</div></div><button class="sml-btn">Email â†’</button></div>
+          <div class="set-row"><div><div class="set-name">CommunautÃ© Skool</div><div class="set-desc">Groupe privÃ© des membres</div></div><button class="sml-btn">Rejoindre â†’</button></div>
         </div>
 
         <div class="card">
-          <div class="card-title" style="margin-bottom:4px">🔑 Code d'accès</div>
-          <div class="card-sub" style="margin-bottom:16px">Entre un code pour débloquer la formation complète</div>
+          <div class="card-title" style="margin-bottom:4px">ðŸ”‘ Code d'accÃ¨s</div>
+          <div class="card-sub" style="margin-bottom:16px">Entre un code pour dÃ©bloquer la formation complÃ¨te</div>
           <div id="access-status-block">
             <!-- Rempli dynamiquement -->
           </div>
@@ -1229,7 +1229,7 @@ body{background:var(--off-white);color:var(--text-1);font-family:'Inter',-apple-
               id="settings-activate-btn"
               onmouseover="this.style.background='var(--accent-h)'"
               onmouseout="this.style.background='var(--accent)'">
-              Activer →
+              Activer â†’
             </button>
             <div id="settings-alert" style="display:none;margin-top:10px;padding:10px 14px;border-radius:8px;font-size:12px;line-height:1.5"></div>
           </div>
@@ -1279,9 +1279,9 @@ function animProgress() {
 
 let answered = false, score = 2, total = 2, qIdx = 0;
 const QS = [
-  { q: "Qu'est-ce que le 'carry trade' dans le contexte du Forex ?", opts: [{t:"Acheter une devise qui se déprécie rapidement",ok:false},{t:"Emprunter dans une devise à faible taux pour investir dans une devise à taux élevé",ok:true},{t:"Vendre à découvert une paire de devises corrélées",ok:false},{t:"Arbitrer deux marchés obligataires de zones différentes",ok:false}] },
-  { q: "Quel indicateur mesure le rapport entre rendement excédentaire et volatilité ?", opts: [{t:"Le ratio de Calmar",ok:false},{t:"Le win rate",ok:false},{t:"Le ratio de Sharpe",ok:true},{t:"Le maximum drawdown",ok:false}] },
-  { q: "Qu'est-ce qu'un régime de marché 'risk-off' ?", opts: [{t:"Un marché où les actifs risqués surperforment",ok:false},{t:"Une phase où les investisseurs fuient vers les actifs refuges",ok:true},{t:"Volatilité inférieure à 10%",ok:false},{t:"Période de taux d'intérêt négatifs",ok:false}] },
+  { q: "Qu'est-ce que le 'carry trade' dans le contexte du Forex ?", opts: [{t:"Acheter une devise qui se dÃ©prÃ©cie rapidement",ok:false},{t:"Emprunter dans une devise Ã  faible taux pour investir dans une devise Ã  taux Ã©levÃ©",ok:true},{t:"Vendre Ã  dÃ©couvert une paire de devises corrÃ©lÃ©es",ok:false},{t:"Arbitrer deux marchÃ©s obligataires de zones diffÃ©rentes",ok:false}] },
+  { q: "Quel indicateur mesure le rapport entre rendement excÃ©dentaire et volatilitÃ© ?", opts: [{t:"Le ratio de Calmar",ok:false},{t:"Le win rate",ok:false},{t:"Le ratio de Sharpe",ok:true},{t:"Le maximum drawdown",ok:false}] },
+  { q: "Qu'est-ce qu'un rÃ©gime de marchÃ© 'risk-off' ?", opts: [{t:"Un marchÃ© oÃ¹ les actifs risquÃ©s surperforment",ok:false},{t:"Une phase oÃ¹ les investisseurs fuient vers les actifs refuges",ok:true},{t:"VolatilitÃ© infÃ©rieure Ã  10%",ok:false},{t:"PÃ©riode de taux d'intÃ©rÃªt nÃ©gatifs",ok:false}] },
 ];
 
 function answer(btn, ok) {
@@ -1318,7 +1318,7 @@ window.addEventListener('load', () => {
   setTimeout(() => { const rf = document.getElementById('rank-fill'); if(rf) rf.style.width='42%'; }, 500);
 });
 
-// ── Supabase init ──
+// â”€â”€ Supabase init â”€â”€
 const SUPABASE_URL = 'https://wlwwkqijedhxmwjktqvj.supabase.co';
 const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indsd3drcWlqZWRoeG13amt0cXZqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1NDY0NDcsImV4cCI6MjA5MDEyMjQ0N30.x4nGTPYfLbkPz0tAejhde_RO4Oto5scGSW8H72FwKOU';
 let _db = null;
@@ -1379,12 +1379,12 @@ function _debounceCheck(code, inputEl, statusEl) {
   inputEl.style.borderColor = 'var(--mid-gray)';
   statusEl.textContent = '';
   if (code.length < 3) return;
-  statusEl.textContent = '…';
+  statusEl.textContent = 'â€¦';
   _promoTimer = setTimeout(async () => {
     const ok = await _verifyPromo(code);
     _promoValid = ok;
     inputEl.style.borderColor = ok ? '#34c759' : '#ff3b30';
-    statusEl.textContent = ok ? '✓' : '✗';
+    statusEl.textContent = ok ? 'âœ“' : 'âœ—';
   }, 400);
 }
 
@@ -1404,7 +1404,7 @@ async function _activateAccess(code, btn, alertEl, onSuccess) {
   }
   const origText = btn.textContent;
   btn.disabled = true;
-  btn.textContent = 'Activation…';
+  btn.textContent = 'Activationâ€¦';
 
   const { data: promoData } = await getDB().from('promo_codes').select('id, used_count').eq('code', code).single();
   if (promoData) {
@@ -1430,7 +1430,7 @@ async function _activateAccess(code, btn, alertEl, onSuccess) {
 async function activateFromPopup() {
   if (!_promoValid) {
     const el = document.getElementById('popup-alert');
-    el.textContent = 'Code invalide, expiré ou déjà utilisé.';
+    el.textContent = 'Code invalide, expirÃ© ou dÃ©jÃ  utilisÃ©.';
     el.style.display = 'block';
     return;
   }
@@ -1446,12 +1446,12 @@ async function activateFromPopup() {
 }
 
 async function activateFromSettings() {
-  if (!_promoValid) { showSettingsAlert('Code invalide, expiré ou déjà utilisé.', 'error'); return; }
+  if (!_promoValid) { showSettingsAlert('Code invalide, expirÃ© ou dÃ©jÃ  utilisÃ©.', 'error'); return; }
   await _activateAccess(
     document.getElementById('settings-promo').value.trim().toUpperCase(),
     document.getElementById('settings-activate-btn'),
     null,
-    () => { showSettingsAlert("Accès activé ! Tu peux maintenant accéder à la formation.", 'success'); loadAccessStatus(); }
+    () => { showSettingsAlert("AccÃ¨s activÃ© ! Tu peux maintenant accÃ©der Ã  la formation.", 'success'); loadAccessStatus(); }
   );
 }
 
@@ -1468,17 +1468,17 @@ async function loadAccessStatus() {
     statusBlock.innerHTML = `
       <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--mid-gray)">
         <div>
-          <div style="font-size:14px;font-weight:500">Formation complète</div>
-          <div style="font-size:12px;color:var(--text-3);font-weight:300;margin-top:2px">Activé le ${date} · Code : ${data.promo_code}</div>
+          <div style="font-size:14px;font-weight:500">Formation complÃ¨te</div>
+          <div style="font-size:12px;color:var(--text-3);font-weight:300;margin-top:2px">ActivÃ© le ${date} Â· Code : ${data.promo_code}</div>
         </div>
         <span style="font-size:11px;font-weight:600;color:var(--green);background:rgba(52,199,89,.1);padding:4px 10px;border-radius:980px">Actif</span>
       </div>
       <button onclick="window.location.href='ark_platform.html'" style="width:100%;padding:10px;background:var(--accent);color:#fff;font-size:13px;font-weight:600;border:none;border-radius:980px;cursor:pointer;font-family:inherit;margin-top:14px" onmouseover="this.style.background='#0077ed'" onmouseout="this.style.background='var(--accent)'">
-        Accéder à la formation →
+        AccÃ©der Ã  la formation â†’
       </button>`;
     if (inputBlock) inputBlock.style.display = 'none';
   } else {
-    statusBlock.innerHTML = `<div style="font-size:13px;color:var(--text-2);font-weight:300;margin-bottom:14px;line-height:1.5">Tu n'as pas encore accès à la formation. Entre un code d'accès pour la débloquer.</div>`;
+    statusBlock.innerHTML = `<div style="font-size:13px;color:var(--text-2);font-weight:300;margin-bottom:14px;line-height:1.5">Tu n'as pas encore accÃ¨s Ã  la formation. Entre un code d'accÃ¨s pour la dÃ©bloquer.</div>`;
     if (inputBlock) inputBlock.style.display = 'block';
   }
 }
