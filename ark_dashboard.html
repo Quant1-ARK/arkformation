@@ -462,6 +462,14 @@ body { background: var(--off-white); color: var(--text-primary); font-family: 'I
           <div class="card-title" style="margin-bottom:14px;">Support</div>
           <div class="set-row"><div><div class="set-name">Contacter ARK</div><div class="set-desc">Une question sur la formation ?</div></div><button class="sml-btn">Email →</button></div>
           <div class="set-row"><div><div class="set-name">Communauté Skool</div><div class="set-desc">Groupe privé des membres</div></div><button class="sml-btn">Rejoindre →</button></div>
+          <div class="set-row" style="border-bottom:none;padding-top:18px;margin-top:4px;">
+            <button onclick="logout()"
+              style="width:100%;padding:10px;background:rgba(255,59,48,0.08);color:#d93025;font-size:13px;font-weight:600;border:1px solid rgba(255,59,48,0.2);border-radius:980px;cursor:pointer;font-family:inherit;transition:all .2s;"
+              onmouseover="this.style.background='rgba(255,59,48,0.15)'"
+              onmouseout="this.style.background='rgba(255,59,48,0.08)'">
+              Se déconnecter
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -471,6 +479,11 @@ body { background: var(--off-white); color: var(--text-primary); font-family: 'I
 
 <script>
 // ── Navigation ──
+async function logout() {
+  await db.auth.signOut();
+  window.location.href = 'login.html';
+}
+
 function nav(id, el) {
   document.querySelectorAll('.content').forEach(p => p.classList.remove('active'));
   const pg = document.getElementById('page-' + id);
