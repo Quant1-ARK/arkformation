@@ -1325,8 +1325,17 @@ window.addEventListener('load', async () => {
   if (elSettings) elSettings.textContent = name;
 
   await loadAccessStatus();
-  const progress = await loadProgressFromDB();
-  updateDashboard(progress);
+  if (hasFormationAccess) {
+    const progress = await loadProgressFromDB();
+    // Vérifier cohérence : si Supabase est vide mais localStorage a des données → reset
+    const local = JSON.parse(localStorage.getItem('ark_progress') || '{"current":0,"done":[]}');
+    if ((progress.done.length === 0 && progress.current === 0) && (local.done.length > 0 || local.current > 0)) {
+      localStorage.removeItem('ark_progress');
+      updateDashboard({ current: 0, done: [] });
+    } else {
+      updateDashboard(progress);
+    }
+  }
 
   if (window.location.hash === '#reglages') {
     window.history.replaceState(null, '', window.location.pathname);
