@@ -476,8 +476,8 @@ body {
         <div class="ring-cell">
           <svg width="80" height="80" viewBox="0 0 80 80">
             <circle cx="40" cy="40" r="32" fill="none" stroke="#e8e8ed" stroke-width="8"/>
-            <circle cx="40" cy="40" r="32" fill="none" stroke="#34c759" stroke-width="8" stroke-dasharray="201" stroke-dashoffset="52" stroke-linecap="round" transform="rotate(-90 40 40)"/>
-            <text x="40" y="45" text-anchor="middle" font-family="Inter,sans-serif" font-size="15" font-weight="600" fill="#1d1d1f">74%</text>
+            <circle id="ring-circle-score" cx="40" cy="40" r="32" fill="none" stroke="#34c759" stroke-width="8" stroke-dasharray="201" stroke-dashoffset="52" stroke-linecap="round" transform="rotate(-90 40 40)"/>
+            <text id="ring-pct-score" x="40" y="45" text-anchor="middle" font-family="Inter,sans-serif" font-size="15" font-weight="600" fill="#1d1d1f">74%</text>
           </svg>
           <div class="ring-name">Score moyen</div>
           <div class="ring-note">Quiz & révisions</div>
@@ -485,8 +485,8 @@ body {
         <div class="ring-cell">
           <svg width="80" height="80" viewBox="0 0 80 80">
             <circle cx="40" cy="40" r="32" fill="none" stroke="#e8e8ed" stroke-width="8"/>
-            <circle cx="40" cy="40" r="32" fill="none" stroke="#ff9500" stroke-width="8" stroke-dasharray="201" stroke-dashoffset="90" stroke-linecap="round" transform="rotate(-90 40 40)"/>
-            <text x="40" y="45" text-anchor="middle" font-family="Inter,sans-serif" font-size="15" font-weight="600" fill="#1d1d1f">55%</text>
+            <circle id="ring-circle-assid" cx="40" cy="40" r="32" fill="none" stroke="#ff9500" stroke-width="8" stroke-dasharray="201" stroke-dashoffset="90" stroke-linecap="round" transform="rotate(-90 40 40)"/>
+            <text id="ring-pct-assid" x="40" y="45" text-anchor="middle" font-family="Inter,sans-serif" font-size="15" font-weight="600" fill="#1d1d1f">55%</text>
           </svg>
           <div class="ring-name">Assiduité</div>
           <div class="ring-note">Sessions cette semaine</div>
@@ -1080,6 +1080,15 @@ function setBannerMode(hasAccess) {
         '</div>' +
         '<button onclick="goToMembre()" style="display:flex;align-items:center;gap:6px;font-size:14px;font-weight:500;background:var(--accent);color:#fff;padding:10px 20px;border-radius:980px;border:none;cursor:pointer;white-space:nowrap;font-family:inherit;transition:background .15s">★ Deviens membre</button>';
     }
+    // Anneaux score et assiduité
+    const ringScore = document.getElementById('ring-circle-score');
+    if (ringScore) ringScore.setAttribute('stroke-dashoffset', '201');
+    const ringPctScore = document.getElementById('ring-pct-score');
+    if (ringPctScore) ringPctScore.textContent = '0%';
+    const ringAssid = document.getElementById('ring-circle-assid');
+    if (ringAssid) ringAssid.setAttribute('stroke-dashoffset', '201');
+    const ringPctAssid = document.getElementById('ring-pct-assid');
+    if (ringPctAssid) ringPctAssid.textContent = '0%';
     // Activité récente
     const actList = document.getElementById('activity-list');
     if (actList) {
