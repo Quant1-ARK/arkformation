@@ -615,7 +615,7 @@ body {
 
 
   <!-- ════ R!-- RÉVISION -->
-  <div class="content" id="page-revision" style="display:none;flex-direction:column;">
+  <div class="content" id="page-revision">
     <div class="page-header">
       <div><div class="page-welcome">Révision</div><div class="page-welcome-sub">Quiz · Flashcards · Résumés</div></div>
     </div>
@@ -836,6 +836,12 @@ function nav(id, el) {
   if (el) el.classList.add('active');
   document.getElementById('sidebar').classList.remove('open');
   if (id === 'dashboard') animProgress();
+  if (id === 'revision') {
+    // S'assurer que Quiz est visible par défaut
+    if (document.getElementById('rev-quiz') && document.getElementById('rev-quiz').style.display === 'none') {
+      selectRevision('quiz');
+    }
+  }
   // Bonus banner : visible uniquement sur l'onglet bonus
   const bonusBanner = document.getElementById('bonus-locked-banner');
   if (bonusBanner) {
