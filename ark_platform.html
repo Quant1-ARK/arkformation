@@ -113,7 +113,7 @@
       <div class="progress-label" id="progressLabel">Module 1 / 12</div>
       <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
     </div>
-    <a href="ark_dashboard.html" class="btn-back">← Retour</a>
+    <a href="index.html" class="btn-back">← Retour</a>
     <button onclick="ARK.logout()" style="font-size:12px;color:var(--text-2);background:none;border:none;cursor:pointer;font-family:inherit;padding:0;transition:color .15s" onmouseover="this.style.color='#000'" onmouseout="this.style.color='var(--text-2)'">Déconnexion</button>
   </div>
 </div>
@@ -128,7 +128,7 @@
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-header">
       <div class="sidebar-eyebrow">Programme</div>
-      <div class="sidebar-title">12 </div>
+      <div class="sidebar-title">12 Modules</div>
     </div>
     <div class="sidebar-list" id="sidebarList"></div>
   </aside>
@@ -137,7 +137,7 @@
     <div class="welcome-screen" id="welcomeScreen">
       <div class="welcome-kicker">Bienvenue dans ARK</div>
       <h1 class="welcome-title">Reprends le<br>contrôle.</h1>
-      <p class="welcome-sub">Ton programme complet est ici. 12  pour comprendre les marchés, construire des thèses, gérer le risque et penser en investisseur indépendant.</p>
+      <p class="welcome-sub">Ton programme complet est ici. 12 modules pour comprendre les marchés, construire des thèses, gérer le risque et penser en investisseur indépendant.</p>
       <button class="welcome-start-btn" onclick="selectModule(0)">Commencer le Module 01 →</button>
     </div>
     <iframe id="module-frame" title="Module ARK"></iframe>
@@ -283,7 +283,18 @@ async function init() {
 
   // Essayer de charger depuis Supabase (données cross-session)
   const remote = await loadProgressFromSupabase();
-  if (remote) {
+
+  // Nouveau compte : pas de progression Supabase → vider localStorage
+  // pour éviter d'hériter de la progression d'un autre compte
+  if (!remote || (remote.done.length === 0 && remote.current === 0)) {
+    const localData = getProgress();
+    // Si le local a des données mais Supabase est vide, c'est un nouveau compte → reset
+    if (localData.done.length > 0 || localData.current > 0) {
+      localStorage.removeItem('ark_progress');
+    }
+  }
+
+  if (remote && (remote.done.length > 0 || remote.current > 0)) {
     // Fusionner : prendre le plus avancé entre local et remote
     const local = getProgress();
     const remoteDone = Array.isArray(remote.done) ? remote.done : [];
