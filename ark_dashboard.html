@@ -750,6 +750,7 @@ const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON, { auth: { p
 let currentUser = null;
 let promoValid = false;
 let promoTimer = null;
+let hasFormationAccess = false;
 
 const MODULE_NAMES = [
   "Introduction : Le Cadre de Pensée",
@@ -880,6 +881,7 @@ function animProgress() {
 }
 
 function updateDashboard(p) {
+  if (!hasFormationAccess) return;
   const done = Array.isArray(p.done) ? p.done : [];
   const current = p.current || 0;
   const total = 12;
@@ -972,6 +974,7 @@ function goToMembre() {
 }
 
 function setBannerMode(hasAccess) {
+  hasFormationAccess = hasAccess;
   // Dashboard CTA banner
   const ctaBanner = document.querySelector('.cta-banner');
   if (ctaBanner) {
