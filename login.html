@@ -83,7 +83,7 @@ const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON, {
 });
 
 db.auth.getSession().then(({ data: { session } }) => {
-  if (session) window.location.href = 'ark_dashboard.html';
+  if (session && session.user) window.location.href = 'ark_dashboard.html';
 });
 
 function setLoading(on) {
