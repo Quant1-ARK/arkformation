@@ -5,149 +5,128 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ARK — Connexion</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-  :root {
-    --white: #fff;
-    --off-white: #fbfbfd;
-    --mid-gray: #e8e8ed;
-    --text-1: #1d1d1f;
-    --text-2: #6e6e73;
-    --text-3: #aeaeb2;
-    --accent: #0071e3;
-    --accent-h: #0077ed;
-    --border: rgba(0,0,0,.08);
-    --r: 16px;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--off-white);color:var(--text-1);font-family:'Inter',-apple-system,sans-serif;font-size:15px;-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px}
-
-  .card{background:var(--white);border-radius:24px;border:1px solid var(--border);padding:40px 36px;width:100%;max-width:420px;box-shadow:0 8px 40px rgba(0,0,0,.06)}
-
-  .logo{font-family:'Times New Roman',serif;font-size:28px;letter-spacing:.2em;text-align:center;margin-bottom:8px}
-  .subtitle{font-size:13px;color:var(--text-3);text-align:center;margin-bottom:32px;font-weight:300}
-
-  .form-title{font-size:20px;font-weight:600;letter-spacing:-.02em;margin-bottom:6px}
-  .form-sub{font-size:13px;color:var(--text-2);font-weight:300;margin-bottom:24px;line-height:1.5}
-
-  label{display:block;font-size:12px;font-weight:500;color:var(--text-2);margin-bottom:6px;letter-spacing:.01em}
-  input{width:100%;padding:12px 14px;border:1px solid var(--mid-gray);border-radius:10px;font-size:15px;font-family:inherit;outline:none;transition:border-color .15s;background:var(--white);color:var(--text-1)}
-  input:focus{border-color:var(--accent)}
-  input::placeholder{color:var(--text-3)}
-
-  .btn{display:block;width:100%;padding:13px;background:var(--accent);color:#fff;font-size:15px;font-weight:500;border:none;border-radius:980px;cursor:pointer;font-family:inherit;transition:all .2s;margin-top:20px;text-align:center}
-  .btn:hover{background:var(--accent-h)}
-  .btn:disabled{opacity:.5;cursor:default}
-
-  .divider{display:flex;align-items:center;gap:12px;margin:24px 0}
-  .divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--mid-gray)}
-  .divider span{font-size:12px;color:var(--text-3);white-space:nowrap}
-
-  .link-btn{display:block;text-align:center;font-size:13px;color:var(--accent);text-decoration:none;font-weight:500;cursor:pointer}
-  .link-btn:hover{opacity:.7}
-
-  .alert{padding:12px 16px;border-radius:10px;font-size:13px;margin-top:16px;display:none;line-height:1.5}
-  .alert.success{background:rgba(52,199,89,.1);color:#2aa34a;border:1px solid rgba(52,199,89,.2)}
-  .alert.error{background:rgba(255,59,48,.08);color:#d93025;border:1px solid rgba(255,59,48,.15)}
-  .alert.show{display:block}
-
-  .footer-note{margin-top:24px;font-size:11px;color:var(--text-3);text-align:center;line-height:1.7;font-weight:300}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --accent: #0071e3; --accent-h: #0077ed;
+  --bg: #f5f5f7; --white: #fff;
+  --text-1: #1d1d1f; --text-2: #6e6e73; --text-3: #aeaeb2;
+  --border: rgba(0,0,0,0.1); --red: #ff3b30;
+}
+body { font-family:'Inter',-apple-system,sans-serif; background:var(--bg); min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px; -webkit-font-smoothing:antialiased; }
+.card { background:var(--white); border-radius:22px; padding:40px 36px; width:100%; max-width:420px; box-shadow:0 2px 40px rgba(0,0,0,0.08); }
+.logo { font-family:'Times New Roman',serif; font-size:22px; letter-spacing:.2em; color:var(--text-1); margin-bottom:28px; }
+h1 { font-size:24px; font-weight:600; letter-spacing:-.02em; margin-bottom:6px; }
+.sub { font-size:14px; color:var(--text-2); font-weight:300; margin-bottom:28px; line-height:1.5; }
+.field { margin-bottom:14px; }
+label { display:block; font-size:13px; font-weight:500; margin-bottom:6px; }
+input[type="email"], input[type="password"] { width:100%; padding:11px 14px; border:1.5px solid var(--border); border-radius:10px; font-size:15px; font-family:inherit; color:var(--text-1); outline:none; transition:border-color .15s; }
+input:focus { border-color:var(--accent); }
+.row { display:flex; align-items:center; gap:8px; margin-bottom:20px; margin-top:4px; }
+.row input[type="checkbox"] { width:16px; height:16px; accent-color:var(--accent); cursor:pointer; flex-shrink:0; }
+.row label { font-size:13px; font-weight:400; color:var(--text-2); margin:0; cursor:pointer; }
+.forgot { font-size:13px; color:var(--accent); text-decoration:none; margin-left:auto; flex-shrink:0; }
+.forgot:hover { opacity:.7; }
+.btn { width:100%; padding:12px; background:var(--accent); color:#fff; font-size:15px; font-weight:600; border:none; border-radius:980px; cursor:pointer; font-family:inherit; transition:background .15s; display:flex; align-items:center; justify-content:center; gap:8px; }
+.btn:hover { background:var(--accent-h); }
+.btn:disabled { opacity:.5; cursor:not-allowed; }
+.spinner { width:16px; height:16px; border:2px solid rgba(255,255,255,0.4); border-top-color:#fff; border-radius:50%; animation:spin .7s linear infinite; display:none; }
+@keyframes spin { to { transform:rotate(360deg); } }
+.alert { display:none; margin-top:14px; padding:11px 14px; border-radius:10px; font-size:13px; line-height:1.5; }
+.alert.error { background:rgba(255,59,48,.08); color:#c0392b; border:1px solid rgba(255,59,48,.15); }
+.divider { height:1px; background:var(--border); margin:22px 0; }
+.footer-link { text-align:center; font-size:13px; color:var(--text-2); font-weight:300; }
+.footer-link a { color:var(--accent); text-decoration:none; font-weight:500; }
+.back { position:fixed; top:20px; left:20px; font-size:15px; font-weight:500; color:var(--text-2); text-decoration:none; transition:color .15s; }
+.back:hover { color:var(--text-1); }
 </style>
 </head>
 <body>
-
+<a href="index.html" class="back">← Retour</a>
 <div class="card">
   <div class="logo">ARK</div>
-  <div class="subtitle">Investor Program</div>
+  <h1>Connexion</h1>
+  <p class="sub">Accède à ton espace de formation.</p>
 
-  <!-- ÉTAT 1 : Formulaire email -->
-  <div id="form-view">
-    <div class="form-title">Connexion</div>
-    <div class="form-sub">Entre ton adresse email — on t'envoie un lien de connexion instantané.</div>
-
-    <label for="email">Adresse email</label>
+  <div class="field">
+    <label for="email">Email</label>
     <input type="email" id="email" placeholder="ton@email.com" autocomplete="email">
-
-    <button class="btn" id="submitBtn" onclick="sendMagicLink()">Envoyer le lien →</button>
-
-    <div class="alert" id="alert"></div>
-
-    <div class="divider"><span>Pas encore de compte ?</span></div>
-    <a class="link-btn" href="signup.html">Créer un compte avec un code promo</a>
+  </div>
+  <div class="field">
+    <label for="password">Mot de passe</label>
+    <input type="password" id="password" placeholder="••••••••" autocomplete="current-password">
   </div>
 
-  <!-- ÉTAT 2 : Email envoyé -->
-  <div id="sent-view" style="display:none;text-align:center">
-    <div style="font-size:40px;margin-bottom:16px">📬</div>
-    <div class="form-title" style="text-align:center">Vérifie ta boîte mail</div>
-    <div class="form-sub" style="text-align:center;margin-top:8px">On a envoyé un lien de connexion à <strong id="sent-email"></strong>.<br>Clique dessus pour accéder à ARK.</div>
-    <div style="margin-top:24px;font-size:12px;color:var(--text-3)">Pas reçu ? Vérifie tes spams ou <a href="#" onclick="reset()" style="color:var(--accent)">réessaie</a>.</div>
+  <div class="row">
+    <input type="checkbox" id="remember" checked>
+    <label for="remember">Se souvenir de moi</label>
+    <a href="reset.html" class="forgot">Mot de passe oublié ?</a>
   </div>
+
+  <button class="btn" id="btn" onclick="login()">
+    <span id="btn-text">Se connecter</span>
+    <div class="spinner" id="spinner"></div>
+  </button>
+  <div class="alert error" id="alert"></div>
+
+  <div class="divider"></div>
+  <div class="footer-link">Pas encore de compte ? <a href="signup.html">Créer un compte</a></div>
 </div>
 
-<div class="footer-note">
-  © 2026 ARK Investor Program · Tous droits réservés
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 const SUPABASE_URL = 'https://wlwwkqijedhxmwjktqvj.supabase.co';
 const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indsd3drcWlqZWRoeG13amt0cXZqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1NDY0NDcsImV4cCI6MjA5MDEyMjQ0N30.x4nGTPYfLbkPz0tAejhde_RO4Oto5scGSW8H72FwKOU';
-const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
-// Si déjà connecté → redirect
-db.auth.getSession().then(({ data }) => {
-  if (data.session) window.location.href = 'ark_dashboard.html';
+const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON, {
+  auth: { persistSession: true, storageKey: 'ark_session' }
 });
 
-function showAlert(msg, type) {
+db.auth.getSession().then(({ data: { session } }) => {
+  if (session) window.location.href = 'ark_dashboard.html';
+});
+
+function setLoading(on) {
+  document.getElementById('btn').disabled = on;
+  document.getElementById('btn-text').textContent = on ? 'Connexion…' : 'Se connecter';
+  document.getElementById('spinner').style.display = on ? 'block' : 'none';
+}
+
+function showError(msg) {
   const el = document.getElementById('alert');
   el.textContent = msg;
-  el.className = `alert ${type} show`;
+  el.style.display = 'block';
 }
 
-async function sendMagicLink() {
+async function login() {
   const email = document.getElementById('email').value.trim();
-  if (!email) { showAlert('Entre ton adresse email.', 'error'); return; }
+  const password = document.getElementById('password').value;
+  const remember = document.getElementById('remember').checked;
 
-  const btn = document.getElementById('submitBtn');
-  btn.disabled = true;
-  btn.textContent = 'Envoi en cours…';
+  document.getElementById('alert').style.display = 'none';
+  if (!email || !password) { showError('Remplis tous les champs.'); return; }
 
-  const { error } = await db.auth.signInWithOtp({
-    email,
-    options: { emailRedirectTo: window.location.origin + '/arkformation/ark_dashboard.html' }
-  });
+  setLoading(true);
+
+  const { data, error } = await db.auth.signInWithPassword({ email, password });
 
   if (error) {
-    showAlert('Erreur : ' + error.message, 'error');
-    btn.disabled = false;
-    btn.textContent = 'Envoyer le lien →';
-  } else {
-    document.getElementById('sent-email').textContent = email;
-    document.getElementById('form-view').style.display = 'none';
-    document.getElementById('sent-view').style.display = 'block';
+    setLoading(false);
+    const msg = error.message.toLowerCase().includes('invalid') ? 'Email ou mot de passe incorrect.' : error.message;
+    showError(msg);
+    return;
   }
+
+  // Se souvenir de moi : stocker l'expiry dans localStorage
+  if (remember) {
+    const expiry = Date.now() + 7 * 24 * 60 * 60 * 1000;
+    localStorage.setItem('ark_remember_expiry', expiry);
+  }
+
+  window.location.href = 'ark_dashboard.html';
 }
 
-function reset() {
-  document.getElementById('form-view').style.display = 'block';
-  document.getElementById('sent-view').style.display = 'none';
-  document.getElementById('email').value = '';
-  document.getElementById('alert').className = 'alert';
-  const btn = document.getElementById('submitBtn');
-  btn.disabled = false;
-  btn.textContent = 'Envoyer le lien →';
-}
-
-document.getElementById('email').addEventListener('keydown', e => {
-  if (e.key === 'Enter') sendMagicLink();
-});
+document.addEventListener('keydown', e => { if (e.key === 'Enter') login(); });
 </script>
-<a href="index.html"
-  style="position:fixed;top:20px;left:20px;display:flex;align-items:center;gap:8px;font-size:15px;font-weight:500;color:var(--text-2);text-decoration:none;transition:color .15s;"
-  onmouseover="this.style.color='var(--text-1)'"
-  onmouseout="this.style.color='var(--text-2)'">
-  ← Retour
-</a>
 </body>
 </html>
