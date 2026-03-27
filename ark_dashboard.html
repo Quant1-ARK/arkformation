@@ -953,6 +953,56 @@ function updateDashboard(p) {
 }
 
 // ── Accès formation ──
+function goToMembre() {
+  nav('membre', document.getElementById('nav-membre'));
+}
+
+function setBannerMode(hasAccess) {
+  // Dashboard CTA banner
+  const ctaBanner = document.querySelector('.cta-banner');
+  if (ctaBanner) {
+    if (hasAccess) {
+      ctaBanner.style.background = 'var(--text-primary)';
+      ctaBanner.innerHTML =
+        '<div>' +
+          '<div class="cta-title" id="cta-title">🚀 Chargement…</div>' +
+          '<div class="cta-sub" id="cta-sub"></div>' +
+        '</div>' +
+        '<button class="cta-btn" onclick="goToFormation()">▶ Continuer</button>';
+    } else {
+      ctaBanner.style.cssText = 'background:var(--light-gray);border:1.5px solid var(--mid-gray);border-radius:var(--radius-lg);padding:20px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;';
+      ctaBanner.innerHTML =
+        '<div>' +
+          '<div style="font-size:16px;font-weight:600;color:var(--text-secondary);letter-spacing:-.01em;">🔒 Formation complète</div>' +
+          '<div style="font-size:13px;color:var(--text-tertiary);font-weight:300;margin-top:3px;">Active ton accès pour débloquer les 12 modules.</div>' +
+        '</div>' +
+        '<button onclick="goToMembre()" style="display:flex;align-items:center;gap:6px;font-size:14px;font-weight:500;background:var(--accent);color:#fff;padding:10px 20px;border-radius:980px;border:none;cursor:pointer;white-space:nowrap;font-family:inherit;transition:background .15s">★ Deviens membre</button>';
+    }
+  }
+
+  // Cours banner
+  const coursBanner = document.getElementById('cours-banner');
+  if (coursBanner) {
+    if (hasAccess) {
+      coursBanner.style.cssText = 'background:#0a1f44;border-radius:var(--radius-lg);padding:20px 26px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;';
+      coursBanner.innerHTML =
+        '<div>' +
+          '<div id="cours-banner-title" style="font-size:16px;font-weight:600;color:#fff;">🚀 Chargement…</div>' +
+          '<div id="cours-banner-sub" style="font-size:13px;color:rgba(255,255,255,0.42);font-weight:300;margin-top:3px;"></div>' +
+        '</div>' +
+        '<button class="cta-btn" style="background:#fff;color:#0a1f44;font-weight:600;" onclick="goToFormation()">▶ Continuer</button>';
+    } else {
+      coursBanner.style.cssText = 'background:var(--light-gray);border:1.5px solid var(--mid-gray);border-radius:var(--radius-lg);padding:20px 26px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;';
+      coursBanner.innerHTML =
+        '<div>' +
+          '<div style="font-size:16px;font-weight:600;color:var(--text-secondary);">🔒 Formation complète</div>' +
+          '<div style="font-size:13px;color:var(--text-tertiary);font-weight:300;margin-top:3px;">Active ton accès pour commencer la formation.</div>' +
+        '</div>' +
+        '<button onclick="goToMembre()" style="display:flex;align-items:center;gap:6px;font-size:14px;font-weight:500;background:var(--accent);color:#fff;padding:10px 20px;border-radius:980px;border:none;cursor:pointer;white-space:nowrap;font-family:inherit;transition:background .15s">★ Deviens membre</button>';
+    }
+  }
+}
+
 async function loadAccessStatus() {
   const el = document.getElementById('acces-content');
   if (!el || !currentUser) return;
@@ -966,6 +1016,7 @@ async function loadAccessStatus() {
 
   if (data) {
     if (badge) { badge.textContent = 'Fondateur'; badge.className = 'logo-badge paid'; }
+    setBannerMode(true);
     const date = new Date(data.created_at).toLocaleDateString('fr-FR');
 
     const row = document.createElement('div');
@@ -992,6 +1043,7 @@ async function loadAccessStatus() {
 
   } else {
     if (badge) { badge.textContent = 'Gratuit'; badge.className = 'logo-badge free'; }
+    setBannerMode(false);
 
     const desc = document.createElement('div');
     desc.style.cssText = 'font-size:13px;color:var(--text-secondary);font-weight:300;margin-bottom:16px;line-height:1.5;';
