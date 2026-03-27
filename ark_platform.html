@@ -281,37 +281,22 @@ async function init() {
   }
   if (hash === '#module') { selectModule(0); return; }
 
-  // Essayer de charger depuis Supabase (données cross-session)
+  // Charger depuis Supabase — source de vérité
   const remote = await loadProgressFromSupabase();
 
-  // Nouveau compte : pas de progression Supabase → vider localStorage
-  // pour éviter d'hériter de la progression d'un autre compte
-  if (!remote || (remote.done.length === 0 && remote.current === 0)) {
-    const localData = getProgress();
-    // Si le local a des données mais Supabase est vide, c'est un nouveau compte → reset
-    if (localData.done.length > 0 || localData.current > 0) {
-      localStorage.removeItem('ark_progress');
-    }
+  if (remote === null) {
+    // Nouveau compte ou pas d'entrée Supabase → reset localStorage et partir de zéro
+    localStorage.removeItem('ark_progress');
+    return;
   }
 
-  if (remote && (remote.done.length > 0 || remote.current > 0)) {
-    // Fusionner : prendre le plus avancé entre local et remote
-    const local = getProgress();
-    const remoteDone = Array.isArray(remote.done) ? remote.done : [];
-    const localDone = Array.isArray(local.done) ? local.done : [];
-    const mergedDone = [...new Set([...remoteDone, ...localDone])];
-    const mergedCurrent = Math.max(remote.current || 0, local.current || 0);
-    // Sauvegarder la version fusionnée localement
-    localStorage.setItem('ark_progress', JSON.stringify({ current: mergedCurrent, done: mergedDone }));
-    if (mergedCurrent > 0 || mergedDone.length > 0) {
-      selectModule(mergedCurrent);
-      return;
-    }
-  }
+  // Supabase a des données → les utiliser comme source de vérité
+  const done = Array.isArray(remote.done) ? remote.done : [];
+  const current = remote.current || 0;
+  localStorage.setItem('ark_progress', JSON.stringify({ current, done }));
 
-  const progress = getProgress();
-  if (progress.current > 0 || progress.done.length > 0) {
-    selectModule(progress.current);
+  if (current > 0 || done.length > 0) {
+    selectModule(current);
   }
 }
 
