@@ -3,180 +3,790 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ARK — Module 05 · Construction d'une Thèse</title>
+<title>Module 05 — Lire et Valoriser un Actif</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #f5f5f5;
-    --border: rgba(19,18,18,.41);
-    --border-active: rgba(255,255,255,.14);
-    --text-1: #000;
-    --text-2: #59595e;
-    --text-3: #48484c;
-    --accent: #0071e3;
-    --accent-glow: rgba(0,113,227,.18);
-    --accent-soft: rgba(0,113,227,.12);
-    --gold: #c9a84c;
-    --gold-soft: rgba(201,168,76,.1);
-  }
-
+  :root{--bg:#f5f5f5;--surface:#fff;--border:rgba(19,18,18,.1);--text-1:#0a0a0a;--text-2:#3d3d3a;--text-3:#6b6b67;--accent:#0071e3;--accent-soft:rgba(0,113,227,.07)}
   *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--bg);color:var(--text-1);font-family:'DM Sans',-apple-system,sans-serif;font-size:15px;-webkit-font-smoothing:antialiased;padding:48px clamp(24px,5vw,80px) 80px;overflow-y:auto;min-height:100vh}
-  @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-  .page{animation:fadeIn .3s ease}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text-1);font-family:'DM Sans',-apple-system,sans-serif;font-size:15px;line-height:1.75;-webkit-font-smoothing:antialiased}
+  .page{max-width:780px;margin:0 auto;padding:48px 24px 120px}
 
-  /* VIDEO */
-  .mod-video{margin-bottom:36px;border-radius:16px;overflow:hidden;aspect-ratio:16/9;background:#1a1a1a;display:none}
-  .mod-video.has-video{display:block}
-  .mod-video iframe{width:100%;height:100%;border:none}
+  .mod-header{margin-bottom:56px;padding-bottom:40px;border-bottom:1px solid var(--border)}
+  .mod-kicker{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+  .mod-title{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(30px,5vw,46px);line-height:1.1;margin-bottom:14px}
+  .mod-sub{font-size:15px;color:var(--text-2);font-style:italic;margin-bottom:20px}
+  .mod-objective{background:var(--accent-soft);border-left:3px solid var(--accent);border-radius:0 10px 10px 0;padding:16px 20px;font-size:14px;color:var(--text-2);line-height:1.65}
 
-  /* MODULE HEADER */
-  .mod-number{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;display:flex;align-items:center;gap:8px}
-  .mod-number::before{content:'';display:inline-block;width:20px;height:1px;background:var(--accent)}
-  .mod-title{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(28px,4vw,44px);font-weight:400;line-height:1.15;letter-spacing:-.01em;color:var(--text-1);margin-bottom:16px}
-  .mod-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:28px}
-  .mod-tag{font-size:11px;font-weight:500;color:var(--accent);background:var(--accent-soft);padding:3px 10px;border-radius:980px;border:1px solid rgba(0,113,227,.15)}
-  .mod-divider{height:1px;background:var(--border);margin:28px 0}
-  .mod-intro{font-size:17px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:36px;font-style:italic;border-left:2px solid var(--accent);padding-left:20px}
-  .mod-section-title{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:16px}
+  .toc{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px 28px;margin-bottom:56px}
+  .toc-title{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:16px}
+  .toc-list{list-style:none;display:flex;flex-direction:column;gap:6px}
+  .toc-list li a{display:flex;align-items:baseline;gap:10px;text-decoration:none;color:var(--text-2);font-size:13.5px;transition:color .15s}
+  .toc-list li a:hover{color:var(--accent)}
+  .toc-letter{font-size:10px;font-weight:700;color:var(--accent);background:var(--accent-soft);border-radius:4px;padding:1px 6px;flex-shrink:0}
 
-  /* OBJECTIVES */
-  .mod-objectives{list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:36px}
-  .mod-objectives li{display:flex;align-items:flex-start;gap:12px;font-size:14px;color:var(--text-2);line-height:1.6}
-  .obj-check{width:18px;height:18px;border-radius:50%;border:1px solid var(--border-active);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--text-3)}
+  .section{margin-bottom:64px}
+  .section-label{display:inline-flex;align-items:center;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);border-radius:6px;padding:4px 10px;margin-bottom:18px}
+  .section-title{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(22px,3.5vw,30px);line-height:1.2;margin-bottom:24px}
+  .section-intro{font-size:15px;color:var(--text-2);line-height:1.75;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid var(--border)}
 
-  /* CONCEPTS */
-  .mod-concepts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:36px}
-  .concept-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px;transition:border-color .2s,background .2s}
-  .concept-card:hover{border-color:var(--border-active);background:var(--bg)}
-  .concept-icon{font-size:20px;margin-bottom:8px}
-  .concept-name{font-size:13px;font-weight:600;color:var(--text-1);margin-bottom:4px}
-  .concept-desc{font-size:12px;color:var(--text-2);line-height:1.5;font-weight:300}
+  /* Sub-sections with continuous left bar */
+  .sub{margin-bottom:36px;border-left:3px solid var(--accent);padding-left:20px}
+  .sub-title{font-family:'DM Serif Display',Georgia,serif;font-size:19px;margin-bottom:14px;color:var(--text-1)}
+  .sub p{color:var(--text-2);margin-bottom:12px;font-size:14.5px;line-height:1.72}
+  .sub p:last-child{margin-bottom:0}
+  .sub strong{color:var(--text-1)}
 
-  /* QUOTE */
-  .mod-quote{background:var(--gold-soft);border:1px solid rgba(201,168,76,.15);border-radius:16px;padding:24px 28px;margin-bottom:36px}
-  .mod-quote-text{font-family:'DM Serif Display',Georgia,serif;font-size:18px;line-height:1.6;color:var(--gold);margin-bottom:8px;font-style:italic}
-  .mod-quote-source{font-size:11px;color:var(--text-3);letter-spacing:.05em;text-transform:uppercase}
+  /* Lists — single bar via .sub */
+  .styled-list{list-style:none;margin:12px 0 16px;display:flex;flex-direction:column;gap:8px}
+  .styled-list li{color:var(--text-2);font-size:14px;line-height:1.65}
+  .styled-list li strong{color:var(--text-1)}
 
-  /* FIGURES & TABLES */
-  .mod-figure{margin:28px 0;text-align:center}
-  .mod-figure img{max-width:100%;height:auto;border-radius:12px;border:1px solid var(--border);cursor:zoom-in;transition:opacity .2s,transform .2s}
-  .mod-figure img:hover{opacity:.9;transform:scale(1.01)}
-  .mod-figure figcaption{margin-top:10px;font-size:12px;color:var(--text-3);font-style:italic;line-height:1.5}
+  /* Callouts — light backgrounds, dark text */
+  .callout{border-radius:0 10px 10px 0;border-left:3px solid;padding:14px 18px;margin:18px 0;font-size:13.5px;line-height:1.65}
+  .callout.yellow{background:#FAEEDA;border-color:#854F0B;color:#412402}
+  .callout.blue{background:#E6F1FB;border-color:#185FA5;color:#042C53}
+  .callout.green{background:#EAF3DE;border-color:#3B6D11;color:#173404}
+  .callout.red{background:#FCEBEB;border-color:#A32D2D;color:#501313}
+  .callout.purple{background:#EEEDFE;border-color:#534AB7;color:#26215C}
+  .callout strong{color:inherit}
 
-  /* LIGHTBOX */
-  .lightbox{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:32px;opacity:0;pointer-events:none;transition:opacity .25s ease}
-  .lightbox.open{opacity:1;pointer-events:all}
-  .lightbox-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(4px)}
-  .lightbox-img-wrap{position:relative;z-index:1;max-width:90vw;max-height:88vh;display:flex;flex-direction:column;align-items:center;gap:14px;transform:scale(.94);transition:transform .25s ease}
-  .lightbox.open .lightbox-img-wrap{transform:scale(1)}
-  .lightbox-img-wrap img{max-width:100%;max-height:80vh;height:auto;border-radius:14px;box-shadow:0 32px 80px rgba(0,0,0,.5);display:block}
-  .lightbox-caption{font-size:13px;color:rgba(255,255,255,.65);font-style:italic;text-align:center;max-width:640px;line-height:1.5}
-  .lightbox-close{position:absolute;top:-14px;right:-14px;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s;line-height:1}
-  .lightbox-close:hover{background:rgba(255,255,255,.25)}
+  /* Notion/formula boxes — light surface, black text */
+  .notion{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px 22px;margin:18px 0}
+  .notion-title{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px}
+  .notion p,.notion li{color:var(--text-1);font-size:13.5px;line-height:1.7;margin-bottom:6px}
+  .notion p:last-child,.notion li:last-child{margin-bottom:0}
+  .notion ul{list-style:none;display:flex;flex-direction:column;gap:4px;padding-left:0}
+  .notion strong{color:var(--text-1)}
+  .notion code{font-family:monospace;background:#f0efe8;padding:1px 5px;border-radius:4px;font-size:12.5px;color:var(--text-1)}
 
-  .mod-table-wrap{overflow-x:auto;margin:24px 0;border-radius:12px;border:1px solid var(--border)}
-  .mod-table{width:100%;border-collapse:collapse;font-size:13px}
-  .mod-table th{background:var(--accent-soft);color:var(--accent);font-weight:600;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:10px 14px;text-align:left;border-bottom:1px solid var(--border)}
-  .mod-table td{padding:10px 14px;color:var(--text-2);border-bottom:1px solid var(--border);vertical-align:top;line-height:1.6;font-weight:300}
-  .mod-table tr:last-child td{border-bottom:none}
-  .mod-table td strong{color:var(--text-1);font-weight:600}
+  /* Tables */
+  .table-wrap{overflow-x:auto;margin:18px 0 24px;border-radius:12px;border:1px solid var(--border)}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  thead tr{background:#f0efe8}
+  thead th{padding:10px 14px;text-align:left;font-size:11px;font-weight:700;letter-spacing:.05em;color:var(--text-1);white-space:nowrap}
+  tbody tr{border-top:1px solid var(--border)}
+  tbody tr:hover{background:rgba(0,0,0,.02)}
+  tbody td{padding:10px 14px;color:var(--text-2);vertical-align:top;line-height:1.55}
+  tbody td strong{color:var(--text-1)}
 
-  /* MODULE BODY */
-  .mod-body{margin-top:40px}
-  .mod-body h2{font-family:'DM Serif Display',Georgia,serif;font-size:22px;font-weight:400;color:var(--text-1);margin:44px 0 14px;padding-top:12px;border-top:1px solid var(--border)}
-  .mod-body h3{font-size:15px;font-weight:600;color:var(--text-1);margin:28px 0 10px}
-  .mod-body p{font-size:15px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:16px}
-  .mod-body ul,.mod-body ol{margin:0 0 20px;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:10px}
-  .mod-body li{position:relative;padding-left:22px;font-size:14px;font-weight:300;color:var(--text-2);line-height:1.7;overflow-wrap:break-word}
-  .mod-body li::before{content:'—';color:var(--accent);font-size:13px;position:absolute;left:0;top:0;line-height:1.7}
-  .mod-body li strong,.mod-body strong{color:var(--text-1);font-weight:600}
-  .mod-body blockquote{border-left:2px solid var(--accent);padding:10px 0 10px 20px;margin:20px 0;font-style:italic;font-weight:300;color:var(--text-2);font-size:14px;line-height:1.7}
-  .formula-box,.warning-box,.summary-box{border-radius:12px;padding:16px 20px;margin:20px 0;font-size:14px;line-height:1.7}
-  .formula-box{background:var(--accent-soft);border:1px solid rgba(0,113,227,.15);font-weight:500;font-style:italic}
-  .warning-box{background:rgba(255,149,0,.08);border:1px solid rgba(255,149,0,.2);color:var(--text-2)}
-  .summary-box{background:var(--gold-soft);border:1px solid rgba(201,168,76,.15);font-style:italic;color:var(--text-2)}
-  .profile-block{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:20px;margin:16px 0}
-  .profile-block h3{margin-top:0}
-  .profile-meta{font-size:12px;color:var(--accent);font-style:italic;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+  /* Figures */
+  .module-figure{margin:24px 0 32px;background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;padding:16px}
+  .module-figure svg{width:100%;display:block}
+  .fig-caption{margin-top:10px;font-size:12px;color:var(--text-3);font-style:italic;text-align:center}
 
-  /* NAV */
-  .mod-nav{display:flex;justify-content:space-between;align-items:center;margin-top:52px;padding-top:24px;border-top:1px solid var(--border);gap:12px}
-  .mod-nav-btn{display:flex;align-items:center;gap:8px;padding:10px 16px;border:1px solid var(--border);border-radius:10px;background:var(--bg);color:var(--text-2);cursor:pointer;font-size:13px;font-weight:500;transition:all .15s;font-family:inherit}
-  .mod-nav-btn:hover:not(:disabled){border-color:var(--border-active);color:var(--text-1)}
-  .mod-nav-btn:disabled{opacity:.3;cursor:default}
-  .mod-nav-label{font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em}
+  /* Checklist */
+  .checklist{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px 22px;margin:18px 0}
+  .checklist-title{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3);margin-bottom:14px}
+  .check-item{display:flex;align-items:flex-start;gap:10px;padding:7px 0;border-bottom:1px solid var(--border);font-size:13.5px;color:var(--text-1)}
+  .check-item:last-child{border-bottom:none}
+  .check-box{width:16px;height:16px;border:1.5px solid var(--border);border-radius:4px;flex-shrink:0;margin-top:3px}
 
-  @media(max-width:768px){
-    body{padding:32px 20px 60px}
-  }
+  /* Case study table */
+  .case-table{width:100%;border-collapse:collapse;margin:18px 0;font-size:13.5px}
+  .case-table tr{border-top:1px solid var(--border)}
+  .case-table tr:first-child{border-top:none}
+  .case-table td:first-child{font-weight:700;color:var(--text-1);padding:12px 16px 12px 0;width:120px;vertical-align:top}
+  .case-table td:last-child{color:var(--text-2);padding:12px 0;line-height:1.65}
+  .case-table .verdict{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:5px;margin-left:8px;vertical-align:middle}
+  .case-table .v-green{background:#EAF3DE;color:#27500A}
+  .case-table .v-blue{background:#E6F1FB;color:#0C447C}
+
+  /* Summary grid */
+  .summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0}
+  @media(max-width:560px){.summary-grid{grid-template-columns:1fr}}
+  .summary-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px}
+  .summary-section{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:4px}
+  .summary-concept{font-weight:600;font-size:13.5px;color:var(--text-1);margin-bottom:4px}
+  .summary-tool{font-size:12.5px;color:var(--text-2)}
+
+  .synthesis{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px;margin-top:48px}
+  .synthesis-title{font-family:'DM Serif Display',Georgia,serif;font-size:22px;margin-bottom:18px}
+  .synthesis p{color:var(--text-2);margin-bottom:12px;line-height:1.75;font-size:14.5px}
+  .synthesis p:last-child{margin-bottom:0}
+  .next-module{margin-top:20px;padding-top:18px;border-top:1px solid var(--border);font-size:13px;color:var(--text-3);font-style:italic}
+  .next-module strong{color:var(--accent);font-style:normal}
+
+  .module-nav{display:flex;justify-content:space-between;align-items:center;margin-top:56px;padding-top:28px;border-top:1px solid var(--border);gap:12px}
+  .nav-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:10px;border:1px solid var(--border);font-size:13.5px;font-weight:500;font-family:inherit;cursor:pointer;transition:all .2s;background:var(--surface);color:var(--text-1)}
+  .nav-btn:hover{border-color:var(--accent);color:var(--accent)}
+  .nav-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .nav-btn.primary:hover{background:#0077ed}
+
+  /* SVG */
+  .node{cursor:pointer}.node:hover{opacity:.85}
+  .arr{stroke:var(--text-3);stroke-width:1.5;fill:none}
+  svg text{font-family:'DM Sans',-apple-system,sans-serif;fill:var(--text-1)}
+  svg .t{font-size:14px;font-weight:400;fill:var(--text-1)}
+  svg .ts{font-size:12px;font-weight:400;fill:var(--text-2)}
+  svg .th{font-size:14px;font-weight:600;fill:var(--text-1)}
+  .c-blue rect,.c-blue circle{fill:#E6F1FB;stroke:#185FA5}
+  .c-blue .th,.c-blue .t{fill:#0C447C}.c-blue .ts{fill:#185FA5}
+  .c-teal rect,.c-teal circle{fill:#E1F5EE;stroke:#0F6E56}
+  .c-teal .th,.c-teal .t{fill:#085041}.c-teal .ts{fill:#0F6E56}
+  .c-purple rect,.c-purple circle{fill:#EEEDFE;stroke:#534AB7}
+  .c-purple .th,.c-purple .t{fill:#3C3489}.c-purple .ts{fill:#534AB7}
+  .c-amber rect,.c-amber circle{fill:#FAEEDA;stroke:#854F0B}
+  .c-amber .th,.c-amber .t{fill:#633806}.c-amber .ts{fill:#854F0B}
+  .c-coral rect,.c-coral circle{fill:#FAECE7;stroke:#993C1D}
+  .c-coral .th,.c-coral .t{fill:#712B13}.c-coral .ts{fill:#993C1D}
+  .c-green rect,.c-green circle{fill:#EAF3DE;stroke:#3B6D11}
+  .c-green .th,.c-green .t{fill:#27500A}.c-green .ts{fill:#3B6D11}
 </style>
 </head>
 <body>
 <div class="page">
 
-  <!-- VIDEO: remplacer la ligne ci-dessous par <div class="mod-video has-video"><iframe src="https://www.youtube.com/embed/VOTRE_ID" allowfullscreen></iframe></div> -->
-  <div class="mod-video"></div>
+  <header class="mod-header">
+    <div class="mod-kicker">Module 05 · ARK Investor Program</div>
+    <h1 class="mod-title">Lire et Valoriser un Actif</h1>
+    <p class="mod-sub">Un actif n'a pas de valeur parce qu'il monte. Il monte parce qu'il avait de la valeur.</p>
+    <div class="mod-objective">Ce module est le cœur analytique de la formation. Comprendre le monde, l'économie et la géopolitique donne le contexte macro. Mais pour prendre une décision d'investissement, il faut répondre à une seule question fondamentale : cet actif est-il bon marché ou trop cher par rapport à ce qu'il vaut vraiment ?</div>
+  </header>
 
-  <div class="mod-number">Module 05</div>
-  <h1 class="mod-title">Construction d'une Thèse</h1>
-  <div class="mod-tags"><span class="mod-tag">Méthodologie</span><span class="mod-tag">Catalyseurs</span><span class="mod-tag">Conviction</span></div>
-  <p class="mod-intro">Méthodologie pour construire une thèse macro de A à Z : identifier le catalyseur, définir l'horizon, choisir le véhicule d'expression et calibrer la conviction.</p>
+  <nav class="toc">
+    <div class="toc-title">Sommaire</div>
+    <ul class="toc-list">
+      <li><a href="#va"><span class="toc-letter">a</span>Qu'est-ce que la Valeur ?</a></li>
+      <li><a href="#vb"><span class="toc-letter">b</span>Lire les États Financiers</a></li>
+      <li><a href="#vc"><span class="toc-letter">c</span>Valorisation par les Comparables</a></li>
+      <li><a href="#vd"><span class="toc-letter">d</span>Valorisation par les Flux (DCF)</a></li>
+      <li><a href="#ve"><span class="toc-letter">e</span>Valoriser une Matière Première</a></li>
+      <li><a href="#vf"><span class="toc-letter">f</span>Valoriser une Devise</a></li>
+      <li><a href="#vg"><span class="toc-letter">g</span>Les Outils Quantitatifs de Confirmation</a></li>
+      <li><a href="#vh"><span class="toc-letter">h</span>Construire une Thèse d'Investissement</a></li>
+    </ul>
+  </nav>
 
-  <div class="mod-section-title">Ce que tu vas apprendre</div>
-  <ul class="mod-objectives"><li><div class="obj-check">○</div><span>Structurer une thèse macro en 5 étapes reproductibles</span></li><li><div class="obj-check">○</div><span>Identifier et hiérarchiser les catalyseurs d'un mouvement de marché</span></li><li><div class="obj-check">○</div><span>Choisir le meilleur véhicule pour exprimer une conviction</span></li><li><div class="obj-check">○</div><span>Définir les conditions d'invalidation de sa thèse</span></li></ul>
+  <!-- SECTION A -->
+  <section class="section" id="va">
+    <div class="section-label">Section A</div>
+    <h2 class="section-title">Qu'est-ce que la Valeur ?</h2>
+    <div class="section-intro">Avant d'apprendre à calculer quoi que ce soit, il faut clarifier ce que l'on cherche à calculer. La valeur est souvent confondue avec le prix dans la pratique. Cette confusion est à l'origine de la plupart des erreurs d'investissement.</div>
 
-  <div class="mod-divider"></div>
+    <div class="sub">
+      <h3 class="sub-title">Prix vs Valeur — la distinction fondamentale</h3>
+      <p>Le <strong>prix</strong> est ce que le marché demande aujourd'hui pour un actif. Il reflète l'offre et la demande instantanées, les émotions des participants, les flux de capitaux, les actualités du jour. Il fluctue en permanence, parfois violemment, sans que la réalité économique sous-jacente ait changé d'un centime.</p>
+      <p>La <strong>valeur intrinsèque</strong> est ce que l'actif vaut indépendamment du prix. Pour une entreprise, c'est la somme actualisée de tous les flux de trésorerie qu'elle va générer dans le futur. Pour une matière première, c'est son coût marginal de production plus une prime de rareté. Pour une devise, c'est le reflet relatif de la santé économique de deux pays.</p>
+      <p>Le trader fondamental cherche les moments où le prix s'écarte significativement de la valeur. Ces écarts sont inévitables, parce que les marchés sont gouvernés à court terme par la psychologie humaine — la peur et l'avidité — et non par le calcul rationnel.</p>
+    </div>
+    <div class="module-figure">
+<svg width="100%" viewBox="0 0 680 330" style="display:block">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
 
-  <div class="mod-section-title">Concepts clés</div>
-  <div class="mod-concepts-grid"><div class="concept-card"><div class="concept-icon">🔍</div><div class="concept-name">Catalyseur</div><div class="concept-desc">L'événement qui va déclencher le mouvement anticipé</div></div><div class="concept-card"><div class="concept-icon">🎯</div><div class="concept-name">Véhicule</div><div class="concept-desc">L'instrument utilisé pour exprimer la thèse</div></div><div class="concept-card"><div class="concept-icon">⏱️</div><div class="concept-name">Horizon temporel</div><div class="concept-desc">La durée estimée pour que la thèse se réalise</div></div><div class="concept-card"><div class="concept-icon">❌</div><div class="concept-name">Invalidation</div><div class="concept-desc">Les conditions qui prouvent que la thèse est fausse</div></div></div>
+<line x1="52" y1="20" x2="52" y2="280" stroke="var(--t)" stroke-width="1" opacity=".25"/>
+<line x1="52" y1="280" x2="620" y2="280" stroke="var(--t)" stroke-width="1" opacity=".25"/>
+<!-- Valeur intrinsèque: flat line -->
+<line x1="52" y1="150" x2="620" y2="150" stroke="#378ADD" stroke-width="2" stroke-dasharray="8 4" opacity=".7"/>
+<text class="ts" x="628" y="154" fill="#185FA5">Valeur intrinsèque</text>
+<!-- Price oscillation -->
+<path d="M 60 150 C 80 145, 95 115, 115 90 C 135 65, 148 60, 160 72 C 175 88, 185 120, 200 148
+  C 215 175, 225 195, 240 205 C 258 218, 272 222, 290 210
+  C 310 196, 322 170, 338 148 C 352 128, 362 108, 378 92
+  C 395 75, 408 70, 422 80 C 438 92, 448 115, 462 145
+  C 476 174, 486 200, 502 215 C 518 228, 530 230, 545 220
+  C 560 208, 572 182, 588 158 C 600 140, 610 128, 620 120"
+  fill="none" stroke="#444441" stroke-width="2" stroke-linecap="round"/>
+<!-- Green zones (undervalued) -->
+<path d="M 175 150 C 185 120, 185 120, 200 148 C 215 175, 225 195, 240 205 C 258 218, 272 222, 290 210 C 310 196, 322 170, 338 148 L 338 150 L 175 150 Z"
+  fill="#1D9E75" fill-opacity=".12"/>
+<path d="M 462 145 C 476 174, 486 200, 502 215 C 518 228, 530 230, 545 220 C 560 208, 572 182, 588 158 L 588 150 L 462 150 Z"
+  fill="#1D9E75" fill-opacity=".12"/>
+<!-- Red zones (overvalued) -->
+<path d="M 60 150 C 80 145, 95 115, 115 90 C 135 65, 148 60, 160 72 C 175 88, 185 120, 175 150 L 60 150 Z"
+  fill="#E24B4A" fill-opacity=".1"/>
+<path d="M 338 148 C 352 128, 362 108, 378 92 C 395 75, 408 70, 422 80 C 438 92, 448 115, 462 145 L 462 150 L 338 150 Z"
+  fill="#E24B4A" fill-opacity=".1"/>
+<!-- Labels -->
+<rect x="195" y="192" width="112" height="24" rx="5" fill="#1D9E75" fill-opacity=".15" stroke="#1D9E75" stroke-width="0.5"/>
+<text class="ts" x="251" y="208" text-anchor="middle" fill="#085041">Opportunité d'achat</text>
+<rect x="80" y="70" width="88" height="22" rx="5" fill="#E24B4A" fill-opacity=".12" stroke="#E24B4A" stroke-width="0.5"/>
+<text class="ts" x="124" y="85" text-anchor="middle" fill="#791F1F">Surévaluation</text>
+<rect x="352" y="68" width="88" height="22" rx="5" fill="#E24B4A" fill-opacity=".12" stroke="#E24B4A" stroke-width="0.5"/>
+<text class="ts" x="396" y="83" text-anchor="middle" fill="#791F1F">Surévaluation</text>
+<!-- Margin of safety annotation -->
+<line x1="290" y1="207" x2="290" y2="150" stroke="#1D9E75" stroke-width="1" stroke-dasharray="3 3" opacity=".5" marker-end="url(#arrow)"/>
+<text class="ts" x="298" y="183" fill="#085041">Marge de</text>
+<text class="ts" x="298" y="197" fill="#085041">sécurité</text>
+<!-- Legend -->
+<line x1="52" y1="308" x2="84" y2="308" stroke="#444441" stroke-width="2" stroke-linecap="round"/>
+<text class="ts" x="92" y="312">Prix de marché</text>
+<line x1="240" y1="308" x2="272" y2="308" stroke="#378ADD" stroke-width="2" stroke-dasharray="7 3"/>
+<text class="ts" x="280" y="312">Valeur intrinsèque</text>
+<rect x="430" y="300" width="14" height="14" rx="3" fill="#1D9E75" fill-opacity=".2" stroke="#1D9E75" stroke-width="0.5"/>
+<text class="ts" x="450" y="311">Achat</text>
+<rect x="510" y="300" width="14" height="14" rx="3" fill="#E24B4A" fill-opacity=".15" stroke="#E24B4A" stroke-width="0.5"/>
+<text class="ts" x="530" y="311">Vente</text>
 
-  <div class="mod-quote">
-    <div class="mod-quote-text">"Une thèse sans catalyseur, c'est une opinion. Avec un catalyseur, c'est un trade."</div>
-    <div class="mod-quote-source">— ARK — Module 05</div>
+</svg>
+<p class="fig-caption">Fig. 1 — Le prix de marché oscille autour de la valeur intrinsèque. Les zones vertes représentent des opportunités d'achat (marge de sécurité). Les zones rouges signalent une surévaluation.</p>
+</div>
+    <div class="sub">
+      <h3 class="sub-title">Mr. Market — Benjamin Graham</h3>
+      <p>Benjamin Graham a introduit l'une des métaphores les plus utiles de la finance. Imaginez que vous êtes associé dans une entreprise avec un certain Mr. Market. Chaque jour, il vient vous proposer de racheter votre part ou de vous vendre la sienne, à un prix qu'il fixe lui-même. Mr. Market est émotionnellement instable : certains jours il est euphorique et vous propose des prix absurdement élevés. D'autres jours il est déprimé et brade ses parts pour presque rien. Votre rôle est d'exploiter ses humeurs, pas de les suivre.</p>
+      <div class="notion">
+        <div class="notion-title">Mr. Market — Les 3 règles de Graham</div>
+        <ul>
+          <li>Le marché est votre serviteur, pas votre maître. Vous n'êtes pas obligé de trader chaque jour.</li>
+          <li>Le prix est ce que vous payez. La valeur est ce que vous obtenez. Ne confondez jamais les deux.</li>
+          <li>La volatilité n'est pas du risque — c'est de l'opportunité pour celui qui connaît la valeur.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">La Marge de Sécurité</h3>
+      <p>La marge de sécurité est le principe central de l'investissement dans la valeur : n'achetez un actif qu'à un prix significativement inférieur à votre estimation de sa valeur intrinsèque. Si vous estimez qu'une entreprise vaut 100 et que vous l'achetez à 65, votre marge de sécurité est de 35%. Même si votre analyse est partiellement erronée, vous êtes toujours en profit. La marge de sécurité absorbe les erreurs de calcul, les imprévus et les chocs de marché.</p>
+      <div class="notion">
+        <div class="notion-title">Notion clé — La Marge de Sécurité</div>
+        <p><code>Marge de sécurité = (Valeur intrinsèque estimée − Prix d'achat) / Valeur intrinsèque</code></p>
+        <p>Exemple : Valeur estimée = 100 € · Prix du marché = 65 € → Marge de sécurité = <strong>35%</strong></p>
+        <p>Règle pratique : exiger au minimum 20 à 30% de marge sur les actifs bien connus, davantage sur les actifs complexes ou illiquides.</p>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">La valeur selon la classe d'actif</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Classe d'actif</th><th>Source de valeur</th><th>Méthode principale</th><th>Section</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Action</strong></td><td>Flux de trésorerie futurs</td><td>DCF / Comparables boursiers</td><td>V.b → V.d</td></tr>
+            <tr><td><strong>Matière première</strong></td><td>Offre vs Demande physique</td><td>Coût marginal + cycles longs</td><td>V.e</td></tr>
+            <tr><td><strong>Devise</strong></td><td>Santé relative de 2 économies</td><td>Différentiel de taux + PPA</td><td>V.f</td></tr>
+            <tr><td><strong>Immobilier coté (REIT)</strong></td><td>Revenus locatifs nets</td><td>Price/FFO, rendement dividende</td><td>V.d (adapté)</td></tr>
+            <tr><td><strong>Obligation</strong></td><td>Flux de coupons + remboursement</td><td>Actualisation + spread crédit</td><td>Module VII</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION B -->
+  <section class="section" id="vb">
+    <div class="section-label">Section B</div>
+    <h2 class="section-title">Lire les États Financiers</h2>
+    <div class="section-intro">Valoriser une action sans savoir lire les états financiers d'une entreprise, c'est comme évaluer une maison sans jamais entrer dedans. Les états financiers sont la radiographie économique de l'entreprise. Il existe trois documents fondamentaux : le compte de résultat, le bilan et le tableau des flux de trésorerie.</div>
+
+    <div class="sub">
+      <h3 class="sub-title">1. Le Compte de Résultat — L'entreprise gagne-t-elle de l'argent ?</h3>
+      <p>Le compte de résultat retrace l'activité sur une période donnée. Il part du chiffre d'affaires et descend progressivement jusqu'au résultat net en déduisant les différents coûts.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Ligne</th><th>Description</th><th>Ce qu'on analyse</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Chiffre d'affaires</strong></td><td>Total des ventes réalisées</td><td>Croissance du CA année sur année</td></tr>
+            <tr><td><strong>Marge brute</strong></td><td>CA − Coût des marchandises vendues</td><td>Efficacité de la production</td></tr>
+            <tr><td><strong>EBITDA</strong></td><td>Résultat avant intérêts, impôts, amortissements</td><td>Proxy de la rentabilité opérationnelle</td></tr>
+            <tr><td><strong>EBIT</strong></td><td>Résultat opérationnel (après amortissements)</td><td>Rentabilité hors financement</td></tr>
+            <tr><td><strong>Résultat net</strong></td><td>Bénéfice ou perte finale</td><td>Base du BPA (bénéfice par action)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="notion">
+        <div class="notion-title">Ratios de rentabilité clés</div>
+        <ul>
+          <li><strong>Marge brute</strong> = (CA − Coût des ventes) / CA — efficacité de la production</li>
+          <li><strong>Marge EBITDA</strong> = EBITDA / CA — proxy de rentabilité opérationnelle (comparaison sectorielle)</li>
+          <li><strong>Marge nette</strong> = Résultat net / CA — ce qui reste après tout, impôts et intérêts inclus</li>
+          <li><strong>ROE</strong> = Résultat net / Capitaux propres — combien l'entreprise génère pour ses actionnaires</li>
+          <li><strong>ROCE</strong> = EBIT / (Capitaux propres + Dette nette) — efficacité du capital total employé</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">2. Le Bilan — Que possède et doit l'entreprise ?</h3>
+      <p>Le bilan est une photographie à un instant T de ce que l'entreprise possède (actifs) et de ce qu'elle doit (passifs + capitaux propres). Par définition comptable : <strong>Actif = Passif + Capitaux propres</strong>. Une entreprise profitable peut faire faillite si son bilan est fragile — si elle a trop de dettes à court terme, pas assez de liquidités, ou des actifs surévalués.</p>
+      <div class="notion">
+        <div class="notion-title">Indicateurs bilan — ce qu'on surveille</div>
+        <ul>
+          <li><strong>Dette nette</strong> = Dettes financières − Trésorerie</li>
+          <li><strong>Ratio Dette nette / EBITDA</strong> : &lt; 2× = sain · 2×–4× = attention · &gt; 4× = risque élevé</li>
+          <li><strong>Ratio courant</strong> = Actifs courants / Passifs courants : doit être &gt; 1 (liquidité court terme)</li>
+          <li><strong>Goodwill élevé</strong> = acquisitions passées à prix élevé → risque de dépréciation massive si la cible déçoit</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">3. Le Tableau des Flux de Trésorerie — Où va vraiment l'argent ?</h3>
+      <p>C'est le document le plus honnête des trois. Le compte de résultat peut être manipulé par des choix comptables. Les flux de trésorerie, eux, montrent les mouvements réels d'argent. Comme dit Warren Buffett : le cash, on ne peut pas l'inventer.</p>
+      <div class="notion">
+        <div class="notion-title">La notion de Free Cash Flow (FCF)</div>
+        <p><code>FCF = Cash opérationnel − Capex (dépenses d'investissement)</code></p>
+        <p>Le FCF est l'argent réellement disponible après avoir payé les dépenses nécessaires au maintien et développement de l'activité. C'est cet argent que l'entreprise peut redistribuer aux actionnaires (dividendes, rachat d'actions), rembourser à ses créanciers, ou utiliser pour de nouvelles acquisitions.</p>
+        <p>Une entreprise avec un EBITDA élevé mais un FCF faible ou négatif consomme son cash pour grandir — ce qui n'est pas forcément mauvais, mais doit être compris et anticipé.</p>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">4. Les Red Flags Comptables</h3>
+      <ul class="styled-list">
+        <li>Croissance du CA sans croissance du cash opérationnel — les ventes sont comptabilisées mais l'argent ne rentre pas</li>
+        <li>Écart croissant entre résultat net et FCF — les bénéfices comptables s'éloignent de la réalité cash</li>
+        <li>Goodwill très élevé par rapport aux actifs totaux — risque de dépréciations massives futures</li>
+        <li>Rotation des créances qui ralentit — les clients paient de plus en plus tard (pression commerciale ou fragilité)</li>
+        <li>Changement fréquent d'auditeurs ou de directeurs financiers — signal d'alerte sur la gouvernance</li>
+        <li>Dépenses d'investissement très faibles dans un secteur capital-intensif — l'entreprise vit sur ses actifs existants</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- SECTION C -->
+  <section class="section" id="vc">
+    <div class="section-label">Section C</div>
+    <h2 class="section-title">Valorisation par les Comparables</h2>
+    <div class="section-intro">L'approche par les comparables est la méthode la plus utilisée sur les marchés financiers. Son principe est simple : un actif vaut ce que des actifs similaires valent sur le marché. Si toutes les entreprises de l'automobile européenne traitent à 6× l'EBITDA et que Renault traite à 4×, il existe a priori une décote qui représente une opportunité.</div>
+
+    <div class="sub">
+      <h3 class="sub-title">Construction d'un tableau de comparables</h3>
+      <p>On sélectionne les pairs — des entreprises comparables en termes de secteur, taille, géographie et stade de développement. On collecte ensuite les multiples de valorisation pour chaque comparable, puis on calcule la médiane et les quartiles pour établir une fourchette de valorisation.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Entreprise</th><th>VE (M€)</th><th>CA (M€)</th><th>EBITDA (M€)</th><th>VE/EBITDA</th><th>P/E</th><th>P/B</th></tr></thead>
+          <tbody>
+            <tr><td>Comparable A</td><td>4 200</td><td>1 800</td><td>420</td><td>10.0×</td><td>18×</td><td>2.1×</td></tr>
+            <tr><td>Comparable B</td><td>3 600</td><td>1 500</td><td>360</td><td>10.0×</td><td>16×</td><td>1.8×</td></tr>
+            <tr><td>Comparable C</td><td>5 800</td><td>2 100</td><td>490</td><td>11.8×</td><td>22×</td><td>2.5×</td></tr>
+            <tr><td>Comparable D</td><td>2 900</td><td>1 200</td><td>260</td><td>11.2×</td><td>20×</td><td>2.0×</td></tr>
+            <tr><td><strong>Médiane pairs</strong></td><td>—</td><td>—</td><td>—</td><td><strong>10.6×</strong></td><td><strong>19×</strong></td><td><strong>2.1×</strong></td></tr>
+            <tr><td><strong>CIBLE</strong></td><td>—</td><td>1 650</td><td>340</td><td><strong>→ 17.6× implicite</strong></td><td>?</td><td>?</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="notion">
+        <div class="notion-title">Les multiples à connaître</div>
+        <ul>
+          <li><strong>VE/EBITDA</strong> : multiple opérationnel, indépendant de la structure de capital. Standard dans les deals M&A et le credit.</li>
+          <li><strong>P/E</strong> (Price/Earnings) : prix divisé par bénéfice par action. Intuitif mais sensible aux choix comptables.</li>
+          <li><strong>P/B</strong> (Price/Book) : prix divisé par valeur comptable. Utile pour les banques et les sociétés à actifs tangibles.</li>
+          <li><strong>EV/Sales</strong> : utilisé pour les entreprises en croissance sans bénéfice (SaaS, biotech).</li>
+          <li><strong>P/FCF</strong> (Price/Free Cash Flow) : le plus honnête pour les entreprises matures.</li>
+        </ul>
+      </div>
+      <div class="callout yellow">Limite majeure : si tout le secteur est surévalué — comme les valeurs technologiques en 2000 — comparer à des pairs surévalués ne révèle pas que l'actif cible est bon marché. Il est seulement moins surévalué. L'approche par les comparables doit toujours être complétée par une analyse fondamentale absolue (DCF ou coût de remplacement).</div>
+    </div>
+  </section>
+
+  <!-- SECTION D -->
+  <section class="section" id="vd">
+    <div class="section-label">Section D</div>
+    <h2 class="section-title">Valorisation par les Flux — le DCF Simplifié</h2>
+    <div class="section-intro">Le DCF (Discounted Cash Flow) est la méthode de valorisation absolue par excellence. Un euro aujourd'hui vaut plus qu'un euro dans dix ans, parce que l'argent disponible maintenant peut être investi et fructifié. La valeur d'un actif est donc la somme de tous ses flux de trésorerie futurs, ramenés en valeur d'aujourd'hui par un taux d'actualisation.</div>
+
+    <div class="sub">
+      <h3 class="sub-title">Le principe d'actualisation</h3>
+      <p>Si un actif va générer 100 € dans un an et que le taux d'actualisation est de 10%, la valeur actuelle de ces 100 € est : 100 / (1 + 0.10) = 90.9 €. Pour des flux sur plusieurs années, chaque flux est actualisé par (1 + r)^n où n est le nombre d'années.</p>
+      <div class="notion">
+        <div class="notion-title">Formule DCF — Valeur Intrinsèque</div>
+        <p><code>V = Σ FCFt / (1 + r)^t + Valeur Terminale / (1 + r)^n</code></p>
+        <p><strong>FCFt</strong> = Free Cash Flow de l'année t · <strong>r</strong> = Taux d'actualisation (WACC) · <strong>n</strong> = Nombre d'années de prévision (5 à 10 ans)</p>
+        <p><strong>Valeur Terminale</strong> = FCF_final × (1 + g) / (r − g) où g = taux de croissance perpétuel</p>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Le taux d'actualisation (WACC)</h3>
+      <ul class="styled-list">
+        <li><strong>Taux sans risque</strong> — rendement des obligations d'État à 10 ans (OAT France, T-Bond USA). Actuellement autour de 3 à 4% dans les économies développées.</li>
+        <li><strong>Prime de risque actions</strong> — rendement supplémentaire exigé pour investir en actions. Historiquement entre 4 et 6% sur les marchés occidentaux.</li>
+        <li><strong>Bêta</strong> — mesure la sensibilité de l'action aux mouvements du marché. Un bêta de 1.5 : l'action monte de 15% quand le marché monte de 10%.</li>
+      </ul>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">L'analyse de sensibilité — l'outil indispensable</h3>
+      <p>Le DCF est extrêmement sensible aux hypothèses de taux de croissance et de taux d'actualisation. Une variation de 1% sur le taux d'actualisation peut changer la valeur estimée de 30 à 50%. C'est pourquoi la valeur issue d'un DCF n'est jamais un chiffre précis, mais une fourchette.</p>
+    </div>
+    <div class="module-figure">
+<svg width="100%" viewBox="0 0 680 310" style="display:block">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+
+<!-- Title -->
+<text class="th" x="340" y="28" text-anchor="middle">Matrice de sensibilité DCF — valeur implicite (M€)</text>
+<!-- Axes labels -->
+<text class="ts" x="340" y="52" text-anchor="middle" opacity=".6">Taux d'actualisation (WACC) →</text>
+<text class="ts" x="24" y="200" text-anchor="middle" opacity=".6" transform="rotate(-90,24,200)">Croissance (g) →</text>
+<!-- Column headers -->
+<text class="ts" x="188" y="75" text-anchor="middle" opacity=".7">7%</text>
+<text class="ts" x="272" y="75" text-anchor="middle" opacity=".7">8%</text>
+<text class="ts" x="356" y="75" text-anchor="middle" opacity=".7">9%</text>
+<text class="ts" x="440" y="75" text-anchor="middle" opacity=".7">10%</text>
+<text class="ts" x="524" y="75" text-anchor="middle" opacity=".7">11%</text>
+<!-- Row headers -->
+<text class="ts" x="136" y="110" text-anchor="middle" opacity=".7">1%</text>
+<text class="ts" x="136" y="154" text-anchor="middle" opacity=".7">2%</text>
+<text class="ts" x="136" y="198" text-anchor="middle" opacity=".7">3%</text>
+<text class="ts" x="136" y="242" text-anchor="middle" opacity=".7">4%</text>
+<text class="ts" x="136" y="286" text-anchor="middle" opacity=".7">5%</text>
+<!-- Row 1 (g=1%) -->
+<rect x="156" y="84" width="84" height="36" fill="#E1F5EE" stroke="#9FE1CB" stroke-width="0.5"/><text class="ts" x="198" y="107" text-anchor="middle" fill="#085041">142</text>
+<rect x="240" y="84" width="84" height="36" fill="#EAF3DE" stroke="#C0DD97" stroke-width="0.5"/><text class="ts" x="282" y="107" text-anchor="middle" fill="#173404">118</text>
+<rect x="324" y="84" width="84" height="36" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="0.5"/><text class="ts" x="366" y="107" text-anchor="middle" fill="#2C2C2A">99</text>
+<rect x="408" y="84" width="84" height="36" fill="#FCEBEB" stroke="#F7C1C1" stroke-width="0.5"/><text class="ts" x="450" y="107" text-anchor="middle" fill="#501313">84</text>
+<rect x="492" y="84" width="84" height="36" fill="#FCEBEB" stroke="#F09595" stroke-width="0.5"/><text class="ts" x="534" y="107" text-anchor="middle" fill="#501313">72</text>
+<!-- Row 2 (g=2%) -->
+<rect x="156" y="120" width="84" height="36" fill="#E1F5EE" stroke="#9FE1CB" stroke-width="0.5"/><text class="ts" x="198" y="143" text-anchor="middle" fill="#085041">168</text>
+<rect x="240" y="120" width="84" height="36" fill="#E1F5EE" stroke="#9FE1CB" stroke-width="0.5"/><text class="ts" x="282" y="143" text-anchor="middle" fill="#085041">138</text>
+<rect x="324" y="120" width="84" height="36" fill="#EAF3DE" stroke="#C0DD97" stroke-width="0.5"/><text class="ts" x="366" y="143" text-anchor="middle" fill="#173404">115</text>
+<rect x="408" y="120" width="84" height="36" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="0.5"/><text class="ts" x="450" y="143" text-anchor="middle" fill="#2C2C2A">97</text>
+<rect x="492" y="120" width="84" height="36" fill="#FCEBEB" stroke="#F7C1C1" stroke-width="0.5"/><text class="ts" x="534" y="143" text-anchor="middle" fill="#501313">82</text>
+<!-- Row 3 (g=3%) — prix actuel = 100 zone -->
+<rect x="156" y="156" width="84" height="36" fill="#E1F5EE" stroke="#5DCAA5" stroke-width="1"/><text class="th" x="198" y="179" text-anchor="middle" fill="#085041">204</text>
+<rect x="240" y="156" width="84" height="36" fill="#E1F5EE" stroke="#5DCAA5" stroke-width="1"/><text class="th" x="282" y="179" text-anchor="middle" fill="#085041">164</text>
+<rect x="324" y="156" width="84" height="36" fill="#EAF3DE" stroke="#97C459" stroke-width="1"/><text class="th" x="366" y="179" text-anchor="middle" fill="#173404">135</text>
+<rect x="408" y="156" width="84" height="36" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="0.5"/><text class="ts" x="450" y="179" text-anchor="middle" fill="#2C2C2A">113</text>
+<rect x="492" y="156" width="84" height="36" fill="#FCEBEB" stroke="#F7C1C1" stroke-width="0.5"/><text class="ts" x="534" y="179" text-anchor="middle" fill="#501313">95</text>
+<!-- Row 4 (g=4%) -->
+<rect x="156" y="192" width="84" height="36" fill="#E1F5EE" stroke="#5DCAA5" stroke-width="1"/><text class="th" x="198" y="215" text-anchor="middle" fill="#085041">258</text>
+<rect x="240" y="192" width="84" height="36" fill="#E1F5EE" stroke="#5DCAA5" stroke-width="1"/><text class="th" x="282" y="215" text-anchor="middle" fill="#085041">201</text>
+<rect x="324" y="192" width="84" height="36" fill="#E1F5EE" stroke="#9FE1CB" stroke-width="0.5"/><text class="ts" x="366" y="215" text-anchor="middle" fill="#085041">162</text>
+<rect x="408" y="192" width="84" height="36" fill="#EAF3DE" stroke="#C0DD97" stroke-width="0.5"/><text class="ts" x="450" y="215" text-anchor="middle" fill="#173404">133</text>
+<rect x="492" y="192" width="84" height="36" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="0.5"/><text class="ts" x="534" y="215" text-anchor="middle" fill="#2C2C2A">111</text>
+<!-- Row 5 (g=5%) -->
+<rect x="156" y="228" width="84" height="36" fill="#E1F5EE" stroke="#5DCAA5" stroke-width="1"/><text class="th" x="198" y="251" text-anchor="middle" fill="#085041">345</text>
+<rect x="240" y="228" width="84" height="36" fill="#E1F5EE" stroke="#5DCAA5" stroke-width="1"/><text class="th" x="282" y="251" text-anchor="middle" fill="#085041">258</text>
+<rect x="324" y="228" width="84" height="36" fill="#E1F5EE" stroke="#9FE1CB" stroke-width="0.5"/><text class="ts" x="366" y="251" text-anchor="middle" fill="#085041">200</text>
+<rect x="408" y="228" width="84" height="36" fill="#E1F5EE" stroke="#9FE1CB" stroke-width="0.5"/><text class="ts" x="450" y="251" text-anchor="middle" fill="#085041">159</text>
+<rect x="492" y="228" width="84" height="36" fill="#EAF3DE" stroke="#C0DD97" stroke-width="0.5"/><text class="ts" x="534" y="251" text-anchor="middle" fill="#173404">130</text>
+<!-- Legend -->
+<rect x="156" y="278" width="14" height="14" rx="3" fill="#E1F5EE" stroke="#5DCAA5" stroke-width="0.5"/>
+<text class="ts" x="176" y="289" fill="#085041">Sous-évalué vs prix actuel (100 M€)</text>
+<rect x="400" y="278" width="14" height="14" rx="3" fill="#FCEBEB" stroke="#F7C1C1" stroke-width="0.5"/>
+<text class="ts" x="420" y="289" fill="#791F1F">Surévalué</text>
+
+</svg>
+<p class="fig-caption">Fig. 2 — Matrice de sensibilité DCF. Valeur implicite (M€) selon le taux d'actualisation et le taux de croissance. Zone verte = sous-évalué vs prix actuel (100 M€). Zone rouge = surévalué.</p>
+</div>
+    <div class="callout blue">Le DCF n'est pas un outil de précision — c'est un outil de réflexion structurée sur les hypothèses. Si votre prix d'achat est en-dessous de la valeur dans la plupart des scénarios (même les défavorables), vous avez une vraie marge de sécurité. Si votre thèse ne « fonctionne » que dans les scénarios les plus optimistes, le risque est asymétrique dans le mauvais sens.</div>
+  </section>
+
+  <!-- SECTION E -->
+  <section class="section" id="ve">
+    <div class="section-label">Section E</div>
+    <h2 class="section-title">Valoriser une Matière Première</h2>
+    <div class="section-intro">Les matières premières n'ont pas de bilan, pas de compte de résultat et pas de cash flows à actualiser. On ne peut pas leur appliquer un P/E ou un DCF. La logique de valeur est entièrement différente : elle est physique, fondée sur l'offre et la demande réelles dans le monde.</div>
+
+    <div class="sub">
+      <h3 class="sub-title">Le coût marginal de production — le plancher de prix</h3>
+      <p>Le coût marginal de production est le coût du producteur le moins efficace qui doit néanmoins rester en activité pour satisfaire la demande actuelle. C'est le plancher naturel du prix à long terme. Si le prix de marché tombe sous ce coût, les mines ou les puits les moins rentables ferment, l'offre se contracte, et le prix remonte mécaniquement.</p>
+      <div class="notion">
+        <div class="notion-title">Le cycle en 4 phases des matières premières</div>
+        <ul>
+          <li><strong>1. Prix bas</strong> → Les producteurs marginaux ferment. Sous-investissement généralisé dans de nouvelles capacités.</li>
+          <li><strong>2. Demande croissante</strong> → Les stocks s'épuisent. La tension sur l'offre commence à se faire sentir.</li>
+          <li><strong>3. Hausse des prix</strong> → Les producteurs restants profitent. Retour progressif des investissements.</li>
+          <li><strong>4. Prix élevés</strong> → Surinvestissement. Nouvelles capacités arrivent en surproduction. Retour en phase 1.</li>
+        </ul>
+        <p>Ce cycle dure typiquement de 7 à 15 ans pour les métaux industriels (cuivre, uranium) et 3 à 5 ans pour les agricoles (blé, maïs).</p>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">La structure de terme — Contango et Backwardation</h3>
+      <p>La structure de terme des contrats futures — la relation entre le prix spot et les prix des contrats à terme (3, 6, 12 mois) — est un signal puissant sur l'état du marché physique.</p>
+    </div>
+    <div class="module-figure">
+<svg width="100%" viewBox="0 0 680 300" style="display:block">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+
+<!-- Axes -->
+<line x1="52" y1="20" x2="52" y2="230" stroke="var(--t)" stroke-width="1" opacity=".25"/>
+<line x1="52" y1="230" x2="620" y2="230" stroke="var(--t)" stroke-width="1" opacity=".25"/>
+<text class="ts" x="336" y="252" text-anchor="middle" opacity=".45">Échéance (mois) →</text>
+<text class="ts" x="32" y="124" text-anchor="middle" opacity=".45" transform="rotate(-90,32,124)">Prix</text>
+<!-- X labels -->
+<text class="ts" x="90"  y="244" text-anchor="middle" opacity=".45">Spot</text>
+<text class="ts" x="200" y="244" text-anchor="middle" opacity=".45">3M</text>
+<text class="ts" x="310" y="244" text-anchor="middle" opacity=".45">6M</text>
+<text class="ts" x="420" y="244" text-anchor="middle" opacity=".45">9M</text>
+<text class="ts" x="530" y="244" text-anchor="middle" opacity=".45">12M</text>
+<!-- Contango line (rising) -->
+<path d="M 90 160 C 150 155, 200 148, 250 140 C 300 132, 370 120, 420 110 C 470 100, 510 90, 560 78"
+  fill="none" stroke="#E24B4A" stroke-width="2.5" stroke-linecap="round"/>
+<!-- Backwardation line (falling) -->
+<path d="M 90 80 C 150 88, 200 100, 250 112 C 300 124, 370 140, 420 152 C 470 163, 510 172, 560 180"
+  fill="none" stroke="#1D9E75" stroke-width="2.5" stroke-linecap="round"/>
+<!-- Labels on lines -->
+<rect x="568" y="62" width="88" height="28" rx="5" fill="#FCEBEB" stroke="#E24B4A" stroke-width="0.5"/>
+<text class="ts" x="612" y="80" text-anchor="middle" fill="#791F1F">Contango</text>
+<rect x="568" y="168" width="104" height="28" rx="5" fill="#E1F5EE" stroke="#1D9E75" stroke-width="0.5"/>
+<text class="ts" x="620" y="186" text-anchor="middle" fill="#085041">Backwardation</text>
+<!-- Annotation boxes -->
+<rect x="60" y="258" width="258" height="32" rx="6" fill="#FCEBEB" stroke="#E24B4A" stroke-width="0.5" opacity=".8"/>
+<text class="ts" x="189" y="272" text-anchor="middle" fill="#791F1F">Contango = surplus · stockage abondant</text>
+<text class="ts" x="189" y="284" text-anchor="middle" fill="#791F1F">→ prudence sur la position longue</text>
+<rect x="334" y="258" width="272" height="32" rx="6" fill="#E1F5EE" stroke="#1D9E75" stroke-width="0.5" opacity=".8"/>
+<text class="ts" x="470" y="272" text-anchor="middle" fill="#085041">Backwardation = pénurie · prime de rareté</text>
+<text class="ts" x="470" y="284" text-anchor="middle" fill="#085041">→ signal haussier sur le physique</text>
+
+</svg>
+<p class="fig-caption">Fig. 3 — Contango : le marché anticipe des prix futurs plus élevés (surplus actuel). Backwardation : le prix spot est supérieur aux futures (pénurie physique immédiate, prime à la livraison).</p>
+</div>
+    <div class="sub">
+      <h3 class="sub-title">Application — Pétrole, Cuivre, Uranium</h3>
+      <p><strong>Pétrole :</strong> gouverné par l'OPEP+ (cartellisation de l'offre) et la demande mondiale. Le coût marginal du shale oil américain (80–85$) constitue le plafond implicite pour l'OPEP — au-dessus de ce niveau, les producteurs américains relancent leurs forages.</p>
+      <p><strong>Cuivre :</strong> baromètre de la croissance mondiale ("Doctor Copper"). Demande structurelle portée par la transition énergétique. L'offre est concentrée au Chili et au Pérou, avec un délai moyen de 15 ans entre la découverte d'un gisement et sa production — ce qui crée des pénuries structurelles prévisibles.</p>
+      <p><strong>Uranium :</strong> coût marginal autour de 50–60$/lb. En 2015–2020, le prix spot est tombé sous 20$/lb — bien en-dessous du coût de production — forçant la fermeture de la quasi-totalité des mines. La reprise de la demande nucléaire combinée à l'absence d'investissements dans de nouvelles mines a créé un déficit structurel prolongé.</p>
+      <div class="notion">
+        <div class="notion-title">Signaux à surveiller pour les matières premières</div>
+        <ul>
+          <li>Niveau des stocks (inventaires LME pour le cuivre, EIA pour le pétrole, WNA pour l'uranium)</li>
+          <li>Nombre de rigs actifs (Baker Hughes pour le pétrole) — indicateur avancé d'offre future</li>
+          <li>Structure de terme : contango/backwardation et son évolution dans le temps</li>
+          <li>Capex des grands producteurs : réduction = sous-investissement = tension future sur l'offre</li>
+          <li>Coût de production des mines marginales : c'est le plancher de prix</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION F -->
+  <section class="section" id="vf">
+    <div class="section-label">Section F</div>
+    <h2 class="section-title">Valoriser une Devise</h2>
+    <div class="section-intro">Une devise n'a pas de valeur intrinsèque au sens comptable du terme. Sa valeur est relative — elle se mesure toujours par rapport à une autre devise, et reflète la santé économique et monétaire relative des deux pays ou zones monétaires concernées.</div>
+
+    <div class="sub">
+      <h3 class="sub-title">Les quatre déterminants fondamentaux</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Déterminant</th><th>Mécanisme</th><th>Impact sur la devise</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Différentiel de taux</strong></td><td>Les capitaux circulent vers les pays offrant les meilleurs rendements</td><td>Taux élevés → afflux de capitaux → devise forte</td></tr>
+            <tr><td><strong>Inflation relative</strong></td><td>Une inflation plus élevée érode le pouvoir d'achat</td><td>Inflation forte → dépréciation progressive de la devise</td></tr>
+            <tr><td><strong>Balance courante</strong></td><td>Excédent = exportations &gt; importations = demande nette de la devise</td><td>Excédent courant → devise structurellement forte</td></tr>
+            <tr><td><strong>Flux de capitaux</strong></td><td>Investissements étrangers directs, achats d'actifs financiers</td><td>Afflux d'IDE → soutien structurel de la devise</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">La Parité de Pouvoir d'Achat — l'ancre de long terme</h3>
+      <p>La PPA postule qu'à long terme, le taux de change entre deux devises devrait s'ajuster pour que le même panier de biens coûte le même prix dans les deux pays. L'indice Big Mac de The Economist en est la version grand public.</p>
+      <p>La PPA n'est pas un outil de timing — une devise peut rester sous-évaluée pendant des années. Mais quand un écart devient extrême, il tend à se corriger, souvent brutalement (Argentine 2001, Turquie 2018–2021, yen japonais 2022–2023).</p>
+      <div class="notion">
+        <div class="notion-title">Les devises comme proxy des actifs réels</div>
+        <ul>
+          <li><strong>AUD</strong> : proxy des matières premières, corrélé au minerai de fer et au charbon. Forte corrélation avec la croissance chinoise.</li>
+          <li><strong>CAD</strong> : proxy du pétrole, corrélé au WTI. Un pétrole à 90$ = CAD fort vs USD.</li>
+          <li><strong>NOK</strong> : proxy du pétrole brent européen.</li>
+          <li><strong>JPY</strong> : devise refuge. S'apprécie dans les crises, se déprécie quand les taux montent (carry trade USD/JPY).</li>
+          <li><strong>CHF</strong> : refuge européen. Appréciations violentes lors des crises politiques européennes.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION G -->
+  <section class="section" id="vg">
+    <div class="section-label">Section G</div>
+    <h2 class="section-title">Les Outils Quantitatifs de Confirmation</h2>
+    <div class="section-intro">L'analyse fondamentale dit quoi acheter. L'analyse quantitative de la dynamique des prix aide à répondre à une question complémentaire : est-ce le bon moment pour entrer, et combien de temps ce signal devrait-il durer ? Ces outils ne remplacent pas la valorisation — ils la complètent.</div>
+
+    <div class="sub">
+      <h3 class="sub-title">L'Exposant de Hurst — Quel est le régime de prix actuel ?</h3>
+      <p>L'exposant de Hurst (H) est une mesure statistique qui caractérise la mémoire d'une série temporelle de prix. Il indique si un actif a tendance à persister dans sa direction (tendance) ou à revenir vers sa moyenne (mean-reversion), ou si ses mouvements sont purement aléatoires.</p>
+    </div>
+    <div class="module-figure">
+<svg width="100%" viewBox="0 0 680 220" style="display:block">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+
+<!-- 3 mini charts side by side -->
+<!-- Mean reversion (H < 0.5) -->
+<rect x="28" y="24" width="188" height="140" rx="8" fill="#EEEDFE" stroke="#AFA9EC" stroke-width="0.5"/>
+<text class="th" x="122" y="46" text-anchor="middle" fill="#3C3489">H &lt; 0.5</text>
+<text class="ts" x="122" y="62" text-anchor="middle" fill="#534AB7">Mean-reversion</text>
+<path d="M 40 110 C 55 80, 68 75, 80 100 C 92 125, 104 130, 116 105 C 128 80, 140 75, 152 100 C 164 125, 176 130, 188 105 C 196 88, 204 82, 210 100"
+  fill="none" stroke="#534AB7" stroke-width="2" stroke-linecap="round"/>
+<line x1="40" y1="100" x2="210" y2="100" stroke="#534AB7" stroke-width="1" stroke-dasharray="4 3" opacity=".4"/>
+<text class="ts" x="122" y="148" text-anchor="middle" fill="#534AB7">Acheter les creux</text>
+<text class="ts" x="122" y="162" text-anchor="middle" fill="#534AB7">Vendre les sommets</text>
+
+<!-- Random walk (H ≈ 0.5) -->
+<rect x="246" y="24" width="188" height="140" rx="8" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="0.5"/>
+<text class="th" x="340" y="46" text-anchor="middle" fill="#444441">H ≈ 0.5</text>
+<text class="ts" x="340" y="62" text-anchor="middle" fill="#5F5E5A">Marche aléatoire</text>
+<path d="M 258 100 C 268 88, 275 105, 285 92 C 295 78, 305 110, 315 95 C 325 80, 335 115, 345 100 C 355 85, 365 108, 375 90 C 385 72, 395 105, 410 98 C 418 94, 425 102, 428 98"
+  fill="none" stroke="#888780" stroke-width="2" stroke-linecap="round"/>
+<text class="ts" x="340" y="148" text-anchor="middle" fill="#5F5E5A">Aucun avantage</text>
+<text class="ts" x="340" y="162" text-anchor="middle" fill="#5F5E5A">statistique — attendre</text>
+
+<!-- Trending (H > 0.5) -->
+<rect x="464" y="24" width="188" height="140" rx="8" fill="#E1F5EE" stroke="#9FE1CB" stroke-width="0.5"/>
+<text class="th" x="558" y="46" text-anchor="middle" fill="#085041">H &gt; 0.5</text>
+<text class="ts" x="558" y="62" text-anchor="middle" fill="#0F6E56">Tendance persistante</text>
+<path d="M 476 140 C 492 132, 506 122, 520 110 C 534 98, 548 85, 562 72 C 576 60, 590 50, 610 40 C 618 36, 630 32, 644 28"
+  fill="none" stroke="#1D9E75" stroke-width="2" stroke-linecap="round"/>
+<text class="ts" x="558" y="148" text-anchor="middle" fill="#085041">Suivre la tendance</text>
+<text class="ts" x="558" y="162" text-anchor="middle" fill="#085041">Breakouts probables</text>
+
+</svg>
+<p class="fig-caption">Fig. 4 — Les trois régimes de prix identifiables par l'exposant de Hurst. Mean-reversion (H < 0.5) · Marche aléatoire (H ≈ 0.5) · Tendance persistante (H > 0.5).</p>
+</div>
+    <div class="sub">
+      <h3 class="sub-title" style="margin-top:16px">Utiliser Hurst dans l'analyse fondamentale</h3>
+      <div class="notion">
+        <div class="notion-title">Méthode d'application</div>
+        <ul>
+          <li>Vous avez identifié un actif sous-évalué par vos comparables et votre DCF.</li>
+          <li>Vous calculez l'exposant de Hurst sur les 6 à 18 derniers mois de données de prix.</li>
+          <li>Si <strong>H &gt; 0.5</strong> : le marché est en régime de tendance → votre thèse haussière est dans le bon sens du vent.</li>
+          <li>Si <strong>H &lt; 0.5</strong> : le marché est en régime de mean-reversion → la sous-évaluation peut persister longtemps, les entrées sur repli sont plus efficaces.</li>
+          <li>Si <strong>H ≈ 0.5</strong> : pas d'information statistique sur la direction — s'appuyer sur les catalyseurs fondamentaux uniquement.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Les Modèles AR — Combien de temps ce signal va-t-il durer ?</h3>
+      <p>Un modèle autorégressif AR(1) modélise une série temporelle comme une fonction linéaire de ses propres valeurs passées : <strong>P(t) = α × P(t−1) + ε(t)</strong>. Si α est proche de 1, la série a une forte mémoire — un choc de prix aujourd'hui se répercute longtemps. Si α est proche de 0, la série oublie rapidement ses valeurs passées.</p>
+      <div class="notion">
+        <div class="notion-title">Half-life of Mean Reversion — La formule clé</div>
+        <p><code>half-life = −ln(2) / ln(α)</code> où α est le coefficient AR(1)</p>
+        <p>Exemple : α = 0.85 → half-life ≈ <strong>4.25 périodes</strong></p>
+        <p>Si vos données sont en jours : l'actif met en moyenne 4 jours pour effacer la moitié d'un écart. Application directe : calibrer la durée de détention attendue d'une position mean-reversion.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION H -->
+  <section class="section" id="vh">
+    <div class="section-label">Section H</div>
+    <h2 class="section-title">Construire une Thèse d'Investissement</h2>
+    <div class="section-intro">Tous les outils de ce module convergent vers un seul objectif : construire une thèse d'investissement. Une thèse est un raisonnement structuré qui répond à la question : pourquoi cet actif, pourquoi maintenant, et à quel prix. Une bonne thèse n'est pas complexe — elle est claire, logique et falsifiable.</div>
+
+    <div class="module-figure">
+<svg width="100%" viewBox="0 0 680 320" style="display:block">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+
+<!-- Center: "Thèse" -->
+<g class="node c-blue">
+  <rect x="270" y="126" width="140" height="56" rx="10" stroke-width="0.5"/>
+  <text class="th" x="340" y="150" text-anchor="middle" dominant-baseline="central">Thèse</text>
+  <text class="ts" x="340" y="168" text-anchor="middle">d'investissement</text>
+</g>
+<!-- 4 pillars -->
+<g class="node c-teal">
+  <rect x="40" y="36" width="180" height="72" rx="8" stroke-width="0.5"/>
+  <text class="th" x="130" y="60" text-anchor="middle" dominant-baseline="central">1. Catalyseur</text>
+  <text class="ts" x="130" y="78" text-anchor="middle">Pourquoi maintenant ?</text>
+  <text class="ts" x="130" y="94" text-anchor="middle">Interne ou externe</text>
+</g>
+<g class="node c-amber">
+  <rect x="460" y="36" width="180" height="72" rx="8" stroke-width="0.5"/>
+  <text class="th" x="550" y="60" text-anchor="middle" dominant-baseline="central">2. Valorisation</text>
+  <text class="ts" x="550" y="78" text-anchor="middle">Décote ≥ 20–30%</text>
+  <text class="ts" x="550" y="94" text-anchor="middle">Risk/Reward ≥ 2:1</text>
+</g>
+<g class="node c-purple">
+  <rect x="40" y="200" width="180" height="72" rx="8" stroke-width="0.5"/>
+  <text class="th" x="130" y="224" text-anchor="middle" dominant-baseline="central">3. Timing</text>
+  <text class="ts" x="130" y="242" text-anchor="middle">Régime macro favorable</text>
+  <text class="ts" x="130" y="258" text-anchor="middle">Hurst &gt; 0.5 confirme</text>
+</g>
+<g class="node c-coral">
+  <rect x="460" y="200" width="180" height="72" rx="8" stroke-width="0.5"/>
+  <text class="th" x="550" y="224" text-anchor="middle" dominant-baseline="central">4. Risques</text>
+  <text class="ts" x="550" y="242" text-anchor="middle">Invalidation définie</text>
+  <text class="ts" x="550" y="258" text-anchor="middle">Stop-loss calibré</text>
+</g>
+<!-- Connector lines to center -->
+<line x1="220" y1="90" x2="270" y2="140" stroke="var(--t)" stroke-width="1" opacity=".2" marker-end="url(#arrow)"/>
+<line x1="460" y1="90" x2="410" y2="140" stroke="var(--t)" stroke-width="1" opacity=".2" marker-end="url(#arrow)"/>
+<line x1="220" y1="230" x2="270" y2="175" stroke="var(--t)" stroke-width="1" opacity=".2" marker-end="url(#arrow)"/>
+<line x1="460" y1="230" x2="410" y2="175" stroke="var(--t)" stroke-width="1" opacity=".2" marker-end="url(#arrow)"/>
+<!-- Bottom note -->
+<rect x="40" y="290" width="600" height="24" rx="6" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5" opacity=".6"/>
+<text class="ts" x="340" y="306" text-anchor="middle" opacity=".65">La convergence des 4 piliers crée la conviction — et justifie une position plus importante</text>
+
+</svg>
+<p class="fig-caption">Fig. 5 — Les quatre piliers d'une thèse d'investissement. Toute décision doit reposer sur un catalyseur identifié, une valorisation favorable, un timing confirmé et une gestion des risques définie en amont.</p>
+</div>
+
+    <div class="sub">
+      <h3 class="sub-title">1. Le Catalyseur</h3>
+      <p>Le catalyseur est l'événement ou le changement de situation qui va déclencher la revalorisation de l'actif. Sans catalyseur, un actif peut rester sous-évalué indéfiniment. La question à se poser : pourquoi la sous-évaluation va-t-elle se corriger maintenant ? Quelle information le marché n'a-t-il pas encore complètement pricée ?</p>
+      <div class="notion">
+        <div class="notion-title">Exemples de catalyseurs identifiables à l'avance</div>
+        <ul>
+          <li>Réouverture d'une économie post-crise (tourisme, transports en 2021)</li>
+          <li>Changement réglementaire favorable (nucléaire post-COP28, légalisation cannabis)</li>
+          <li>Déficit structurel d'une matière première qui atteint un point critique de rupture des stocks</li>
+          <li>Rotation sectorielle due à un changement du cycle de taux (banques et utilities se comportent inversement)</li>
+          <li>Nouveau management réputé annoncé dans une entreprise décotée</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">2. La Valorisation</h3>
+      <p>Le deuxième pilier valide que l'actif est effectivement sous-évalué. On utilise les outils du module — comparables sectoriels, DCF, coût marginal, PPA selon la nature de l'actif. L'objectif est de quantifier la décote et d'estimer le potentiel de hausse jusqu'à la juste valeur.</p>
+      <div class="notion">
+        <div class="notion-title">L'asymétrie Risk/Reward</div>
+        <p><code>Risk/Reward = Gain potentiel / Perte potentielle</code></p>
+        <p>Exemple : actif à 65 €, valeur cible à 100 € (+54%), stop-loss à 58 € (−11%) → <strong>Risk/Reward = 4.9 : 1</strong></p>
+        <p>Règle : ne jamais prendre une position avec un Risk/Reward inférieur à 2:1. Les meilleures thèses fondamentales offrent des ratios de 4:1 à 10:1.</p>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">3. Le Timing</h3>
+      <p>Avoir raison sur la valorisation mais tort sur le timing est l'une des erreurs les plus courantes et les plus coûteuses. Le timing s'évalue à deux niveaux. D'abord, le niveau macro : quel est le régime de marché actuel ? Un actif value dans un bear market généralisé continuera à baisser. Ensuite, le niveau micro : les outils quantitatifs (Hurst, AR) indiquent-ils que la dynamique de prix commence à changer en faveur de la thèse ?</p>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">4. Les Risques et l'Invalidation de la Thèse</h3>
+      <p>Pour chaque thèse, il faut explicitement lister les conditions qui l'invalideraient. Si le prix atteint ce niveau, ou si cet événement se produit, la thèse est invalide et on sort de la position. Ce travail préventif est le fondement de la discipline — il protège contre le biais de confirmation, la tendance humaine à ne voir que les informations qui confirment notre position.</p>
+    </div>
+
+    <div class="checklist">
+      <div class="checklist-title">Checklist avant d'entrer en position</div>
+      <div class="check-item"><div class="check-box"></div>Le catalyseur est identifié et son timing est estimable</div>
+      <div class="check-item"><div class="check-box"></div>La valorisation montre une décote d'au moins 20–30% sur la valeur cible</div>
+      <div class="check-item"><div class="check-box"></div>Le Risk/Reward est supérieur à 2:1 (idéalement &gt; 3:1)</div>
+      <div class="check-item"><div class="check-box"></div>Le régime de prix (Hurst) est favorable ou neutre — pas frontalement défavorable</div>
+      <div class="check-item"><div class="check-box"></div>La thèse est falsifiable : j'ai défini à l'avance ce qui l'invalide</div>
+      <div class="check-item"><div class="check-box"></div>La taille de la position est compatible avec ma gestion du risque (Module VIII)</div>
+      <div class="check-item"><div class="check-box"></div>Je comprends les risques spécifiques : liquidité, risque de change, risque réglementaire</div>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Cas pratique — Thèse Cameco / Uranium (fil rouge Module II)</h3>
+      <table class="case-table">
+        <tr><td>CATALYSEUR</td><td>COP28 (22 pays pro-nucléaire) + SMR Trump + contrats Microsoft/Google/Amazon pour datacenters IA → demande additionnelle sur marché déjà en déficit <span class="verdict v-green">Multiple · Institutionnel · Difficilement réversible</span></td></tr>
+        <tr><td>VALORISATION</td><td>Coût marginal production = 50–60$/lb. Prix spot 2020 = 28$/lb (sous le coût de production). Risk/Reward estimé à 4:1 <span class="verdict v-green">Décote 40–50% sur valeur cible</span></td></tr>
+        <tr><td>TIMING</td><td>Prix spot 28$ → décollage à 60$ (2022) → 107$ (2024). Hurst calculé mi-2022 : H = 0.68 (tendance forte) <span class="verdict v-blue">Timing favorable confirmé</span></td></tr>
+        <tr><td>RISQUES</td><td>Accident nucléaire majeur. Décision politique anti-nucléaire dans un pays clé. Chute de la demande datacenters IA. Gérables par stop-loss et position sizing.</td></tr>
+        <tr><td>RÉSULTAT</td><td>Uranium +280% (28$ → 107$). Cameco ×4. URNM ×3. <span class="verdict v-green">Thèse validée en 24 mois</span></td></tr>
+      </table>
+      <div class="callout green">La règle de convergence des couches : une thèse puissante ne repose jamais sur un seul signal. Couche 1 — Macro (cycle favorable). Couche 2 — Géopolitique (déséquilibre structurel). Couche 3 — Valorisation (actif sous-évalué). Couche 4 — Timing (régime de prix confirmé). Plus le nombre de couches convergentes est élevé, plus la conviction est justifiée.</div>
+    </div>
+  </section>
+
+  <!-- SYNTHESIS -->
+  <div class="synthesis">
+    <h2 class="synthesis-title">Résumé du Module V</h2>
+    <div class="summary-grid">
+      <div class="summary-card"><div class="summary-section">V.a</div><div class="summary-concept">Prix ≠ Valeur · Marge de sécurité</div><div class="summary-tool">Mr. Market (Graham), marge de sécurité ≥ 20–30%</div></div>
+      <div class="summary-card"><div class="summary-section">V.b</div><div class="summary-concept">Le FCF est plus honnête que le résultat net</div><div class="summary-tool">ROE, EV/EBITDA, Dette/EBITDA, Red flags</div></div>
+      <div class="summary-card"><div class="summary-section">V.c</div><div class="summary-concept">Un actif vaut ce que ses pairs valent</div><div class="summary-tool">Tableau de comparables, multiples sectoriels, médiane</div></div>
+      <div class="summary-card"><div class="summary-section">V.d</div><div class="summary-concept">La valeur = somme des flux futurs actualisés</div><div class="summary-tool">Formule DCF, WACC, matrice de sensibilité</div></div>
+      <div class="summary-card"><div class="summary-section">V.e</div><div class="summary-concept">Coût marginal = plancher de prix</div><div class="summary-tool">Contango/Backwardation, cycles longs 7–15 ans</div></div>
+      <div class="summary-card"><div class="summary-section">V.f</div><div class="summary-concept">La devise reflète la santé relative de 2 économies</div><div class="summary-tool">Différentiel de taux, balance courante, PPA</div></div>
+      <div class="summary-card"><div class="summary-section">V.g</div><div class="summary-concept">Hurst et AR complètent la valorisation</div><div class="summary-tool">Exposant de Hurst, half-life AR(1) → Module VII</div></div>
+      <div class="summary-card"><div class="summary-section">V.h</div><div class="summary-concept">4 piliers : Catalyseur + Valorisation + Timing + Risques</div><div class="summary-tool">Checklist pré-position, Risk/Reward ≥ 2:1</div></div>
+    </div>
+    <div class="next-module">Module suivant — <strong>Module VI : Analyse Technique Appliquée.</strong> On ajoute la lecture des graphiques à l'analyse fondamentale — niveaux clés, structures de prix, et confirmation du timing d'entrée.</div>
   </div>
 
-  
-
-  <div class="mod-nav">
-    <button class="mod-nav-btn" onclick="navigate(3)" >← Précédent</button>
-    <span class="mod-nav-label">5 / 12</span>
-    <button class="mod-nav-btn" onclick="navigate(5, true)" >Suivant →</button>
+  <div class="module-nav">
+    <button class="nav-btn" onclick="window.parent.postMessage({type:'navigate',index:3,markDone:false},'*')">← Module 04</button>
+    <button class="nav-btn primary" onclick="window.parent.postMessage({type:'navigate',index:5,markDone:true},'*')">Module 06 →</button>
   </div>
 
 </div>
-
-<!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox">
-  <div class="lightbox-backdrop" id="lightboxBackdrop"></div>
-  <div class="lightbox-img-wrap">
-    <button class="lightbox-close" id="lightboxClose">✕</button>
-    <img id="lightboxImg" src="" alt=""/>
-    <div class="lightbox-caption" id="lightboxCaption"></div>
-  </div>
-</div>
-
-<script>
-function navigate(index, markDone) {
-  window.parent.postMessage({ type: 'navigate', index: index, markDone: !!markDone }, '*');
-}
-function openLightbox(src, caption) {
-  document.getElementById('lightboxImg').src = src;
-  document.getElementById('lightboxCaption').textContent = caption;
-  document.getElementById('lightbox').classList.add('open');
-}
-function closeLightbox() {
-  document.getElementById('lightbox').classList.remove('open');
-}
-document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
-document.getElementById('lightboxBackdrop').addEventListener('click', closeLightbox);
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
-document.addEventListener('click', e => {
-  const img = e.target.closest('.mod-figure img');
-  if (!img) return;
-  const caption = img.closest('.mod-figure')?.querySelector('figcaption')?.textContent || '';
-  openLightbox(img.src, caption);
-});
-</script>
 </body>
 </html>
