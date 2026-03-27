@@ -665,11 +665,20 @@ body {
 
 
   <!-- ════ BONUS ════ -->
-  <div class="content" id="page-bonus">
+  <div class="cont id="page-bonus">
     <div class="page-header">
       <div><div class="page-welcome">Bonus & Ressources</div><div class="page-welcome-sub">Contenu exclusif inclus dans ton accès Fondateur</div></div>
     </div>
-    <div class="bonus-grid">
+
+    <div id="bonus-locked-banner" style="display:none;background:var(--light-gray);border:1.5px solid var(--mid-gray);border-radius:var(--radius-lg);padding:20px 24px;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+      <div>
+        <div style="font-size:16px;font-weight:600;color:var(--text-secondary);letter-spacing:-.01em;">🎁 Contenu réservé aux membres</div>
+        <div style="font-size:13px;color:var(--text-tertiary);font-weight:300;margin-top:3px;">Active ton accès pour débloquer tous les bonus exclusifs.</div>
+      </div>
+      <button onclick="goToMembre()" style="font-size:14px;font-weight:500;background:#fff;color:var(--text-primary);padding:10px 20px;border-radius:980px;border:none;cursor:pointer;font-family:inherit;">★ Deviens membre</button>
+    </div>
+
+    <div class="bonus-grid" id="bonus-grid">
       <div class="bonus-card"><span class="badge new">Nouveau</span><div class="bonus-ico">📊</div><div class="bonus-title">Template Journal de Trading</div><div class="bonus-desc">Excel/Notion pour suivre tes positions, calculer ton expectancy et analyser tes biais.</div></div>
       <div class="bonus-card"><span class="badge exclu">Exclusif</span><div class="bonus-ico">🌐</div><div class="bonus-title">Guide COT Report</div><div class="bonus-desc">Comment lire le rapport COT pour anticiper les retournements institutionnels.</div></div>
       <div class="bonus-card"><span class="badge new">Nouveau</span><div class="bonus-ico">📉</div><div class="bonus-title">Simulateur Monte Carlo</div><div class="bonus-desc">Outil interactif pour simuler tes scénarios de drawdown selon win rate et R/R.</div></div>
@@ -979,6 +988,18 @@ function setBannerMode(hasAccess) {
         '<button onclick="goToMembre()" style="display:flex;align-items:center;gap:6px;font-size:14px;font-weight:500;background:var(--accent);color:#fff;padding:10px 20px;border-radius:980px;border:none;cursor:pointer;white-space:nowrap;font-family:inherit;transition:background .15s">★ Deviens membre</button>';
     }
   }
+
+  // Bonus
+  const bonusBanner = document.getElementById('bonus-locked-banner');
+  const bonusCards = document.querySelectorAll('#bonus-grid .bonus-card:not(.locked)');
+  if (bonusBanner) {
+    bonusBanner.style.display = hasAccess ? 'none' : 'flex';
+  }
+  bonusCards.forEach(card => {
+    card.style.opacity = hasAccess ? '1' : '0.35';
+    card.style.pointerEvents = hasAccess ? '' : 'none';
+    card.style.filter = hasAccess ? '' : 'grayscale(1)';
+  });
 
   // Cours banner
   const coursBanner = document.getElementById('cours-banner');
