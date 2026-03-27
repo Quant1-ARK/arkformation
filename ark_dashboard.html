@@ -398,8 +398,8 @@ body {
   </nav>
   <div class="sidebar-user">
     <div class="user-row">
-      <div class="user-av">Q</div>
-      <div><div class="user-name">Quentin</div><div class="user-plan">Accès à vie · Fondateur</div></div>
+      <div class="user-av" id="user-av">?</div>
+      <div><div class="user-name" id="user-name">…</div><div class="user-plan">Accès à vie · Fondateur</div></div>
     </div>
   </div>
 </aside>
@@ -412,7 +412,7 @@ body {
     <!-- Page header with tabs -->
     <div class="page-header">
       <div>
-        <div class="page-welcome">Bienvenue, <span>Quentin</span> 👋</div>
+        <div class="page-welcome">Bienvenue, <span id="welcome-name">…</span> 👋</div>
         <div class="page-welcome-sub">Suis ta progression et continue ton parcours de formation</div>
       </div>
       <div class="header-tabs">
@@ -696,7 +696,7 @@ body {
       <div class="col">
         <div class="card">
           <div class="card-title" style="margin-bottom:14px;">Mon compte</div>
-          <div class="set-row"><div><div class="set-name">Nom</div><div class="set-desc">Quentin</div></div><button class="sml-btn">Modifier</button></div>
+          <div class="set-row"><div><div class="set-name">Nom</div><div class="set-desc" id="settings-name">…</div></div><button class="sml-btn">Modifier</button></div>
           <div class="set-row"><div><div class="set-name">Accès</div><div class="set-desc">Fondateur · Accès à vie</div></div><span style="font-size:11px;font-weight:600;color:var(--green);background:rgba(52,199,89,0.1);padding:4px 10px;border-radius:980px;">Actif</span></div>
           <div class="set-row"><div><div class="set-name">Membre depuis</div><div class="set-desc">Mars 2026</div></div></div>
         </div>
@@ -1155,6 +1155,17 @@ window.addEventListener('load', async () => {
   const { data: { session } } = await db.auth.getSession();
   if (!session) { window.location.href = 'login.html'; return; }
   currentUser = session.user;
+  const name = currentUser.user_metadata?.full_name || currentUser.email.split('@')[0];
+  const initial = name.charAt(0).toUpperCase();
+
+  const elName = document.getElementById('user-name');
+  if (elName) elName.textContent = name;
+  const elAv = document.getElementById('user-av');
+  if (elAv) elAv.textContent = initial;
+  const elWelcome = document.getElementById('welcome-name');
+  if (elWelcome) elWelcome.textContent = name.split(' ')[0];
+  const elSettings = document.getElementById('settings-name');
+  if (elSettings) elSettings.textContent = name;
 
   await loadAccessStatus();
   const progress = await loadProgressFromDB();
