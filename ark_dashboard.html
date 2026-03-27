@@ -435,7 +435,7 @@ body {
       <div id="perf-body">
         <div class="kpi-trio">
           <div class="kpi-cell"><div class="kpi-ico">🎯</div><div><div class="kpi-val" id="kpi-progression">0%</div><div class="kpi-lbl">Progression</div></div></div>
-          <div class="kpi-cell"><div class="kpi-ico">📝</div><div><div class="kpi-val">38</div><div class="kpi-lbl">Questions tentées</div></div></div>
+          <div class="kpi-cell"><div class="kpi-ico">📝</div><div><div class="kpi-val" id="kpi-questions">0</div><div class="kpi-lbl">Questions tentées</div></div></div>
           <div class="kpi-cell"><div class="kpi-ico">🔖</div><div><div class="kpi-val" id="kpi-modules">0/12</div><div class="kpi-lbl">Modules terminés</div></div></div>
         </div>
       </div>
@@ -1006,6 +1006,56 @@ function setBannerMode(hasAccess) {
     card.style.pointerEvents = hasAccess ? '' : 'none';
     card.style.filter = hasAccess ? '' : 'grayscale(1)';
   });
+
+  // KPIs : tout à zéro si pas d'accès
+  if (!hasAccess) {
+    const kpiP = document.getElementById('kpi-progression');
+    if (kpiP) kpiP.textContent = '0%';
+    const kpiM = document.getElementById('kpi-modules');
+    if (kpiM) kpiM.textContent = '0/12';
+    const kpiQ = document.getElementById('kpi-questions');
+    if (kpiQ) kpiQ.textContent = '0';
+    // Anneaux
+    const circle = document.getElementById('ring-circle-prog');
+    if (circle) circle.setAttribute('stroke-dashoffset', '201');
+    const ringPct = document.getElementById('ring-pct-prog');
+    if (ringPct) ringPct.textContent = '0%';
+    const ringNote = document.getElementById('ring-note-prog');
+    if (ringNote) ringNote.textContent = '0 / 12 modules';
+    // Rang
+    const rankLabel = document.getElementById('rank-label');
+    if (rankLabel) rankLabel.textContent = '🎓 Novice';
+    const rankPct = document.getElementById('rank-pct');
+    if (rankPct) rankPct.textContent = '0% accompli';
+    const rankFill = document.getElementById('rank-fill');
+    if (rankFill) rankFill.style.width = '0%';
+    // Liste modules
+    const progList = document.getElementById('prog-list');
+    if (progList) {
+      progList.innerHTML = '';
+      progList.style.cssText = 'display:flex;flex-direction:column;gap:12px;margin-top:16px;';
+      for (let i = 0; i < 6; i++) {
+        const div = document.createElement('div');
+        div.className = 'prog-wrap';
+        div.style.opacity = '0.4';
+        const row = document.createElement('div');
+        row.className = 'prog-row';
+        const s1 = document.createElement('span');
+        s1.textContent = String(i+1).padStart(2,'0') + ' · ' + MODULE_NAMES[i];
+        const s2 = document.createElement('span');
+        s2.textContent = '0%';
+        row.appendChild(s1); row.appendChild(s2);
+        const track = document.createElement('div');
+        track.className = 'prog-track';
+        const fill = document.createElement('div');
+        fill.className = 'prog-fill';
+        fill.style.width = '0%';
+        track.appendChild(fill);
+        div.appendChild(row); div.appendChild(track);
+        progList.appendChild(div);
+      }
+    }
+  }
 
   // Cours banner
   const coursBanner = document.getElementById('cours-banner');
