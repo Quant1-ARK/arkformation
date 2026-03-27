@@ -509,11 +509,11 @@ body {
         <div class="card-top" style="margin-bottom:8px;">
           <div class="card-title">Activité récente</div>
         </div>
-        <div class="act-item"><div class="act-dot g"></div><div><div class="act-text"><strong>Module 04 terminé</strong></div><div class="act-time">Il y a 2 jours</div></div></div>
+        <div id="activity-list"><div class="act-item"><div class="act-dot g"></div><div><div class="act-text"><strong>Module 04 terminé</strong></div><div class="act-time">Il y a 2 jours</div></div></div>
         <div class="act-item"><div class="act-dot"></div><div><div class="act-text"><strong>Module 05 débuté</strong></div><div class="act-time">Il y a 2 jours</div></div></div>
         <div class="act-item"><div class="act-dot o"></div><div><div class="act-text"><strong>Quiz Macro</strong> · 74%</div><div class="act-time">Il y a 5 jours</div></div></div>
         <div class="act-item"><div class="act-dot g"></div><div><div class="act-text"><strong>Module 03 terminé</strong></div><div class="act-time">Il y a 1 sem.</div></div></div>
-        <div class="act-item"><div class="act-dot"></div><div><div class="act-text"><strong>Bonus Journal</strong> téléchargé</div><div class="act-time">Il y a 1 sem.</div></div></div>
+        <div class="act-item"><div class="act-dot"></div><div><div class="act-text"><strong>Bonus Journal</strong> téléchargé</div><div class="act-time">Il y a 1 sem.</div></div></div></div>
       </div>
     </div>
 
@@ -653,7 +653,7 @@ body {
         </div>
         <div class="card">
           <div class="card-title" style="margin-bottom:12px;">Tes scores</div>
-          <div style="display:flex;flex-direction:column;gap:12px;">
+          <div id="revision-scores" style="display:flex;flex-direction:column;gap:12px;">
             <div class="prog-wrap"><div class="prog-row"><span>Module 01</span><span>74%</span></div><div class="prog-track"><div class="prog-fill o" style="width:74%"></div></div></div>
             <div class="prog-wrap"><div class="prog-row"><span>Module 02</span><span>88%</span></div><div class="prog-track"><div class="prog-fill g" style="width:88%"></div></div></div>
             <div class="prog-wrap"><div class="prog-row"><span>Module 03</span><span>92%</span></div><div class="prog-track"><div class="prog-fill g" style="width:92%"></div></div></div>
@@ -1076,6 +1076,19 @@ function setBannerMode(hasAccess) {
           '<div style="font-size:13px;color:var(--text-tertiary);font-weight:300;margin-top:3px;">Active ton accès pour commencer la formation.</div>' +
         '</div>' +
         '<button onclick="goToMembre()" style="display:flex;align-items:center;gap:6px;font-size:14px;font-weight:500;background:var(--accent);color:#fff;padding:10px 20px;border-radius:980px;border:none;cursor:pointer;white-space:nowrap;font-family:inherit;transition:background .15s">★ Deviens membre</button>';
+    }
+    // Activité récente
+    const actList = document.getElementById('activity-list');
+    if (actList) {
+      actList.innerHTML = '<div style="font-size:13px;color:var(--text-tertiary);font-weight:300;padding:12px 0;">Aucune activité pour le moment.</div>';
+    }
+    // Scores révision
+    const revScores = document.getElementById('revision-scores');
+    if (revScores) {
+      revScores.innerHTML =
+        '<div class="prog-wrap" style="opacity:.4"><div class="prog-row"><span>Module 01</span><span>0%</span></div><div class="prog-track"><div class="prog-fill" style="width:0%"></div></div></div>' +
+        '<div class="prog-wrap" style="opacity:.4"><div class="prog-row"><span>Module 02</span><span>0%</span></div><div class="prog-track"><div class="prog-fill" style="width:0%"></div></div></div>' +
+        '<div class="prog-wrap" style="opacity:.4"><div class="prog-row"><span>Module 03</span><span>0%</span></div><div class="prog-track"><div class="prog-fill" style="width:0%"></div></div></div>';
     }
   }
 }
