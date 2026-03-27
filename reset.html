@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARK — Réinitialiser le mot de passe</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+:root {
+  --accent:#0071e3; --accent-h:#0077ed;
+  --bg:#f5f5f7; --white:#fff;
+  --text-1:#1d1d1f; --text-2:#6e6e73;
+  --border:rgba(0,0,0,0.1);
+}
+body { font-family:'Inter',-apple-system,sans-serif; background:var(--bg); min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px; -webkit-font-smoothing:antialiased; }
+.card { background:var(--white); border-radius:22px; padding:40px 36px; width:100%; max-width:420px; box-shadow:0 2px 40px rgba(0,0,0,0.08); }
+.logo { font-family:'Times New Roman',serif; font-size:22px; letter-spacing:.2em; color:var(--text-1); margin-bottom:28px; }
+h1 { font-size:24px; font-weight:600; letter-spacing:-.02em; margin-bottom:6px; }
+.sub { font-size:14px; color:var(--text-2); font-weight:300; margin-bottom:28px; line-height:1.5; }
+.field { margin-bottom:14px; }
+label { display:block; font-size:13px; font-weight:500; margin-bottom:6px; }
+input[type="email"], input[type="password"] { width:100%; padding:11px 14px; border:1.5px solid var(--border); border-radius:10px; font-size:15px; font-family:inherit; color:var(--text-1); outline:none; transition:border-color .15s; }
+input:focus { border-color:var(--accent); }
+.btn { width:100%; padding:12px; background:var(--accent); color:#fff; font-size:15px; font-weight:600; border:none; border-radius:980px; cursor:pointer; font-family:inherit; transition:background .15s; display:flex; align-items:center; justify-content:center; gap:8px; }
+.btn:hover { background:var(--accent-h); }
+.btn:disabled { opacity:.5; cursor:not-allowed; }
+.spinner { width:16px; height:16px; border:2px solid rgba(255,255,255,0.4); border-top-color:#fff; border-radius:50%; animation:spin .7s linear infinite; display:none; }
+@keyframes spin { to { transform:rotate(360deg); } }
+.alert { display:none; margin-top:14px; padding:11px 14px; border-radius:10px; font-size:13px; line-height:1.5; }
+.alert.error { background:rgba(255,59,48,.08); color:#c0392b; border:1px solid rgba(255,59,48,.15); }
+.alert.success { background:rgba(52,199,89,.08); color:#1a7431; border:1px solid rgba(52,199,89,.15); }
+.back-link { display:block; text-align:center; margin-top:20px; font-size:13px; color:var(--text-2); text-decoration:none; }
+.back-link:hover { color:var(--accent); }
+.back { position:fixed; top:20px; left:20px; font-size:15px; font-weight:500; color:var(--text-2); text-decoration:none; transition:color .15s; }
+.back:hover { color:var(--text-1); }
+</style>
+</head>
+<body>
+<a href="login.html" class="back">← Retour</a>
+
+<div class="card">
+  <div class="logo">ARK</div>
+
+  <!-- Étape 1 : demander l'email -->
+  <div id="step-request">
+    <h1>Mot de passe oublié</h1>
+    <p class="sub">Entre ton email et on t'envoie un lien pour réinitialiser ton mot de passe.</p>
+    <div class="field">
+      <label for="email">Email</label>
+      <input type="email" id="email" placeholder="ton@email.com" autocomplete="email">
+    </div>
+    <button class="btn" id="btn-request" onclick="sendReset()">
+      <span id="btn-request-text">Envoyer le lien</span>
+      <div class="spinner" id="spinner-request"></div>
+    </button>
+    <div class="alert" id="alert-request"></div>
+    <a href="login.html" class="back-link">← Retour à la connexion</a>
+  </div>
+
+  <!-- Étape 2 : nouveau mot de passe (après clic sur le lien email) -->
+  <div id="step-new" style="display:none;">
+    <h1>Nouveau mot de passe</h1>
+    <p class="sub">Choisis un mot de passe fort pour sécuriser ton compte.</p>
+    <div class="field">
+      <label for="new-password">Nouveau mot de passe</label>
+      <input type="password" id="new-password" placeholder="8 caractères minimum" autocomplete="new-password">
+    </div>
+    <div class="field">
+      <label for="confirm-password">Confirmer</label>
+      <input type="password" id="confirm-password" placeholder="••••••••" autocomplete="new-password">
+    </div>
+    <button class="btn" id="btn-new" onclick="updatePassword()">
+      <span id="btn-new-text">Mettre à jour</span>
+      <div class="spinner" id="spinner-new"></div>
+    </button>
+    <div class="alert" id="alert-new"></div>
+  </div>
+</div>
+
+<script>
+const SUPABASE_URL = 'https://wlwwkqijedhxmwjktqvj.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indsd3drcWlqZWRoeG13amt0cXZqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1NDY0NDcsImV4cCI6MjA5MDEyMjQ0N30.x4nGTPYfLbkPz0tAejhde_RO4Oto5scGSW8H72FwKOU';
+const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON, {
+  auth: { persistSession: true, storageKey: 'ark_session' }
+});
+
+// Détecter si on est dans le flow de reset (lien email cliqué)
+window.addEventListener('load', async () => {
+  const hash = window.location.hash;
+  if (hash && hash.includes('type=recovery')) {
+    // Supabase gère la session automatiquement via le hash
+    const { data: { session } } = await db.auth.getSession();
+    if (session) {
+      document.getElementById('step-request').style.display = 'none';
+      document.getElementById('step-new').style.display = 'block';
+      window.history.replaceState(null, '', window.location.pathname);
+    }
+  }
+});
+
+// Écouter les changements d'état auth (pour le flow PASSWORD_RECOVERY)
+db.auth.onAuthStateChange((event, session) => {
+  if (event === 'PASSWORD_RECOVERY') {
+    document.getElementById('step-request').style.display = 'none';
+    document.getElementById('step-new').style.display = 'block';
+  }
+});
+
+async function sendReset() {
+  const email = document.getElementById('email').value.trim();
+  const alertEl = document.getElementById('alert-request');
+  alertEl.style.display = 'none';
+
+  if (!email) {
+    alertEl.textContent = 'Entre ton email.';
+    alertEl.className = 'alert error';
+    alertEl.style.display = 'block';
+    return;
+  }
+
+  document.getElementById('btn-request').disabled = true;
+  document.getElementById('btn-request-text').textContent = 'Envoi…';
+  document.getElementById('spinner-request').style.display = 'block';
+
+  const { error } = await db.auth.resetPasswordForEmail(email, {
+    redirectTo: 'https://quant1-ark.github.io/arkformation/reset.html'
+  });
+
+  document.getElementById('btn-request').disabled = false;
+  document.getElementById('btn-request-text').textContent = 'Envoyer le lien';
+  document.getElementById('spinner-request').style.display = 'none';
+
+  if (error) {
+    alertEl.textContent = error.message;
+    alertEl.className = 'alert error';
+  } else {
+    alertEl.textContent = 'Email envoyé ! Vérifie ta boîte mail (y compris les spams).';
+    alertEl.className = 'alert success';
+  }
+  alertEl.style.display = 'block';
+}
+
+async function updatePassword() {
+  const newPwd = document.getElementById('new-password').value;
+  const confirm = document.getElementById('confirm-password').value;
+  const alertEl = document.getElementById('alert-new');
+  alertEl.style.display = 'none';
+
+  if (!newPwd || !confirm) {
+    alertEl.textContent = 'Remplis les deux champs.';
+    alertEl.className = 'alert error';
+    alertEl.style.display = 'block';
+    return;
+  }
+  if (newPwd.length < 8) {
+    alertEl.textContent = 'Le mot de passe doit contenir au moins 8 caractères.';
+    alertEl.className = 'alert error';
+    alertEl.style.display = 'block';
+    return;
+  }
+  if (newPwd !== confirm) {
+    alertEl.textContent = 'Les mots de passe ne correspondent pas.';
+    alertEl.className = 'alert error';
+    alertEl.style.display = 'block';
+    return;
+  }
+
+  document.getElementById('btn-new').disabled = true;
+  document.getElementById('btn-new-text').textContent = 'Mise à jour…';
+  document.getElementById('spinner-new').style.display = 'block';
+
+  const { error } = await db.auth.updateUser({ password: newPwd });
+
+  document.getElementById('btn-new').disabled = false;
+  document.getElementById('btn-new-text').textContent = 'Mettre à jour';
+  document.getElementById('spinner-new').style.display = 'none';
+
+  if (error) {
+    alertEl.textContent = error.message;
+    alertEl.className = 'alert error';
+    alertEl.style.display = 'block';
+  } else {
+    alertEl.textContent = 'Mot de passe mis à jour ! Redirection…';
+    alertEl.className = 'alert success';
+    alertEl.style.display = 'block';
+    setTimeout(() => window.location.href = 'ark_dashboard.html', 1500);
+  }
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter') {
+    if (document.getElementById('step-new').style.display !== 'none') updatePassword();
+    else sendReset();
+  }
+});
+</script>
+</body>
+</html>
