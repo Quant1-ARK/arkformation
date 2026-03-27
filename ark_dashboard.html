@@ -775,6 +775,10 @@ function nav(id, el) {
   if (el) el.classList.add('active');
   document.getElementById('sidebar').classList.remove('open');
   if (id === 'dashboard') animProgress();
+  if (id === 'bonus') {
+    const banner = document.getElementById('bonus-locked-banner');
+    if (banner) banner.style.display = banner.dataset.showForFree === '1' ? 'flex' : 'none';
+  }
 }
 
 function tabSwitch(btn) {
@@ -993,7 +997,8 @@ function setBannerMode(hasAccess) {
   const bonusBanner = document.getElementById('bonus-locked-banner');
   const bonusCards = document.querySelectorAll('#bonus-grid .bonus-card:not(.locked)');
   if (bonusBanner) {
-    bonusBanner.style.display = hasAccess ? 'none' : 'flex';
+    bonusBanner.dataset.showForFree = hasAccess ? '0' : '1';
+    bonusBanner.style.display = 'none';
   }
   bonusCards.forEach(card => {
     card.style.opacity = hasAccess ? '1' : '0.35';
