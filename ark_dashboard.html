@@ -614,54 +614,114 @@ body {
   </div><!-- /cours -->
 
 
-  <!-- ════ RÉVISION ════ -->
-  <div class="content" id="page-revision">
+  <!-- ════ R!-- RÉVISION -->
+  <div class="content" id="page-revision" style="display:none;flex-direction:column;">
     <div class="page-header">
       <div><div class="page-welcome">Révision</div><div class="page-welcome-sub">Quiz · Flashcards · Résumés</div></div>
-      <div class="header-tabs">
-        <button class="header-tab active" onclick="tabSwitch(this)">📋 Quiz</button>
-        <button class="header-tab" onclick="tabSwitch(this)">🃏 Flashcards</button>
-        <button class="header-tab" onclick="tabSwitch(this)">📝 Résumés</button>
+    </div>
+
+    <!-- 3 cartes de sélection -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;">
+      <div id="rev-card-quiz" onclick="selectRevision('quiz')" style="background:var(--accent-light);border:2px solid var(--accent);border-radius:var(--radius-lg);padding:22px 20px;cursor:pointer;transition:all .2s;text-align:center;">
+        <div style="font-size:28px;margin-bottom:10px;">📋</div>
+        <div style="font-size:15px;font-weight:600;letter-spacing:-.01em;margin-bottom:4px;">Quiz</div>
+        <div style="font-size:12px;color:var(--text-secondary);font-weight:300;">Teste tes connaissances module par module</div>
+      </div>
+      <div id="rev-card-flash" onclick="selectRevision('flash')" style="background:var(--white);border:1.5px solid var(--mid-gray);border-radius:var(--radius-lg);padding:22px 20px;cursor:pointer;transition:all .2s;text-align:center;">
+        <div style="font-size:28px;margin-bottom:10px;">🃏</div>
+        <div style="font-size:15px;font-weight:600;letter-spacing:-.01em;margin-bottom:4px;">Flashcards</div>
+        <div style="font-size:12px;color:var(--text-secondary);font-weight:300;">Mémorise les concepts clés en mode répétition</div>
+      </div>
+      <div id="rev-card-resume" onclick="selectRevision('resume')" style="background:var(--white);border:1.5px solid var(--mid-gray);border-radius:var(--radius-lg);padding:22px 20px;cursor:pointer;transition:all .2s;text-align:center;">
+        <div style="font-size:28px;margin-bottom:10px;">📝</div>
+        <div style="font-size:15px;font-weight:600;letter-spacing:-.01em;margin-bottom:4px;">Résumés</div>
+        <div style="font-size:12px;color:var(--text-secondary);font-weight:300;">Relis les synthèses de chaque module</div>
       </div>
     </div>
-    <div class="grid2-1">
-      <div class="card">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">
-          <span class="tag">Module 01 · Macro Trading</span>
-          <span style="font-size:12px;color:var(--text-tertiary);">Q <span id="q-num">3</span>/8</span>
-        </div>
-        <div class="quiz-q" id="quiz-q">Qu'est-ce que le "carry trade" dans le contexte du Forex ?</div>
-        <div class="quiz-opts" id="quiz-opts">
-          <button class="quiz-opt" onclick="answer(this,false)">Acheter une devise qui se déprécie rapidement</button>
-          <button class="quiz-opt" onclick="answer(this,true)">Emprunter dans une devise à faible taux pour investir dans une devise à taux élevé</button>
-          <button class="quiz-opt" onclick="answer(this,false)">Vendre à découvert une paire de devises corrélées</button>
-          <button class="quiz-opt" onclick="answer(this,false)">Arbitrer deux marchés obligataires de zones différentes</button>
-        </div>
-        <div class="quiz-actions">
-          <button class="btn-p" onclick="nextQ()">Question suivante</button>
-          <button class="btn-g">Passer</button>
-          <span class="quiz-score" id="quiz-score">Score : 2/2</span>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card">
-          <div class="card-title" style="margin-bottom:12px;">Modules disponibles</div>
-          <div class="mod-item"><div class="mod-num cur">01</div><div style="flex:1;"><div class="mod-title">Macro Trading</div><div class="mod-meta">8 questions</div></div><span class="mod-badge bd-done">74%</span></div>
-          <div class="mod-item"><div class="mod-num">02</div><div style="flex:1;"><div class="mod-title">Marchés Financiers</div><div class="mod-meta">10 questions</div></div><span class="mod-badge bd-done">88%</span></div>
-          <div class="mod-item"><div class="mod-num">03</div><div style="flex:1;"><div class="mod-title">Analyse Macro</div><div class="mod-meta">12 questions</div></div><span class="mod-badge bd-done">92%</span></div>
-          <div class="mod-item"><div class="mod-num">04</div><div style="flex:1;"><div class="mod-title">Analyse des Actifs</div><div class="mod-meta">9 questions</div></div><span class="mod-badge bd-wip">Nouveau</span></div>
-        </div>
-        <div class="card">
-          <div class="card-title" style="margin-bottom:12px;">Tes scores</div>
-          <div id="revision-scores" style="display:flex;flex-direction:column;gap:12px;">
-            <div class="prog-wrap"><div class="prog-row"><span>Module 01</span><span>74%</span></div><div class="prog-track"><div class="prog-fill o" style="width:74%"></div></div></div>
-            <div class="prog-wrap"><div class="prog-row"><span>Module 02</span><span>88%</span></div><div class="prog-track"><div class="prog-fill g" style="width:88%"></div></div></div>
-            <div class="prog-wrap"><div class="prog-row"><span>Module 03</span><span>92%</span></div><div class="prog-track"><div class="prog-fill g" style="width:92%"></div></div></div>
+
+    <!-- Panneau actif -->
+    <div style="flex:1;display:flex;flex-direction:column;min-height:0;">
+
+      <div id="rev-quiz" style="flex:1;display:flex;flex-direction:column;gap:16px;">
+        <div class="grid2-1">
+          <div class="card">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">
+              <span class="tag">Module 01 · Macro Trading</span>
+              <span style="font-size:12px;color:var(--text-tertiary);">Q <span id="q-num">3</span>/8</span>
+            </div>
+            <div class="quiz-q" id="quiz-q">Qu&#39;est-ce que le &quot;carry trade&quot; dans le contexte du Forex ?</div>
+            <div class="quiz-opts" id="quiz-opts">
+              <button class="quiz-opt" onclick="answer(this,false)">Acheter une devise qui se déprécie rapidement</button>
+              <button class="quiz-opt" onclick="answer(this,true)">Emprunter dans une devise à faible taux pour investir dans une devise à taux élevé</button>
+              <button class="quiz-opt" onclick="answer(this,false)">Vendre à découvert une paire de devises corrélées</button>
+              <button class="quiz-opt" onclick="answer(this,false)">Arbitrer deux marchés obligataires de zones différentes</button>
+            </div>
+            <div class="quiz-actions">
+              <button class="btn-p" onclick="nextQ()">Question suivante</button>
+              <button class="btn-g">Passer</button>
+              <span class="quiz-score" id="quiz-score">Score : 2/2</span>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card">
+              <div class="card-title" style="margin-bottom:12px;">Modules disponibles</div>
+              <div class="mod-item"><div class="mod-num cur">01</div><div style="flex:1;"><div class="mod-title">Macro Trading</div><div class="mod-meta">8 questions</div></div><span class="mod-badge bd-done">74%</span></div>
+              <div class="mod-item"><div class="mod-num">02</div><div style="flex:1;"><div class="mod-title">Marchés Financiers</div><div class="mod-meta">10 questions</div></div><span class="mod-badge bd-done">88%</span></div>
+              <div class="mod-item"><div class="mod-num">03</div><div style="flex:1;"><div class="mod-title">Analyse Macro</div><div class="mod-meta">12 questions</div></div><span class="mod-badge bd-done">92%</span></div>
+              <div class="mod-item"><div class="mod-num">04</div><div style="flex:1;"><div class="mod-title">Analyse des Actifs</div><div class="mod-meta">9 questions</div></div><span class="mod-badge bd-wip">Nouveau</span></div>
+            </div>
+            <div class="card">
+              <div class="card-title" style="margin-bottom:12px;">Tes scores</div>
+              <div id="revision-scores" style="display:flex;flex-direction:column;gap:12px;">
+                <div class="prog-wrap"><div class="prog-row"><span>Module 01</span><span>74%</span></div><div class="prog-track"><div class="prog-fill o" style="width:74%"></div></div></div>
+                <div class="prog-wrap"><div class="prog-row"><span>Module 02</span><span>88%</span></div><div class="prog-track"><div class="prog-fill g" style="width:88%"></div></div></div>
+                <div class="prog-wrap"><div class="prog-row"><span>Module 03</span><span>92%</span></div><div class="prog-track"><div class="prog-fill g" style="width:92%"></div></div></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+
+      <div id="rev-flash" style="display:none;flex:1;flex-direction:column;">
+        <div class="card" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-height:300px;">
+          <div style="font-size:48px;margin-bottom:16px;">🃏</div>
+          <div style="font-size:18px;font-weight:600;margin-bottom:8px;">Flashcards</div>
+          <div style="font-size:14px;color:var(--text-secondary);font-weight:300;max-width:380px;line-height:1.6;">Cette section sera disponible prochainement. Les flashcards couvriront tous les concepts clés des 12 modules.</div>
+          <span style="margin-top:20px;font-size:11px;font-weight:600;color:var(--text-tertiary);background:var(--light-gray);padding:4px 12px;border-radius:980px;text-transform:uppercase;letter-spacing:.04em;">Bientôt disponible</span>
+        </div>
+      </div>
+
+      <div id="rev-resume" style="display:none;flex:1;flex-direction:column;">
+        <div class="card" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-height:300px;">
+          <div style="font-size:48px;margin-bottom:16px;">📝</div>
+          <div style="font-size:18px;font-weight:600;margin-bottom:8px;">Résumés</div>
+          <div style="font-size:14px;color:var(--text-secondary);font-weight:300;max-width:380px;line-height:1.6;">Les synthèses de chaque module seront disponibles prochainement pour une révision rapide et efficace.</div>
+          <span style="margin-top:20px;font-size:11px;font-weight:600;color:var(--text-tertiary);background:var(--light-gray);padding:4px 12px;border-radius:980px;text-transform:uppercase;letter-spacing:.04em;">Bientôt disponible</span>
+        </div>
+      </div>
+
     </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;">
+      <div id="rev-card-quiz" onclick="selectRevision('quiz')" style="background:var(--accent-light);border:2px solid var(--accent);border-radius:var(--radius-lg);padding:22px 20px;cursor:pointer;transition:all .2s;text-align:center;">
+        <div style="font-size:28px;margin-bottom:10px;">📋</div>
+        <div style="font-size:15px;font-weight:600;letter-spacing:-.01em;margin-bottom:4px;">Quiz</div>
+        <div style="font-size:12px;color:var(--text-secondary);font-weight:300;">Teste tes connaissances module par module</div>
+      </div>
+      <div id="rev-card-flash" onclick="selectRevision('flash')" style="background:var(--white);border:1.5px solid var(--mid-gray);border-radius:var(--radius-lg);padding:22px 20px;cursor:pointer;transition:all .2s;text-align:center;">
+        <div style="font-size:28px;margin-bottom:10px;">🃏</div>
+        <div style="font-size:15px;font-weight:600;letter-spacing:-.01em;margin-bottom:4px;">Flashcards</div>
+        <div style="font-size:12px;color:var(--text-secondary);font-weight:300;">Mémorise les concepts clés en mode répétition</div>
+      </div>
+      <div id="rev-card-resume" onclick="selectRevision('resume')" style="background:var(--white);border:1.5px solid var(--mid-gray);border-radius:var(--radius-lg);padding:22px 20px;cursor:pointer;transition:all .2s;text-align:center;">
+        <div style="font-size:28px;margin-bottom:10px;">📝</div>
+        <div style="font-size:15px;font-weight:600;letter-spacing:-.01em;margin-bottom:4px;">Résumés</div>
+        <div style="font-size:12px;color:var(--text-secondary);font-weight:300;">Relis les synthèses de chaque module</div>
+      </div>
+    </div>
+
   </div><!-- /revision -->
+
 
 
   <!-- ════ BONUS ════ -->
@@ -781,6 +841,21 @@ function nav(id, el) {
   if (bonusBanner) {
     bonusBanner.style.display = (id === 'bonus' && bonusBanner.dataset.showForFree === '1') ? 'flex' : 'none';
   }
+}
+
+function selectRevision(type) {
+  const panels = ['quiz', 'flash', 'resume'];
+  const cards = ['rev-card-quiz', 'rev-card-flash', 'rev-card-resume'];
+  panels.forEach((p, i) => {
+    const panel = document.getElementById('rev-' + p);
+    const card = document.getElementById(cards[i]);
+    const isActive = p === type;
+    if (panel) panel.style.display = isActive ? 'flex' : 'none';
+    if (card) {
+      card.style.border = isActive ? '2px solid var(--accent)' : '1.5px solid var(--mid-gray)';
+      card.style.background = isActive ? 'var(--accent-light)' : 'var(--white)';
+    }
+  });
 }
 
 function tabSwitch(btn) {
