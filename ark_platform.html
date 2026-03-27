@@ -162,12 +162,9 @@ const modules = [
 
 let currentModule = null;
 
-const SUPABASE_URL = 'https://wlwwkqijedhxmwjktqvj.supabase.co';
-const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indsd3drcWlqZWRoeG13amt0cXZqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1NDY0NDcsImV4cCI6MjA5MDEyMjQ0N30.x4nGTPYfLbkPz0tAejhde_RO4Oto5scGSW8H72FwKOU';
-
+// DB exposé par auth.js via window.ARK.db
 function getDB() {
-  if (!window._arkDB) window._arkDB = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
-  return window._arkDB;
+  return window.ARK && window.ARK.db ? window.ARK.db : null;
 }
 
 function getProgress() {
