@@ -3,180 +3,681 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ARK — Module 08 · Gestion du Risque</title>
+<title>Module 08 — Gestion du Risque</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #f5f5f5;
-    --border: rgba(19,18,18,.41);
-    --border-active: rgba(255,255,255,.14);
-    --text-1: #000;
-    --text-2: #59595e;
-    --text-3: #48484c;
-    --accent: #0071e3;
-    --accent-glow: rgba(0,113,227,.18);
-    --accent-soft: rgba(0,113,227,.12);
-    --gold: #c9a84c;
-    --gold-soft: rgba(201,168,76,.1);
-  }
-
+  :root{--bg:#f5f5f5;--surface:#fff;--border:rgba(19,18,18,.1);--text-1:#0a0a0a;--text-2:#3d3d3a;--text-3:#6b6b67;--accent:#0071e3;--accent-soft:rgba(0,113,227,.07)}
   *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--bg);color:var(--text-1);font-family:'DM Sans',-apple-system,sans-serif;font-size:15px;-webkit-font-smoothing:antialiased;padding:48px clamp(24px,5vw,80px) 80px;overflow-y:auto;min-height:100vh}
-  @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-  .page{animation:fadeIn .3s ease}
-
-  /* VIDEO */
-  .mod-video{margin-bottom:36px;border-radius:16px;overflow:hidden;aspect-ratio:16/9;background:#1a1a1a;display:none}
-  .mod-video.has-video{display:block}
-  .mod-video iframe{width:100%;height:100%;border:none}
-
-  /* MODULE HEADER */
-  .mod-number{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;display:flex;align-items:center;gap:8px}
-  .mod-number::before{content:'';display:inline-block;width:20px;height:1px;background:var(--accent)}
-  .mod-title{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(28px,4vw,44px);font-weight:400;line-height:1.15;letter-spacing:-.01em;color:var(--text-1);margin-bottom:16px}
-  .mod-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:28px}
-  .mod-tag{font-size:11px;font-weight:500;color:var(--accent);background:var(--accent-soft);padding:3px 10px;border-radius:980px;border:1px solid rgba(0,113,227,.15)}
-  .mod-divider{height:1px;background:var(--border);margin:28px 0}
-  .mod-intro{font-size:17px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:36px;font-style:italic;border-left:2px solid var(--accent);padding-left:20px}
-  .mod-section-title{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:16px}
-
-  /* OBJECTIVES */
-  .mod-objectives{list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:36px}
-  .mod-objectives li{display:flex;align-items:flex-start;gap:12px;font-size:14px;color:var(--text-2);line-height:1.6}
-  .obj-check{width:18px;height:18px;border-radius:50%;border:1px solid var(--border-active);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--text-3)}
-
-  /* CONCEPTS */
-  .mod-concepts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:36px}
-  .concept-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px;transition:border-color .2s,background .2s}
-  .concept-card:hover{border-color:var(--border-active);background:var(--bg)}
-  .concept-icon{font-size:20px;margin-bottom:8px}
-  .concept-name{font-size:13px;font-weight:600;color:var(--text-1);margin-bottom:4px}
-  .concept-desc{font-size:12px;color:var(--text-2);line-height:1.5;font-weight:300}
-
-  /* QUOTE */
-  .mod-quote{background:var(--gold-soft);border:1px solid rgba(201,168,76,.15);border-radius:16px;padding:24px 28px;margin-bottom:36px}
-  .mod-quote-text{font-family:'DM Serif Display',Georgia,serif;font-size:18px;line-height:1.6;color:var(--gold);margin-bottom:8px;font-style:italic}
-  .mod-quote-source{font-size:11px;color:var(--text-3);letter-spacing:.05em;text-transform:uppercase}
-
-  /* FIGURES & TABLES */
-  .mod-figure{margin:28px 0;text-align:center}
-  .mod-figure img{max-width:100%;height:auto;border-radius:12px;border:1px solid var(--border);cursor:zoom-in;transition:opacity .2s,transform .2s}
-  .mod-figure img:hover{opacity:.9;transform:scale(1.01)}
-  .mod-figure figcaption{margin-top:10px;font-size:12px;color:var(--text-3);font-style:italic;line-height:1.5}
-
-  /* LIGHTBOX */
-  .lightbox{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:32px;opacity:0;pointer-events:none;transition:opacity .25s ease}
-  .lightbox.open{opacity:1;pointer-events:all}
-  .lightbox-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(4px)}
-  .lightbox-img-wrap{position:relative;z-index:1;max-width:90vw;max-height:88vh;display:flex;flex-direction:column;align-items:center;gap:14px;transform:scale(.94);transition:transform .25s ease}
-  .lightbox.open .lightbox-img-wrap{transform:scale(1)}
-  .lightbox-img-wrap img{max-width:100%;max-height:80vh;height:auto;border-radius:14px;box-shadow:0 32px 80px rgba(0,0,0,.5);display:block}
-  .lightbox-caption{font-size:13px;color:rgba(255,255,255,.65);font-style:italic;text-align:center;max-width:640px;line-height:1.5}
-  .lightbox-close{position:absolute;top:-14px;right:-14px;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s;line-height:1}
-  .lightbox-close:hover{background:rgba(255,255,255,.25)}
-
-  .mod-table-wrap{overflow-x:auto;margin:24px 0;border-radius:12px;border:1px solid var(--border)}
-  .mod-table{width:100%;border-collapse:collapse;font-size:13px}
-  .mod-table th{background:var(--accent-soft);color:var(--accent);font-weight:600;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:10px 14px;text-align:left;border-bottom:1px solid var(--border)}
-  .mod-table td{padding:10px 14px;color:var(--text-2);border-bottom:1px solid var(--border);vertical-align:top;line-height:1.6;font-weight:300}
-  .mod-table tr:last-child td{border-bottom:none}
-  .mod-table td strong{color:var(--text-1);font-weight:600}
-
-  /* MODULE BODY */
-  .mod-body{margin-top:40px}
-  .mod-body h2{font-family:'DM Serif Display',Georgia,serif;font-size:22px;font-weight:400;color:var(--text-1);margin:44px 0 14px;padding-top:12px;border-top:1px solid var(--border)}
-  .mod-body h3{font-size:15px;font-weight:600;color:var(--text-1);margin:28px 0 10px}
-  .mod-body p{font-size:15px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:16px}
-  .mod-body ul,.mod-body ol{margin:0 0 20px;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:10px}
-  .mod-body li{position:relative;padding-left:22px;font-size:14px;font-weight:300;color:var(--text-2);line-height:1.7;overflow-wrap:break-word}
-  .mod-body li::before{content:'—';color:var(--accent);font-size:13px;position:absolute;left:0;top:0;line-height:1.7}
-  .mod-body li strong,.mod-body strong{color:var(--text-1);font-weight:600}
-  .mod-body blockquote{border-left:2px solid var(--accent);padding:10px 0 10px 20px;margin:20px 0;font-style:italic;font-weight:300;color:var(--text-2);font-size:14px;line-height:1.7}
-  .formula-box,.warning-box,.summary-box{border-radius:12px;padding:16px 20px;margin:20px 0;font-size:14px;line-height:1.7}
-  .formula-box{background:var(--accent-soft);border:1px solid rgba(0,113,227,.15);font-weight:500;font-style:italic}
-  .warning-box{background:rgba(255,149,0,.08);border:1px solid rgba(255,149,0,.2);color:var(--text-2)}
-  .summary-box{background:var(--gold-soft);border:1px solid rgba(201,168,76,.15);font-style:italic;color:var(--text-2)}
-  .profile-block{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:20px;margin:16px 0}
-  .profile-block h3{margin-top:0}
-  .profile-meta{font-size:12px;color:var(--accent);font-style:italic;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
-
-  /* NAV */
-  .mod-nav{display:flex;justify-content:space-between;align-items:center;margin-top:52px;padding-top:24px;border-top:1px solid var(--border);gap:12px}
-  .mod-nav-btn{display:flex;align-items:center;gap:8px;padding:10px 16px;border:1px solid var(--border);border-radius:10px;background:var(--bg);color:var(--text-2);cursor:pointer;font-size:13px;font-weight:500;transition:all .15s;font-family:inherit}
-  .mod-nav-btn:hover:not(:disabled){border-color:var(--border-active);color:var(--text-1)}
-  .mod-nav-btn:disabled{opacity:.3;cursor:default}
-  .mod-nav-label{font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em}
-
-  @media(max-width:768px){
-    body{padding:32px 20px 60px}
-  }
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text-1);font-family:'DM Sans',-apple-system,sans-serif;font-size:15px;line-height:1.75;-webkit-font-smoothing:antialiased}
+  .page{max-width:780px;margin:0 auto;padding:48px 24px 120px}
+  .mod-header{margin-bottom:56px;padding-bottom:40px;border-bottom:1px solid var(--border)}
+  .mod-kicker{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+  .mod-title{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(30px,5vw,46px);line-height:1.1;margin-bottom:14px}
+  .mod-sub{font-size:15px;color:var(--text-2);font-style:italic;margin-bottom:20px}
+  .mod-objective{background:var(--accent-soft);border-left:3px solid var(--accent);border-radius:0 10px 10px 0;padding:16px 20px;font-size:14px;color:var(--text-2);line-height:1.65}
+  .toc{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px 28px;margin-bottom:56px}
+  .toc-title{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:16px}
+  .toc-list{list-style:none;display:flex;flex-direction:column;gap:6px}
+  .toc-list li a{display:flex;align-items:baseline;gap:10px;text-decoration:none;color:var(--text-2);font-size:13.5px;transition:color .15s}
+  .toc-list li a:hover{color:var(--accent)}
+  .toc-letter{font-size:10px;font-weight:700;color:var(--accent);background:var(--accent-soft);border-radius:4px;padding:1px 6px;flex-shrink:0}
+  .section{margin-bottom:64px}
+  .section-label{display:inline-flex;align-items:center;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);border-radius:6px;padding:4px 10px;margin-bottom:18px}
+  .section-title{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(22px,3.5vw,30px);line-height:1.2;margin-bottom:24px}
+  .section-intro{font-size:15px;color:var(--text-2);line-height:1.75;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid var(--border)}
+  .sub{margin-bottom:36px;border-left:3px solid var(--accent);padding-left:20px}
+  .sub-title{font-family:'DM Serif Display',Georgia,serif;font-size:19px;margin-bottom:14px;color:var(--text-1)}
+  .sub p{color:var(--text-2);margin-bottom:12px;font-size:14.5px;line-height:1.72}
+  .sub p:last-child{margin-bottom:0}
+  .sub strong{color:var(--text-1)}
+  .styled-list{list-style:none;margin:12px 0 16px;display:flex;flex-direction:column;gap:8px}
+  .styled-list li{color:var(--text-2);font-size:14px;line-height:1.65}
+  .styled-list li strong{color:var(--text-1)}
+  .callout{border-radius:0 10px 10px 0;border-left:3px solid;padding:14px 18px;margin:18px 0;font-size:13.5px;line-height:1.65}
+  .callout.yellow{background:#FAEEDA;border-color:#854F0B;color:#412402}
+  .callout.blue{background:#E6F1FB;border-color:#185FA5;color:#042C53}
+  .callout.green{background:#EAF3DE;border-color:#3B6D11;color:#173404}
+  .callout.red{background:#FCEBEB;border-color:#A32D2D;color:#501313}
+  .callout.purple{background:#EEEDFE;border-color:#534AB7;color:#26215C}
+  .callout strong{color:inherit}
+  .notion{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px 22px;margin:18px 0}
+  .notion-title{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px}
+  .notion p,.notion li{color:var(--text-1);font-size:13.5px;line-height:1.7;margin-bottom:6px}
+  .notion p:last-child,.notion li:last-child{margin-bottom:0}
+  .notion ul{list-style:none;display:flex;flex-direction:column;gap:4px}
+  .notion strong{color:var(--text-1)}
+  .notion code{font-family:monospace;background:#f0efe8;padding:1px 5px;border-radius:4px;font-size:12.5px;color:var(--text-1)}
+  .table-wrap{overflow-x:auto;margin:18px 0 24px;border-radius:12px;border:1px solid var(--border)}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  thead tr{background:#f0efe8}
+  thead th{padding:10px 14px;text-align:left;font-size:11px;font-weight:700;letter-spacing:.05em;color:var(--text-1);white-space:nowrap}
+  tbody tr{border-top:1px solid var(--border)}
+  tbody tr:hover{background:rgba(0,0,0,.02)}
+  tbody td{padding:10px 14px;color:var(--text-2);vertical-align:top;line-height:1.55}
+  tbody td strong{color:var(--text-1)}
+  .module-figure{margin:24px 0 32px;background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;padding:16px}
+  .module-figure svg{width:100%;display:block}
+  .fig-caption{margin-top:10px;font-size:12px;color:var(--text-3);font-style:italic;text-align:center}
+  /* Summary */
+  .summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0}
+  @media(max-width:560px){.summary-grid{grid-template-columns:1fr}}
+  .summary-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px}
+  .summary-section{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:4px}
+  .summary-concept{font-weight:600;font-size:13.5px;color:var(--text-1);margin-bottom:4px}
+  .summary-tool{font-size:12.5px;color:var(--text-2)}
+  .synthesis{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px;margin-top:48px}
+  .synthesis-title{font-family:'DM Serif Display',Georgia,serif;font-size:22px;margin-bottom:18px}
+  .synthesis p{color:var(--text-2);margin-bottom:12px;line-height:1.75;font-size:14.5px}
+  .synthesis p:last-child{margin-bottom:0}
+  .next-module{margin-top:20px;padding-top:18px;border-top:1px solid var(--border);font-size:13px;color:var(--text-3);font-style:italic}
+  .next-module strong{color:var(--accent);font-style:normal}
+  .module-nav{display:flex;justify-content:space-between;align-items:center;margin-top:56px;padding-top:28px;border-top:1px solid var(--border);gap:12px}
+  .nav-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:10px;border:1px solid var(--border);font-size:13.5px;font-weight:500;font-family:inherit;cursor:pointer;transition:all .2s;background:var(--surface);color:var(--text-1)}
+  .nav-btn:hover{border-color:var(--accent);color:var(--accent)}
+  .nav-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .nav-btn.primary:hover{background:#0077ed}
+  .node{cursor:pointer}.node:hover{opacity:.85}
+  svg text{font-family:'DM Sans',-apple-system,sans-serif;fill:var(--text-1)}
+  svg .t{font-size:14px;font-weight:400;fill:var(--text-1)}
+  svg .ts{font-size:12px;font-weight:400;fill:var(--text-2)}
+  svg .th{font-size:14px;font-weight:600;fill:var(--text-1)}
+  .c-blue rect,.c-blue circle{fill:#E6F1FB;stroke:#185FA5}
+  .c-blue .th,.c-blue .t{fill:#0C447C}.c-blue .ts{fill:#185FA5}
+  .c-teal rect,.c-teal circle{fill:#E1F5EE;stroke:#0F6E56}
+  .c-teal .th,.c-teal .t{fill:#085041}.c-teal .ts{fill:#0F6E56}
+  .c-purple rect,.c-purple circle{fill:#EEEDFE;stroke:#534AB7}
+  .c-purple .th,.c-purple .t{fill:#3C3489}.c-purple .ts{fill:#534AB7}
+  .c-amber rect,.c-amber circle{fill:#FAEEDA;stroke:#854F0B}
+  .c-amber .th,.c-amber .t{fill:#633806}.c-amber .ts{fill:#854F0B}
+  .c-green rect,.c-green circle{fill:#EAF3DE;stroke:#3B6D11}
+  .c-green .th,.c-green .t{fill:#27500A}.c-green .ts{fill:#3B6D11}
+  .c-red rect,.c-red circle{fill:#FCEBEB;stroke:#A32D2D}
+  .c-red .th,.c-red .t{fill:#501313}.c-red .ts{fill:#A32D2D}
+  /* Checklist */
+  .checklist{list-style:none;display:flex;flex-direction:column;gap:10px;margin:16px 0}
+  .checklist li{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--text-2);line-height:1.6}
+  .checklist li::before{content:"☐";font-size:15px;color:var(--accent);flex-shrink:0;margin-top:1px}
 </style>
 </head>
 <body>
 <div class="page">
 
-  <!-- VIDEO: remplacer la ligne ci-dessous par <div class="mod-video has-video"><iframe src="https://www.youtube.com/embed/VOTRE_ID" allowfullscreen></iframe></div> -->
-  <div class="mod-video"></div>
+  <header class="mod-header">
+    <div class="mod-kicker">Module 08 · ARK Investor Program</div>
+    <h1 class="mod-title">Gestion du Risque</h1>
+    <p class="mod-sub">Survivre d'abord. Performer ensuite.</p>
+    <div class="mod-objective">Ce module enseigne comment ne pas mourir en position. Il couvre le sizing rationnel des positions, les mécanismes du levier et leurs dangers, les modèles quantitatifs de gestion du risque, et leur implémentation opérationnelle quotidienne — du journal de trading à la checklist pré-trade.</div>
+  </header>
 
-  <div class="mod-number">Module 08</div>
-  <h1 class="mod-title">Gestion du Risque</h1>
-  <div class="mod-tags"><span class="mod-tag">Stop loss</span><span class="mod-tag">Position sizing</span><span class="mod-tag">Corrélations</span></div>
-  <p class="mod-intro">Stop loss, position sizing, corrélations entre positions — construire un système de protection qui survit aux marchés adverses sans tuer la performance.</p>
+  <nav class="toc">
+    <div class="toc-title">Sommaire</div>
+    <ul class="toc-list">
+      <li><a href="#viiia"><span class="toc-letter">a</span>Sizer une Position Correctement</a></li>
+      <li><a href="#viiib"><span class="toc-letter">b</span>Le Levier</a></li>
+      <li><a href="#viiic"><span class="toc-letter">c</span>Modèles de Gestion du Risque</a></li>
+      <li><a href="#viiid"><span class="toc-letter">d</span>Implémentation Pratique</a></li>
+    </ul>
+  </nav>
 
-  <div class="mod-section-title">Ce que tu vas apprendre</div>
-  <ul class="mod-objectives"><li><div class="obj-check">○</div><span>Concevoir un système de gestion du risque adapté à son profil</span></li><li><div class="obj-check">○</div><span>Placer des stop loss logiques et non arbitraires</span></li><li><div class="obj-check">○</div><span>Calculer l'exposition réelle d'un portefeuille en tenant compte des corrélations</span></li><li><div class="obj-check">○</div><span>Définir son risque maximal par trade et par mois</span></li></ul>
+  <!-- INTRODUCTION -->
+  <section class="section">
+    <div class="sub">
+      <h3 class="sub-title">Introduction : Gestion du Risque</h3>
+      <p>Le Module VII a enseigné comment entrer en position. Ce module enseigne comment ne pas en mourir. La gestion du risque n'est pas une contrainte imposée par la prudence — c'est le mécanisme qui permet à la stratégie de se déployer dans le temps. Un plan de trade parfait, mal dimensionné, peut ruiner un portefeuille sur une seule position. Un plan médiocre, rigoureusement géré, permet de survivre assez longtemps pour apprendre et progresser.</p>
+      <p><strong>Le contresens dominant :</strong> La grande majorité des traders particuliers croit que gérer le risque revient à limiter ses gains. C'est l'inverse : la gestion du risque est ce qui permet aux gains de se matérialiser dans la durée, en évitant que quelques mauvaises séquences n'effacent des mois ou des années de performance positive.</p>
+    </div>
 
-  <div class="mod-divider"></div>
+    <div class="sub">
+      <h3 class="sub-title">Le modèle hedge fund comme référence de pensée</h3>
+      <p>Le mot <em>hedge fund</em> vient du verbe anglais <em>to hedge</em> : se couvrir, réduire l'exposition. L'objectif premier d'un hedge fund n'est pas de battre le marché — c'est de produire un rendement régulier <strong>décorrélé</strong> du marché. Bridgewater, AQR, Renaissance ne se posent pas la question « comment faire +30% ? » mais « comment ne jamais perdre plus de X% quelle que soit la condition de marché ? »</p>
+      <p>Le rendement est une conséquence de la maîtrise du risque — pas l'inverse. Le Sharpe Ratio, qui mesure le rendement ajusté de la volatilité, est précisément l'indicateur qui distingue un bon gérant d'un chanceux. Deux gérants affichant +20% annualisé n'ont pas les mêmes mérites si l'un a oscillé entre +60% et −40%, et l'autre entre +22% et +18%.</p>
+      <div class="notion">
+        <div class="notion-title">Hedge fund — Ce que le nom signifie vraiment</div>
+        <p>L'objectif n'est pas le rendement maximum — c'est la survie du capital dans tous les régimes de marché.</p>
+        <p><strong>Bridgewater (All Weather) :</strong> portefeuille conçu pour performer dans 4 régimes — croissance forte, croissance faible, inflation haute, inflation basse.</p>
+        <p><strong>Renaissance (Medallion) :</strong> +66% brut annualisé sur 30 ans, mais avec un contrôle du drawdown maximal rigoureux à chaque étape.</p>
+        <p><strong>Sharpe Ratio &gt; 1 :</strong> le rendement excédentaire dépasse la volatilité — c'est la cible institutionnelle. Un portefeuille d'actions non géré tourne à 0.5–0.7.</p>
+      </div>
+    </div>
 
-  <div class="mod-section-title">Concepts clés</div>
-  <div class="mod-concepts-grid"><div class="concept-card"><div class="concept-icon">🛑</div><div class="concept-name">Stop loss</div><div class="concept-desc">L'ordre qui protège le capital quand le marché va contre soi</div></div><div class="concept-card"><div class="concept-icon">📏</div><div class="concept-name">Risk/Reward</div><div class="concept-desc">Le rapport entre le gain potentiel et la perte maximale</div></div><div class="concept-card"><div class="concept-icon">🔗</div><div class="concept-name">Corrélations</div><div class="concept-desc">Deux positions corrélées, c'est le même risque déguisé</div></div><div class="concept-card"><div class="concept-icon">💰</div><div class="concept-name">Risque par trade</div><div class="concept-desc">Le pourcentage du capital qu'on accepte de perdre</div></div></div>
+    <div class="callout blue"><strong>Message central du module :</strong> Le drawdown maximum que tu es capable d'absorber sans changer de comportement définit la taille de tes paris — pas ta conviction sur le trade.</div>
+  </section>
 
-  <div class="mod-quote">
-    <div class="mod-quote-text">"Les grands traders ne gagnent pas plus souvent. Ils perdent moins."</div>
-    <div class="mod-quote-source">— Principe fondamental — ARK</div>
+  <!-- SECTION A -->
+  <section class="section" id="viiia">
+    <div class="section-label">Section A</div>
+    <h2 class="section-title">Sizer une Position Correctement</h2>
+    <div class="section-intro"><em>Ne jamais risquer plus que ce qu'on peut perdre sans changer de comportement.</em></div>
+
+    <div class="sub">
+      <h3 class="sub-title">Le problème du sizing intuitif</h3>
+      <p>La grande majorité des traders particuliers calibrent leur taille de position à l'instinct : « je crois fort en ce trade, je mets plus. » C'est précisément l'inverse de ce qu'il faudrait faire. La conviction justifie la thèse — elle ne justifie pas de surexposer le portefeuille à une position dont l'issue reste incertaine.</p>
+      <p>Le sizing rationnel repose sur un principe unique : la perte maximale si le stop-loss est atteint doit représenter un pourcentage prédéfini et fixe du portefeuille. Ce pourcentage — appelé risque par trade (R) — est défini une fois pour toutes, indépendamment de la conviction sur le trade. La taille de la position découle mécaniquement de R et de la distance entre le point d'entrée et le stop-loss.</p>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">La formule de base : le risque fixe par trade</h3>
+      <div class="notion">
+        <div class="notion-title">Formule — Risque fixe par trade</div>
+        <p><strong>Taille = (Portefeuille × R%) / Distance au stop</strong></p>
+        <p>Exemple : Portefeuille = 50 000€ · R = 1.5% · Stop à 4.5% sous l'entrée</p>
+        <p>→ <strong>Taille = (50 000 × 0.015) / 0.045 = 16 667€ exposés</strong></p>
+        <p>Ce calcul s'applique à toutes les classes d'actifs avec les ajustements liés au levier.</p>
+      </div>
+      <div class="callout green"><strong>Pourquoi 1 à 2% par trade ? — La mathématique de survie :</strong> Avec R = 2%, il faut 50 stops consécutifs déclenchés sans aucun trade gagnant pour perdre l'intégralité du capital. Avec R = 10%, 10 stops consécutifs suffisent à tout perdre — et 10 mauvais trades de suite arrivent régulièrement, même sur de bonnes stratégies. La règle du 1–2% n'est pas de la timidité : c'est de la mathématique de survie.</div>
+    </div>
+
+    <div class="module-figure">
+<svg width="100%" viewBox="0 0 680 280" style="display:block">
+<!-- Axes -->
+<line x1="60" y1="20" x2="60" y2="230" stroke="var(--text-2)" stroke-width="1" opacity=".2"/>
+<line x1="60" y1="230" x2="640" y2="230" stroke="var(--text-2)" stroke-width="1" opacity=".2"/>
+<!-- Y axis label -->
+<text class="ts" x="56" y="230" text-anchor="end" opacity=".5">0%</text>
+<text class="ts" x="56" y="170" text-anchor="end" opacity=".5">25%</text>
+<text class="ts" x="56" y="110" text-anchor="end" opacity=".5">50%</text>
+<text class="ts" x="56" y="50" text-anchor="end" opacity=".5">75%</text>
+<text class="ts" x="350" y="260" text-anchor="middle" opacity=".5">% risqué par trade</text>
+<text class="ts" x="16" y="130" text-anchor="middle" opacity=".5" transform="rotate(-90,16,130)">Prob. ruine</text>
+<!-- X labels -->
+<text class="ts" x="100" y="248" text-anchor="middle" opacity=".5">1%</text>
+<text class="ts" x="175" y="248" text-anchor="middle" opacity=".5">2%</text>
+<text class="ts" x="280" y="248" text-anchor="middle" opacity=".5">5%</text>
+<text class="ts" x="420" y="248" text-anchor="middle" opacity=".5">10%</text>
+<text class="ts" x="560" y="248" text-anchor="middle" opacity=".5">20%</text>
+<!-- Green zone 1-2% -->
+<rect x="88" y="20" width="99" height="210" fill="#EAF3DE" opacity=".5" rx="4"/>
+<text class="ts" x="138" y="38" text-anchor="middle" fill="#3B6D11" style="font-size:11px;font-weight:700">Zone sûre</text>
+<text class="ts" x="138" y="52" text-anchor="middle" fill="#3B6D11" style="font-size:10px">1–2%</text>
+<!-- Ruin curve -->
+<path d="M 88,224 L 100,222 L 120,219 L 140,215 L 175,210 L 200,200 L 230,185 L 260,165 L 280,148 L 320,115 L 360,82 L 400,55 L 440,38 L 500,26 L 560,22 L 620,20" fill="none" stroke="#E24B4A" stroke-width="2.5" stroke-linecap="round"/>
+<!-- Annotation arrows -->
+<line x1="190" y1="195" x2="210" y2="175" stroke="#A32D2D" stroke-width="1" opacity=".5"/>
+<text class="ts" x="215" y="170" fill="#A32D2D" style="font-size:11px">5% → ~35% de chances de ruine</text>
+<line x1="420" y1="53" x2="400" y2="68" stroke="#A32D2D" stroke-width="1" opacity=".5"/>
+<text class="ts" x="365" y="47" fill="#A32D2D" style="font-size:11px" text-anchor="middle">10% → quasi-certain</text>
+</svg>
+<p class="fig-caption">Fig. 1 — Probabilité de ruine selon le % risqué par trade. La zone verte (1–2%) garantit 50+ stops consécutifs nécessaires pour ruiner le portefeuille.</p>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Le critère de Kelly : l'optimum théorique</h3>
+      <p>Le critère de Kelly est la formule mathématique qui maximise la croissance logarithmique du portefeuille sur le long terme. Elle dépend de deux paramètres mesurables : le taux de succès (win rate) et le rapport gain moyen / perte moyenne.</p>
+      <div class="notion">
+        <div class="notion-title">Critère de Kelly — Formule et calcul</div>
+        <p><strong>f* = W − (1−W) / R</strong></p>
+        <p>f* = fraction du portefeuille à risquer · W = taux de succès · R = ratio gain/perte moyen</p>
+        <p><strong>Exemple :</strong> Win rate = 45%, ratio gain/perte = 2.5 → f* = 0.45 − (0.55 / 2.5) = 0.23 → 23% du portefeuille</p>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Pourquoi ne pas utiliser Kelly plein — Half-Kelly et Quarter-Kelly</h3>
+      <p>Kelly a été développé en 1956 par John Kelly, un ingénieur chez Bell Labs, dans un contexte de transmission de signal — pas de trading. Sa formule maximise la croissance logarithmique du capital sur le long terme, ce qui est mathématiquement optimal si l'on connaît exactement son win rate et son ratio gain/perte, et si l'on peut jouer un nombre infini de fois sans contrainte psychologique. Ces deux conditions ne sont jamais réunies en pratique.</p>
+      <p>Kelly plein pose deux problèmes concrets. D'abord, les paramètres sont incertains : le win rate estimé est une moyenne sur un historique limité, pas une loi physique. Si l'edge est légèrement surestimé, Kelly plein prescrit une fraction trop élevée et les drawdowns explosent. Ensuite, même avec des paramètres corrects, les drawdowns de Kelly plein sont profonds — il n'est pas rare de voir le portefeuille reculer de 40 à 50% avant de reprendre sa trajectoire ascendante, même sur une stratégie profitable.</p>
+      <div class="callout yellow"><strong>L'origine du Half-Kelly — Edward Thorp :</strong> C'est Edward Thorp — mathématicien, auteur de <em>Beat the Dealer</em> et pionnier du trading quantitatif — qui a popularisé le Half-Kelly dans les années 1970–80. Son observation : utiliser f*/2 réduit les drawdowns d'environ 50% pour un coût de seulement 25% sur la croissance long terme. Concrètement : diviser f par 2 divise la variance des rendements par 4, mais ne divise la croissance que par environ 1.25.</div>
+      <p>Le <strong>Quarter-Kelly (f*/4)</strong> s'applique quand l'incertitude sur les paramètres est élevée : stratégie nouvelle avec peu d'historique, marchés peu liquides, ou edge difficile à mesurer précisément. On l'utilise en phase de test ou sur des allocations satellites du portefeuille.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Approche</th><th>Fraction utilisée</th><th>Croissance long terme</th><th>Drawdown typique</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Kelly plein</strong></td><td>100% de f*</td><td>Maximale théorique</td><td>30–50% possible</td></tr>
+            <tr><td><strong>Half-Kelly</strong></td><td>50% de f*</td><td>−25% vs Kelly plein</td><td>Réduit de ~50%</td></tr>
+            <tr><td><strong>Risque fixe 1–2%</strong></td><td>Indép. de f*</td><td>Sous-optimale si edge fort</td><td>Très contrôlé</td></tr>
+            <tr><td><strong>Full bet (&gt;20%)</strong></td><td>—</td><td>Ruine probable</td><td>Catastrophique</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="module-figure">
+<svg width="100%" viewBox="0 0 680 260" style="display:block">
+<!-- Axes -->
+<line x1="60" y1="20" x2="60" y2="220" stroke="var(--text-2)" stroke-width="1" opacity=".2"/>
+<line x1="60" y1="220" x2="640" y2="220" stroke="var(--text-2)" stroke-width="1" opacity=".2"/>
+<text class="ts" x="350" y="248" text-anchor="middle" opacity=".5">Trades simulés (200)</text>
+<text class="ts" x="56" y="40" text-anchor="end" opacity=".5">×10</text>
+<text class="ts" x="56" y="100" text-anchor="end" opacity=".5">×5</text>
+<text class="ts" x="56" y="160" text-anchor="end" opacity=".5">×2</text>
+<text class="ts" x="56" y="215" text-anchor="end" opacity=".5">×1</text>
+<!-- Kelly full - volatile growth -->
+<path d="M 60,215 L 90,205 L 120,195 L 150,175 L 160,140 L 175,170 L 190,130 L 210,80 L 230,110 L 250,90 L 270,50 L 290,70 L 310,40 L 340,30 L 370,22 L 400,28 L 430,20 L 470,25 L 510,20 L 560,22 L 620,20" fill="none" stroke="#E24B4A" stroke-width="2" stroke-linecap="round" opacity=".9"/>
+<text class="ts" x="320" y="28" fill="#A32D2D">Kelly plein</text>
+<!-- Half-Kelly - stable growth -->
+<path d="M 60,215 L 90,210 L 120,205 L 150,196 L 180,188 L 210,175 L 240,162 L 270,150 L 300,140 L 330,128 L 360,117 L 390,107 L 420,95 L 460,82 L 500,70 L 550,58 L 610,45" fill="none" stroke="#185FA5" stroke-width="2" stroke-linecap="round"/>
+<text class="ts" x="555" y="42" fill="#0C447C">Half-Kelly</text>
+<!-- Fixed 1-2% - smooth growth -->
+<path d="M 60,215 L 90,212 L 120,209 L 160,204 L 200,198 L 240,192 L 280,184 L 320,175 L 360,165 L 400,155 L 440,145 L 490,131 L 540,118 L 600,104" fill="none" stroke="#3B6D11" stroke-width="2" stroke-linecap="round"/>
+<text class="ts" x="545" y="112" fill="#27500A">Risque fixe 1–2%</text>
+</svg>
+<p class="fig-caption">Fig. 2 — Simulation 200 trades : Kelly plein maximise la croissance mais expose à des drawdowns extrêmes. Half-Kelly et risque fixe offrent des trajectoires plus stables.</p>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Sizing dynamique via GARCH</h3>
+      <p>Le Module VII.e a introduit le GARCH pour mesurer la volatilité conditionnelle. Son application directe au sizing est l'une des techniques les plus puissantes à disposition du position trader. Quand la variance conditionnelle GARCH augmente, les mouvements adverses potentiels s'élargissent — la même position en euros représente un risque réel plus élevé.</p>
+      <div class="notion">
+        <div class="notion-title">Règle du sizing dynamique GARCH</div>
+        <p>Si la volatilité conditionnelle double → taille de position réduite de moitié.</p>
+        <p>Ce sizing dynamique n'est pas de la gestion réactive : c'est un ajustement automatique qui suit la structure statistique du marché.</p>
+        <p>Le maintien du risque en euros constant quelle que soit la volatilité est l'objectif.</p>
+      </div>
+    </div>
+
+    <div class="module-figure">
+<svg width="100%" viewBox="0 0 680 300" style="display:block">
+<!-- Three panels: price, volatility, position size -->
+<!-- Panel 1: Price -->
+<text class="ts" x="64" y="18" fill="#185FA5" style="font-weight:600">Prix</text>
+<path d="M 60,80 L 90,75 L 120,70 L 150,65 L 180,55 L 200,60 L 220,50 L 240,55 L 260,45 L 290,50 L 320,60 L 340,55 L 360,70 L 380,75 L 400,80 L 420,75 L 440,80 L 460,70 L 480,65 L 510,72 L 550,68 L 600,72 L 640,68" fill="none" stroke="#185FA5" stroke-width="2" stroke-linecap="round"/>
+<line x1="60" y1="95" x2="640" y2="95" stroke="var(--text-2)" stroke-width="0.5" opacity=".15"/>
+<!-- Panel 2: GARCH volatility -->
+<text class="ts" x="64" y="115" fill="#854F0B" style="font-weight:600">Volatilité GARCH</text>
+<path d="M 60,170 L 90,165 L 120,162 L 150,158 L 180,130 L 200,110 L 220,95 L 240,115 L 260,125 L 290,140 L 320,150 L 340,148 L 360,158 L 380,162 L 400,168 L 430,162 L 460,158 L 490,155 L 530,160 L 580,165 L 630,162" fill="none" stroke="#854F0B" stroke-width="2" stroke-linecap="round"/>
+<line x1="60" y1="190" x2="640" y2="190" stroke="var(--text-2)" stroke-width="0.5" opacity=".15"/>
+<!-- Panel 3: Position size -->
+<text class="ts" x="64" y="210" fill="#3B6D11" style="font-weight:600">Taille position</text>
+<!-- Fixed size reference -->
+<line x1="60" y1="250" x2="640" y2="250" stroke="#aaa" stroke-width="1.5" stroke-dasharray="5 3" opacity=".5"/>
+<text class="ts" x="645" y="254" fill="#888">fixe</text>
+<!-- Dynamic size - inverse of vol -->
+<path d="M 60,250 L 90,248 L 120,246 L 150,244 L 180,230 L 200,216 L 220,205 L 240,220 L 260,228 L 290,236 L 320,242 L 340,241 L 360,246 L 380,248 L 400,250 L 430,246 L 460,244 L 490,242 L 530,246 L 580,248 L 630,246" fill="none" stroke="#3B6D11" stroke-width="2" stroke-linecap="round"/>
+<!-- Fill between -->
+<path d="M 160,244 L 180,230 L 200,216 L 220,205 L 240,220 L 260,228 L 280,235 L 280,250 L 260,250 L 240,250 L 220,250 L 200,250 L 180,250 L 160,250 Z" fill="#EAF3DE" opacity=".5"/>
+<text class="ts" x="220" y="218" text-anchor="middle" fill="#27500A" style="font-size:11px">vol. haute → taille réduite</text>
+</svg>
+<p class="fig-caption">Fig. 3 — Sizing dynamique GARCH : en haut le prix, au centre la volatilité conditionnelle GARCH(1,1), en bas la taille de position fixe (gris) vs ajustée (vert). Quand la volatilité culmine, la taille est réduite automatiquement pour maintenir le risque en euros constant.</p>
+    </div>
+  </section>
+
+  <!-- SECTION B -->
+  <section class="section" id="viiib">
+    <div class="section-label">Section B</div>
+    <h2 class="section-title">Le Levier</h2>
+    <div class="section-intro"><em>Le levier amplifie les rendements et les pertes de façon parfaitement symétrique. Il ne trichera jamais en ta faveur.</em></div>
+
+    <div class="sub">
+      <h3 class="sub-title">Mécanique du levier par instrument</h3>
+      <p>Le levier permet de contrôler une exposition plus grande que le capital déposé. Un levier de 10:1 signifie que 1 000€ de marge contrôle 10 000€ d'actif. C'est le mécanisme qui amplifie les rendements — et les pertes — de façon symétrique.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Instrument</th><th>Type de levier</th><th>Coût de portage</th><th>Levier max retail (Europe)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>CFD actions</strong></td><td>Sur marge, overnight financing</td><td>Oui — LIBOR + spread (1.5–3%/an)</td><td>5:1</td></tr>
+            <tr><td><strong>CFD indices</strong></td><td>Sur marge</td><td>Oui</td><td>20:1</td></tr>
+            <tr><td><strong>Forex (majeures)</strong></td><td>Sur marge</td><td>Swap overnight (±) selon taux</td><td>30:1</td></tr>
+            <tr><td><strong>Futures</strong></td><td>Dépôt de garantie initial</td><td>Intégré dans contango/backwardation</td><td>Variable (bourses)</td></tr>
+            <tr><td><strong>Options</strong></td><td>Premium payé d'avance</td><td>Theta decay (coût du temps)</td><td>Levier implicite variable</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Le coût réel du levier — l'invisible qui grève le rendement</h3>
+      <p>Un CFD sur action avec levier 5:1 et une position maintenue 6 mois coûte en moyenne 1.5 à 3% par an sur le nominal exposé, pas sur la marge déposée. Ce coût est invisible dans la majorité des interfaces de trading mais grève mécaniquement le rendement des positions tenues dans le temps.</p>
+      <div class="notion">
+        <div class="notion-title">Calcul du coût réel — Ce que les brokers n'affichent pas</div>
+        <p>Position 10 000€ à levier 5 avec 2 000€ de marge.</p>
+        <p>Coût overnight : 2.5%/an sur 10 000€ = 250€/an = <strong>12.5% de la mise initiale annuellement.</strong></p>
+        <p>Sur 6 mois : 125€ de coût de portage sur 2 000€ de capital — soit <strong>6.25% de la mise.</strong></p>
+        <p>Toute thèse utilisant le levier doit intégrer ce coût dans le calcul du R/R avant d'ouvrir la position.</p>
+      </div>
+    </div>
+
+    <div class="module-figure">
+<svg width="100%" viewBox="0 0 680 240" style="display:block">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<!-- Left: amplification chart -->
+<text class="ts" x="175" y="20" text-anchor="middle" style="font-weight:600">Amplification symétrique</text>
+<!-- Bars: without leverage -->
+<rect x="80" y="100" width="30" height="60" fill="#EAF3DE" stroke="#3B6D11" stroke-width="0.5"/>
+<text class="ts" x="95" y="174" text-anchor="middle" fill="#085041">+10%</text>
+<rect x="80" y="160" width="30" height="40" fill="#FCEBEB" stroke="#A32D2D" stroke-width="0.5"/>
+<text class="ts" x="95" y="214" text-anchor="middle" fill="#791F1F">−10%</text>
+<text class="ts" x="95" y="90" text-anchor="middle">Sans levier</text>
+<!-- Bars: with leverage 5x -->
+<rect x="145" y="60" width="30" height="100" fill="#EAF3DE" stroke="#3B6D11" stroke-width="0.5"/>
+<text class="ts" x="160" y="174" text-anchor="middle" fill="#085041">+50%</text>
+<rect x="145" y="160" width="30" height="80" fill="#FCEBEB" stroke="#A32D2D" stroke-width="0.5"/>
+<text class="ts" x="160" y="252" text-anchor="middle" fill="#791F1F">−50%</text>
+<text class="ts" x="160" y="50" text-anchor="middle">Levier ×5</text>
+<!-- Separator -->
+<line x1="330" y1="10" x2="330" y2="230" stroke="var(--border)" stroke-width="1"/>
+<!-- Right: margin call thresholds -->
+<text class="ts" x="500" y="20" text-anchor="middle" style="font-weight:600">Seuil de margin call</text>
+<text class="ts" x="395" y="50">×2 →</text><text class="ts" x="440" y="50" fill="#3B6D11">−50% du sous-jacent</text>
+<text class="ts" x="395" y="78">×5 →</text><text class="ts" x="440" y="78" fill="#854F0B">−20% du sous-jacent</text>
+<text class="ts" x="395" y="106">×10 →</text><text class="ts" x="440" y="106" fill="#E24B4A">−10% du sous-jacent</text>
+<text class="ts" x="395" y="134">×20 →</text><text class="ts" x="440" y="134" fill="#A32D2D">−5% du sous-jacent</text>
+<text class="ts" x="395" y="162">×30 →</text><text class="ts" x="440" y="162" fill="#791F1F">−3.3% du sous-jacent</text>
+<rect x="380" y="180" width="270" height="36" rx="6" fill="#FCEBEB" stroke="#A32D2D" stroke-width="0.5"/>
+<text class="ts" x="515" y="196" text-anchor="middle" fill="#791F1F" style="font-weight:600">Stop &lt; 1/(2L) du prix d'entrée</text>
+<text class="ts" x="515" y="210" text-anchor="middle" fill="#791F1F">règle pratique minimale</text>
+</svg>
+<p class="fig-caption">Fig. 4 — Effet de levier : amplification symétrique des gains et pertes (gauche) et seuil de margin call selon le niveau de levier (droite).</p>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">L'effet de ruine : la mathématique du levier élevé</h3>
+      <p>L'erreur centrale des traders débutants avec le levier est de penser en termes de gains potentiels sans modéliser la probabilité de ruine. Or le levier élevé rend la ruine non seulement possible mais inévitable sur un nombre suffisant de trades.</p>
+      <div class="callout red">Avec un levier L, un mouvement adverse de 1/L suffit à effacer l'intégralité de la marge. ×5 → −20% du sous-jacent — possible en crise (CAC40 mars 2020 : −38%). ×10 → −10% — fréquent sur matières premières et FX. ×30 → −3.3% — intraday sur forex.</div>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Le margin call : mécanisme et prévention</h3>
+      <p>Un margin call intervient quand la perte latente excède la marge disponible. Le broker liquide alors la position automatiquement — souvent au pire moment, au prix du marché au moment de la liquidation, pas au stop défini par le trader. C'est ce mécanisme qui transforme un drawdown gérable en perte permanente de capital.</p>
+      <div class="notion">
+        <div class="notion-title">Prévention du margin call — La règle de la marge libre</div>
+        <p>Maintenir en permanence une marge libre (free margin) au moins égale à <strong>2× la marge utilisée.</strong></p>
+        <p>Cette réserve de liquidité absorbe les mouvements adverses sans déclencher la liquidation automatique.</p>
+        <p>Un margin call est toujours une décision de broker, jamais une décision de trader. La prévention est la seule protection.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION C -->
+  <section class="section" id="viiic">
+    <div class="section-label">Section C</div>
+    <h2 class="section-title">Modèles de Gestion du Risque</h2>
+    <div class="section-intro"><em>Les outils quantitatifs ne protègent pas contre la malchance. Ils protègent contre soi-même.</em></div>
+
+    <div class="sub">
+      <h3 class="sub-title">Stop-loss dynamiques : au-delà du stop fixe</h3>
+      <p>Le stop fixe défini en VII.f est le minimum. Les stops dynamiques permettent de protéger les profits accumulés tout en laissant courir le trade en tendance. Trois approches complémentaires :</p>
+      <ul class="styled-list">
+        <li><strong>ATR trailing :</strong> Le stop remonte avec le prix, maintenant une distance fixe de N× ATR(14). Il ne descend jamais — il ne peut que monter. Cette approche capture la tendance tant qu'elle persiste et protège automatiquement les profits en cas de retournement.</li>
+        <li><strong>Stop trailing MM50 hebdomadaire :</strong> La MM50 hebdomadaire sert de stop dynamique pour les positions de plusieurs mois. Tant que le prix reste au-dessus, la position est maintenue. Une clôture hebdomadaire sous la MM50 déclenche la sortie.</li>
+        <li><strong>Time stop :</strong> Pour les positions mean reversion, si après 2× la half-life AR(1) la position n'a pas évolué dans le sens prévu, la thèse est réévaluée. Ce stop n'est pas déclenché par le prix mais par le temps — il élimine les positions zombies qui immobilisent le capital sans progresser.</li>
+      </ul>
+    </div>
+
+    <div class="module-figure">
+<svg width="100%" viewBox="0 0 680 260" style="display:block">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<!-- Axes -->
+<line x1="60" y1="20" x2="60" y2="220" stroke="var(--text-2)" stroke-width="1" opacity=".2"/>
+<line x1="60" y1="220" x2="640" y2="220" stroke="var(--text-2)" stroke-width="1" opacity=".2"/>
+<text class="ts" x="350" y="245" text-anchor="middle" opacity=".5">Temps</text>
+<!-- Price path -->
+<path d="M 68,180 L 100,170 L 130,158 L 160,145 L 190,132 L 210,138 L 235,118 L 260,105 L 285,92 L 310,100 L 330,85 L 355,72 L 380,80 L 400,68 L 430,75 L 460,62 L 490,70 L 510,65 L 540,72 L 570,68 L 600,75 L 630,70" fill="none" stroke="#185FA5" stroke-width="2.5" stroke-linecap="round"/>
+<!-- ATR Trailing stop - ratchets up -->
+<path d="M 68,200 L 100,192 L 130,182 L 160,170 L 190,158 L 215,158 L 235,140 L 260,128 L 285,115 L 315,115 L 330,105 L 355,92 L 380,92 L 400,88 L 430,88 L 460,80 L 490,80 L 510,80 L 540,80 L 570,80 L 600,80 L 630,80" fill="none" stroke="#3B6D11" stroke-width="2" stroke-dasharray="6 3" stroke-linecap="round"/>
+<!-- Fill between price and stop -->
+<path d="M 68,180 L 100,170 L 130,158 L 160,145 L 190,132 L 215,138 L 235,118 L 260,105 L 285,92 L 310,100 L 330,85 L 355,72 L 380,80 L 400,68 L 430,75 L 460,62 L 490,70 L 510,65 L 540,72 L 570,68 L 600,75 L 630,70 L 630,80 L 600,80 L 570,80 L 540,80 L 510,80 L 490,80 L 460,80 L 430,88 L 400,88 L 380,92 L 355,92 L 330,105 L 310,115 L 285,115 L 260,128 L 235,140 L 215,158 L 190,158 L 160,170 L 130,182 L 100,192 L 68,200 Z" fill="#EAF3DE" opacity=".35"/>
+<!-- Labels -->
+<text class="ts" x="520" y="60" fill="#0C447C">Prix</text>
+<text class="ts" x="520" y="76" fill="#3B6D11">ATR Trailing Stop</text>
+<text class="ts" x="400" y="110" text-anchor="middle" fill="#27500A" style="font-size:11px">Profit protégé ↑</text>
+<!-- Entry point -->
+<circle cx="68" cy="180" r="5" fill="#3B6D11" opacity=".8"/>
+<text class="ts" x="76" y="176" fill="#085041">Entrée</text>
+</svg>
+<p class="fig-caption">Fig. 5 — ATR Trailing Stop : le stop remonte progressivement avec la tendance haussière, protégeant les profits accumulés. La zone verte représente la marge de profit protégée à tout moment.</p>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Le ratio risque/rendement (R/R) : l'outil de sélection des trades</h3>
+      <p>Le R/R compare le gain potentiel (distance entre l'entrée et l'objectif) à la perte maximale (distance entre l'entrée et le stop). Seuls les trades avec un R/R minimum sont acceptés dans le portefeuille.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>R/R</th><th>Interprétation</th><th>Décision</th><th>Win rate nécessaire pour break-even</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>&lt; 1:1</strong></td><td>On risque plus qu'on ne peut gagner</td><td>Refus systématique</td><td>&gt; 50%</td></tr>
+            <tr><td><strong>1:1 – 2:1</strong></td><td>Acceptable seulement si win rate élevé</td><td>Sélectif</td><td>34–50%</td></tr>
+            <tr><td><strong>2:1 – 3:1</strong></td><td>Standard pour position trading fondamental</td><td>Accepté</td><td>25–34%</td></tr>
+            <tr><td><strong>&gt; 3:1</strong></td><td>Setup exceptionnel — conviction maximale</td><td>Priorité absolue</td><td>&lt; 25%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="notion">
+        <div class="notion-title">L'implication mathématique sous-estimée du R/R</div>
+        <p>Avec un R/R de 2:1, un taux de succès de <strong>34% suffit à être rentable</strong> sur le long terme.</p>
+        <p>Il n'est pas nécessaire d'avoir raison la majorité du temps — il suffit que les gains des trades gagnants compensent largement les pertes.</p>
+        <p>Un trader avec 40% de win rate et R/R moyen de 2.5:1 performe mieux qu'un trader avec 60% de win rate et R/R de 0.8:1.</p>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Drawdown maximum : le plafond de douleur</h3>
+      <p>Le drawdown maximum (MDD) est le recul le plus important du portefeuille de son pic historique à son point le plus bas. C'est la mesure la plus honnête du risque réel d'une stratégie — bien plus utile que la volatilité annualisée.</p>
+      <div class="notion">
+        <div class="notion-title">La relation non-linéaire perte / récupération</div>
+        <p>−10% du portefeuille → <strong>+11.1%</strong> nécessaire pour récupérer.</p>
+        <p>−20% du portefeuille → <strong>+25%</strong> nécessaire.</p>
+        <p>−30% du portefeuille → <strong>+42.9%</strong> nécessaire.</p>
+        <p>−50% du portefeuille → <strong>+100%</strong> nécessaire — un doublement complet.</p>
+        <p>−75% du portefeuille → <strong>+300%</strong> nécessaire.</p>
+        <p>Cette asymétrie est l'argument le plus puissant pour la rigueur du sizing. Une perte de 50% peut prendre des années à récupérer même avec une excellente stratégie.</p>
+      </div>
+      <p>Règle pratique : définir en avance un drawdown maximum tolérable (15 à 25% pour un portefeuille position trading). Lorsque ce seuil est atteint, toutes les positions sont réduites de moitié et aucun nouveau trade n'est ouvert jusqu'à récupération partielle.</p>
+    </div>
+
+    <div class="module-figure">
+<svg width="100%" viewBox="0 0 680 260" style="display:block">
+<!-- Axes -->
+<line x1="60" y1="20" x2="60" y2="220" stroke="var(--text-2)" stroke-width="1" opacity=".2"/>
+<line x1="60" y1="220" x2="620" y2="220" stroke="var(--text-2)" stroke-width="1" opacity=".2"/>
+<text class="ts" x="340" y="248" text-anchor="middle" opacity=".5">Perte subie</text>
+<text class="ts" x="56" y="50" text-anchor="end" opacity=".5">300%</text>
+<text class="ts" x="56" y="100" text-anchor="end" opacity=".5">100%</text>
+<text class="ts" x="56" y="155" text-anchor="end" opacity=".5">25%</text>
+<text class="ts" x="56" y="220" text-anchor="end" opacity=".5">0%</text>
+<!-- X labels -->
+<text class="ts" x="130" y="238" text-anchor="middle" opacity=".5">−10%</text>
+<text class="ts" x="230" y="238" text-anchor="middle" opacity=".5">−20%</text>
+<text class="ts" x="340" y="238" text-anchor="middle" opacity=".5">−30%</text>
+<text class="ts" x="460" y="238" text-anchor="middle" opacity=".5">−50%</text>
+<text class="ts" x="560" y="238" text-anchor="middle" opacity=".5">−75%</text>
+<!-- Recovery required curve -->
+<path d="M 68,218 L 130,215 L 230,211 L 340,201 L 460,100 L 560,50 L 610,32" fill="none" stroke="#E24B4A" stroke-width="2.5" stroke-linecap="round"/>
+<!-- Fill under -->
+<path d="M 68,218 L 130,215 L 230,211 L 340,201 L 460,100 L 560,50 L 610,32 L 610,220 L 68,220 Z" fill="#FCEBEB" opacity=".25"/>
+<!-- Key points -->
+<circle cx="340" cy="201" r="4" fill="#854F0B" opacity=".8"/>
+<text class="ts" x="348" y="197" fill="#633806">−30% → +42.9%</text>
+<circle cx="460" cy="100" r="4" fill="#A32D2D" opacity=".8"/>
+<text class="ts" x="468" y="96" fill="#791F1F">−50% → +100%</text>
+<circle cx="560" cy="50" r="4" fill="#A32D2D" opacity=".9"/>
+<text class="ts" x="568" y="46" fill="#791F1F">−75% → +300%</text>
+</svg>
+<p class="fig-caption">Fig. 6 — Asymétrie perte / récupération : une perte de 50% exige un gain de 100% pour être effacée. L'écart se creuse de façon non-linéaire.</p>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">VaR et CVaR : mesurer ce qu'on ne voit pas</h3>
+      <p>La <strong>Value at Risk (VaR)</strong> quantifie la perte maximale probable sur un horizon donné et un niveau de confiance donné. « La VaR à 95% sur 1 jour est de 3% » signifie : en conditions normales de marché, il y a 95% de probabilité que la perte quotidienne ne dépasse pas 3%.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Méthode de calcul</th><th>Principe</th><th>Avantage</th><th>Limite</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Paramétrique</strong></td><td>Suppose une distribution normale des rendements</td><td>Simple, rapide</td><td>Sous-estime les queues épaisses</td></tr>
+            <tr><td><strong>Historique</strong></td><td>Simulation sur les données de prix passées</td><td>Capture les événements réels</td><td>Dépend de la qualité de l'historique</td></tr>
+            <tr><td><strong>Monte Carlo</strong></td><td>Génération de milliers de scénarios aléatoires</td><td>Flexible, gère les non-linéarités</td><td>Coûteux en calcul</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout red"><strong>La limite fondamentale de la VaR — La crise 2008 comme illustration :</strong> La VaR modélise les pertes dans la zone centrale de la distribution — pas les queues. Elle ne dit rien sur ce qui se passe dans les 5% restants. Or c'est précisément dans ces 5% que se trouvent les drawdowns catastrophiques. En 2008, des événements « impossibles » selon la VaR 99% survenaient plusieurs fois par semaine.</div>
+      <p>La <strong>CVaR (Conditional Value at Risk)</strong> corrige la limite principale de la VaR : elle mesure la perte moyenne dans les scénarios qui dépassent la VaR — ce que la VaR refuse de regarder. C'est la réponse réglementaire (Basel III) à la défaillance de la VaR dans les queues de distribution.</p>
+      <div class="notion">
+        <div class="notion-title">CVaR — Formule et interprétation</div>
+        <p><strong>Définition :</strong> perte moyenne conditionnelle au dépassement de la VaR.</p>
+        <p><strong>Exemple :</strong> VaR 95% = 3%, CVaR 95% = 7% → dans les 5% de mauvais jours, la perte moyenne est de 7%.</p>
+        <p><strong>Propriété clé :</strong> la CVaR est convexe — elle pénalise davantage les distributions à queues épaisses, ce qui la rend plus adaptée aux actifs financiers réels.</p>
+        <p><strong>Standard Basel III :</strong> les banques et fonds institutionnels sont tenus de reporter la CVaR plutôt que la VaR depuis la réforme réglementaire post-2008.</p>
+      </div>
+    </div>
+
+    <div class="module-figure">
+<svg width="100%" viewBox="0 0 680 260" style="display:block">
+<!-- Normal distribution curve -->
+<text class="ts" x="340" y="18" text-anchor="middle" style="font-weight:600">Distribution des rendements — VaR vs CVaR</text>
+<!-- Bell curve path -->
+<path d="M 60,200 L 100,198 L 140,192 L 170,178 L 200,155 L 220,130 L 240,100 L 260,70 L 280,48 L 300,35 L 320,28 L 340,26 L 360,28 L 380,35 L 400,48 L 420,70 L 440,100 L 460,130 L 480,155 L 500,178 L 530,192 L 560,198 L 600,200" fill="none" stroke="#185FA5" stroke-width="2" stroke-linecap="round"/>
+<!-- Fill normal zone (95%) -->
+<path d="M 175,168 L 200,155 L 220,130 L 240,100 L 260,70 L 280,48 L 300,35 L 320,28 L 340,26 L 360,28 L 380,35 L 400,48 L 420,70 L 440,100 L 460,130 L 480,155 L 500,175 L 500,200 L 175,200 Z" fill="#E6F1FB" opacity=".5"/>
+<!-- CVaR zone (tail 5%) -->
+<path d="M 60,200 L 100,198 L 140,192 L 160,183 L 175,168 L 175,200 Z" fill="#FCEBEB" opacity=".7"/>
+<!-- VaR line -->
+<line x1="175" y1="40" x2="175" y2="210" stroke="#A32D2D" stroke-width="1.5" stroke-dasharray="5 3"/>
+<text class="ts" x="178" y="55" fill="#A32D2D">VaR 95%</text>
+<text class="ts" x="178" y="68" fill="#A32D2D">= 3%</text>
+<!-- CVaR annotation -->
+<text class="ts" x="108" y="168" text-anchor="middle" fill="#791F1F" style="font-weight:700">CVaR</text>
+<text class="ts" x="108" y="182" text-anchor="middle" fill="#791F1F">= 7%</text>
+<text class="ts" x="108" y="196" text-anchor="middle" fill="#791F1F">moy. dans les 5%</text>
+<!-- Normal zone label -->
+<text class="ts" x="340" y="190" text-anchor="middle" fill="#0C447C">95% des jours → perdre moins que la VaR</text>
+<!-- X axis label -->
+<text class="ts" x="60" y="218" fill="#3B6D11" style="font-size:11px">Pertes extrêmes →</text>
+<text class="ts" x="600" y="218" text-anchor="end" fill="#3B6D11" style="font-size:11px">← Gains</text>
+</svg>
+<p class="fig-caption">Fig. 7 — VaR vs CVaR sur une distribution des rendements. La zone rouge (CVaR) représente ce que la VaR ignore : la perte moyenne dans les 5% de pires scénarios.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Indicateur</th><th>Ce qu'il mesure</th><th>Limite principale</th><th>Usage pratique</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>VaR (95%)</strong></td><td>Perte max sur 95% des jours</td><td>Muette sur les 5% catastrophiques</td><td>Borne de risque normal</td></tr>
+          <tr><td><strong>VaR (99%)</strong></td><td>Perte max sur 99% des jours</td><td>Sous-estime les queues épaisses</td><td>Reporting réglementaire (ancienne norme)</td></tr>
+          <tr><td><strong>CVaR / ES (95%)</strong></td><td>Perte moyenne au-delà de la VaR</td><td>Dépend de la qualité des données historiques</td><td>Standard Basel III — mesure de tail risk</td></tr>
+          <tr><td><strong>Drawdown max (MDD)</strong></td><td>Pire perte réalisée dans le passé</td><td>Non prédictif — le futur peut être pire</td><td>Référence psychologique et de sizing</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- SECTION D -->
+  <section class="section" id="viiid">
+    <div class="section-label">Section D</div>
+    <h2 class="section-title">Implémentation Pratique</h2>
+    <div class="section-intro"><em>Un système de gestion du risque qui n'est pas écrit n'existe pas. Les décisions prises sous pression ne sont jamais les bonnes.</em></div>
+
+    <div class="sub">
+      <h3 class="sub-title">Le journal de trading : la mémoire objective du portefeuille</h3>
+      <p>Le journal de trading est le document qui transforme l'expérience en apprentissage. Sans trace écrite, chaque trade est évalué a posteriori à travers le biais de confirmation — on se souvient des bonnes décisions, on minimise les mauvaises. Le journal force une objectivité que la mémoire ne permet pas.</p>
+      <p><strong>Les 6 champs obligatoires :</strong></p>
+      <ul class="styled-list">
+        <li><strong>Date et actif —</strong> identification précise, broker utilisé, instrument exact (spot, CFD, future).</li>
+        <li><strong>Thèse en une phrase —</strong> si on ne peut pas résumer la conviction en une phrase, la thèse n'est pas assez claire pour ouvrir une position.</li>
+        <li><strong>Les 3 filtres au moment de l'entrée —</strong> fondamental, macro/COT, technique/Hurst. Les 3 doivent être cochés.</li>
+        <li><strong>Paramètres du trade —</strong> entrée, stop, objectif, taille en euros, R/R calculé avant l'entrée.</li>
+        <li><strong>Résultat —</strong> gain/perte en euros ET en R (multiples du risque initial). Le résultat en R permet de comparer des trades de tailles différentes.</li>
+        <li><strong>Post-mortem —</strong> que s'est-il passé ? La thèse était-elle correcte ? Le timing ? Le sizing ?</li>
+      </ul>
+      <div class="notion">
+        <div class="notion-title">Le post-mortem : la section la plus importante — et la plus négligée</div>
+        <p>Un trade perdant sur une thèse correcte (timing prématuré) enseigne quelque chose de différent d'un trade perdant sur une thèse incorrecte.</p>
+        <p>Sans distinction, les deux se ressemblent dans le bilan mais ont des implications opposées pour la stratégie future.</p>
+        <p>Un trade gagnant sur une mauvaise thèse (chance pure) peut être le plus dangereux — il renforce de mauvaises habitudes.</p>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Les règles d'engagement : le code de conduite du portefeuille</h3>
+      <p>Les règles d'engagement sont les contraintes auto-imposées qui protègent le portefeuille contre les décisions irrationnelles prises sous pression émotionnelle. Elles sont définies à froid — jamais pendant un drawdown.</p>
+      <ul class="styled-list">
+        <li><strong>Maximum N positions ouvertes simultanément</strong> (typiquement 5 à 8 pour un portefeuille position trading).</li>
+        <li><strong>Maximum X% du portefeuille exposé</strong> sur une seule classe d'actif (ex : max 30% en matières premières).</li>
+        <li><strong>Aucun nouveau trade ouvert</strong> si le drawdown du mois dépasse Y% (ex : −8% sur le mois → pause).</li>
+        <li><strong>Stop-loss jamais déplacé dans le sens adverse</strong> de la position. C'est la règle la plus souvent violée et la plus destructrice.</li>
+        <li><strong>Aucune position ouverte 48h avant une publication macro majeure</strong> sur cet actif (Fed, NFP, CPI) sans réduction préalable de la taille.</li>
+      </ul>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">La revue de portefeuille : fréquence et processus</h3>
+      <p>La revue de portefeuille est l'analogue du bilan comptable appliqué aux positions ouvertes. Elle n'est pas réactive (déclenchée par un mouvement de prix) mais calendaire — effectuée à intervalle fixe, indépendamment de ce qui se passe sur les marchés.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Fréquence</th><th>Durée</th><th>Questions clés</th><th>Décisions possibles</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Hebdomadaire</strong></td>
+              <td>30 min</td>
+              <td>La thèse est-elle intacte ? Stops cohérents avec ATR récent ? Événements macro à venir ?</td>
+              <td>Ajuster stops, réduire taille avant publication, sortir si thèse invalide</td>
+            </tr>
+            <tr>
+              <td><strong>Mensuelle</strong></td>
+              <td>2h</td>
+              <td>Win rate réel vs attendu ? R moyen ? MDD du mois ? Sharpe mensuel ?</td>
+              <td>Recalibrer le sizing si écart &gt; 20% vs paramètres attendus</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">La checklist opérationnelle pré-trade</h3>
+      <p>Avant d'ouvrir toute position, validation de chaque item. Si un item n'est pas coché, la position n'est pas ouverte.</p>
+      <div class="notion">
+        <div class="notion-title">Checklist — 8 points obligatoires avant chaque entrée</div>
+        <ul class="checklist">
+          <li>Les 3 filtres (fondamental / macro-COT / technique) sont convergents</li>
+          <li>Le R/R est ≥ 2:1</li>
+          <li>La taille de position respecte la règle R% du portefeuille</li>
+          <li>Le stop-loss est ≥ 1.5× ATR(14) du point d'entrée</li>
+          <li>Le stop est positionné sur un niveau structurel (pivot, MM, creux significatif)</li>
+          <li>La perte max de cette position respecte le plafond de concentration</li>
+          <li>Aucune publication macro majeure dans les 72h sur cet actif</li>
+          <li>Le plan de trade est documenté dans le journal avant l'entrée</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- SYNTHESIS -->
+  <div class="synthesis">
+    <h2 class="synthesis-title">Résumé du Module VIII</h2>
+    <p>Ce module est le garde-fou de la formation. Son message central est contre-intuitif : ce n'est pas le rendement qui définit un bon trader, c'est le drawdown maximum qu'il est capable d'absorber sans changer de comportement. L'espérance mathématique positive ne suffit pas — il faut encore que la taille des paris permette à cette espérance de se réaliser dans la durée.</p>
+    <p>Le sizing rationnel (risque fixe + Kelly) impose que la taille découle du stop, pas de la conviction. Le levier est un outil puissant dont le coût réel — invisible dans la plupart des interfaces — doit être systématiquement intégré dans le calcul du R/R. Les modèles quantitatifs (stops dynamiques ATR, MDD, VaR, CVaR) fournissent un cadre objectif pour mesurer et contrôler le risque. Et l'implémentation quotidienne — journal, règles d'engagement, revue calendaire, checklist — est ce qui transforme ces outils en discipline reproductible.</p>
+    <div class="summary-grid">
+      <div class="summary-card">
+        <div class="summary-section">VIII.a — Sizing</div>
+        <div class="summary-concept">Risque fixe par trade. Taille = f(stop), pas f(conviction). Half-Kelly pour réduire drawdown de 50%.</div>
+        <div class="summary-tool">Formule R%, Half-Kelly, GARCH dynamique</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-section">VIII.b — Levier</div>
+        <div class="summary-concept">Coût réel du levier (overnight sur nominal). Asymétrie perte/récupération. Margin call = liquidation au pire prix.</div>
+        <div class="summary-tool">Calcul marge libre, coût de portage</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-section">VIII.c — Modèles</div>
+        <div class="summary-concept">Stop trailing ATR et MM. R/R minimum 2:1. MDD tolérable défini à froid. VaR muette sur les queues — CVaR mesure le tail risk réel.</div>
+        <div class="summary-tool">ATR trailing, MDD, CVaR (Basel III)</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-section">VIII.d — Pratique</div>
+        <div class="summary-concept">Journal + post-mortem. Règles d'engagement définies à froid. Revue calendaire hebdo + mensuelle. Checklist 8 points avant chaque entrée.</div>
+        <div class="summary-tool">Journal structuré, checklist</div>
+      </div>
+    </div>
+    <div class="next-module">Module suivant — <strong>Module IX.</strong> La formation continue.</div>
   </div>
 
-  
-
-  <div class="mod-nav">
-    <button class="mod-nav-btn" onclick="navigate(6)" >← Précédent</button>
-    <span class="mod-nav-label">8 / 12</span>
-    <button class="mod-nav-btn" onclick="navigate(8, true)" >Suivant →</button>
+  <div class="module-nav">
+    <button class="nav-btn" onclick="window.parent.postMessage({type:'navigate',index:6,markDone:false},'*')">← Module 07</button>
+    <button class="nav-btn primary" onclick="window.parent.postMessage({type:'navigate',index:8,markDone:true},'*')">Module 09 →</button>
   </div>
 
 </div>
-
-<!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox">
-  <div class="lightbox-backdrop" id="lightboxBackdrop"></div>
-  <div class="lightbox-img-wrap">
-    <button class="lightbox-close" id="lightboxClose">✕</button>
-    <img id="lightboxImg" src="" alt=""/>
-    <div class="lightbox-caption" id="lightboxCaption"></div>
-  </div>
-</div>
-
-<script>
-function navigate(index, markDone) {
-  window.parent.postMessage({ type: 'navigate', index: index, markDone: !!markDone }, '*');
-}
-function openLightbox(src, caption) {
-  document.getElementById('lightboxImg').src = src;
-  document.getElementById('lightboxCaption').textContent = caption;
-  document.getElementById('lightbox').classList.add('open');
-}
-function closeLightbox() {
-  document.getElementById('lightbox').classList.remove('open');
-}
-document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
-document.getElementById('lightboxBackdrop').addEventListener('click', closeLightbox);
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
-document.addEventListener('click', e => {
-  const img = e.target.closest('.mod-figure img');
-  if (!img) return;
-  const caption = img.closest('.mod-figure')?.querySelector('figcaption')?.textContent || '';
-  openLightbox(img.src, caption);
-});
-</script>
 </body>
 </html>
