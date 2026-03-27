@@ -3,180 +3,693 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ARK — Module 03 · Analyse Macroéconomique</title>
+<title>Module 03 — Comment Tourne le Monde</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #f5f5f5;
-    --border: rgba(19,18,18,.41);
-    --border-active: rgba(255,255,255,.14);
-    --text-1: #000;
-    --text-2: #59595e;
-    --text-3: #48484c;
-    --accent: #0071e3;
-    --accent-glow: rgba(0,113,227,.18);
-    --accent-soft: rgba(0,113,227,.12);
-    --gold: #c9a84c;
-    --gold-soft: rgba(201,168,76,.1);
+    --bg: #f5f5f5; --surface: #ffffff; --border: rgba(19,18,18,.12);
+    --text-1: #0a0a0a; --text-2: #59595e; --text-3: #8a8a8e;
+    --accent: #0071e3; --accent-soft: rgba(0,113,227,.08);
+    --green: #30d158; --yellow: #ffd60a; --red: #ff453a;
   }
-
   *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--bg);color:var(--text-1);font-family:'DM Sans',-apple-system,sans-serif;font-size:15px;-webkit-font-smoothing:antialiased;padding:48px clamp(24px,5vw,80px) 80px;overflow-y:auto;min-height:100vh}
-  @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-  .page{animation:fadeIn .3s ease}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text-1);font-family:'DM Sans',-apple-system,sans-serif;font-size:15px;line-height:1.75;-webkit-font-smoothing:antialiased}
+  .page{max-width:780px;margin:0 auto;padding:48px 24px 120px}
 
-  /* VIDEO */
-  .mod-video{margin-bottom:36px;border-radius:16px;overflow:hidden;aspect-ratio:16/9;background:#1a1a1a;display:none}
-  .mod-video.has-video{display:block}
-  .mod-video iframe{width:100%;height:100%;border:none}
+  /* Header */
+  .mod-header{margin-bottom:56px;padding-bottom:40px;border-bottom:1px solid var(--border)}
+  .mod-kicker{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+  .mod-title{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(30px,5vw,46px);line-height:1.1;margin-bottom:20px}
+  .mod-objective{background:var(--accent-soft);border-left:3px solid var(--accent);border-radius:0 10px 10px 0;padding:16px 20px;font-size:14px;color:var(--text-2);line-height:1.65;font-style:italic}
 
-  /* MODULE HEADER */
-  .mod-number{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;display:flex;align-items:center;gap:8px}
-  .mod-number::before{content:'';display:inline-block;width:20px;height:1px;background:var(--accent)}
-  .mod-title{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(28px,4vw,44px);font-weight:400;line-height:1.15;letter-spacing:-.01em;color:var(--text-1);margin-bottom:16px}
-  .mod-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:28px}
-  .mod-tag{font-size:11px;font-weight:500;color:var(--accent);background:var(--accent-soft);padding:3px 10px;border-radius:980px;border:1px solid rgba(0,113,227,.15)}
-  .mod-divider{height:1px;background:var(--border);margin:28px 0}
-  .mod-intro{font-size:17px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:36px;font-style:italic;border-left:2px solid var(--accent);padding-left:20px}
-  .mod-section-title{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:16px}
+  /* TOC */
+  .toc{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px 28px;margin-bottom:56px}
+  .toc-title{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:16px}
+  .toc-list{list-style:none;display:flex;flex-direction:column;gap:6px}
+  .toc-list li a{display:flex;align-items:baseline;gap:10px;text-decoration:none;color:var(--text-2);font-size:13.5px;transition:color .15s}
+  .toc-list li a:hover{color:var(--accent)}
+  .toc-list li a .toc-letter{font-size:10px;font-weight:700;color:var(--accent);background:var(--accent-soft);border-radius:4px;padding:1px 6px;flex-shrink:0}
 
-  /* OBJECTIVES */
-  .mod-objectives{list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:36px}
-  .mod-objectives li{display:flex;align-items:flex-start;gap:12px;font-size:14px;color:var(--text-2);line-height:1.6}
-  .obj-check{width:18px;height:18px;border-radius:50%;border:1px solid var(--border-active);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--text-3)}
+  /* Sections */
+  .section{margin-bottom:72px}
+  .section-label{display:inline-flex;align-items:center;gap:8px;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);border-radius:6px;padding:4px 10px;margin-bottom:20px}
+  .section-title{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(22px,3.5vw,30px);line-height:1.2;margin-bottom:28px}
+  .section-intro{font-size:15px;color:var(--text-2);line-height:1.75;margin-bottom:32px;padding-bottom:28px;border-bottom:1px solid var(--border)}
 
-  /* CONCEPTS */
-  .mod-concepts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:36px}
-  .concept-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px;transition:border-color .2s,background .2s}
-  .concept-card:hover{border-color:var(--border-active);background:var(--bg)}
-  .concept-icon{font-size:20px;margin-bottom:8px}
-  .concept-name{font-size:13px;font-weight:600;color:var(--text-1);margin-bottom:4px}
-  .concept-desc{font-size:12px;color:var(--text-2);line-height:1.5;font-weight:300}
+  /* Subsections */
+  .sub{margin-bottom:40px}
+  .sub-title{font-family:'DM Serif Display',Georgia,serif;font-size:20px;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+  .sub-title::before{content:'';display:block;width:3px;height:22px;background:var(--accent);border-radius:2px;flex-shrink:0}
+  .sub p{color:var(--text-2);margin-bottom:14px}
+  .sub p:last-child{margin-bottom:0}
+  .sub strong{color:var(--text-1)}
 
-  /* QUOTE */
-  .mod-quote{background:var(--gold-soft);border:1px solid rgba(201,168,76,.15);border-radius:16px;padding:24px 28px;margin-bottom:36px}
-  .mod-quote-text{font-family:'DM Serif Display',Georgia,serif;font-size:18px;line-height:1.6;color:var(--gold);margin-bottom:8px;font-style:italic}
-  .mod-quote-source{font-size:11px;color:var(--text-3);letter-spacing:.05em;text-transform:uppercase}
+  /* Callouts */
+  .callout{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--yellow);border-radius:0 10px 10px 0;padding:14px 18px;margin:24px 0;font-size:13.5px;color:var(--text-2);font-style:italic}
+  .callout.blue{border-left-color:var(--accent)}
+  .callout.green{border-left-color:var(--green)}
 
-  /* FIGURES & TABLES */
-  .mod-figure{margin:28px 0;text-align:center}
-  .mod-figure img{max-width:100%;height:auto;border-radius:12px;border:1px solid var(--border);cursor:zoom-in;transition:opacity .2s,transform .2s}
-  .mod-figure img:hover{opacity:.9;transform:scale(1.01)}
-  .mod-figure figcaption{margin-top:10px;font-size:12px;color:var(--text-3);font-style:italic;line-height:1.5}
+  /* Lists */
+  .styled-list{list-style:none;margin:16px 0 20px;display:flex;flex-direction:column;gap:10px}
+  .styled-list li{display:flex;gap:12px;color:var(--text-2);font-size:14px;line-height:1.65}
+  .styled-list li::before{content:'';display:block;width:3px;min-height:18px;background:var(--accent);border-radius:2px;flex-shrink:0;margin-top:4px}
+  .styled-list li strong{color:var(--text-1)}
 
-  /* LIGHTBOX */
-  .lightbox{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:32px;opacity:0;pointer-events:none;transition:opacity .25s ease}
-  .lightbox.open{opacity:1;pointer-events:all}
-  .lightbox-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(4px)}
-  .lightbox-img-wrap{position:relative;z-index:1;max-width:90vw;max-height:88vh;display:flex;flex-direction:column;align-items:center;gap:14px;transform:scale(.94);transition:transform .25s ease}
-  .lightbox.open .lightbox-img-wrap{transform:scale(1)}
-  .lightbox-img-wrap img{max-width:100%;max-height:80vh;height:auto;border-radius:14px;box-shadow:0 32px 80px rgba(0,0,0,.5);display:block}
-  .lightbox-caption{font-size:13px;color:rgba(255,255,255,.65);font-style:italic;text-align:center;max-width:640px;line-height:1.5}
-  .lightbox-close{position:absolute;top:-14px;right:-14px;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s;line-height:1}
-  .lightbox-close:hover{background:rgba(255,255,255,.25)}
+  /* Step cards (cas pratique) */
+  .steps{display:flex;flex-direction:column;gap:12px;margin:24px 0}
+  .step{display:flex;gap:16px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+  .step-num{font-size:11px;font-weight:700;color:var(--accent);background:var(--accent-soft);border-radius:6px;padding:3px 8px;flex-shrink:0;height:fit-content;margin-top:2px;letter-spacing:.05em}
+  .step-content{flex:1}
+  .step-title{font-weight:600;font-size:14px;margin-bottom:6px;color:var(--text-1)}
+  .step-desc{font-size:13.5px;color:var(--text-2);line-height:1.65}
 
-  .mod-table-wrap{overflow-x:auto;margin:24px 0;border-radius:12px;border:1px solid var(--border)}
-  .mod-table{width:100%;border-collapse:collapse;font-size:13px}
-  .mod-table th{background:var(--accent-soft);color:var(--accent);font-weight:600;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:10px 14px;text-align:left;border-bottom:1px solid var(--border)}
-  .mod-table td{padding:10px 14px;color:var(--text-2);border-bottom:1px solid var(--border);vertical-align:top;line-height:1.6;font-weight:300}
-  .mod-table tr:last-child td{border-bottom:none}
-  .mod-table td strong{color:var(--text-1);font-weight:600}
+  /* Figures */
+  .module-figure{margin:28px 0 36px;background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;padding:16px}
+  .module-figure svg{width:100%;display:block}
+  .fig-caption{margin-top:10px;font-size:12px;color:var(--text-3);font-style:italic;text-align:center}
 
-  /* MODULE BODY */
-  .mod-body{margin-top:40px}
-  .mod-body h2{font-family:'DM Serif Display',Georgia,serif;font-size:22px;font-weight:400;color:var(--text-1);margin:44px 0 14px;padding-top:12px;border-top:1px solid var(--border)}
-  .mod-body h3{font-size:15px;font-weight:600;color:var(--text-1);margin:28px 0 10px}
-  .mod-body p{font-size:15px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:16px}
-  .mod-body ul,.mod-body ol{margin:0 0 20px;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:10px}
-  .mod-body li{position:relative;padding-left:22px;font-size:14px;font-weight:300;color:var(--text-2);line-height:1.7;overflow-wrap:break-word}
-  .mod-body li::before{content:'—';color:var(--accent);font-size:13px;position:absolute;left:0;top:0;line-height:1.7}
-  .mod-body li strong,.mod-body strong{color:var(--text-1);font-weight:600}
-  .mod-body blockquote{border-left:2px solid var(--accent);padding:10px 0 10px 20px;margin:20px 0;font-style:italic;font-weight:300;color:var(--text-2);font-size:14px;line-height:1.7}
-  .formula-box,.warning-box,.summary-box{border-radius:12px;padding:16px 20px;margin:20px 0;font-size:14px;line-height:1.7}
-  .formula-box{background:var(--accent-soft);border:1px solid rgba(0,113,227,.15);font-weight:500;font-style:italic}
-  .warning-box{background:rgba(255,149,0,.08);border:1px solid rgba(255,149,0,.2);color:var(--text-2)}
-  .summary-box{background:var(--gold-soft);border:1px solid rgba(201,168,76,.15);font-style:italic;color:var(--text-2)}
-  .profile-block{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:20px;margin:16px 0}
-  .profile-block h3{margin-top:0}
-  .profile-meta{font-size:12px;color:var(--accent);font-style:italic;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+  /* Region cards */
+  .region-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:24px 0}
+  @media(max-width:600px){.region-grid{grid-template-columns:1fr}}
+  .region-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px}
+  .region-flag{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+  .region-name{font-size:15px;font-weight:600;margin-bottom:8px}
+  .region-desc{font-size:13px;color:var(--text-2);line-height:1.6}
 
-  /* NAV */
-  .mod-nav{display:flex;justify-content:space-between;align-items:center;margin-top:52px;padding-top:24px;border-top:1px solid var(--border);gap:12px}
-  .mod-nav-btn{display:flex;align-items:center;gap:8px;padding:10px 16px;border:1px solid var(--border);border-radius:10px;background:var(--bg);color:var(--text-2);cursor:pointer;font-size:13px;font-weight:500;transition:all .15s;font-family:inherit}
-  .mod-nav-btn:hover:not(:disabled){border-color:var(--border-active);color:var(--text-1)}
-  .mod-nav-btn:disabled{opacity:.3;cursor:default}
-  .mod-nav-label{font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em}
+  /* Highlight box */
+  .highlight{background:var(--accent-soft);border:1px solid rgba(0,113,227,.15);border-radius:12px;padding:20px 24px;margin:24px 0}
+  .highlight p{color:var(--text-2);margin-bottom:8px;font-size:14px;line-height:1.7}
+  .highlight p:last-child{margin-bottom:0}
 
-  @media(max-width:768px){
-    body{padding:32px 20px 60px}
-  }
+  /* Synthesis */
+  .synthesis{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px;margin-top:64px}
+  .synthesis-title{font-family:'DM Serif Display',Georgia,serif;font-size:22px;margin-bottom:20px}
+  .synthesis p{color:var(--text-2);margin-bottom:14px;line-height:1.75}
+  .synthesis p:last-child{margin-bottom:0}
+  .synthesis .next-module{margin-top:24px;padding-top:20px;border-top:1px solid var(--border);font-size:13px;color:var(--text-3);font-style:italic}
+  .synthesis .next-module strong{color:var(--accent);font-style:normal}
+
+  /* Nav */
+  .module-nav{display:flex;justify-content:space-between;align-items:center;margin-top:64px;padding-top:32px;border-top:1px solid var(--border);gap:12px}
+  .nav-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:10px;border:1px solid var(--border);font-size:13.5px;font-weight:500;font-family:inherit;cursor:pointer;transition:all .2s;text-decoration:none;background:var(--surface);color:var(--text-1)}
+  .nav-btn:hover{border-color:var(--accent);color:var(--accent)}
+  .nav-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .nav-btn.primary:hover{background:#0077ed}
+
+  /* SVG widget classes */
+  .node{cursor:pointer}.node:hover{opacity:.85}
+  .arr{stroke:var(--text-3);stroke-width:1.5;fill:none}
+  .leader{stroke:var(--text-3);stroke-width:0.5;stroke-dasharray:3 3;fill:none}
+  svg text{font-family:'DM Sans',-apple-system,sans-serif;fill:var(--text-1)}
+  svg .t{font-size:14px;font-weight:400;fill:var(--text-1)}
+  svg .ts{font-size:12px;font-weight:400;fill:var(--text-2)}
+  svg .th{font-size:14px;font-weight:600;fill:var(--text-1)}
+
+  /* Color ramps */
+  .c-blue rect,.c-blue circle,.c-blue ellipse{fill:#E6F1FB;stroke:#185FA5}
+  .c-blue .th,.c-blue .t{fill:#0C447C}.c-blue .ts{fill:#185FA5}
+  .c-teal rect,.c-teal circle,.c-teal ellipse{fill:#E1F5EE;stroke:#0F6E56}
+  .c-teal .th,.c-teal .t{fill:#085041}.c-teal .ts{fill:#0F6E56}
+  .c-purple rect,.c-purple circle,.c-purple ellipse{fill:#EEEDFE;stroke:#534AB7}
+  .c-purple .th,.c-purple .t{fill:#3C3489}.c-purple .ts{fill:#534AB7}
+  .c-amber rect,.c-amber circle,.c-amber ellipse{fill:#FAEEDA;stroke:#854F0B}
+  .c-amber .th,.c-amber .t{fill:#633806}.c-amber .ts{fill:#854F0B}
+  .c-coral rect,.c-coral circle,.c-coral ellipse{fill:#FAECE7;stroke:#993C1D}
+  .c-coral .th,.c-coral .t{fill:#712B13}.c-coral .ts{fill:#993C1D}
+  .c-green rect,.c-green circle,.c-green ellipse{fill:#EAF3DE;stroke:#3B6D11}
+  .c-green .th,.c-green .t{fill:#27500A}.c-green .ts{fill:#3B6D11}
+  .c-gray rect,.c-gray circle,.c-gray ellipse{fill:#F1EFE8;stroke:#5F5E5A}
+  .c-gray .th,.c-gray .t{fill:#444441}.c-gray .ts{fill:#5F5E5A}
 </style>
 </head>
 <body>
 <div class="page">
 
-  <!-- VIDEO: remplacer la ligne ci-dessous par <div class="mod-video has-video"><iframe src="https://www.youtube.com/embed/VOTRE_ID" allowfullscreen></iframe></div> -->
-  <div class="mod-video"></div>
+  <header class="mod-header">
+    <div class="mod-kicker">Module 03 · ARK Investor Program</div>
+    <h1 class="mod-title">Comment Tourne le Monde</h1>
+    <div class="mod-objective">Comprendre les mécanismes macro avant de regarder le moindre actif. L'économie mondiale n'est pas un bruit de fond — c'est le moteur principal des prix. Un trader qui ignore la macro est un navigateur sans carte.</div>
+  </header>
 
-  <div class="mod-number">Module 03</div>
-  <h1 class="mod-title">Analyse Macroéconomique</h1>
-  <div class="mod-tags"><span class="mod-tag">Cycles</span><span class="mod-tag">Banques centrales</span><span class="mod-tag">Indicateurs</span></div>
-  <p class="mod-intro">Lire les cycles économiques, interpréter les indicateurs macro, comprendre le rôle des banques centrales et anticiper les grands mouvements de marché.</p>
+  <nav class="toc">
+    <div class="toc-title">Sommaire</div>
+    <ul class="toc-list">
+      <li><a href="#section-a"><span class="toc-letter">a</span>L'économie mondiale et ses cycles</a></li>
+      <li><a href="#section-b"><span class="toc-letter">b</span>Flux de biens, de capitaux et de richesse</a></li>
+      <li><a href="#section-c"><span class="toc-letter">c</span>Business et régions du monde</a></li>
+      <li><a href="#section-d"><span class="toc-letter">d</span>Ce qu'on retient pour valoriser un actif</a></li>
+      <li><a href="#section-cas1"><span class="toc-letter">★</span>Cas pratique I — Ukraine &amp; AUD/CAD</a></li>
+      <li><a href="#section-cas2"><span class="toc-letter">★</span>Cas pratique II — Le retour du nucléaire</a></li>
+    </ul>
+  </nav>
 
-  <div class="mod-section-title">Ce que tu vas apprendre</div>
-  <ul class="mod-objectives"><li><div class="obj-check">○</div><span>Identifier les quatre phases du cycle économique et leurs implications pour les marchés</span></li><li><div class="obj-check">○</div><span>Lire et interpréter les indicateurs macro clés : PIB, inflation, chômage, PMI</span></li><li><div class="obj-check">○</div><span>Comprendre le rôle des banques centrales et l'impact des taux directeurs</span></li><li><div class="obj-check">○</div><span>Anticiper les rotations sectorielles selon le cycle</span></li></ul>
+  <!-- SECTION A -->
+  <section class="section" id="section-a">
+    <div class="section-label">Section A</div>
+    <h2 class="section-title">L'économie mondiale et ses cycles</h2>
+    <div class="section-intro">
+      L'économie mondiale ne progresse pas en ligne droite. Elle se déplace par cycles — expansion, surchauffe, contraction, reprise — et comprendre à quel stade du cycle on se trouve est la première chose qu'un bon position trader fait avant d'ouvrir une position.
+    </div>
 
-  <div class="mod-divider"></div>
+    <div class="sub">
+      <h3 class="sub-title">Les quatre grands mécanismes</h3>
+      <ul class="styled-list">
+        <li><div><strong>Les taux d'intérêt —</strong> Le prix de l'argent. Quand les taux montent, le crédit coûte cher, l'économie ralentit et les actifs risqués corrigent. Quand ils baissent, les capitaux cherchent du rendement et les marchés montent. C'est le levier le plus puissant des banques centrales.</div></li>
+        <li><div><strong>L'inflation —</strong> La vitesse à laquelle la monnaie perd de la valeur. Une inflation modérée (2–3%) est saine. Une inflation galopante érode le pouvoir d'achat et force les banques centrales à agir. Une déflation paralyse les dépenses et annonce une récession.</div></li>
+        <li><div><strong>La politique monétaire —</strong> Ce que font les banques centrales (Fed, BCE, BoJ, BoE…) pour contrôler taux et inflation. Leurs décisions, leur langage et leurs anticipations sont des moteurs de marché majeurs. Apprendre à lire leurs communiqués est une compétence à part entière.</div></li>
+        <li><div><strong>La politique budgétaire —</strong> Ce que font les gouvernements : dépenses publiques, déficits, plans de stimulus ou d'austérité. Elle interagit directement avec la politique monétaire et peut accélérer ou freiner brutalement un cycle.</div></li>
+      </ul>
+    </div>
 
-  <div class="mod-section-title">Concepts clés</div>
-  <div class="mod-concepts-grid"><div class="concept-card"><div class="concept-icon">🔄</div><div class="concept-name">Cycle économique</div><div class="concept-desc">Expansion, surchauffe, contraction, reprise — la roue qui tourne</div></div><div class="concept-card"><div class="concept-icon">🏦</div><div class="concept-name">Banque centrale</div><div class="concept-desc">La Fed, la BCE — les institutions qui pilotent les taux et la monnaie</div></div><div class="concept-card"><div class="concept-icon">📊</div><div class="concept-name">Inflation</div><div class="concept-desc">L'ennemi silencieux du capital — et le signal le plus scruté des marchés</div></div><div class="concept-card"><div class="concept-icon">📉</div><div class="concept-name">Courbe des taux</div><div class="concept-desc">Le spread 2ans/10ans — baromètre des anticipations de récession</div></div></div>
+    <div class="sub">
+      <h3 class="sub-title">Les quatre phases du cycle</h3>
+      <ul class="styled-list">
+        <li><div><strong>Expansion —</strong> Croissance forte, emploi élevé, inflation qui commence à monter. Les actifs risqués (actions, matières premières) surperforment.</div></li>
+        <li><div><strong>Surchauffe —</strong> L'inflation dépasse les cibles, les banques centrales resserrent agressivement. Rotation vers les actifs défensifs.</div></li>
+        <li><div><strong>Contraction / Récession —</strong> Le crédit se contracte, la consommation chute. Les marchés corrigent fortement. L'or et les obligations d'État deviennent des refuges.</div></li>
+        <li><div><strong>Reprise —</strong> Les banques centrales baissent les taux, les gouvernements stimulent. C'est souvent la phase la plus intéressante : les actifs sont bradés avant que le consensus ne reconnaisse la reprise.</div></li>
+      </ul>
+      <div class="callout blue">Question clé à se poser avant chaque thèse : dans quelle phase du cycle sommes-nous, et cette phase est-elle en train de se terminer ou de s'approfondir ?</div>
+    </div>
+<div class="module-figure">
+<svg width="100%" viewBox="0 0 680 420" style="display:block">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
 
-  <div class="mod-quote">
-    <div class="mod-quote-text">"Les marchés anticipent l'économie de 6 à 9 mois. Celui qui lit le présent trade le passé."</div>
-    <div class="mod-quote-source">— ARK — Module 03</div>
+<!-- Phase wheel: 4 quadrants -->
+<!-- Background quadrants -->
+<path d="M340,210 L340,50 A160,160,0,0,1,500,210 Z" fill="#1D9E75" opacity=".12"/>
+<path d="M340,210 L500,210 A160,160,0,0,1,340,370 Z" fill="#EF9F27" opacity=".12"/>
+<path d="M340,210 L340,370 A160,160,0,0,1,180,210 Z" fill="#E24B4A" opacity=".1"/>
+<path d="M340,210 L180,210 A160,160,0,0,1,340,50 Z" fill="#378ADD" opacity=".1"/>
+
+<!-- Center ring -->
+<circle cx="340" cy="210" r="52" fill="var(--bg2)" stroke="var(--b)" stroke-width="1"/>
+<text class="th" x="340" y="205" text-anchor="middle" dominant-baseline="central">Cycle</text>
+<text class="ts" x="340" y="222" text-anchor="middle">économique</text>
+
+<!-- Phase labels in quadrants -->
+<text class="th" x="430" y="130" text-anchor="middle" fill="#0F6E56">1. Expansion</text>
+<text class="ts" x="430" y="147" text-anchor="middle" fill="#0F6E56">Croissance forte</text>
+<text class="ts" x="430" y="162" text-anchor="middle" fill="#0F6E56">Emploi ↑ · Bénéfices ↑</text>
+
+<text class="th" x="430" y="285" text-anchor="middle" fill="#854F0B">2. Surchauffe</text>
+<text class="ts" x="430" y="302" text-anchor="middle" fill="#854F0B">Inflation dépasse cible</text>
+<text class="ts" x="430" y="317" text-anchor="middle" fill="#854F0B">BC resserrent les taux</text>
+
+<text class="th" x="248" y="285" text-anchor="middle" fill="#A32D2D">3. Récession</text>
+<text class="ts" x="248" y="302" text-anchor="middle" fill="#A32D2D">Crédit contracte</text>
+<text class="ts" x="248" y="317" text-anchor="middle" fill="#A32D2D">Actions corrigent</text>
+
+<text class="th" x="248" y="130" text-anchor="middle" fill="#185FA5">4. Reprise</text>
+<text class="ts" x="248" y="147" text-anchor="middle" fill="#185FA5">BC baissent les taux</text>
+<text class="ts" x="248" y="162" text-anchor="middle" fill="#185FA5">Actifs bradés</text>
+
+<!-- Rotation arrows on ring -->
+<path d="M340,50 A160,160,0,0,1,500,210" fill="none" stroke="#1D9E75" stroke-width="2" marker-end="url(#arrow)" opacity=".5"/>
+<path d="M500,210 A160,160,0,0,1,340,370" fill="none" stroke="#EF9F27" stroke-width="2" marker-end="url(#arrow)" opacity=".5"/>
+<path d="M340,370 A160,160,0,0,1,180,210" fill="none" stroke="#E24B4A" stroke-width="2" marker-end="url(#arrow)" opacity=".5"/>
+<path d="M180,210 A160,160,0,0,1,340,50" fill="none" stroke="#378ADD" stroke-width="2" marker-end="url(#arrow)" opacity=".5"/>
+
+<!-- Asset allocation boxes bottom -->
+<rect x="36" y="376" width="608" height="36" rx="6" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5" opacity=".6"/>
+<text class="ts" x="340" y="390" text-anchor="middle" opacity=".6">Question clé : dans quelle phase sommes-nous — et est-elle en train de se terminer ou de s'approfondir ?</text>
+<text class="ts" x="340" y="406" text-anchor="middle" opacity=".4">Expansion → actions/MP · Surchauffe → défensifs · Récession → or/OAT · Reprise → meilleur point d'entrée</text>
+
+</svg>
+<p class="fig-caption">Les 4 phases du cycle économique — signaux, actifs et question clé</p>
+</div>
+  </section>
+
+  <!-- SECTION B -->
+  <section class="section" id="section-b">
+    <div class="section-label">Section B</div>
+    <h2 class="section-title">Flux de biens, de capitaux et de richesse</h2>
+    <div class="section-intro">
+      Les marchés financiers sont le reflet de quelque chose de bien plus concret : des flux. Des marchandises qui traversent des océans, des capitaux qui cherchent du rendement, de la richesse qui se concentre ou se redistribue. Comprendre les flux, c'est anticiper les prix avant que le consensus ne les explique.
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Les flux commerciaux</h3>
+      <ul class="styled-list">
+        <li><div><strong>Devises et commerce —</strong> Un pays qui exporte beaucoup voit sa devise s'apprécier car les acheteurs étrangers doivent convertir leur monnaie pour payer.</div></li>
+        <li><div><strong>Perturbations des flux —</strong> Sanctions économiques, guerres tarifaires, disruptions logistiques (blocage du canal de Suez en 2021) créent des opportunités sectorielles immédiates.</div></li>
+        <li><div><strong>Pays exportateurs vs importateurs —</strong> Les pays dont l'économie repose sur l'export de matières premières (Russie, Arabie Saoudite, Australie, Canada) sont directement exposés aux fluctuations des prix de ces commodités.</div></li>
+      </ul>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Les flux de capitaux</h3>
+      <p>Les capitaux institutionnels — fonds de pension, banques centrales, hedge funds, fonds souverains — gèrent des milliers de milliards. Leurs décisions d'allocation créent des tendances de fond qui durent des mois, parfois des années.</p>
+      <ul class="styled-list">
+        <li><div><strong>Flight to safety —</strong> En période d'incertitude, les capitaux fuient vers les actifs perçus comme sûrs : dollar américain, obligations d'État américaines, franc suisse, or.</div></li>
+        <li><div><strong>Taux US et émergents —</strong> Quand les taux américains montent, les capitaux reviennent aux États-Unis attirés par le rendement, ce qui déprécie mécaniquement les devises émergentes.</div></li>
+        <li><div><strong>Sorties de capitaux —</strong> Quand les investisseurs délaissent massivement une zone (ex : Zone Euro en 2011–2012), les prix des actifs s'effondrent indépendamment des fondamentaux individuels.</div></li>
+      </ul>
+    </div>
+<div class="module-figure">
+<svg width="100%" viewBox="0 0 680 360" style="display:block">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+
+<!-- Central: World capital pool -->
+<g class="node c-blue">
+  <rect x="270" y="140" width="140" height="60" rx="8" stroke-width="0.5"/>
+  <text class="th" x="340" y="163" text-anchor="middle" dominant-baseline="central">Capitaux</text>
+  <text class="ts" x="340" y="181" text-anchor="middle">institutionnels</text>
+</g>
+
+<!-- Nodes around -->
+<g class="node c-teal"><rect x="40" y="40" width="130" height="52" rx="8" stroke-width="0.5"/><text class="th" x="105" y="60" text-anchor="middle" dominant-baseline="central">USD / T-Bonds</text><text class="ts" x="105" y="78" text-anchor="middle">flight to safety</text></g>
+<g class="node c-teal"><rect x="510" y="40" width="130" height="52" rx="8" stroke-width="0.5"/><text class="th" x="575" y="60" text-anchor="middle" dominant-baseline="central">Or / CHF / JPY</text><text class="ts" x="575" y="78" text-anchor="middle">valeurs refuges</text></g>
+<g class="node c-amber"><rect x="40" y="260" width="130" height="52" rx="8" stroke-width="0.5"/><text class="th" x="105" y="280" text-anchor="middle" dominant-baseline="central">Émergents</text><text class="ts" x="105" y="298" text-anchor="middle">rendement / risque</text></g>
+<g class="node c-amber"><rect x="510" y="260" width="130" height="52" rx="8" stroke-width="0.5"/><text class="th" x="575" y="280" text-anchor="middle" dominant-baseline="central">Actions / Crédit</text><text class="ts" x="575" y="298" text-anchor="middle">risk-on</text></g>
+<g class="node c-purple"><rect x="265" y="24" width="150" height="44" rx="8" stroke-width="0.5"/><text class="th" x="340" y="44" text-anchor="middle" dominant-baseline="central">Banques centrales</text><text class="ts" x="340" y="60" text-anchor="middle">mandats + réserves</text></g>
+<g class="node c-coral"><rect x="265" y="280" width="150" height="44" rx="8" stroke-width="0.5"/><text class="th" x="340" y="300" text-anchor="middle" dominant-baseline="central">Hedge funds</text><text class="ts" x="340" y="316" text-anchor="middle">alpha / momentum</text></g>
+
+<!-- Arrows: stress flows (red dashed) -->
+<line x1="270" y1="162" x2="172" y2="92" stroke="#E24B4A" stroke-width="1.5" stroke-dasharray="5 3" opacity=".5" marker-end="url(#arrow)"/>
+<line x1="270" y1="172" x2="512" y2="92" stroke="#E24B4A" stroke-width="1.5" stroke-dasharray="5 3" opacity=".5" marker-end="url(#arrow)"/>
+<!-- Risk-on flows (green) -->
+<line x1="270" y1="182" x2="172" y2="270" stroke="#1D9E75" stroke-width="1.5" stroke-dasharray="5 3" opacity=".5" marker-end="url(#arrow)"/>
+<line x1="410" y1="182" x2="508" y2="270" stroke="#1D9E75" stroke-width="1.5" stroke-dasharray="5 3" opacity=".5" marker-end="url(#arrow)"/>
+<!-- BC arrow -->
+<line x1="340" y1="140" x2="340" y2="70" stroke="var(--t)" stroke-width="1" opacity=".3" marker-end="url(#arrow)"/>
+<!-- HF arrow -->
+<line x1="340" y1="200" x2="340" y2="278" stroke="var(--t)" stroke-width="1" opacity=".3" marker-end="url(#arrow)"/>
+
+<!-- Legend -->
+<line x1="40" y1="348" x2="70" y2="348" stroke="#E24B4A" stroke-width="1.5" stroke-dasharray="5 3"/>
+<text class="ts" x="78" y="352" fill="#A32D2D">Stress / risk-off → refuges</text>
+<line x1="280" y1="348" x2="310" y2="348" stroke="#1D9E75" stroke-width="1.5" stroke-dasharray="5 3"/>
+<text class="ts" x="318" y="352" fill="#085041">Risk-on → rendement</text>
+
+</svg>
+<p class="fig-caption">Flux de capitaux institutionnels — stress vs risk-on</p>
+</div>
+
+    <div class="sub">
+      <h3 class="sub-title">Les flux de matières premières</h3>
+      <ul class="styled-list">
+        <li><div><strong>Énergie —</strong> Pétrole, gaz naturel, charbon. Extrêmement sensibles à la géopolitique (OPEP, Moyen-Orient, sanctions). Un choc pétrolier se transmet rapidement à l'inflation mondiale.</div></li>
+        <li><div><strong>Métaux —</strong> Or, argent, cuivre, lithium, cobalt. Le cuivre est considéré comme un baromètre de la santé industrielle mondiale ("Doctor Copper"). Le lithium et le cobalt sont au cœur de la transition énergétique.</div></li>
+        <li><div><strong>Agricoles —</strong> Blé, maïs, soja. Sensibles aux aléas climatiques, aux politiques agricoles et aux flux logistiques. La guerre en Ukraine a mis en lumière l'importance géopolitique des exportations de céréales.</div></li>
+      </ul>
+      <div class="callout">Un mouvement sur les matières premières précède souvent un mouvement sur les devises des pays producteurs, puis sur leur économie au sens large.</div>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Qui produit quoi — les grandes devises Forex</h3>
+      <p>En forex, chaque devise est le reflet de l'économie qui l'émet. Comprendre ce que produit un pays, c'est comprendre ce qui fait bouger sa monnaie.</p>
+    </div>
+<div class="module-figure">
+<svg width="100%" viewBox="0 0 680 380" style="display:block">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+
+<!-- Title hint -->
+<text class="th" x="340" y="30" text-anchor="middle">Profil économique des grandes devises</text>
+
+<!-- USD -->
+<g class="node c-blue">
+  <rect x="28" y="55" width="148" height="80" rx="8" stroke-width="0.5"/>
+  <text class="th" x="102" y="76" text-anchor="middle">USD — États-Unis</text>
+  <text class="ts" x="102" y="93" text-anchor="middle">Monnaie de réserve</text>
+  <text class="ts" x="102" y="109" text-anchor="middle">Tech · Finance · Énergie</text>
+  <text class="ts" x="102" y="124" text-anchor="middle">Refuge · Fed-driven</text>
+</g>
+
+<!-- EUR -->
+<g class="node c-teal">
+  <rect x="196" y="55" width="148" height="80" rx="8" stroke-width="0.5"/>
+  <text class="th" x="270" y="76" text-anchor="middle">EUR — Zone Euro</text>
+  <text class="ts" x="270" y="93" text-anchor="middle">Exportateur industriel</text>
+  <text class="ts" x="270" y="109" text-anchor="middle">Auto · Chimie · Luxe</text>
+  <text class="ts" x="270" y="124" text-anchor="middle">Importateur énergie</text>
+</g>
+
+<!-- GBP -->
+<g class="node c-teal">
+  <rect x="364" y="55" width="148" height="80" rx="8" stroke-width="0.5"/>
+  <text class="th" x="438" y="76" text-anchor="middle">GBP — Royaume-Uni</text>
+  <text class="ts" x="438" y="93" text-anchor="middle">Services / Finance</text>
+  <text class="ts" x="438" y="109" text-anchor="middle">City of London</text>
+  <text class="ts" x="438" y="124" text-anchor="middle">BoE · Brexit sensible</text>
+</g>
+
+<!-- JPY -->
+<g class="node c-purple">
+  <rect x="504" y="55" width="148" height="80" rx="8" stroke-width="0.5"/>
+  <text class="th" x="578" y="76" text-anchor="middle">JPY — Japon</text>
+  <text class="ts" x="578" y="93" text-anchor="middle">Manu. haute valeur</text>
+  <text class="ts" x="578" y="109" text-anchor="middle">Refuge · Carry trade</text>
+  <text class="ts" x="578" y="124" text-anchor="middle">Import. énergie massif</text>
+</g>
+
+<!-- CAD -->
+<g class="node c-amber">
+  <rect x="28" y="170" width="148" height="80" rx="8" stroke-width="0.5"/>
+  <text class="th" x="102" y="191" text-anchor="middle">CAD — Canada</text>
+  <text class="ts" x="102" y="208" text-anchor="middle">Pétro-devise</text>
+  <text class="ts" x="102" y="224" text-anchor="middle">Pétrole · Bois · Céréales</text>
+  <text class="ts" x="102" y="240" text-anchor="middle">Corrélé WTI</text>
+</g>
+
+<!-- AUD -->
+<g class="node c-amber">
+  <rect x="196" y="170" width="148" height="80" rx="8" stroke-width="0.5"/>
+  <text class="th" x="270" y="191" text-anchor="middle">AUD — Australie</text>
+  <text class="ts" x="270" y="208" text-anchor="middle">Métaux · Minerai fer</text>
+  <text class="ts" x="270" y="224" text-anchor="middle">Charbon · Or · GNL</text>
+  <text class="ts" x="270" y="240" text-anchor="middle">Corrélé Chine</text>
+</g>
+
+<!-- NZD -->
+<g class="node c-amber">
+  <rect x="364" y="170" width="148" height="80" rx="8" stroke-width="0.5"/>
+  <text class="th" x="438" y="191" text-anchor="middle">NZD — N.-Zélande</text>
+  <text class="ts" x="438" y="208" text-anchor="middle">Agricole · Laitier</text>
+  <text class="ts" x="438" y="224" text-anchor="middle">Fonterra · Soft commod.</text>
+  <text class="ts" x="438" y="240" text-anchor="middle">Risk-on sensible</text>
+</g>
+
+<!-- CHF -->
+<g class="node c-purple">
+  <rect x="504" y="170" width="148" height="80" rx="8" stroke-width="0.5"/>
+  <text class="th" x="578" y="191" text-anchor="middle">CHF — Suisse</text>
+  <text class="ts" x="578" y="208" text-anchor="middle">Finance · Pharma</text>
+  <text class="ts" x="578" y="224" text-anchor="middle">Horlogerie · Refuge EUR</text>
+  <text class="ts" x="578" y="240" text-anchor="middle">Dette/PIB ~30%</text>
+</g>
+
+<!-- Category labels -->
+<rect x="28" y="266" width="624" height="26" rx="6" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5" opacity=".5"/>
+<text class="ts" x="340" y="283" text-anchor="middle" opacity=".7">Refuges : USD · JPY · CHF   ·   Commodités : CAD · AUD · NZD   ·   Industrielles : EUR · GBP</text>
+
+<!-- Risk-on / Risk-off row -->
+<rect x="28" y="300" width="296" height="60" rx="8" fill="#E24B4A" fill-opacity=".07" stroke="#E24B4A" stroke-width="0.5" opacity=".6"/>
+<text class="th" x="176" y="322" text-anchor="middle" fill="#A32D2D">Risk-off → refuges s'apprécient</text>
+<text class="ts" x="176" y="340" text-anchor="middle" fill="#A32D2D">USD ↑ · JPY ↑ · CHF ↑</text>
+<text class="ts" x="176" y="355" text-anchor="middle" fill="#A32D2D">Commodités ↓ · Émergents ↓</text>
+
+<rect x="356" y="300" width="296" height="60" rx="8" fill="#1D9E75" fill-opacity=".07" stroke="#1D9E75" stroke-width="0.5" opacity=".6"/>
+<text class="th" x="504" y="322" text-anchor="middle" fill="#085041">Risk-on → commodités s'apprécient</text>
+<text class="ts" x="504" y="340" text-anchor="middle" fill="#085041">CAD ↑ · AUD ↑ · NZD ↑</text>
+<text class="ts" x="504" y="355" text-anchor="middle" fill="#085041">USD ↓ relatif · Émergents ↑</text>
+
+</svg>
+<p class="fig-caption">Profil économique des grandes devises — refuges, commodités, industrielles</p>
+</div>
+  </section>
+
+  <!-- SECTION C -->
+  <section class="section" id="section-c">
+    <div class="section-label">Section C</div>
+    <h2 class="section-title">Business et régions du monde</h2>
+    <div class="section-intro">
+      Le monde économique est fragmenté en blocs qui ont chacun leur logique propre, leurs forces structurelles et leurs vulnérabilités. Un position trader qui ignore cette géographie économique manque la moitié du tableau.
+    </div>
+
+    <div class="region-grid">
+      <div class="region-card">
+        <div class="region-flag">États-Unis</div>
+        <div class="region-name">Le consommateur mondial</div>
+        <div class="region-desc">Émetteur de la monnaie de réserve. Le dollar représente ~58% des réserves mondiales. Déficit budgétaire structurel — la charge des intérêts dépasse désormais le budget de la défense. Le S&P 500 et le Nasdaq donnent le ton à tous les autres marchés.</div>
+      </div>
+      <div class="region-card">
+        <div class="region-flag">Zone Euro</div>
+        <div class="region-name">L'union sans fiscalité commune</div>
+        <div class="region-desc">L'Allemagne est le moteur industriel mais fragilisé par les coûts énergétiques et la concurrence chinoise. France, Italie, Grèce portent des ratios dette/PIB préoccupants (116%, 138%, 147%). Le spread Bund/BTP est l'indicateur de stress à surveiller.</div>
+      </div>
+      <div class="region-card">
+        <div class="region-flag">Chine</div>
+        <div class="region-name">L'atelier du monde en transition</div>
+        <div class="region-desc">Premier importateur mondial de matières premières. Ses cycles de croissance impactent directement les prix des commodités. Crise immobilière structurelle depuis 2021 (Evergrande). La relation sino-américaine est la grande rivalité géopolitique du siècle.</div>
+      </div>
+      <div class="region-card">
+        <div class="region-flag">Pays émergents</div>
+        <div class="region-name">Sensibles aux conditions US</div>
+        <div class="region-desc">Très exposés aux taux américains et au dollar. Quand le dollar s'apprécie, leur dette libellée en dollars devient plus lourde. L'Inde est le marché émergent le plus structurellement intéressant : démographie favorable, montée industrielle, autonomie géopolitique.</div>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Dédollarisation et blocs BRICS</h3>
+      <p>Une tendance de fond à surveiller sur le long terme : la remise en question progressive du dollar comme monnaie de réserve unique. La part du dollar dans les réserves mondiales est passée de 71% en 2000 à environ 58% aujourd'hui. La saisie des réserves russes en 2022 a accéléré cette tendance — de nombreux pays ont réalisé que leurs réserves pouvaient être gelées pour des raisons politiques.</p>
+      <div class="callout blue">Pour un position trader : la dédollarisation n'est pas un événement, c'est un processus. Elle crée des opportunités structurelles sur l'or, certaines devises émergentes et les matières premières libellées hors dollar.</div>
+    </div>
+  </section>
+
+  <!-- SECTION D -->
+  <section class="section" id="section-d">
+    <div class="section-label">Section D</div>
+    <h2 class="section-title">Ce qu'on retient pour valoriser un actif</h2>
+    <div class="section-intro">
+      Ce module n'est pas de la culture générale. Chaque concept a une application directe dans le processus d'investissement. Voici comment les relier concrètement à la prise de décision.
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Lire le cycle pour orienter le portefeuille</h3>
+      <ul class="styled-list">
+        <li><div><strong>Expansion →</strong> Surpondérer les actions cycliques (industrie, énergie, matériaux), les devises des pays exportateurs</div></li>
+        <li><div><strong>Surchauffe →</strong> Réduire l'exposition aux actifs risqués, surveiller les signaux de retournement, renforcer les positions défensives</div></li>
+        <li><div><strong>Contraction →</strong> Actifs refuges (or, obligations souveraines de qualité, franc suisse), ventes à découvert sur les actifs les plus fragiles</div></li>
+        <li><div><strong>Reprise →</strong> Souvent le meilleur moment d'entrée, quand le consensus est encore pessimiste mais que les données macro commencent à se stabiliser</div></li>
+      </ul>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Lire les flux pour anticiper les mouvements</h3>
+      <ul class="styled-list">
+        <li><div>Des flux de capitaux vers les émergents → opportunités sur les devises et les indices locaux</div></li>
+        <li><div>Une perturbation dans les flux de pétrole → position sur l'énergie ou les devises pétrolières (CAD, NOK)</div></li>
+        <li><div>Une banque centrale qui pivote → repositionnement sur les obligations et les secteurs sensibles aux taux</div></li>
+        <li><div>Une tension commerciale entre grandes puissances → rotation sectorielle selon les filières exposées</div></li>
+      </ul>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">La carte mentale de l'investisseur</h3>
+      <p>À l'issue de ce module, vous devez être capable de répondre rapidement à ces quatre questions pour n'importe quel actif :</p>
+      <div class="highlight">
+        <p>1. Dans quelle région du monde cet actif est-il ancré ?</p>
+        <p>2. Quels flux (commerciaux, de capitaux, de matières premières) l'influencent directement ?</p>
+        <p>3. À quelle phase du cycle économique cette région se trouve-t-elle ?</p>
+        <p>4. Quels sont les risques macro qui peuvent invalider ma thèse dans les 3 à 6 prochains mois ?</p>
+      </div>
+      <div class="callout blue">Le fil conducteur : comprendre le monde n'est pas une fin en soi. C'est le premier filtre qui permet d'identifier où chercher des opportunités — et où ne pas regarder.</div>
+    </div>
+  </section>
+
+  <!-- CAS PRATIQUE 1 -->
+  <section class="section" id="section-cas1">
+    <div class="section-label">Cas Pratique I</div>
+    <h2 class="section-title">La guerre en Ukraine et l'AUD / CAD</h2>
+    <p style="color:var(--text-2);margin-bottom:28px;line-height:1.75">Le 24 février 2022, la Russie envahit l'Ukraine. Avant même de regarder un seul graphique, un position trader formé à la lecture des flux pouvait construire la thèse suivante en quelques heures.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">Étape 1</div>
+        <div class="step-content">
+          <div class="step-title">Identifier les flux perturbés</div>
+          <div class="step-desc">La Russie est le 1er ou 2e exportateur mondial de pétrole, gaz, blé, engrais et plusieurs métaux industriels. L'Ukraine est le 4e exportateur mondial de blé. Ensemble, ils représentent ~30% des exportations mondiales de blé.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">Étape 2</div>
+        <div class="step-content">
+          <div class="step-title">Modéliser l'impact sur l'offre</div>
+          <div class="step-desc">Sanctions économiques sur la Russie + blocage des ports ukrainiens (Odessa) + prime de risque géopolitique = contraction brutale de l'offre mondiale en céréales, énergie et métaux.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">Étape 3</div>
+        <div class="step-content">
+          <div class="step-title">Déduire l'impact sur les prix</div>
+          <div class="step-desc">Offre qui chute + demande inchangée = appréciation mécanique des prix. Pétrole, gaz, blé, maïs, engrais et nickel vont monter — et ils ont effectivement monté de 20 à 100% dans les semaines suivantes.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">Étape 4</div>
+        <div class="step-content">
+          <div class="step-title">Identifier les devises gagnantes</div>
+          <div class="step-desc">L'Australie est parmi les premiers producteurs de blé, charbon, GNL et métaux. Le Canada exporte massivement pétrole, blé et engrais (potasse). Leurs termes de l'échange s'améliorent mécaniquement.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">Étape 5</div>
+        <div class="step-content">
+          <div class="step-title">Construire la position</div>
+          <div class="step-desc">Amélioration des termes de l'échange → afflux de capitaux → renforcement des anticipations de hausse des taux des banques centrales locales. Thèse : acheter AUD/USD et CAD/USD dès les premiers jours du conflit.</div>
+        </div>
+      </div>
+    </div>
+<div class="module-figure">
+<svg width="100%" viewBox="0 0 680 280" style="display:block">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+
+<!-- Axes -->
+<line x1="60" y1="20" x2="60" y2="220" stroke="var(--t)" stroke-width="1" opacity=".3"/>
+<line x1="60" y1="220" x2="620" y2="220" stroke="var(--t)" stroke-width="1" opacity=".3"/>
+
+<!-- Event marker: Feb 24 invasion -->
+<line x1="200" y1="20" x2="200" y2="220" stroke="#E24B4A" stroke-width="1.5" stroke-dasharray="4 3" opacity=".5"/>
+<text class="ts" x="206" y="36" fill="#A32D2D">24 fév. 2022</text>
+<text class="ts" x="206" y="51" fill="#A32D2D">Invasion Ukraine</text>
+
+<!-- AUD/USD line (green, rising) -->
+<path d="M 60 155 C 100 152, 140 148, 200 145 C 250 130, 310 108, 370 102 C 430 98, 500 105, 560 118 C 580 122, 600 128, 620 132"
+  fill="none" stroke="#1D9E75" stroke-width="2.5" stroke-linecap="round"/>
+
+<!-- CAD/USD line (teal, moderate rise) -->
+<path d="M 60 160 C 100 158, 140 155, 200 153 C 250 145, 310 135, 370 130 C 430 127, 500 132, 560 140 C 580 143, 600 147, 620 150"
+  fill="none" stroke="#3B8BD4" stroke-width="2.5" stroke-linecap="round"/>
+
+<!-- EUR/USD line (red, falling) -->
+<path d="M 60 120 C 100 122, 140 124, 200 126 C 250 135, 310 155, 370 168 C 430 178, 500 182, 560 188 C 580 189, 600 190, 620 191"
+  fill="none" stroke="#E24B4A" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="8 3"/>
+
+<!-- Performance labels at end -->
+<text class="ts" x="628" y="136" fill="#0F6E56">AUD +6%</text>
+<text class="ts" x="628" y="154" fill="#185FA5">CAD +3%</text>
+<text class="ts" x="628" y="195" fill="#A32D2D">EUR −4%</text>
+
+<!-- Y-axis labels -->
+<text class="ts" x="52" y="24" text-anchor="end" opacity=".45">+8%</text>
+<text class="ts" x="52" y="120" text-anchor="end" opacity=".45">0%</text>
+<text class="ts" x="52" y="220" text-anchor="end" opacity=".45">−8%</text>
+<line x1="56" y1="120" x2="620" y2="120" stroke="var(--t)" stroke-width="0.5" stroke-dasharray="3 4" opacity=".15"/>
+
+<!-- X-axis labels -->
+<text class="ts" x="60"  y="236" text-anchor="middle" opacity=".45">Jan 22</text>
+<text class="ts" x="200" y="236" text-anchor="middle" opacity=".45">Fév 22</text>
+<text class="ts" x="370" y="236" text-anchor="middle" opacity=".45">Mar 22</text>
+<text class="ts" x="540" y="236" text-anchor="middle" opacity=".45">Avr 22</text>
+<text class="ts" x="620" y="236" text-anchor="middle" opacity=".45">Mai 22</text>
+
+<!-- Legend -->
+<line x1="60" y1="258" x2="90" y2="258" stroke="#1D9E75" stroke-width="2.5" stroke-linecap="round"/>
+<text class="ts" x="98" y="262">AUD/USD — exportateur blé/métaux/GNL</text>
+<line x1="320" y1="258" x2="350" y2="258" stroke="#3B8BD4" stroke-width="2.5" stroke-linecap="round"/>
+<text class="ts" x="358" y="262">CAD/USD — exportateur pétrole/potasse</text>
+<line x1="60" y1="274" x2="90" y2="274" stroke="#E24B4A" stroke-width="2.5" stroke-dasharray="7 3" stroke-linecap="round"/>
+<text class="ts" x="98" y="278">EUR/USD — importateur énergie russe</text>
+
+</svg>
+<p class="fig-caption">AUD/USD et CAD/USD vs EUR/USD — performance fév.–mai 2022</p>
+</div>
+    <div class="callout green">Résultat : entre février et avril 2022, l'AUD/USD a progressé d'environ +6%, le CAD/USD de +3%, pendant que l'EUR/USD chutait de –4%. Le blé a bondi de +50%, le nickel de +250% en deux jours (short squeeze LME), le pétrole à 130$/b. Aucune de ces positions n'a nécessité de lire un graphique.</div>
+  </section>
+
+  <!-- CAS PRATIQUE 2 -->
+  <section class="section" id="section-cas2">
+    <div class="section-label">Cas Pratique II</div>
+    <h2 class="section-title">Le retour du nucléaire et les actions uranium</h2>
+    <p style="color:var(--text-2);margin-bottom:28px;line-height:1.75">Ce cas pratique illustre une thèse d'investissement de long terme construite non pas sur un choc soudain, mais sur une convergence de signaux politiques, historiques et structurels.</p>
+
+    <div class="sub">
+      <h3 class="sub-title">Le contexte : doctrine gaulliste et chute post-Fukushima</h3>
+      <p>De Gaulle, dès 1958, fait de l'indépendance énergétique un pilier de la souveraineté française. La France construit entre 1970 et 2000 le plus grand parc nucléaire au monde en proportion : 56 réacteurs, jusqu'à 75% de la production électrique.</p>
+      <p>L'accident de Fukushima en 2011 provoque un retournement brutal. L'Allemagne ferme toutes ses centrales d'ici 2022 — la rendant massivement dépendante du gaz russe. Le prix de l'uranium s'effondre de 70$/lb à moins de 20$/lb. Les mines ferment. L'offre mondiale se contracte structurellement.</p>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">La convergence de signaux (2021–2024)</h3>
+      <ul class="styled-list">
+        <li><div><strong>Ukraine (fév. 2022) —</strong> Révèle brutalement la vulnérabilité énergétique de l'Europe. L'Allemagne, sans centrales nucléaires, est en position de faiblesse totale — exactement ce que de Gaulle avait voulu éviter.</div></li>
+        <li><div><strong>Macron (nov. 2021) —</strong> Annonce la construction de 6 nouveaux EPR2 et la prolongation du parc existant. Résurgence explicite de la doctrine gaulliste.</div></li>
+        <li><div><strong>Taxonomie verte UE (2022) —</strong> Von der Leyen intègre le nucléaire dans la taxonomie verte européenne. Ouvre la voie aux financements institutionnels.</div></li>
+        <li><div><strong>Consensus international —</strong> Royaume-Uni, Canada, Japon, Corée du Sud, pays asiatiques annoncent de nouveaux programmes. La COP28 de Dubaï (déc. 2023) : 22 pays signent pour tripler la capacité nucléaire mondiale d'ici 2050.</div></li>
+        <li><div><strong>Trump + Big Tech (2024) —</strong> Trump fait du nucléaire un axe central de sa politique énergétique. Microsoft, Google, Amazon signent des contrats d'approvisionnement nucléaire pour leurs datacenters d'IA. Demande privée massive qui s'ajoute à la demande d'État.</div></li>
+      </ul>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Le raisonnement d'investissement</h3>
+      <ul class="styled-list">
+        <li><div><strong>Demande en hausse structurelle —</strong> Relance nucléaire dans les pays développés + essor dans les pays émergents (Chine prévoit 150 nouveaux réacteurs d'ici 2035).</div></li>
+        <li><div><strong>Offre contrainte et inélastique —</strong> Les mines ont été fermées pendant 10 ans. Rouvrir une mine d'uranium prend 5 à 10 ans. L'offre ne peut pas répondre rapidement à la hausse de la demande.</div></li>
+        <li><div><strong>Actifs à jouer —</strong> Cameco (Canada), Kazatomprom (Kazakhstan), Paladin Energy (Namibie/Australie). ETF : Sprott Physical Uranium Trust, URNM.</div></li>
+      </ul>
+    </div>
+<div class="module-figure">
+<svg width="100%" viewBox="0 0 680 300" style="display:block">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+
+<!-- Axes -->
+<line x1="60" y1="20" x2="60" y2="240" stroke="var(--t)" stroke-width="1" opacity=".3"/>
+<line x1="60" y1="240" x2="630" y2="240" stroke="var(--t)" stroke-width="1" opacity=".3"/>
+
+<!-- Price curve: 28→107 -->
+<path d="M 60 210 C 100 209, 130 207, 170 205 C 210 202, 230 198, 260 190 C 290 178, 310 162, 340 148 C 360 138, 375 128, 400 108 C 420 90, 440 72, 470 55 C 490 44, 510 38, 540 34 C 560 32, 590 36, 610 42"
+  fill="none" stroke="#EF9F27" stroke-width="2.5" stroke-linecap="round"/>
+
+<!-- Fill under curve -->
+<path d="M 60 210 C 100 209, 130 207, 170 205 C 210 202, 230 198, 260 190 C 290 178, 310 162, 340 148 C 360 138, 375 128, 400 108 C 420 90, 440 72, 470 55 C 490 44, 510 38, 540 34 C 560 32, 590 36, 610 42 L 610 240 L 60 240 Z"
+  fill="#EF9F27" fill-opacity=".08"/>
+
+<!-- Key event markers -->
+<line x1="170" y1="20" x2="170" y2="240" stroke="var(--t)" stroke-width="1" stroke-dasharray="3 3" opacity=".2"/>
+<text class="ts" x="174" y="35" opacity=".6">Macron</text>
+<text class="ts" x="174" y="49" opacity=".6">Nov 2021</text>
+
+<line x1="280" y1="20" x2="280" y2="240" stroke="var(--t)" stroke-width="1" stroke-dasharray="3 3" opacity=".2"/>
+<text class="ts" x="284" y="35" opacity=".6">Ukraine</text>
+<text class="ts" x="284" y="49" opacity=".6">Fév 2022</text>
+
+<line x1="400" y1="20" x2="400" y2="240" stroke="var(--t)" stroke-width="1" stroke-dasharray="3 3" opacity=".2"/>
+<text class="ts" x="404" y="35" opacity=".6">Taxonomie</text>
+<text class="ts" x="404" y="49" opacity=".6">verte EU</text>
+
+<line x1="520" y1="20" x2="520" y2="240" stroke="var(--t)" stroke-width="1" stroke-dasharray="3 3" opacity=".2"/>
+<text class="ts" x="524" y="35" opacity=".6">Trump + Big</text>
+<text class="ts" x="524" y="49" opacity=".6">Tech nucl.</text>
+
+<!-- Price labels on curve -->
+<circle cx="60" cy="210" r="4" fill="#EF9F27"/>
+<text class="ts" x="68" y="207" fill="#633806">28 $/lb</text>
+
+<circle cx="540" cy="34" r="5" fill="#EF9F27"/>
+<text class="ts" x="548" y="31" fill="#633806">107 $/lb</text>
+<text class="ts" x="548" y="46" fill="#633806">+400%</text>
+
+<!-- Y axis -->
+<text class="ts" x="52" y="24" text-anchor="end" opacity=".45">120$</text>
+<text class="ts" x="52" y="130" text-anchor="end" opacity=".45">60$</text>
+<text class="ts" x="52" y="242" text-anchor="end" opacity=".45">0$</text>
+<line x1="56" y1="130" x2="630" y2="130" stroke="var(--t)" stroke-width="0.5" stroke-dasharray="3 4" opacity=".1"/>
+
+<!-- X axis -->
+<text class="ts" x="60"  y="256" text-anchor="middle" opacity=".45">2020</text>
+<text class="ts" x="170" y="256" text-anchor="middle" opacity=".45">2021</text>
+<text class="ts" x="280" y="256" text-anchor="middle" opacity=".45">2022</text>
+<text class="ts" x="400" y="256" text-anchor="middle" opacity=".45">2023</text>
+<text class="ts" x="540" y="256" text-anchor="middle" opacity=".45">2024</text>
+
+<!-- Cameco annotation -->
+<rect x="60" y="266" width="560" height="24" rx="6" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5" opacity=".5"/>
+<text class="ts" x="340" y="282" text-anchor="middle" opacity=".65">Cameco (CCO) +400% · Sprott URNM ×3 · Convergence signal politique → thèse multi-couches</text>
+
+</svg>
+<p class="fig-caption">Prix de l'uranium 2020–2024 : 28$/lb → 107$/lb (+400%) — catalyseurs politiques identifiables</p>
+</div>
+    <div class="callout green">Résultat : uranium spot 28$/lb → 107$/lb (+400%). Cameco +400% entre 2021 et 2024. Sprott URNM ×3. Ces performances ont précédé et largement surpassé la prise de conscience médiatique du grand public.</div>
+    <div class="callout blue">La leçon : une thèse d'investissement puissante n'est pas un signal isolé — c'est une convergence. Doctrine gaulliste, vulnérabilité post-Ukraine, relance européenne, nucléaire bipartisan aux États-Unis, demande privée des géants de l'IA. Quand autant de couches s'alignent, l'horizon de la thèse se prolonge et sa probabilité de succès augmente.</div>
+  </section>
+
+  <!-- SYNTHESIS -->
+  <div class="synthesis">
+    <h2 class="synthesis-title">Synthèse du module</h2>
+    <p>Le Module III pose les fondations de toute prise de décision d'investissement. Avant de regarder un graphique ou un bilan, vous devez savoir dans quel monde économique l'actif que vous analysez évolue.</p>
+    <p>Les cycles de la section a vous donnent le cadre temporel. Les flux de la section b vous donnent les mécanismes de transmission. La géographie économique de la section c vous donne les acteurs et leurs logiques propres. Les outils de la section d transforment tout cela en processus de décision opérationnel.</p>
+    <p>Les deux cas pratiques — Ukraine/AUD-CAD et uranium — illustrent comment ces outils s'articulent en thèses concrètes, avant que le consensus ne les ait intégrées dans les prix. C'est précisément cet avantage informationnel que ce cours vous apprend à construire.</p>
+    <div class="next-module">Module suivant — <strong>Module IV : Analyse des Actifs.</strong> Nous allons apprendre à valoriser concrètement un actif : actions, obligations, matières premières, devises.</div>
   </div>
 
-  
-
-  <div class="mod-nav">
-    <button class="mod-nav-btn" onclick="navigate(1)" >← Précédent</button>
-    <span class="mod-nav-label">3 / 12</span>
-    <button class="mod-nav-btn" onclick="navigate(3, true)" >Suivant →</button>
+  <!-- NAVIGATION -->
+  <div class="module-nav">
+    <button class="nav-btn" onclick="window.parent.postMessage({type:'navigate',index:1,markDone:false},'*')">← Module 02</button>
+    <button class="nav-btn primary" onclick="window.parent.postMessage({type:'navigate',index:3,markDone:true},'*')">Module 04 →</button>
   </div>
 
 </div>
-
-<!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox">
-  <div class="lightbox-backdrop" id="lightboxBackdrop"></div>
-  <div class="lightbox-img-wrap">
-    <button class="lightbox-close" id="lightboxClose">✕</button>
-    <img id="lightboxImg" src="" alt=""/>
-    <div class="lightbox-caption" id="lightboxCaption"></div>
-  </div>
-</div>
-
-<script>
-function navigate(index, markDone) {
-  window.parent.postMessage({ type: 'navigate', index: index, markDone: !!markDone }, '*');
-}
-function openLightbox(src, caption) {
-  document.getElementById('lightboxImg').src = src;
-  document.getElementById('lightboxCaption').textContent = caption;
-  document.getElementById('lightbox').classList.add('open');
-}
-function closeLightbox() {
-  document.getElementById('lightbox').classList.remove('open');
-}
-document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
-document.getElementById('lightboxBackdrop').addEventListener('click', closeLightbox);
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
-document.addEventListener('click', e => {
-  const img = e.target.closest('.mod-figure img');
-  if (!img) return;
-  const caption = img.closest('.mod-figure')?.querySelector('figcaption')?.textContent || '';
-  openLightbox(img.src, caption);
-});
-</script>
 </body>
 </html>
