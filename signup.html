@@ -144,13 +144,20 @@ async function signup() {
     return;
   }
 
-  // Compte créé + auto-connecté (si confirmation email désactivée)
-  if (data.session) {
-    window.location.href = 'ark_dashboard.html';
-  } else {
-    setLoading(false);
-    showAlert('Compte créé ! Vérifie tes emails pour confirmer ton adresse.', 'success');
-  }
+  setLoading(false);
+  // Masquer le formulaire, afficher message de confirmation
+  document.querySelector('.card').innerHTML =
+    '<div class="logo">ARK</div>' +
+    '<div style="text-align:center;padding:12px 0;">' +
+      '<div style="font-size:48px;margin-bottom:20px;">📬</div>' +
+      '<h1 style="margin-bottom:12px;">Vérifie tes emails</h1>' +
+      '<p style="font-size:14px;color:var(--text-2);font-weight:300;line-height:1.6;margin-bottom:24px;">' +
+        'Un email de confirmation a été envoyé à <strong style="color:var(--text-1);">' + email + '</strong>.<br>' +
+        'Clique sur le lien pour activer ton compte.' +
+      '</p>' +
+      '<p style="font-size:12px;color:var(--text-3);font-weight:300;">Tu ne vois pas l&#39;email ? Vérifie tes spams.</p>' +
+      '<div style="margin-top:28px;"><a href="login.html" style="font-size:14px;color:var(--accent);text-decoration:none;font-weight:500;">← Retour à la connexion</a></div>' +
+    '</div>';
 }
 
 document.addEventListener('keydown', e => { if (e.key === 'Enter') signup(); });
