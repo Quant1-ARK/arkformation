@@ -3,180 +3,718 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ARK — Module 06 · Analyse Technique Appliquée</title>
+<title>Module 06 — Sources, Veille et Information</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #f5f5f5;
-    --border: rgba(19,18,18,.41);
-    --border-active: rgba(255,255,255,.14);
-    --text-1: #000;
-    --text-2: #59595e;
-    --text-3: #48484c;
-    --accent: #0071e3;
-    --accent-glow: rgba(0,113,227,.18);
-    --accent-soft: rgba(0,113,227,.12);
-    --gold: #c9a84c;
-    --gold-soft: rgba(201,168,76,.1);
-  }
-
+  :root{--bg:#f5f5f5;--surface:#fff;--border:rgba(19,18,18,.1);--text-1:#0a0a0a;--text-2:#3d3d3a;--text-3:#6b6b67;--accent:#0071e3;--accent-soft:rgba(0,113,227,.07)}
   *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--bg);color:var(--text-1);font-family:'DM Sans',-apple-system,sans-serif;font-size:15px;-webkit-font-smoothing:antialiased;padding:48px clamp(24px,5vw,80px) 80px;overflow-y:auto;min-height:100vh}
-  @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-  .page{animation:fadeIn .3s ease}
-
-  /* VIDEO */
-  .mod-video{margin-bottom:36px;border-radius:16px;overflow:hidden;aspect-ratio:16/9;background:#1a1a1a;display:none}
-  .mod-video.has-video{display:block}
-  .mod-video iframe{width:100%;height:100%;border:none}
-
-  /* MODULE HEADER */
-  .mod-number{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;display:flex;align-items:center;gap:8px}
-  .mod-number::before{content:'';display:inline-block;width:20px;height:1px;background:var(--accent)}
-  .mod-title{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(28px,4vw,44px);font-weight:400;line-height:1.15;letter-spacing:-.01em;color:var(--text-1);margin-bottom:16px}
-  .mod-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:28px}
-  .mod-tag{font-size:11px;font-weight:500;color:var(--accent);background:var(--accent-soft);padding:3px 10px;border-radius:980px;border:1px solid rgba(0,113,227,.15)}
-  .mod-divider{height:1px;background:var(--border);margin:28px 0}
-  .mod-intro{font-size:17px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:36px;font-style:italic;border-left:2px solid var(--accent);padding-left:20px}
-  .mod-section-title{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:16px}
-
-  /* OBJECTIVES */
-  .mod-objectives{list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:36px}
-  .mod-objectives li{display:flex;align-items:flex-start;gap:12px;font-size:14px;color:var(--text-2);line-height:1.6}
-  .obj-check{width:18px;height:18px;border-radius:50%;border:1px solid var(--border-active);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--text-3)}
-
-  /* CONCEPTS */
-  .mod-concepts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:36px}
-  .concept-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px;transition:border-color .2s,background .2s}
-  .concept-card:hover{border-color:var(--border-active);background:var(--bg)}
-  .concept-icon{font-size:20px;margin-bottom:8px}
-  .concept-name{font-size:13px;font-weight:600;color:var(--text-1);margin-bottom:4px}
-  .concept-desc{font-size:12px;color:var(--text-2);line-height:1.5;font-weight:300}
-
-  /* QUOTE */
-  .mod-quote{background:var(--gold-soft);border:1px solid rgba(201,168,76,.15);border-radius:16px;padding:24px 28px;margin-bottom:36px}
-  .mod-quote-text{font-family:'DM Serif Display',Georgia,serif;font-size:18px;line-height:1.6;color:var(--gold);margin-bottom:8px;font-style:italic}
-  .mod-quote-source{font-size:11px;color:var(--text-3);letter-spacing:.05em;text-transform:uppercase}
-
-  /* FIGURES & TABLES */
-  .mod-figure{margin:28px 0;text-align:center}
-  .mod-figure img{max-width:100%;height:auto;border-radius:12px;border:1px solid var(--border);cursor:zoom-in;transition:opacity .2s,transform .2s}
-  .mod-figure img:hover{opacity:.9;transform:scale(1.01)}
-  .mod-figure figcaption{margin-top:10px;font-size:12px;color:var(--text-3);font-style:italic;line-height:1.5}
-
-  /* LIGHTBOX */
-  .lightbox{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:32px;opacity:0;pointer-events:none;transition:opacity .25s ease}
-  .lightbox.open{opacity:1;pointer-events:all}
-  .lightbox-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(4px)}
-  .lightbox-img-wrap{position:relative;z-index:1;max-width:90vw;max-height:88vh;display:flex;flex-direction:column;align-items:center;gap:14px;transform:scale(.94);transition:transform .25s ease}
-  .lightbox.open .lightbox-img-wrap{transform:scale(1)}
-  .lightbox-img-wrap img{max-width:100%;max-height:80vh;height:auto;border-radius:14px;box-shadow:0 32px 80px rgba(0,0,0,.5);display:block}
-  .lightbox-caption{font-size:13px;color:rgba(255,255,255,.65);font-style:italic;text-align:center;max-width:640px;line-height:1.5}
-  .lightbox-close{position:absolute;top:-14px;right:-14px;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s;line-height:1}
-  .lightbox-close:hover{background:rgba(255,255,255,.25)}
-
-  .mod-table-wrap{overflow-x:auto;margin:24px 0;border-radius:12px;border:1px solid var(--border)}
-  .mod-table{width:100%;border-collapse:collapse;font-size:13px}
-  .mod-table th{background:var(--accent-soft);color:var(--accent);font-weight:600;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:10px 14px;text-align:left;border-bottom:1px solid var(--border)}
-  .mod-table td{padding:10px 14px;color:var(--text-2);border-bottom:1px solid var(--border);vertical-align:top;line-height:1.6;font-weight:300}
-  .mod-table tr:last-child td{border-bottom:none}
-  .mod-table td strong{color:var(--text-1);font-weight:600}
-
-  /* MODULE BODY */
-  .mod-body{margin-top:40px}
-  .mod-body h2{font-family:'DM Serif Display',Georgia,serif;font-size:22px;font-weight:400;color:var(--text-1);margin:44px 0 14px;padding-top:12px;border-top:1px solid var(--border)}
-  .mod-body h3{font-size:15px;font-weight:600;color:var(--text-1);margin:28px 0 10px}
-  .mod-body p{font-size:15px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:16px}
-  .mod-body ul,.mod-body ol{margin:0 0 20px;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:10px}
-  .mod-body li{position:relative;padding-left:22px;font-size:14px;font-weight:300;color:var(--text-2);line-height:1.7;overflow-wrap:break-word}
-  .mod-body li::before{content:'—';color:var(--accent);font-size:13px;position:absolute;left:0;top:0;line-height:1.7}
-  .mod-body li strong,.mod-body strong{color:var(--text-1);font-weight:600}
-  .mod-body blockquote{border-left:2px solid var(--accent);padding:10px 0 10px 20px;margin:20px 0;font-style:italic;font-weight:300;color:var(--text-2);font-size:14px;line-height:1.7}
-  .formula-box,.warning-box,.summary-box{border-radius:12px;padding:16px 20px;margin:20px 0;font-size:14px;line-height:1.7}
-  .formula-box{background:var(--accent-soft);border:1px solid rgba(0,113,227,.15);font-weight:500;font-style:italic}
-  .warning-box{background:rgba(255,149,0,.08);border:1px solid rgba(255,149,0,.2);color:var(--text-2)}
-  .summary-box{background:var(--gold-soft);border:1px solid rgba(201,168,76,.15);font-style:italic;color:var(--text-2)}
-  .profile-block{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:20px;margin:16px 0}
-  .profile-block h3{margin-top:0}
-  .profile-meta{font-size:12px;color:var(--accent);font-style:italic;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
-
-  /* NAV */
-  .mod-nav{display:flex;justify-content:space-between;align-items:center;margin-top:52px;padding-top:24px;border-top:1px solid var(--border);gap:12px}
-  .mod-nav-btn{display:flex;align-items:center;gap:8px;padding:10px 16px;border:1px solid var(--border);border-radius:10px;background:var(--bg);color:var(--text-2);cursor:pointer;font-size:13px;font-weight:500;transition:all .15s;font-family:inherit}
-  .mod-nav-btn:hover:not(:disabled){border-color:var(--border-active);color:var(--text-1)}
-  .mod-nav-btn:disabled{opacity:.3;cursor:default}
-  .mod-nav-label{font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em}
-
-  @media(max-width:768px){
-    body{padding:32px 20px 60px}
-  }
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text-1);font-family:'DM Sans',-apple-system,sans-serif;font-size:15px;line-height:1.75;-webkit-font-smoothing:antialiased}
+  .page{max-width:780px;margin:0 auto;padding:48px 24px 120px}
+  .mod-header{margin-bottom:56px;padding-bottom:40px;border-bottom:1px solid var(--border)}
+  .mod-kicker{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+  .mod-title{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(30px,5vw,46px);line-height:1.1;margin-bottom:14px}
+  .mod-sub{font-size:15px;color:var(--text-2);font-style:italic;margin-bottom:20px}
+  .mod-objective{background:var(--accent-soft);border-left:3px solid var(--accent);border-radius:0 10px 10px 0;padding:16px 20px;font-size:14px;color:var(--text-2);line-height:1.65}
+  .toc{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px 28px;margin-bottom:56px}
+  .toc-title{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:16px}
+  .toc-list{list-style:none;display:flex;flex-direction:column;gap:6px}
+  .toc-list li a{display:flex;align-items:baseline;gap:10px;text-decoration:none;color:var(--text-2);font-size:13.5px;transition:color .15s}
+  .toc-list li a:hover{color:var(--accent)}
+  .toc-letter{font-size:10px;font-weight:700;color:var(--accent);background:var(--accent-soft);border-radius:4px;padding:1px 6px;flex-shrink:0}
+  .section{margin-bottom:64px}
+  .section-label{display:inline-flex;align-items:center;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);border-radius:6px;padding:4px 10px;margin-bottom:18px}
+  .section-title{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(22px,3.5vw,30px);line-height:1.2;margin-bottom:24px}
+  .section-intro{font-size:15px;color:var(--text-2);line-height:1.75;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid var(--border)}
+  .sub{margin-bottom:36px;border-left:3px solid var(--accent);padding-left:20px}
+  .sub-title{font-family:'DM Serif Display',Georgia,serif;font-size:19px;margin-bottom:14px;color:var(--text-1)}
+  .sub p{color:var(--text-2);margin-bottom:12px;font-size:14.5px;line-height:1.72}
+  .sub p:last-child{margin-bottom:0}
+  .sub strong{color:var(--text-1)}
+  .styled-list{list-style:none;margin:12px 0 16px;display:flex;flex-direction:column;gap:8px}
+  .styled-list li{color:var(--text-2);font-size:14px;line-height:1.65}
+  .styled-list li strong{color:var(--text-1)}
+  /* Callouts */
+  .callout{border-radius:0 10px 10px 0;border-left:3px solid;padding:14px 18px;margin:18px 0;font-size:13.5px;line-height:1.65}
+  .callout.yellow{background:#FAEEDA;border-color:#854F0B;color:#412402}
+  .callout.blue{background:#E6F1FB;border-color:#185FA5;color:#042C53}
+  .callout.green{background:#EAF3DE;border-color:#3B6D11;color:#173404}
+  .callout.red{background:#FCEBEB;border-color:#A32D2D;color:#501313}
+  .callout.purple{background:#EEEDFE;border-color:#534AB7;color:#26215C}
+  .callout strong{color:inherit}
+  /* Notion boxes */
+  .notion{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px 22px;margin:18px 0}
+  .notion-title{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px}
+  .notion p,.notion li{color:var(--text-1);font-size:13.5px;line-height:1.7;margin-bottom:6px}
+  .notion p:last-child,.notion li:last-child{margin-bottom:0}
+  .notion ul{list-style:none;display:flex;flex-direction:column;gap:4px;padding-left:0}
+  .notion strong{color:var(--text-1)}
+  .notion code{font-family:monospace;background:#f0efe8;padding:1px 5px;border-radius:4px;font-size:12.5px;color:var(--text-1)}
+  /* Tables */
+  .table-wrap{overflow-x:auto;margin:18px 0 24px;border-radius:12px;border:1px solid var(--border)}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  thead tr{background:#f0efe8}
+  thead th{padding:10px 14px;text-align:left;font-size:11px;font-weight:700;letter-spacing:.05em;color:var(--text-1);white-space:nowrap}
+  tbody tr{border-top:1px solid var(--border)}
+  tbody tr:hover{background:rgba(0,0,0,.02)}
+  tbody td{padding:10px 14px;color:var(--text-2);vertical-align:top;line-height:1.55}
+  tbody td strong{color:var(--text-1)}
+  .module-figure{margin:24px 0 32px;background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;padding:16px}
+  .module-figure svg{width:100%;display:block}
+  .fig-caption{margin-top:10px;font-size:12px;color:var(--text-3);font-style:italic;text-align:center}
+  /* Bloomberg callout special */
+  .bloomberg-box{background:#E6F1FB;border:1px solid #B5D4F4;border-radius:12px;padding:20px 22px;margin:20px 0}
+  .bloomberg-box p{color:#042C53;font-size:13.5px;line-height:1.7;margin-bottom:8px}
+  .bloomberg-box p:last-child{margin-bottom:0}
+  .bloomberg-box strong{color:#0C447C}
+  /* Divergence callout */
+  .signal-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px 22px;margin:18px 0}
+  .signal-title{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:14px}
+  .signal-title.green{color:#27500A}
+  .signal-title.red{color:#791F1F}
+  .signal-row{display:flex;gap:10px;margin-bottom:8px;font-size:13.5px;color:var(--text-2);line-height:1.6}
+  .signal-row:last-child{margin-bottom:0}
+  .signal-tag{font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;flex-shrink:0;margin-top:3px}
+  .tag-green{background:#EAF3DE;color:#27500A}
+  .tag-red{background:#FCEBEB;color:#791F1F}
+  /* Bias table */
+  .bias-table{width:100%;border-collapse:collapse;margin:18px 0;font-size:13px;border-radius:12px;overflow:hidden;border:1px solid var(--border)}
+  .bias-table th{background:#f0efe8;padding:10px 14px;text-align:left;font-size:11px;font-weight:700;letter-spacing:.05em;color:var(--text-1)}
+  .bias-table td{padding:10px 14px;vertical-align:top;line-height:1.55;border-top:1px solid var(--border);color:var(--text-2)}
+  .bias-table td:first-child{font-weight:700;color:var(--text-1);white-space:nowrap}
+  /* Checklist */
+  .checklist{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px 22px;margin:18px 0}
+  .checklist-title{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3);margin-bottom:14px}
+  .check-item{display:flex;align-items:flex-start;gap:10px;padding:7px 0;border-bottom:1px solid var(--border);font-size:13.5px;color:var(--text-1)}
+  .check-item:last-child{border-bottom:none}
+  .check-num{font-size:11px;font-weight:700;color:var(--accent);background:var(--accent-soft);border-radius:4px;padding:2px 7px;flex-shrink:0;margin-top:2px}
+  /* Summary */
+  .summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0}
+  @media(max-width:560px){.summary-grid{grid-template-columns:1fr}}
+  .summary-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px}
+  .summary-section{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:4px}
+  .summary-concept{font-weight:600;font-size:13.5px;color:var(--text-1);margin-bottom:4px}
+  .summary-tool{font-size:12.5px;color:var(--text-2)}
+  /* Habits list */
+  .habits{background:#EAF3DE;border:1px solid #C0DD97;border-radius:12px;padding:20px 22px;margin:20px 0}
+  .habits-title{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#27500A;margin-bottom:14px}
+  .habit-row{display:flex;gap:10px;padding:7px 0;border-bottom:1px solid #C0DD97;font-size:13.5px;color:#173404;line-height:1.6}
+  .habit-row:last-child{border-bottom:none}
+  .habit-num{font-size:11px;font-weight:700;color:#27500A;background:#fff;border-radius:4px;padding:2px 7px;flex-shrink:0;margin-top:2px}
+  /* Nav */
+  .synthesis{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px;margin-top:48px}
+  .synthesis-title{font-family:'DM Serif Display',Georgia,serif;font-size:22px;margin-bottom:18px}
+  .synthesis p{color:var(--text-2);margin-bottom:12px;line-height:1.75;font-size:14.5px}
+  .synthesis p:last-child{margin-bottom:0}
+  .next-module{margin-top:20px;padding-top:18px;border-top:1px solid var(--border);font-size:13px;color:var(--text-3);font-style:italic}
+  .next-module strong{color:var(--accent);font-style:normal}
+  .module-nav{display:flex;justify-content:space-between;align-items:center;margin-top:56px;padding-top:28px;border-top:1px solid var(--border);gap:12px}
+  .nav-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:10px;border:1px solid var(--border);font-size:13.5px;font-weight:500;font-family:inherit;cursor:pointer;transition:all .2s;background:var(--surface);color:var(--text-1)}
+  .nav-btn:hover{border-color:var(--accent);color:var(--accent)}
+  .nav-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .nav-btn.primary:hover{background:#0077ed}
+  /* SVG */
+  .node{cursor:pointer}.node:hover{opacity:.85}
+  svg text{font-family:'DM Sans',-apple-system,sans-serif;fill:var(--text-1)}
+  svg .t{font-size:14px;font-weight:400;fill:var(--text-1)}
+  svg .ts{font-size:12px;font-weight:400;fill:var(--text-2)}
+  svg .th{font-size:14px;font-weight:600;fill:var(--text-1)}
+  .c-blue rect,.c-blue circle{fill:#E6F1FB;stroke:#185FA5}
+  .c-blue .th,.c-blue .t{fill:#0C447C}.c-blue .ts{fill:#185FA5}
+  .c-teal rect,.c-teal circle{fill:#E1F5EE;stroke:#0F6E56}
+  .c-teal .th,.c-teal .t{fill:#085041}.c-teal .ts{fill:#0F6E56}
+  .c-purple rect,.c-purple circle{fill:#EEEDFE;stroke:#534AB7}
+  .c-purple .th,.c-purple .t{fill:#3C3489}.c-purple .ts{fill:#534AB7}
+  .c-amber rect,.c-amber circle{fill:#FAEEDA;stroke:#854F0B}
+  .c-amber .th,.c-amber .t{fill:#633806}.c-amber .ts{fill:#854F0B}
+  .c-green rect,.c-green circle{fill:#EAF3DE;stroke:#3B6D11}
+  .c-green .th,.c-green .t{fill:#27500A}.c-green .ts{fill:#3B6D11}
 </style>
 </head>
 <body>
 <div class="page">
 
-  <!-- VIDEO: remplacer la ligne ci-dessous par <div class="mod-video has-video"><iframe src="https://www.youtube.com/embed/VOTRE_ID" allowfullscreen></iframe></div> -->
-  <div class="mod-video"></div>
+  <header class="mod-header">
+    <div class="mod-kicker">Module 06 · ARK Investor Program</div>
+    <h1 class="mod-title">Sources, Veille et Information</h1>
+    <p class="mod-sub">L'information est une matière première. La majorité des investisseurs lisent les mêmes sources au même moment. L'avantage concurrentiel vient de lire mieux, plus tôt, ou différemment.</p>
+    <div class="mod-objective">Les outils des modules précédents ne servent à rien si l'information qui les alimente est mauvaise, tardive, ou mal interprétée. Ce module est consacré à la maîtrise de l'information — comment la sourcer, la filtrer, l'organiser et l'exploiter avec un avantage réel sur le marché.</div>
+  </header>
 
-  <div class="mod-number">Module 06</div>
-  <h1 class="mod-title">Analyse Technique Appliquée</h1>
-  <div class="mod-tags"><span class="mod-tag">Chartisme</span><span class="mod-tag">Indicateurs</span><span class="mod-tag">Structures de prix</span></div>
-  <p class="mod-intro">Lire un graphique, identifier les structures de prix, utiliser les indicateurs comme confirmation — pas comme signal principal.</p>
+  <nav class="toc">
+    <div class="toc-title">Sommaire</div>
+    <ul class="toc-list">
+      <li><a href="#via"><span class="toc-letter">a</span>La Hiérarchie de l'Information</a></li>
+      <li><a href="#vib"><span class="toc-letter">b</span>Les Sources Primaires par Classe d'Actif</a></li>
+      <li><a href="#vic"><span class="toc-letter">c</span>Lire un Rapport Annuel en 45 Minutes</a></li>
+      <li><a href="#vid"><span class="toc-letter">d</span>Construire son Système de Veille</a></li>
+      <li><a href="#vie"><span class="toc-letter">e</span>Les Données Alternatives</a></li>
+      <li><a href="#vif"><span class="toc-letter">f</span>Biais Cognitifs dans le Traitement de l'Information</a></li>
+    </ul>
+  </nav>
 
-  <div class="mod-section-title">Ce que tu vas apprendre</div>
-  <ul class="mod-objectives"><li><div class="obj-check">○</div><span>Lire un graphique avec précision : bougies, volumes, structure</span></li><li><div class="obj-check">○</div><span>Identifier les supports, résistances et zones de valeur</span></li><li><div class="obj-check">○</div><span>Utiliser les indicateurs techniques comme filtre, pas comme oracle</span></li><li><div class="obj-check">○</div><span>Reconnaître les patterns de retournement et de continuation</span></li></ul>
+  <!-- SECTION A -->
+  <section class="section" id="via">
+    <div class="section-label">Section A</div>
+    <h2 class="section-title">La Hiérarchie de l'Information</h2>
+    <div class="section-intro">Chaque jour, des dizaines de milliers d'articles, de commentaires et de newsletters parlent des marchés financiers. La quasi-totalité de ce flux est inutile pour un investisseur fondamental. Savoir distinguer le signal du bruit est la première compétence à développer — avant même de savoir analyser un bilan ou lire un graphique.</div>
 
-  <div class="mod-divider"></div>
+    <div class="sub">
+      <h3 class="sub-title">Les 3 niveaux d'information</h3>
+      <p>L'information financière peut être classée en trois niveaux selon sa qualité de signal et son volume de production. Ces niveaux forment une pyramide inversée : plus on monte, plus le volume est grand et la qualité est faible.</p>
+      <ul class="styled-list">
+        <li><strong>Niveau primaire</strong> — Données brutes officielles : filings réglementaires (SEC, AMF), statistiques gouvernementales (BLS, BEA, INSEE), rapports des banques centrales, inventaires de matières premières (EIA, LME). Rares, denses, peu médiatisées — matériau brut de toute analyse sérieuse.</li>
+        <li><strong>Niveau secondaire</strong> — Analyse et interprétation : recherche sell-side, Financial Times, Bloomberg, notes de brokers. Utile pour prendre connaissance d'une thématique, mais l'analyse a déjà été produite par des professionnels — l'avantage informationnel est donc limité.</li>
+        <li><strong>Niveau tertiaire</strong> — Bruit : réseaux sociaux, newsletters grand public, podcasts généralistes, forums de trading. Structurellement en retard sur le marché. Agir sur ce flux, c'est systématiquement arriver en dernier.</li>
+      </ul>
+    </div>
+    <div class="module-figure">
+<svg width="100%" viewBox="0 0 680 335" style="display:block">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
 
-  <div class="mod-section-title">Concepts clés</div>
-  <div class="mod-concepts-grid"><div class="concept-card"><div class="concept-icon">🕯️</div><div class="concept-name">Chandeliers japonais</div><div class="concept-desc">La représentation graphique de la psychologie des marchés</div></div><div class="concept-card"><div class="concept-icon">📐</div><div class="concept-name">Supports / Résistances</div><div class="concept-desc">Zones où l'offre et la demande s'équilibrent</div></div><div class="concept-card"><div class="concept-icon">📊</div><div class="concept-name">Volume</div><div class="concept-desc">La conviction derrière un mouvement de prix</div></div><div class="concept-card"><div class="concept-icon">〰️</div><div class="concept-name">Moyennes mobiles</div><div class="concept-desc">Lisser le bruit pour voir la tendance de fond</div></div></div>
+<!-- Inverted pyramid: 3 tiers, widest at top -->
+<!-- Level 3 — Tertiaire (top, widest, grey) -->
+<polygon points="52,40 628,40 520,130 160,130" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1"/>
+<text class="th" x="340" y="75" text-anchor="middle" fill="#2C2C2A">Niveau Tertiaire</text>
+<text class="ts" x="340" y="93" text-anchor="middle" fill="#5F5E5A">Réseaux sociaux · Newsletters grand public · Forums · Podcasts généralistes</text>
+<text class="ts" x="340" y="110" text-anchor="middle" fill="#888780">Volume très élevé — Signal quasi nul — Information déjà pricée</text>
 
-  <div class="mod-quote">
-    <div class="mod-quote-text">"L'analyse technique ne prédit pas le futur. Elle lit les traces laissées par le passé."</div>
-    <div class="mod-quote-source">— ARK — Module 06</div>
+<!-- Level 2 — Secondaire (middle, amber) -->
+<polygon points="160,138 520,138 412,228 248,228" fill="#FAEEDA" stroke="#EF9F27" stroke-width="1"/>
+<text class="th" x="340" y="172" text-anchor="middle" fill="#412402">Niveau Secondaire</text>
+<text class="ts" x="340" y="190" text-anchor="middle" fill="#633806">Financial Times · Bloomberg · Recherche sell-side · Brokers</text>
+<text class="ts" x="340" y="207" text-anchor="middle" fill="#854F0B">Analyse déjà produite — Avantage informationnel limité</text>
+
+<!-- Level 1 — Primaire (bottom, narrowest, green) -->
+<polygon points="248,236 412,236 340,310 340,310" fill="#E1F5EE" stroke="#1D9E75" stroke-width="1"/>
+<!-- Wider bottom for readability -->
+<polygon points="238,236 442,236 390,310 290,310" fill="#E1F5EE" stroke="#1D9E75" stroke-width="1"/>
+<text class="th" x="340" y="265" text-anchor="middle" fill="#04342C">Niveau Primaire</text>
+<text class="ts" x="340" y="282" text-anchor="middle" fill="#085041">SEC/AMF · Banques centrales · EIA · USDA · BIS</text>
+<text class="ts" x="340" y="298" text-anchor="middle" fill="#0F6E56">Rare · Dense · Fortement actionnable</text>
+
+<!-- Right side labels -->
+<text class="ts" x="640" y="88" fill="#888780" opacity=".6">Volume ↑</text>
+<text class="ts" x="640" y="183" fill="#888780" opacity=".6">Signal ↑</text>
+<text class="ts" x="640" y="272" fill="#1D9E75">Edge ↑</text>
+<line x1="634" y1="40" x2="634" y2="310" stroke="var(--t)" stroke-width="1" opacity=".15"/>
+<line x1="630" y1="40" x2="638" y2="40" stroke="var(--t)" stroke-width="1" opacity=".3"/>
+<line x1="630" y1="310" x2="638" y2="310" stroke="var(--t)" stroke-width="1" opacity=".3"/>
+
+<!-- Arrow pointing down (signal improves going down) -->
+<line x1="16" y1="50" x2="16" y2="300" stroke="var(--t)" stroke-width="1.5" opacity=".2" marker-end="url(#arrow)"/>
+<text class="ts" x="8" y="180" text-anchor="middle" fill="#5F5E5A" opacity=".5" transform="rotate(-90,8,180)">Qualité signal</text>
+
+</svg>
+<p class="fig-caption">Fig. 1 — La pyramide inversée de l'information. Le niveau primaire est rare mais fortement actionnable. Le niveau tertiaire est abondant mais quasi-inutile pour une décision fondée sur la valeur.</p>
+</div>
+
+    <div class="sub">
+      <h3 class="sub-title">L'edge informationnel : lire mieux, plus tôt, ou différemment</h3>
+      <p>L'edge informationnel peut prendre trois formes. <strong>Lire mieux</strong> : comprendre réellement ce que les autres lisent superficiellement — un rapport annuel de 200 pages est consulté en diagonale par la plupart des acteurs. <strong>Lire plus tôt</strong> : être dans les sources primaires avant que la presse les vulgarise. Quand le Financial Times titre sur un déficit d'uranium, les mineurs uranifères ont déjà monté depuis six mois.</p>
+      <p>La troisième forme, et la plus importante, est de <strong>tirer une conclusion différente du consensus</strong>. C'est ici que réside le gain asymétrique le plus puissant.</p>
+      <div class="callout yellow">
+        <strong>Le droit de ne pas être d'accord avec le marché</strong><br><br>
+        Le marché a souvent tort aux points d'inflexion. Il extrapole le passé récent, surpondère les dernières nouvelles, et réagit de façon excessive aux émotions collectives. Un actif que tout le monde déteste, fondamentalement sous-évalué, et dont le catalyseur n'est pas encore visible pour le consensus — c'est exactement là que se trouvent les gains asymétriques.<br><br>
+        Diverger du consensus avec une thèse solide et une marge de sécurité adéquate n'est pas une erreur. C'est la définition de l'investissement dans la valeur. Warren Buffett, Howard Marks, ou Michael Burry n'ont pas fait leurs rendements en suivant le consensus — ils les ont faits en le contestant, avec rigueur et patience.
+      </div>
+      <div class="notion">
+        <div class="notion-title">Signal vs Bruit — Les 3 questions à se poser</div>
+        <ul>
+          <li><strong>1.</strong> Cette information est-elle déjà dans le prix ? Si elle est dans le Financial Times, la réponse est probablement oui.</li>
+          <li><strong>2.</strong> Cette information change-t-elle mon estimation de la valeur fondamentale de l'actif ?</li>
+          <li><strong>3.</strong> Cette information modifie-t-elle le timing ou la probabilité du catalyseur identifié dans ma thèse ?</li>
+        </ul>
+        <p>Si la réponse aux questions 2 et 3 est non, l'information n'est pas actionnable — quel que soit son volume ou son bruit médiatique.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION B -->
+  <section class="section" id="vib">
+    <div class="section-label">Section B</div>
+    <h2 class="section-title">Les Sources Primaires par Classe d'Actif</h2>
+    <div class="section-intro">Pour chaque classe d'actif, il existe un ensemble de sources primaires officielles qui constituent le matériau brut de l'analyse. Les connaître, savoir les lire et s'y abonner directement est la base d'un avantage informationnel durable.</div>
+
+    <div class="bloomberg-box">
+      <p><strong>Le Bloomberg Terminal — l'agrégateur ultime</strong></p>
+      <p>Le Bloomberg Terminal est l'outil de référence des professionnels : traders, gestionnaires de fonds, analystes sell-side. Il centralise en temps réel les prix de tous les actifs mondiaux, les données macro, les filings, les nouvelles. Son coût : environ <strong>24 000 € par an et par utilisateur</strong>.</p>
+      <p>La bonne nouvelle : on peut faire exactement la même chose sans Bloomberg. Les sources primaires listées dans cette section sont publiques et gratuites. Les agrégateurs — FRED, Finviz, TradingEconomics, Barchart — couvrent 90% des besoins d'un position trader fondamental pour un coût nul ou marginal. Pour un horizon de position trading (jours à mois), la différence est négligeable.</p>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Actions</h3>
+      <p>La source primaire absolue pour les sociétés américaines est <strong>SEC EDGAR</strong> (sec.gov/edgar). Chaque société y dépose ses rapports réglementaires : le 10-K (rapport annuel), le 10-Q (trimestriel), le 8-K (événements significatifs en temps réel), et le Form 4 (achats et ventes par les dirigeants — les insiders). Pour les valeurs françaises et européennes, l'équivalent est l'AMF et les sections Relations Investisseurs des entreprises.</p>
+      <p>Les transcripts de calls de résultats trimestriels sont une mine sous-exploitée. Le management y parle librement, répond aux questions des analystes et donne souvent des signaux sur la direction future bien avant qu'ils apparaissent dans les chiffres.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Source</th><th>Contenu</th><th>URL</th><th>Usage</th></tr></thead>
+          <tbody>
+            <tr><td><strong>SEC EDGAR</strong></td><td>10-K, 10-Q, 8-K, Form 4</td><td>sec.gov/edgar</td><td>Source primaire US — filings officiels</td></tr>
+            <tr><td><strong>AMF</strong></td><td>Documents de référence EU</td><td>amf-france.org</td><td>Source primaire France/Europe</td></tr>
+            <tr><td><strong>Finviz</strong></td><td>Screener, heatmap, news</td><td>finviz.com</td><td>Agrégateur actions — vue d'ensemble rapide</td></tr>
+            <tr><td><strong>Macrotrends</strong></td><td>Ratios historiques 20+ ans</td><td>macrotrends.net</td><td>Historiques de valorisation longue période</td></tr>
+            <tr><td><strong>Seeking Alpha</strong></td><td>Transcripts, analyses</td><td>seekingalpha.com</td><td>Transcripts calls + analyses indépendantes</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Matières Premières</h3>
+      <p>L'<strong>EIA</strong> (Energy Information Administration) est la référence mondiale pour les données pétrole et gaz. Chaque mercredi à 16h30 (heure de Paris), elle publie ses stocks hebdomadaires de pétrole brut — un chiffre très suivi qui peut faire bouger le WTI de 2 à 3% en quelques minutes. Le <strong>LME</strong> publie quotidiennement les inventaires dans ses warehouses pour le cuivre, l'aluminium, le nickel et le zinc.</p>
+      <p>Pour les agricoles, le rapport <strong>WASDE</strong> publié mensuellement par l'USDA est la référence mondiale sur les bilans offre/demande du blé, du maïs, du soja et du riz.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Source</th><th>Matière première</th><th>URL</th><th>Publication</th></tr></thead>
+          <tbody>
+            <tr><td><strong>EIA</strong></td><td>Pétrole, gaz, électricité</td><td>eia.gov</td><td>Hebdomadaire (mercredi)</td></tr>
+            <tr><td><strong>LME</strong></td><td>Cuivre, alu, nickel, zinc</td><td>lme.com</td><td>Quotidien</td></tr>
+            <tr><td><strong>WNA / UxC</strong></td><td>Uranium</td><td>world-nuclear.org</td><td>Mensuel / continu</td></tr>
+            <tr><td><strong>USDA WASDE</strong></td><td>Agricoles (blé, maïs, soja)</td><td>usda.gov</td><td>Mensuel (vers le 10)</td></tr>
+            <tr><td><strong>Barchart</strong></td><td>Futures, COT visualisé</td><td>barchart.com</td><td>Continu + hebdo COT</td></tr>
+            <tr><td><strong>TradingEconomics</strong></td><td>Macro + commodités</td><td>tradingeconomics.com</td><td>Continu</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Devises et Macro</h3>
+      <p>Les banques centrales publient directement les informations les plus importantes pour le forex et les taux. Les <strong>minutes de la Fed</strong> (federalreserve.gov) sont publiées trois semaines après chaque réunion du FOMC — elles donnent le détail des délibérations et des votes, bien au-delà du simple communiqué de presse.</p>
+      <p>La <strong>BIS</strong> (Bank for International Settlements, bis.org) publie des rapports trimestriels de référence sur les flux de capitaux globaux et l'exposition au risque systémique — une lecture indispensable pour quiconque opère sur le forex ou les obligations souveraines.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Source</th><th>Contenu</th><th>URL</th><th>Fréquence</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Fed / FOMC</strong></td><td>Minutes, dot plot, discours</td><td>federalreserve.gov</td><td>8 réunions/an + discours continus</td></tr>
+            <tr><td><strong>BCE</strong></td><td>Minutes, projections, QE</td><td>ecb.europa.eu</td><td>8 réunions/an</td></tr>
+            <tr><td><strong>BIS</strong></td><td>Flux globaux, risque systémique</td><td>bis.org</td><td>Trimestriel</td></tr>
+            <tr><td><strong>FMI</strong></td><td>WEO, Article IV par pays</td><td>imf.org</td><td>Semestriel</td></tr>
+            <tr><td><strong>FRED St. Louis</strong></td><td>Séries macro US exhaustives</td><td>fred.stlouisfed.org</td><td>Continu — 800 000+ séries</td></tr>
+            <tr><td><strong>ForexFactory</strong></td><td>Calendrier + impact historique</td><td>forexfactory.com</td><td>Hebdomadaire</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Géopolitique</h3>
+      <p>L'analyse géopolitique requiert des sources dont l'indépendance et la rigueur méthodologique sont établies. <strong>L'IISS</strong> (iiss.org) publie le Military Balance annuel, référence mondiale sur les capacités militaires comparées. <strong>Chatham House</strong> (chathamhouse.org) et le <strong>Council on Foreign Relations</strong> (cfr.org) produisent des analyses approfondies sur les relations internationales et les risques politiques.</p>
+      <p>Pour l'angle francophone, l'<strong>IRIS</strong> (iris-france.org) et l'<strong>IFRI</strong> (ifri.org) sont les références. L'<strong>International Crisis Group</strong> (crisisgroup.org) suit en temps réel les conflits actifs dans le monde et produit des rapports de terrain d'une qualité rarement égalée par la presse généraliste.</p>
+    </div>
+  </section>
+
+  <!-- SECTION C -->
+  <section class="section" id="vic">
+    <div class="section-label">Section C</div>
+    <h2 class="section-title">Lire un Rapport Annuel en 45 Minutes</h2>
+    <div class="section-intro">Un rapport annuel peut faire entre 100 et 400 pages. Le lire de la première à la dernière page serait non seulement chronophage, mais contre-productif : la plupart des pages sont des formules juridiques standardisées. La compétence clé est de savoir dans quel ordre lire, et quels passages révèlent les informations que le management préférerait noyer dans la masse.</div>
+
+    <div class="sub">
+      <h3 class="sub-title">L'ordre de lecture — les 5 étapes</h3>
+      <ul class="styled-list">
+        <li><strong>Étape 1 — La lettre aux actionnaires :</strong> premier filtre sur le ton et l'honnêteté. Le management peut-il reconnaître ses erreurs, ou se contente-t-il de célébrer les succès ? Le ton révèle le caractère du management — et le caractère du management est l'un des facteurs les plus importants dans la création ou la destruction de valeur.</li>
+        <li><strong>Étape 2 — Le MD&amp;A (Management Discussion &amp; Analysis) :</strong> le management commente lui-même ses résultats financiers. Réglementairement obligé d'y mentionner les tendances et risques significatifs. Comprendre la logique économique du business, les leviers de croissance et les pressions concurrentielles à venir.</li>
+        <li><strong>Étape 3 — Les notes de bas de page :</strong> la section la moins lue — et la plus révélatrice. Elles contiennent les engagements hors bilan, les litiges en cours, les hypothèses comptables et les risques que la société est légalement obligée de divulguer. Chercher en particulier : les provisions pour litiges, les garanties accordées, les dettes conditionnelles et les changements de méthodes comptables.</li>
+        <li><strong>Étape 4 — Les rémunérations du management :</strong> la part variable est-elle liée à des indicateurs réels de création de valeur (FCF, ROCE, TSR) ou à des indicateurs manipulables (BPA ajusté, EBITDA recalculé) ? Le management possède-t-il des actions de la société ? Vend-il massivement ?</li>
+        <li><strong>Étape 5 — La comparaison YoY :</strong> comparer avec le rapport de l'année précédente. Quelles métriques étaient mises en avant l'année dernière et ont disparu cette année ? Quelle formulation a changé dans la description des risques ? La disparition d'une information est souvent plus révélatrice que sa présence.</li>
+      </ul>
+
+      <div class="callout red">
+        <strong>Red Flags linguistiques dans un rapport annuel</strong><br><br>
+        Passage de la voix active à la passive : "nous avons décidé" → "il a été décidé que" (dilution de responsabilité) · Disparition d'une métrique clé mise en avant l'année précédente (souvent parce qu'elle s'est dégradée) · Multiplication des qualificatifs : "léger", "temporaire", "exceptionnel", "ponctuel" (le management normalise un problème) · Section risques qui s'allonge significativement · Changement de la définition d'une métrique non-GAAP d'une année à l'autre (manipulation de la perception)
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Cas pratique — Apple 10-K : ce que les chiffres ne disent pas</h3>
+      <p>Apple est l'une des sociétés les plus analysées au monde. Pourtant, une lecture attentive de ses rapports annuels successifs révèle des signaux que la couverture média tend à lisser ou ignorer.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Étape</th><th>Ce qu'on observe dans le 10-K Apple</th><th>Signal</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Lettre Tim Cook</strong></td><td>Ton constamment positif. Depuis 2020 : montée du mot "Services" dans chaque ouverture.</td><td>Pivot stratégique signalé bien avant les chiffres</td></tr>
+            <tr><td><strong>MD&amp;A</strong></td><td>Ralentissement iPhone présenté comme "transition de cycle". Croissance Services (+14% CAGR) mise en avant. Mention discrète de la dépendance géographique (Chine = 19% du CA).</td><td>Le management sait que l'iPhone est mature — les Services sont la thèse de croissance</td></tr>
+            <tr><td><strong>Notes de bas de page</strong></td><td>Risques géopolitiques Chine enfouis à la page 22 de la section Risk Factor. Formulation prudente mais substantielle : dépendance supply chains, tensions réglementaires. Peu cité en conférence.</td><td>Le risque Chine est matérialisé mais sous-communiqué en public</td></tr>
+            <tr><td><strong>Rémunérations</strong></td><td>Tim Cook : rémunération 2022 de 99M$ dont 82M$ en actions liées à la performance TSR. Fort alignement actionnaire.</td><td>Alignement correct sur le TSR</td></tr>
+            <tr><td><strong>Comparaison YoY</strong></td><td>Le mot "innovation" : 23 fois dans le 10-K 2019, 14 fois en 2021, 9 fois en 2023. Le mot "Services" passe de 41 mentions en 2019 à 87 en 2023.</td><td>Le discours confirme le pivot — Apple ne se positionne plus comme pure innovateur hardware</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout blue">Le pivot d'Apple vers un modèle de revenus récurrents (Services, abonnements, Apple Care, Apple Pay) était lisible dans les rapports annuels 3 à 4 ans avant que le consensus des analystes ne l'intègre pleinement dans ses modèles de valorisation.</div>
+    </div>
+  </section>
+
+  <!-- SECTION D -->
+  <section class="section" id="vid">
+    <div class="section-label">Section D</div>
+    <h2 class="section-title">Construire son Système de Veille</h2>
+    <div class="section-intro">Un système de veille efficace n'est pas une liste de sites à consulter chaque matin. C'est une architecture organisée qui filtre l'information en entrée, la catégorise selon sa pertinence pour les thèses actives, et la transforme en décisions documentées.</div>
+
+    <div class="module-figure">
+<svg width="100%" viewBox="0 0 680 340" style="display:block">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+
+<!-- 4 layers top to bottom -->
+<!-- Layer 1: Sources -->
+<rect x="28" y="24" width="624" height="56" rx="8" fill="#E6F1FB" stroke="#185FA5" stroke-width="0.5"/>
+<text class="th" x="120" y="48" fill="#0C447C">Couche 1 — Sources</text>
+<text class="ts" x="120" y="66" fill="#185FA5">Primaires : SEC · EIA · Fed · BIS · USDA · LME</text>
+<text class="ts" x="400" y="48" fill="#185FA5">Secondaires : FT · Bloomberg · Seeking Alpha</text>
+<text class="ts" x="400" y="66" fill="#185FA5" opacity=".7">Flux RSS via Feedly · Alertes email EDGAR</text>
+
+<!-- Arrow down -->
+<line x1="340" y1="80" x2="340" y2="104" stroke="var(--t)" stroke-width="1.5" opacity=".3" marker-end="url(#arrow)"/>
+
+<!-- Layer 2: Filtre -->
+<rect x="28" y="108" width="624" height="56" rx="8" fill="#FAEEDA" stroke="#854F0B" stroke-width="1"/>
+<text class="th" x="340" y="132" text-anchor="middle" fill="#412402">Couche 2 — Filtre central (compétence clé)</text>
+<text class="ts" x="340" y="150" text-anchor="middle" fill="#633806">Signal ou bruit ? · Info déjà pricée ? · Impact sur valeur fondamentale ou timing du catalyseur ?</text>
+
+<!-- Arrow down -->
+<line x1="340" y1="164" x2="340" y2="188" stroke="var(--t)" stroke-width="1.5" opacity=".3" marker-end="url(#arrow)"/>
+
+<!-- Layer 3: Veille de fond vs déclencheur -->
+<rect x="28" y="192" width="300" height="72" rx="8" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.5"/>
+<text class="th" x="178" y="216" text-anchor="middle" fill="#26215C">Veille de fond</text>
+<text class="ts" x="178" y="234" text-anchor="middle" fill="#3C3489">Connaissance sectorielle profonde</text>
+<text class="ts" x="178" y="250" text-anchor="middle" fill="#534AB7">Rythme hebdomadaire · 1h/secteur</text>
+
+<rect x="352" y="192" width="300" height="72" rx="8" fill="#EAF3DE" stroke="#3B6D11" stroke-width="0.5"/>
+<text class="th" x="502" y="216" text-anchor="middle" fill="#173404">Veille déclencheur</text>
+<text class="ts" x="502" y="234" text-anchor="middle" fill="#27500A">Catalyseurs des thèses actives</text>
+<text class="ts" x="502" y="250" text-anchor="middle" fill="#3B6D11">Réactive · Alertes ciblées</text>
+
+<!-- Arrow down -->
+<line x1="340" y1="264" x2="340" y2="288" stroke="var(--t)" stroke-width="1.5" opacity=".3" marker-end="url(#arrow)"/>
+
+<!-- Layer 4: Journal de thèse -->
+<rect x="28" y="292" width="624" height="36" rx="8" fill="#E1F5EE" stroke="#1D9E75" stroke-width="0.5"/>
+<text class="th" x="340" y="308" text-anchor="middle" fill="#04342C">Couche 4 — Journal de thèse</text>
+<text class="ts" x="340" y="322" text-anchor="middle" fill="#085041">Documenter : date · événement · impact conviction · décision prise</text>
+
+</svg>
+<p class="fig-caption">Fig. 2 — Architecture d'un système de veille en 4 couches. Le filtre central est la compétence la plus importante : distinguer ce qui est actionnable de ce qui est du bruit.</p>
+</div>
+
+    <div class="sub">
+      <h3 class="sub-title">Veille de fond vs veille de déclencheur</h3>
+      <p>La <strong>veille de fond</strong> consiste à construire une connaissance sectorielle profonde sur la durée. Pour une thèse sur le secteur minier, cela signifie lire régulièrement les rapports de production des majors, les études de l'ICSG (cuivre) ou du WNA (uranium). Ce travail se fait à un rythme hebdomadaire, environ une heure par semaine par secteur suivi.</p>
+      <p>La <strong>veille de déclencheur</strong> est plus tactique : elle surveille les catalyseurs spécifiques identifiés pour une thèse active. Si la thèse repose sur un déficit de stocks de pétrole devant apparaître dans les chiffres EIA, on met une alerte sur les publications hebdomadaires de l'EIA. Cette veille est ciblée, réactive, et directement liée à la gestion de la position.</p>
+      <div class="notion">
+        <div class="notion-title">Outils recommandés par cas d'usage</div>
+        <ul>
+          <li>Suivi filings en temps réel → <strong>SEC EDGAR email alerts</strong> (gratuit) : sec.gov/cgi-bin/browse-edgar</li>
+          <li>Calendrier macro hebdomadaire → <strong>TradingEconomics.com</strong> + <strong>ForexFactory.com</strong></li>
+          <li>Screener actions + heatmap sectorielle → <strong>Finviz.com</strong> (gratuit)</li>
+          <li>Séries historiques macro US → <strong>FRED St. Louis</strong> (gratuit, 800 000+ séries)</li>
+          <li>Agrégateur flux RSS → <strong>Feedly</strong> (gratuit jusqu'à 100 sources)</li>
+          <li>Visualisation COT → <strong>Barchart.com/futures/commitment-of-traders</strong> (gratuit)</li>
+          <li>Suivi hedge funds (13-F) → <strong>WhaleWisdom.com</strong> ou <strong>Dataroma.com</strong> (gratuits)</li>
+          <li>Positionnement insiders (Form 4) → <strong>OpenInsider.com</strong> (gratuit)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Le journal de thèse</h3>
+      <p>Le journal de thèse est l'outil le plus sous-estimé de la gestion d'un portefeuille. C'est un document dans lequel on consigne, pour chaque thèse active, la date, l'événement observé, l'impact sur la conviction, et la décision prise ou non.</p>
+      <p>Sa première fonction est <strong>opérationnelle</strong> : maintenir une cohérence entre la thèse initiale et les décisions prises au fil du temps. Sa deuxième fonction est <strong>pédagogique</strong> : en relisant ses journaux de thèses passées, on identifie ses patterns d'erreur — vend-on systématiquement trop tôt ? Réagit-on trop aux nouvelles à court terme ?</p>
+      <div class="notion">
+        <div class="notion-title">Structure d'une entrée de journal de thèse</div>
+        <p><strong>Date :</strong> 14 mars 2024 · <strong>Thèse :</strong> Uranium / Cameco (CCJ)</p>
+        <p><strong>Événement :</strong> Signature d'un contrat de fourniture à long terme entre Cameco et un opérateur européen pour 10 ans</p>
+        <p><strong>Impact sur la thèse :</strong> Positif fort — confirme la demande institutionnelle à long terme, réduit le risque de baisse du spot</p>
+        <p><strong>Impact sur le prix :</strong> +3.4% sur Cameco en séance</p>
+        <p><strong>Décision :</strong> Maintien de la position. Pas d'ajout car la position est déjà au sizing maximum prévu (Module VIII)</p>
+        <p><strong>Note :</strong> Le marché commence à pricer la demande contractuelle — signale que la thèse entre dans sa phase de reconnaissance</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION E -->
+  <section class="section" id="vie">
+    <div class="section-label">Section E</div>
+    <h2 class="section-title">Les Données Alternatives</h2>
+    <div class="section-intro">Au-delà des sources primaires officielles, il existe un ensemble de données — souvent sous-exploitées par les investisseurs particuliers — qui donnent accès à des signaux que les grandes institutions utilisent pour construire leur avantage informationnel. Certaines de ces données sont entièrement gratuites. La difficulté n'est pas l'accès, c'est de savoir comment les lire.</div>
+
+    <div class="sub">
+      <h3 class="sub-title">Le COT Report — Commitment of Traders</h3>
+      <p>Le COT est un rapport publié chaque vendredi soir par la CFTC (cftc.gov). Il recense, par contrat futures, les positions agrégées de trois catégories de participants. C'est l'une des rares fenêtres publiques sur le positionnement réel des grandes mains du marché.</p>
+    </div>
+    <div class="module-figure">
+<svg width="100%" viewBox="0 0 680 380" style="display:block">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+
+<!-- Axes -->
+<line x1="52" y1="24" x2="52" y2="260" stroke="var(--t)" stroke-width="1" opacity=".25"/>
+<line x1="52" y1="260" x2="620" y2="260" stroke="var(--t)" stroke-width="1" opacity=".25"/>
+<line x1="52" y1="142" x2="620" y2="142" stroke="var(--t)" stroke-width="0.5" stroke-dasharray="4 3" opacity=".2"/>
+<text class="ts" x="36" y="146" text-anchor="middle" opacity=".4">0</text>
+<text class="ts" x="36" y="30" text-anchor="middle" opacity=".4">Net long</text>
+<text class="ts" x="36" y="254" text-anchor="middle" opacity=".4">Net short</text>
+
+<!-- X labels (weeks) -->
+<text class="ts" x="100" y="275" text-anchor="middle" opacity=".4">S1</text>
+<text class="ts" x="200" y="275" text-anchor="middle" opacity=".4">S5</text>
+<text class="ts" x="300" y="275" text-anchor="middle" opacity=".4">S10</text>
+<text class="ts" x="400" y="275" text-anchor="middle" opacity=".4">S15</text>
+<text class="ts" x="500" y="275" text-anchor="middle" opacity=".4">S20</text>
+<text class="ts" x="600" y="275" text-anchor="middle" opacity=".4">S25</text>
+
+<!-- Large Specs (green — smart money, trending) -->
+<path d="M 60 180 C 90 175, 120 160, 150 140 C 180 120, 210 105, 240 90 C 270 75, 300 65, 330 60
+  C 360 56, 390 60, 420 70 C 450 80, 480 95, 510 105 C 540 115, 570 120, 610 118"
+  fill="none" stroke="#1D9E75" stroke-width="2.5" stroke-linecap="round"/>
+
+<!-- Retail non-reportable (red — dumb money, contra) -->
+<path d="M 60 100 C 90 105, 120 115, 150 130 C 180 145, 210 160, 240 172 C 270 182, 300 188, 330 185
+  C 360 182, 390 175, 420 162 C 450 148, 480 138, 510 130 C 540 122, 570 118, 610 122"
+  fill="none" stroke="#E24B4A" stroke-width="2" stroke-linecap="round" stroke-dasharray="6 3"/>
+
+<!-- Commercials (grey — hedgers, contra at extremes) -->
+<path d="M 60 142 C 90 138, 120 130, 150 155 C 180 175, 210 190, 240 195 C 270 198, 300 190, 330 178
+  C 360 165, 390 155, 420 148 C 450 142, 480 138, 510 140 C 540 142, 570 145, 610 148"
+  fill="none" stroke="#888780" stroke-width="1.5" stroke-linecap="round" opacity=".7"/>
+
+<!-- Signal annotations -->
+<circle cx="330" cy="60" r="6" fill="#1D9E75" opacity=".8"/>
+<line x1="330" y1="54" x2="330" y2="34" stroke="#1D9E75" stroke-width="1" opacity=".5" marker-end="url(#arrow)"/>
+<text class="ts" x="340" y="32" fill="#085041">Large Specs</text>
+<text class="ts" x="340" y="47" fill="#085041">accum. longs → bullish</text>
+
+<circle cx="330" cy="185" r="6" fill="#E24B4A" opacity=".8"/>
+<line x1="330" y1="191" x2="330" y2="215" stroke="#E24B4A" stroke-width="1" opacity=".5" marker-end="url(#arrow)"/>
+<text class="ts" x="340" y="220" fill="#791F1F">Retail au max</text>
+<text class="ts" x="340" y="234" fill="#791F1F">de longs → signal contra</text>
+
+<!-- Legend -->
+<line x1="52" y1="308" x2="90" y2="308" stroke="#1D9E75" stroke-width="2.5" stroke-linecap="round"/>
+<text class="ts" x="98" y="312" fill="#085041">Large Non-Commercial Specs (smart money — directionnel)</text>
+<line x1="52" y1="330" x2="90" y2="330" stroke="#E24B4A" stroke-width="2" stroke-dasharray="6 3" stroke-linecap="round"/>
+<text class="ts" x="98" y="334" fill="#791F1F">Non-Reportable / Retail (contra-indicateur aux extrêmes)</text>
+<line x1="52" y1="352" x2="90" y2="352" stroke="#888780" stroke-width="1.5" stroke-linecap="round"/>
+<text class="ts" x="98" y="356" fill="#5F5E5A">Commercials / Hedgers (production cover — contra aux extrêmes)</text>
+
+</svg>
+<p class="fig-caption">Fig. 3 — COT Report : les trois catégories de participants et leur comportement typique. Les extrêmes historiques des Large Specs sont les signaux directionnels les plus fiables.</p>
+</div>
+
+    <div class="sub">
+      <h3 class="sub-title" style="margin-top:16px">Les 3 catégories et leur logique</h3>
+      <ul class="styled-list">
+        <li><strong>Commercials</strong> — Les acteurs du marché physique (producteurs de pétrole, raffineurs, mines). Ils utilisent les futures pour couvrir leur risque de production — ce ne sont pas des spéculateurs directionnels. Leur positionnement est contra-indicateur par nature. Quand les Commercials sont à un record historique de short, les prix sont élevés et les producteurs couvrent massivement — souvent un signal de sommet de cycle.</li>
+        <li><strong>Large Non-Commercial Speculators</strong> — Les hedge funds, CTA et managed futures. Ce sont eux qui expriment des vues directionnelles. Ils suivent et amplifient les tendances. C'est leur direction qu'on veut identifier et suivre. Quand les Large Specs accumulent des longs de façon progressive sur plusieurs semaines, c'est un signal constructif.</li>
+        <li><strong>Non-Reportable Positions</strong> — En pratique, le retail. Historiquement, ce groupe se positionne de façon maximale exactement aux mauvais moments : au sommet des marchés haussiers (record de longs) et aux creux des marchés baissiers (record de shorts). C'est le signal contra-indicateur le plus fiable du COT.</li>
+      </ul>
+
+      <div class="signal-box">
+        <div class="signal-title green">Signal haussier</div>
+        <div class="signal-row"><span class="signal-tag tag-green">↑</span>Large Specs accumulent des longs progressivement (trend à la hausse du net positioning)</div>
+        <div class="signal-row"><span class="signal-tag tag-green">↑</span>Retail (non-reportables) est à un record de shorts ou en cours de capitulation</div>
+        <div class="signal-row"><span class="signal-tag tag-green">↑</span>Commercials commencent à réduire leur couverture short (prix encore bas)</div>
+        <div style="margin-top:16px" class="signal-title red">Signal baissier</div>
+        <div class="signal-row"><span class="signal-tag tag-red">↓</span>Les Large Specs réduisent leurs longs ou basculent short de façon significative</div>
+        <div class="signal-row"><span class="signal-tag tag-red">↓</span>Retail est à un record de longs (ils ont suivi le mouvement en retard)</div>
+        <div class="signal-row"><span class="signal-tag tag-red">↓</span>Commercials sont à un record historique de shorts (ils couvrent massivement à prix élevé)</div>
+        <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border);font-size:13px;color:var(--text-2)"><strong>Divergence haussière (signal fort) :</strong> le prix baisse mais les Large Specs continuent d'accumuler des longs → le smart money ne croit pas à la baisse</div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Outil COT</th><th>Spécificité</th><th>URL</th><th>Gratuit ?</th></tr></thead>
+          <tbody>
+            <tr><td><strong>CFTC direct</strong></td><td>Données brutes officielles CSV</td><td>cftc.gov</td><td>Oui</td></tr>
+            <tr><td><strong>Barchart</strong></td><td>Visualisation graphique par actif</td><td>barchart.com/futures/commitment-of-traders</td><td>Oui</td></tr>
+            <tr><td><strong>Cotbase</strong></td><td>Historiques + comparaisons inter-actifs</td><td>cotbase.com</td><td>Oui (base)</td></tr>
+            <tr><td><strong>Tradingster</strong></td><td>COT indexé 0–100 — extrêmes clairs</td><td>tradingster.com</td><td>Oui</td></tr>
+            <tr><td><strong>Timingcharts</strong></td><td>Superposition COT + prix sur longue période</td><td>timingcharts.com</td><td>Oui</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Autres données alternatives accessibles</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Donnée</th><th>Source</th><th>Usage</th><th>Accès</th></tr></thead>
+          <tbody>
+            <tr><td><strong>13-F Filings</strong></td><td>SEC (sec.gov)</td><td>Positions des hedge funds — 45j de décalage mais utile structurellement</td><td>Gratuit</td></tr>
+            <tr><td><strong>Form 4 (Insiders)</strong></td><td>OpenInsider.com</td><td>Achats/ventes des dirigeants en temps réel — signal d'alignement</td><td>Gratuit</td></tr>
+            <tr><td><strong>AIS Tracking</strong></td><td>MarineTraffic.com</td><td>Flux de tankers et vraquiers — proxy des échanges de matières premières</td><td>Gratuit (base)</td></tr>
+            <tr><td><strong>Baltic Dry Index</strong></td><td>Investing.com</td><td>Proxy du commerce maritime mondial de vrac sec</td><td>Gratuit</td></tr>
+            <tr><td><strong>Données satellites</strong></td><td>NASA Earthdata / Sentinel</td><td>Activité industrielle, niveaux réservoirs, déforestation</td><td>Gratuit</td></tr>
+            <tr><td><strong>Données brevets</strong></td><td>patents.google.com</td><td>Indicateur avancé d'innovation sectorielle</td><td>Gratuit</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION F -->
+  <section class="section" id="vif">
+    <div class="section-label">Section F</div>
+    <h2 class="section-title">Biais Cognitifs dans le Traitement de l'Information</h2>
+    <div class="section-intro">Avoir accès aux meilleures sources et aux meilleurs outils ne suffit pas si le cerveau qui traite l'information est biaisé. Les biais cognitifs sont des patterns systématiques d'erreur de raisonnement — ils sont universels et affectent les professionnels comme les particuliers. La différence entre un investisseur discipliné et un autre, c'est souvent la capacité à reconnaître ses propres biais et à mettre en place des protocoles pour les contrebalancer.</div>
+
+    <div class="sub">
+      <h3 class="sub-title">Les 5 biais clés de la veille</h3>
+      <table class="bias-table">
+        <thead><tr><th>Biais</th><th>Définition</th><th>Manifestation dans la veille</th><th>Contremesure</th></tr></thead>
+        <tbody>
+          <tr><td>Confirmation</td><td>On cherche les infos qui confirment ce qu'on croit déjà</td><td>Lire uniquement les analyses haussières sur un actif déjà long</td><td>Chercher activement les meilleurs arguments bears</td></tr>
+          <tr><td>Disponibilité</td><td>On surpondère les informations récentes ou émotionnellement saillantes</td><td>Réagir à un tweet ou un titre de presse sans vérifier les fondamentaux</td><td>Remonter systématiquement à la source primaire</td></tr>
+          <tr><td>Ancrage</td><td>Le premier chiffre vu devient la référence implicite</td><td>Estimer qu'une action a "beaucoup baissé" parce qu'on a vu le sommet</td><td>Recalculer la valeur indépendamment du prix historique</td></tr>
+          <tr><td>Récence</td><td>Les dernières nouvelles paraissent plus importantes que le long terme</td><td>Abandonner une thèse fondamentale après 3 semaines de contre-performance</td><td>Relire le journal de thèse pour replacer le court terme dans le contexte</td></tr>
+          <tr><td>Narration</td><td>On préfère une histoire cohérente aux données contradictoires</td><td>Ignorer les red flags dans un rapport annuel parce que "la thèse est belle"</td><td>Lire le rapport de façon adversariale — chercher ce qui détruit la thèse</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">La lecture adversariale</h3>
+      <p>La lecture adversariale est un protocole simple mais puissant : avant de valider une thèse, chercher activement les meilleurs arguments contre elle. Si on est bullish sur le cuivre, lire les analyses baissières les plus sérieuses. Si on pense qu'une société est sous-évaluée, chercher pourquoi des professionnels compétents pourraient la trouver à juste prix ou surévaluée.</p>
+      <p>L'objectif n'est pas de se convaincre d'avoir tort — c'est de comprendre ce que le camp adverse voit, pour évaluer si ces arguments sont fondés. Une thèse qui résiste à une lecture adversariale rigoureuse est une thèse de conviction forte. Une thèse qui s'effondre au premier argument sérieux adverse n'était pas mûre.</p>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Le pré-mortem</h3>
+      <p>Le pré-mortem est une technique empruntée à la gestion de projet, adaptée à l'investissement par Howard Marks et Daniel Kahneman. Le principe : imaginez que nous sommes dans 12 mois et que la thèse a complètement échoué. Le prix est 40% plus bas que votre point d'entrée. Qu'est-ce qui s'est passé ?</p>
+      <p>Cet exercice force le cerveau à sortir du mode optimiste par défaut et à explorer concrètement les scénarios d'échec. Il est remarquablement efficace pour identifier les risques qu'on avait minimisés — parce qu'on les explore dans un cadre où l'échec est déjà assumé, pas craint.</p>
+      <div class="checklist">
+        <div class="checklist-title">Protocole complet avant d'intégrer une information dans une thèse</div>
+        <div class="check-item"><div class="check-num">1</div>D'où vient cette information ? Niveau primaire, secondaire ou tertiaire ?</div>
+        <div class="check-item"><div class="check-num">2</div>Cette information est-elle déjà pricée par le marché ?</div>
+        <div class="check-item"><div class="check-num">3</div>Est-ce que je voulais lire cette information (biais de confirmation possible) ?</div>
+        <div class="check-item"><div class="check-num">4</div>Quelle est la source adverse la plus sérieuse sur ce sujet ?</div>
+        <div class="check-item"><div class="check-num">5</div>Cette information change-t-elle mon estimation de valeur fondamentale ou seulement mon humeur ?</div>
+        <div class="check-item"><div class="check-num">6</div>Si je n'avais pas de position sur cet actif, est-ce que cette information m'inciterait quand même à agir ?</div>
+      </div>
+      <div class="callout yellow">Si les réponses aux questions 2, 3 et 5 sont défavorables, l'information est probablement du bruit.</div>
+    </div>
+  </section>
+
+  <!-- SYNTHESIS -->
+  <div class="synthesis">
+    <h2 class="synthesis-title">Résumé du Module VI</h2>
+    <p>L'avantage informationnel ne vient pas d'avoir accès à plus d'information — les sources primaires sont publiques et gratuites. Il vient de les lire en premier, de les lire mieux, et d'en tirer des conclusions que le consensus ne tire pas encore.</p>
+    <div class="summary-grid">
+      <div class="summary-card"><div class="summary-section">VI.a</div><div class="summary-concept">Primaire &gt; Secondaire &gt; Tertiaire</div><div class="summary-tool">Pyramide des 3 niveaux · edge informationnel · droit de diverger</div></div>
+      <div class="summary-card"><div class="summary-section">VI.b</div><div class="summary-concept">Connaître les sources primaires par classe d'actif</div><div class="summary-tool">SEC EDGAR · EIA · FRED · Finviz · TradingEconomics · BIS</div></div>
+      <div class="summary-card"><div class="summary-section">VI.c</div><div class="summary-concept">Lire dans le bon ordre — notes et YoY sont les plus révélatrices</div><div class="summary-tool">Méthode 5 étapes · Red flags linguistiques · Cas Apple</div></div>
+      <div class="summary-card"><div class="summary-section">VI.d</div><div class="summary-concept">Veille de fond vs déclencheur · Journal de thèse</div><div class="summary-tool">Feedly · EDGAR alerts · Journal structuré par thèse</div></div>
+      <div class="summary-card"><div class="summary-section">VI.e</div><div class="summary-concept">COT : avec les Large Specs, contre le Retail</div><div class="summary-tool">COT Report · 13-F · Form 4 · Barchart · Cotbase</div></div>
+      <div class="summary-card"><div class="summary-section">VI.f</div><div class="summary-concept">Confirmation · disponibilité · ancrage · récence · narration</div><div class="summary-tool">Lecture adversariale · pré-mortem · protocole 6 questions</div></div>
+    </div>
+
+    <div class="module-figure">
+<svg width="100%" viewBox="0 0 680 320" style="display:block">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+
+<!-- Header -->
+<rect x="28" y="16" width="624" height="32" rx="6" fill="#0C447C"/>
+<text class="th" x="340" y="36" text-anchor="middle" fill="#E6F1FB">Calendrier des publications macro-clés — à intégrer dans sa veille hebdomadaire</text>
+
+<!-- Column headers -->
+<rect x="28" y="52" width="120" height="28" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="0.5"/>
+<text class="ts" x="88" y="70" text-anchor="middle" fill="#0C447C">Fréquence</text>
+<rect x="148" y="52" width="180" height="28" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="0.5"/>
+<text class="ts" x="238" y="70" text-anchor="middle" fill="#0C447C">Publication</text>
+<rect x="328" y="52" width="140" height="28" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="0.5"/>
+<text class="ts" x="398" y="70" text-anchor="middle" fill="#0C447C">Actifs impactés</text>
+<rect x="468" y="52" width="184" height="28" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="0.5"/>
+<text class="ts" x="560" y="70" text-anchor="middle" fill="#0C447C">Source</text>
+
+<!-- Rows -->
+<rect x="28" y="80" width="120" height="30" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5"/>
+<text class="ts" x="88" y="99" text-anchor="middle" fill="#085041">Hebdo · Mercredi</text>
+<rect x="148" y="80" width="180" height="30" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5"/>
+<text class="ts" x="238" y="99" text-anchor="middle">EIA Stocks pétrole/gaz</text>
+<rect x="328" y="80" width="140" height="30" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5"/>
+<text class="ts" x="398" y="99" text-anchor="middle">WTI · XOM · CAD</text>
+<rect x="468" y="80" width="184" height="30" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5"/>
+<text class="ts" x="560" y="99" text-anchor="middle">eia.gov · 16h30 Paris</text>
+
+<rect x="28" y="110" width="120" height="30" fill="#f8f7f4" stroke="var(--b)" stroke-width="0.5"/>
+<text class="ts" x="88" y="129" text-anchor="middle" fill="#085041">Hebdo · Vendredi</text>
+<rect x="148" y="110" width="180" height="30" fill="#f8f7f4" stroke="var(--b)" stroke-width="0.5"/>
+<text class="ts" x="238" y="129" text-anchor="middle">COT Report CFTC</text>
+<rect x="328" y="110" width="140" height="30" fill="#f8f7f4" stroke="var(--b)" stroke-width="0.5"/>
+<text class="ts" x="398" y="129" text-anchor="middle">Tous futures</text>
+<rect x="468" y="110" width="184" height="30" fill="#f8f7f4" stroke="var(--b)" stroke-width="0.5"/>
+<text class="ts" x="560" y="129" text-anchor="middle">cftc.gov · Barchart</text>
+
+<rect x="28" y="140" width="120" height="30" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5"/>
+<text class="ts" x="88" y="159" text-anchor="middle" fill="#633806">Mensuel · vers le 8</text>
+<rect x="148" y="140" width="180" height="30" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5"/>
+<text class="ts" x="238" y="159" text-anchor="middle">NFP (emploi US)</text>
+<rect x="328" y="140" width="140" height="30" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5"/>
+<text class="ts" x="398" y="159" text-anchor="middle">USD · actions US · or</text>
+<rect x="468" y="140" width="184" height="30" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5"/>
+<text class="ts" x="560" y="159" text-anchor="middle">bls.gov · 14h30 Paris</text>
+
+<rect x="28" y="170" width="120" height="30" fill="#f8f7f4" stroke="var(--b)" stroke-width="0.5"/>
+<text class="ts" x="88" y="189" text-anchor="middle" fill="#633806">Mensuel · vers le 12</text>
+<rect x="148" y="170" width="180" height="30" fill="#f8f7f4" stroke="var(--b)" stroke-width="0.5"/>
+<text class="ts" x="238" y="189" text-anchor="middle">CPI (inflation US)</text>
+<rect x="328" y="170" width="140" height="30" fill="#f8f7f4" stroke="var(--b)" stroke-width="0.5"/>
+<text class="ts" x="398" y="189" text-anchor="middle">Obligations · USD · or</text>
+<rect x="468" y="170" width="184" height="30" fill="#f8f7f4" stroke="var(--b)" stroke-width="0.5"/>
+<text class="ts" x="560" y="189" text-anchor="middle">bls.gov · 14h30 Paris</text>
+
+<rect x="28" y="200" width="120" height="30" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5"/>
+<text class="ts" x="88" y="219" text-anchor="middle" fill="#633806">Mensuel · vers le 10</text>
+<rect x="148" y="200" width="180" height="30" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5"/>
+<text class="ts" x="238" y="219" text-anchor="middle">USDA WASDE (agri)</text>
+<rect x="328" y="200" width="140" height="30" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5"/>
+<text class="ts" x="398" y="219" text-anchor="middle">Blé · Maïs · Soja</text>
+<rect x="468" y="200" width="184" height="30" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5"/>
+<text class="ts" x="560" y="219" text-anchor="middle">usda.gov · 18h Paris</text>
+
+<rect x="28" y="230" width="120" height="30" fill="#f8f7f4" stroke="var(--b)" stroke-width="0.5"/>
+<text class="ts" x="88" y="249" text-anchor="middle" fill="#3C3489">8×/an · après réunion</text>
+<rect x="148" y="230" width="180" height="30" fill="#f8f7f4" stroke="var(--b)" stroke-width="0.5"/>
+<text class="ts" x="238" y="249" text-anchor="middle">Minutes FOMC / BCE</text>
+<rect x="328" y="230" width="140" height="30" fill="#f8f7f4" stroke="var(--b)" stroke-width="0.5"/>
+<text class="ts" x="398" y="249" text-anchor="middle">USD · EUR · taux</text>
+<rect x="468" y="230" width="184" height="30" fill="#f8f7f4" stroke="var(--b)" stroke-width="0.5"/>
+<text class="ts" x="560" y="249" text-anchor="middle">federalreserve.gov</text>
+
+<rect x="28" y="260" width="120" height="30" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5"/>
+<text class="ts" x="88" y="279" text-anchor="middle" fill="#3C3489">Trimestriel</text>
+<rect x="148" y="260" width="180" height="30" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5"/>
+<text class="ts" x="238" y="279" text-anchor="middle">BIS Quarterly Review</text>
+<rect x="328" y="260" width="140" height="30" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5"/>
+<text class="ts" x="398" y="279" text-anchor="middle">Forex · souverains</text>
+<rect x="468" y="260" width="184" height="30" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5"/>
+<text class="ts" x="560" y="279" text-anchor="middle">bis.org</text>
+
+<rect x="28" y="290" width="624" height="24" rx="0 0 6 6" fill="#f0efe8" stroke="var(--b)" stroke-width="0.5" opacity=".7"/>
+<text class="ts" x="340" y="306" text-anchor="middle" opacity=".6">Intégrer ces dates dans un calendrier partagé — les surprises vs consensus ont plus d'impact que les chiffres absolus</text>
+
+</svg>
+<p class="fig-caption">Fig. 4 — Tableau de référence des publications macro-clés. À mémoriser et intégrer dans son calendrier hebdomadaire de veille.</p>
+</div>
+
+    <div class="habits">
+      <div class="habits-title">Les 5 habitudes à ancrer après ce module</div>
+      <div class="habit-row"><span class="habit-num">1</span>Classer chaque info en niveau 1, 2 ou 3 — ignorer le niveau 3 par défaut</div>
+      <div class="habit-row"><span class="habit-num">2</span>Consulter le COT Report chaque vendredi sur les actifs en thèse active</div>
+      <div class="habit-row"><span class="habit-num">3</span>Lire les rapports annuels dans l'ordre : lettre → MD&A → notes → rémunérations → YoY</div>
+      <div class="habit-row"><span class="habit-num">4</span>Tenir le journal de thèse après chaque événement sur une position ouverte</div>
+      <div class="habit-row"><span class="habit-num">5</span>Protocole 6 questions + pré-mortem avant chaque entrée en position</div>
+    </div>
+
+    <div class="next-module">Module suivant — <strong>Module VII : Prise de Position.</strong> On passe de la thèse à l'ordre de marché — timing d'entrée, sizing, et confirmation quantitative.</div>
   </div>
 
-  
-
-  <div class="mod-nav">
-    <button class="mod-nav-btn" onclick="navigate(4)" >← Précédent</button>
-    <span class="mod-nav-label">6 / 12</span>
-    <button class="mod-nav-btn" onclick="navigate(6, true)" >Suivant →</button>
+  <div class="module-nav">
+    <button class="nav-btn" onclick="window.parent.postMessage({type:'navigate',index:4,markDone:false},'*')">← Module 05</button>
+    <button class="nav-btn primary" onclick="window.parent.postMessage({type:'navigate',index:6,markDone:true},'*')">Module 07 →</button>
   </div>
 
 </div>
-
-<!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox">
-  <div class="lightbox-backdrop" id="lightboxBackdrop"></div>
-  <div class="lightbox-img-wrap">
-    <button class="lightbox-close" id="lightboxClose">✕</button>
-    <img id="lightboxImg" src="" alt=""/>
-    <div class="lightbox-caption" id="lightboxCaption"></div>
-  </div>
-</div>
-
-<script>
-function navigate(index, markDone) {
-  window.parent.postMessage({ type: 'navigate', index: index, markDone: !!markDone }, '*');
-}
-function openLightbox(src, caption) {
-  document.getElementById('lightboxImg').src = src;
-  document.getElementById('lightboxCaption').textContent = caption;
-  document.getElementById('lightbox').classList.add('open');
-}
-function closeLightbox() {
-  document.getElementById('lightbox').classList.remove('open');
-}
-document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
-document.getElementById('lightboxBackdrop').addEventListener('click', closeLightbox);
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
-document.addEventListener('click', e => {
-  const img = e.target.closest('.mod-figure img');
-  if (!img) return;
-  const caption = img.closest('.mod-figure')?.querySelector('figcaption')?.textContent || '';
-  openLightbox(img.src, caption);
-});
-</script>
 </body>
 </html>
