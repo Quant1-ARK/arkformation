@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARK — Module 09 · Management de Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f5f5;
+    --border: rgba(19,18,18,.41);
+    --border-active: rgba(255,255,255,.14);
+    --text-1: #000;
+    --text-2: #59595e;
+    --text-3: #48484c;
+    --accent: #0071e3;
+    --accent-glow: rgba(0,113,227,.18);
+    --accent-soft: rgba(0,113,227,.12);
+    --gold: #c9a84c;
+    --gold-soft: rgba(201,168,76,.1);
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text-1);font-family:'DM Sans',-apple-system,sans-serif;font-size:15px;-webkit-font-smoothing:antialiased;padding:48px clamp(24px,5vw,80px) 80px;overflow-y:auto;min-height:100vh}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+  .page{animation:fadeIn .3s ease}
+
+  /* VIDEO */
+  .mod-video{margin-bottom:36px;border-radius:16px;overflow:hidden;aspect-ratio:16/9;background:#1a1a1a;display:none}
+  .mod-video.has-video{display:block}
+  .mod-video iframe{width:100%;height:100%;border:none}
+
+  /* MODULE HEADER */
+  .mod-number{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .mod-number::before{content:'';display:inline-block;width:20px;height:1px;background:var(--accent)}
+  .mod-title{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(28px,4vw,44px);font-weight:400;line-height:1.15;letter-spacing:-.01em;color:var(--text-1);margin-bottom:16px}
+  .mod-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:28px}
+  .mod-tag{font-size:11px;font-weight:500;color:var(--accent);background:var(--accent-soft);padding:3px 10px;border-radius:980px;border:1px solid rgba(0,113,227,.15)}
+  .mod-divider{height:1px;background:var(--border);margin:28px 0}
+  .mod-intro{font-size:17px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:36px;font-style:italic;border-left:2px solid var(--accent);padding-left:20px}
+  .mod-section-title{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:16px}
+
+  /* OBJECTIVES */
+  .mod-objectives{list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:36px}
+  .mod-objectives li{display:flex;align-items:flex-start;gap:12px;font-size:14px;color:var(--text-2);line-height:1.6}
+  .obj-check{width:18px;height:18px;border-radius:50%;border:1px solid var(--border-active);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--text-3)}
+
+  /* CONCEPTS */
+  .mod-concepts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:36px}
+  .concept-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px;transition:border-color .2s,background .2s}
+  .concept-card:hover{border-color:var(--border-active);background:var(--bg)}
+  .concept-icon{font-size:20px;margin-bottom:8px}
+  .concept-name{font-size:13px;font-weight:600;color:var(--text-1);margin-bottom:4px}
+  .concept-desc{font-size:12px;color:var(--text-2);line-height:1.5;font-weight:300}
+
+  /* QUOTE */
+  .mod-quote{background:var(--gold-soft);border:1px solid rgba(201,168,76,.15);border-radius:16px;padding:24px 28px;margin-bottom:36px}
+  .mod-quote-text{font-family:'DM Serif Display',Georgia,serif;font-size:18px;line-height:1.6;color:var(--gold);margin-bottom:8px;font-style:italic}
+  .mod-quote-source{font-size:11px;color:var(--text-3);letter-spacing:.05em;text-transform:uppercase}
+
+  /* FIGURES & TABLES */
+  .mod-figure{margin:28px 0;text-align:center}
+  .mod-figure img{max-width:100%;height:auto;border-radius:12px;border:1px solid var(--border);cursor:zoom-in;transition:opacity .2s,transform .2s}
+  .mod-figure img:hover{opacity:.9;transform:scale(1.01)}
+  .mod-figure figcaption{margin-top:10px;font-size:12px;color:var(--text-3);font-style:italic;line-height:1.5}
+
+  /* LIGHTBOX */
+  .lightbox{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:32px;opacity:0;pointer-events:none;transition:opacity .25s ease}
+  .lightbox.open{opacity:1;pointer-events:all}
+  .lightbox-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(4px)}
+  .lightbox-img-wrap{position:relative;z-index:1;max-width:90vw;max-height:88vh;display:flex;flex-direction:column;align-items:center;gap:14px;transform:scale(.94);transition:transform .25s ease}
+  .lightbox.open .lightbox-img-wrap{transform:scale(1)}
+  .lightbox-img-wrap img{max-width:100%;max-height:80vh;height:auto;border-radius:14px;box-shadow:0 32px 80px rgba(0,0,0,.5);display:block}
+  .lightbox-caption{font-size:13px;color:rgba(255,255,255,.65);font-style:italic;text-align:center;max-width:640px;line-height:1.5}
+  .lightbox-close{position:absolute;top:-14px;right:-14px;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s;line-height:1}
+  .lightbox-close:hover{background:rgba(255,255,255,.25)}
+
+  .mod-table-wrap{overflow-x:auto;margin:24px 0;border-radius:12px;border:1px solid var(--border)}
+  .mod-table{width:100%;border-collapse:collapse;font-size:13px}
+  .mod-table th{background:var(--accent-soft);color:var(--accent);font-weight:600;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:10px 14px;text-align:left;border-bottom:1px solid var(--border)}
+  .mod-table td{padding:10px 14px;color:var(--text-2);border-bottom:1px solid var(--border);vertical-align:top;line-height:1.6;font-weight:300}
+  .mod-table tr:last-child td{border-bottom:none}
+  .mod-table td strong{color:var(--text-1);font-weight:600}
+
+  /* MODULE BODY */
+  .mod-body{margin-top:40px}
+  .mod-body h2{font-family:'DM Serif Display',Georgia,serif;font-size:22px;font-weight:400;color:var(--text-1);margin:44px 0 14px;padding-top:12px;border-top:1px solid var(--border)}
+  .mod-body h3{font-size:15px;font-weight:600;color:var(--text-1);margin:28px 0 10px}
+  .mod-body p{font-size:15px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:16px}
+  .mod-body ul,.mod-body ol{margin:0 0 20px;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+  .mod-body li{position:relative;padding-left:22px;font-size:14px;font-weight:300;color:var(--text-2);line-height:1.7;overflow-wrap:break-word}
+  .mod-body li::before{content:'—';color:var(--accent);font-size:13px;position:absolute;left:0;top:0;line-height:1.7}
+  .mod-body li strong,.mod-body strong{color:var(--text-1);font-weight:600}
+  .mod-body blockquote{border-left:2px solid var(--accent);padding:10px 0 10px 20px;margin:20px 0;font-style:italic;font-weight:300;color:var(--text-2);font-size:14px;line-height:1.7}
+  .formula-box,.warning-box,.summary-box{border-radius:12px;padding:16px 20px;margin:20px 0;font-size:14px;line-height:1.7}
+  .formula-box{background:var(--accent-soft);border:1px solid rgba(0,113,227,.15);font-weight:500;font-style:italic}
+  .warning-box{background:rgba(255,149,0,.08);border:1px solid rgba(255,149,0,.2);color:var(--text-2)}
+  .summary-box{background:var(--gold-soft);border:1px solid rgba(201,168,76,.15);font-style:italic;color:var(--text-2)}
+  .profile-block{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:20px;margin:16px 0}
+  .profile-block h3{margin-top:0}
+  .profile-meta{font-size:12px;color:var(--accent);font-style:italic;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+
+  /* NAV */
+  .mod-nav{display:flex;justify-content:space-between;align-items:center;margin-top:52px;padding-top:24px;border-top:1px solid var(--border);gap:12px}
+  .mod-nav-btn{display:flex;align-items:center;gap:8px;padding:10px 16px;border:1px solid var(--border);border-radius:10px;background:var(--bg);color:var(--text-2);cursor:pointer;font-size:13px;font-weight:500;transition:all .15s;font-family:inherit}
+  .mod-nav-btn:hover:not(:disabled){border-color:var(--border-active);color:var(--text-1)}
+  .mod-nav-btn:disabled{opacity:.3;cursor:default}
+  .mod-nav-label{font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em}
+
+  @media(max-width:768px){
+    body{padding:32px 20px 60px}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- VIDEO: remplacer la ligne ci-dessous par <div class="mod-video has-video"><iframe src="https://www.youtube.com/embed/VOTRE_ID" allowfullscreen></iframe></div> -->
+  <div class="mod-video"></div>
+
+  <div class="mod-number">Module 09</div>
+  <h1 class="mod-title">Management de Portfolio</h1>
+  <div class="mod-tags"><span class="mod-tag">Allocation</span><span class="mod-tag">Diversification</span><span class="mod-tag">Réévaluation</span></div>
+  <p class="mod-intro">Diversification sans dilution des convictions, allocation par thèse et horizon, suivi et réévaluation du portefeuille sans réagir au bruit.</p>
+
+  <div class="mod-section-title">Ce que tu vas apprendre</div>
+  <ul class="mod-objectives"><li><div class="obj-check">○</div><span>Construire un portefeuille diversifié sans diluer ses convictions</span></li><li><div class="obj-check">○</div><span>Allouer le capital en fonction du niveau de conviction et de l'horizon</span></li><li><div class="obj-check">○</div><span>Suivre et réévaluer les positions de façon disciplinée</span></li><li><div class="obj-check">○</div><span>Distinguer le bruit de marché des changements structurels</span></li></ul>
+
+  <div class="mod-divider"></div>
+
+  <div class="mod-section-title">Concepts clés</div>
+  <div class="mod-concepts-grid"><div class="concept-card"><div class="concept-icon">🗺️</div><div class="concept-name">Allocation d'actifs</div><div class="concept-desc">La répartition stratégique du capital entre classes d'actifs</div></div><div class="concept-card"><div class="concept-icon">📊</div><div class="concept-name">Rebalancing</div><div class="concept-desc">Rééquilibrer le portefeuille selon les évolutions du marché</div></div><div class="concept-card"><div class="concept-icon">🎲</div><div class="concept-name">Concentration vs. diversification</div><div class="concept-desc">Trouver l'équilibre entre conviction et protection</div></div><div class="concept-card"><div class="concept-icon">📓</div><div class="concept-name">Suivi du portefeuille</div><div class="concept-desc">Journal de positions, performance et apprentissages</div></div></div>
+
+  <div class="mod-quote">
+    <div class="mod-quote-text">"La diversification, c'est se protéger contre l'ignorance. Si tu sais ce que tu fais, concentre."</div>
+    <div class="mod-quote-source">— Warren Buffett</div>
+  </div>
+
+  
+
+  <div class="mod-nav">
+    <button class="mod-nav-btn" onclick="navigate(7)" >← Précédent</button>
+    <span class="mod-nav-label">9 / 12</span>
+    <button class="mod-nav-btn" onclick="navigate(9, true)" >Suivant →</button>
+  </div>
+
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <div class="lightbox-backdrop" id="lightboxBackdrop"></div>
+  <div class="lightbox-img-wrap">
+    <button class="lightbox-close" id="lightboxClose">✕</button>
+    <img id="lightboxImg" src="" alt=""/>
+    <div class="lightbox-caption" id="lightboxCaption"></div>
+  </div>
+</div>
+
+<script>
+function navigate(index, markDone) {
+  window.parent.postMessage({ type: 'navigate', index: index, markDone: !!markDone }, '*');
+}
+function openLightbox(src, caption) {
+  document.getElementById('lightboxImg').src = src;
+  document.getElementById('lightboxCaption').textContent = caption;
+  document.getElementById('lightbox').classList.add('open');
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+}
+document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+document.getElementById('lightboxBackdrop').addEventListener('click', closeLightbox);
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+document.addEventListener('click', e => {
+  const img = e.target.closest('.mod-figure img');
+  if (!img) return;
+  const caption = img.closest('.mod-figure')?.querySelector('figcaption')?.textContent || '';
+  openLightbox(img.src, caption);
+});
+</script>
+</body>
+</html>
