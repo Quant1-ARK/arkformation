@@ -681,6 +681,749 @@
     <div class="module-figure">
 <svg width="100%" viewBox="0 0 680 260" style="display:block">
 <defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<!-- Axes -->
+<line x1="60" y1="20" x2="60" y2="225" stroke="var(--t)" stroke-width="1" opacity=".25"/>
+<line x1="60" y1="225" x2="630" y2="225" stroke="var(--t)" stroke-width="1" opacity=".25"/>
+<!-- Y labels -->
+<text class="ts" x="52" y="205" text-anchor="end" opacity=".45">105</text>
+<text class="ts" x="52" y="158" text-anchor="end" opacity=".45">120</text>
+<text class="ts" x="52" y="112" text-anchor="end" opacity=".45">135</text>
+<text class="ts" x="52" y="66" text-anchor="end" opacity=".45">150</text>
+<text class="ts" x="52" y="29" text-anchor="end" opacity=".45">162</text>
+<!-- X labels -->
+<text class="ts" x="68" y="240" text-anchor="middle" opacity=".45">2021</text>
+<text class="ts" x="163" y="240" text-anchor="middle" opacity=".45">2022</text>
+<text class="ts" x="315" y="240" text-anchor="middle" opacity=".45">2023</text>
+<text class="ts" x="428" y="240" text-anchor="middle" opacity=".45">2024</text>
+<!-- Horizontal grid -->
+<line x1="60" y1="66.2" x2="630" y2="66.2" stroke="var(--t)" stroke-width="0.5" stroke-dasharray="3 4" opacity=".12"/>
+<line x1="60" y1="112.3" x2="630" y2="112.3" stroke="var(--t)" stroke-width="0.5" stroke-dasharray="3 4" opacity=".12"/>
+<!-- Stop 159.5 -->
+<line x1="60" y1="36.9" x2="630" y2="36.9" stroke="#E24B4A" stroke-width="1" stroke-dasharray="4 3" opacity=".4"/>
+<text class="ts" x="64" y="34" fill="#A32D2D" style="font-size:11px">Stop 159.50</text>
+<!-- Target 142 -->
+<line x1="60" y1="90.8" x2="630" y2="90.8" stroke="#1D9E75" stroke-width="1" stroke-dasharray="4 3" opacity=".4"/>
+<text class="ts" x="64" y="88" fill="#085041" style="font-size:11px">Objectif 142</text>
+<!-- PPA zone -->
+<rect x="60" y="189" width="570" height="31" fill="#1D9E75" fill-opacity=".06"/>
+<text class="ts" x="340" y="198" text-anchor="middle" fill="#085041" opacity=".6">Zone PPA OCDE : 100–110</text>
+<!-- Price path -->
+<path d="M 68.0,208.6 L 87.0,192.3 L 105.9,187.7 L 124.9,184.9 L 143.9,173.5 L 162.8,171.7 L 181.8,154.2 L 200.8,128.3 L 219.7,109.2 L 238.7,116.9 L 257.7,60.3 L 276.6,100.6 L 295.6,124.3 L 314.6,128.3 L 333.5,116.9 L 352.5,83.7 L 371.4,68.0 L 390.4,60.3 L 409.4,93.8 L 428.3,77.2 L 447.3,62.5 L 466.3,50.8 L 485.2,43.7 L 504.2,32.9 L 523.2,30.5 L 542.1,53.8 L 561.1,85.8 L 580.1,86.2 L 599.0,60.6 L 618.0,44.6" fill="none" stroke="#E24B4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<!-- Entry annotation -->
+<circle cx="447.3" cy="50.8" r="5" fill="#EF9F27" opacity=".9"/>
+<line x1="447.3" y1="56" x2="447.3" y2="79" stroke="#EF9F27" stroke-width="1" opacity=".6" marker-end="url(#arrow)"/>
+<text class="ts" x="455" y="71" fill="#633806">Entrée 155</text>
+<text class="ts" x="455" y="84" fill="#633806">mars 2024</text>
+<!-- Peak annotation -->
+<circle cx="485.2" cy="30.5" r="5" fill="#E24B4A" opacity=".9"/>
+<text class="ts" x="491" y="26" fill="#A32D2D">161.6 — juil. 2024</text>
+<!-- BoJ annotation -->
+<circle cx="542.1" cy="85.8" r="5" fill="#1D9E75" opacity=".9"/>
+<line x1="542.1" y1="91" x2="542.1" y2="114" stroke="#1D9E75" stroke-width="1" opacity=".6" marker-end="url(#arrow)"/>
+<text class="ts" x="550" y="104" fill="#085041">BoJ hike → dénouement</text>
+<text class="ts" x="550" y="117" fill="#085041">143.6 · août 2024</text>
+<!-- R/R box -->
+<rect x="60" y="185" width="218" height="30" rx="6" fill="#E6F1FB" stroke="#185FA5" stroke-width="0.5"/>
+<text class="ts" x="169" y="197" text-anchor="middle" fill="#042C53">Entrée 155 · Stop 159.5 · Objectif 142</text>
+<text class="th" x="169" y="210" text-anchor="middle" fill="#0C447C">R/R = 2.9:1 · −12% en 3 semaines</text>
+</svg>
+<p class="fig-caption">Fig. 5 — USD/JPY 2021-2024. La thèse fondamentale (PPA + différentiel de taux) était correcte — le dénouement du carry trade a ramené le prix de 161 à 142 en 3 semaines. Même une thèse correcte peut être invalidée par un timing d'entrée prématuré.</p>
+</div>
+
+    <div class="sub">
+      <h3 class="sub-title">Cas pratique 2 — Or (XAU/USD) : Breakout Historique Mars 2024</h3>
+      <p>La thèse or était construite sur trois couches convergentes : achats massifs de banques centrales (Chine, Inde, Turquie) documentés dans les rapports WGC, anticipation du cycle de baisse de la Fed, et breakout technique d'une résistance à 2 100$ tenue pendant 3 ans. L'entrée à 2 179$ après confirmation du breakout, avec stop à 1 985$ (sous le support 2 000$), a atteint l'objectif de 2 500$ le 19 août 2024, soit +321$ par once pour un R/R de 1.7:1. Le sommet réel à 2 788$ en octobre 2024 confirme que la thèse était correcte sur toute la ligne.</p>
+      <div class="callout green">Contrairement au cas JPY, les 3 filtres étaient pleinement alignés en mars 2024 sur l'or : fondamental (achats BCs), macro (anticipation baisse Fed), technique (breakout historique de 2 100$ avec volume). C'est la convergence qui crée l'asymétrie.</div>
+    </div>
+    <div class="module-figure">
+<svg width="100%" viewBox="0 0 680 260" style="display:block">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<!-- Axes -->
+<line x1="60" y1="20" x2="60" y2="225" stroke="var(--t)" stroke-width="1" opacity=".25"/>
+<line x1="60" y1="225" x2="630" y2="225" stroke="var(--t)" stroke-width="1" opacity=".25"/>
+<!-- Y labels -->
+<text class="ts" x="52" y="156" text-anchor="end" opacity=".45">1985$</text>
+<text class="ts" x="52" y="138" text-anchor="end" opacity=".45">2100$</text>
+<text class="ts" x="52" y="75" text-anchor="end" opacity=".45">2500$</text>
+<text class="ts" x="52" y="30" text-anchor="end" opacity=".45">2788$</text>
+<!-- X labels -->
+<text class="ts" x="68" y="240" text-anchor="middle" opacity=".45">2022</text>
+<text class="ts" x="255" y="240" text-anchor="middle" opacity=".45">2023</text>
+<text class="ts" x="438" y="240" text-anchor="middle" opacity=".45">2024</text>
+<!-- Resistance 2100 -->
+<line x1="60" y1="138.1" x2="630" y2="138.1" stroke="#E24B4A" stroke-width="1.5" stroke-dasharray="5 3" opacity=".5"/>
+<text class="ts" x="64" y="134" fill="#A32D2D" style="font-size:11px">Résistance 2100$ (3 ans)</text>
+<!-- Stop 1985 -->
+<line x1="60" y1="156.2" x2="630" y2="156.2" stroke="#E24B4A" stroke-width="1" stroke-dasharray="3 3" opacity=".3"/>
+<text class="ts" x="64" y="153" fill="#A32D2D" style="font-size:11px">Stop 1985$</text>
+<!-- Target 2500 -->
+<line x1="60" y1="75.1" x2="630" y2="75.1" stroke="#1D9E75" stroke-width="1" stroke-dasharray="4 3" opacity=".4"/>
+<text class="ts" x="64" y="72" fill="#085041" style="font-size:11px">Objectif 2500$ ✓</text>
+<!-- Fill area above 2100 after breakout -->
+<path d="M 471.3,126.2 L 475.0,129.0 L 478.7,123.8 L 482.3,108.4 L 486.0,98.0 L 489.7,93.7 L 493.3,101.9 L 497.0,106.7 L 500.7,101.6 L 504.3,94.0 L 508.0,101.1 L 511.7,103.0 L 515.3,105.8 L 519.0,101.7 L 522.7,101.9 L 526.3,102.3 L 530.0,97.1 L 533.7,81.0 L 537.3,90.1 L 541.0,90.1 L 544.7,92.6 L 548.3,80.4 L 552.0,73.3 L 555.7,72.6 L 559.3,76.2 L 563.0,73.2 L 566.7,64.0 L 570.3,50.0 L 574.0,52.0 L 577.7,58.4 L 581.3,47.7 L 585.0,41.4 L 588.7,29.7 L 592.3,48.7 L 596.0,62.4 L 599.7,51.8 L 603.3,53.1 L 607.0,55.2 L 610.7,45.6 L 614.3,60.6 L 618.0,56.7 L 618.0 138.1 L 471.3 138.1 Z" fill="#EF9F27" fill-opacity=".08"/>
+<!-- Main price path -->
+<path d="M 68.0,185.4 L 71.7,185.6 L 75.3,183.4 L 79.0,177.1 L 82.7,185.3 L 86.3,181.2 L 90.0,176.7 L 93.7,168.2 L 97.3,166.3 L 101.0,156.1 L 104.7,168.3 L 108.3,163.8 L 112.0,164.3 L 115.7,166.7 L 119.3,156.9 L 123.0,162.5 L 126.7,171.4 L 130.3,173.7 L 134.0,181.6 L 137.7,178.9 L 141.3,177.9 L 145.0,178.2 L 148.7,174.1 L 152.3,179.7 L 156.0,182.1 L 159.7,191.4 L 163.3,197.4 L 167.0,199.5 L 170.7,198.3 L 174.3,189.9 L 178.0,186.3 L 181.7,189.6 L 185.3,193.7 L 189.0,197.4 L 192.7,198.7 L 196.3,201.7 L 200.0,206.7 L 203.7,207.3 L 207.3,199.3 L 211.0,205.8 L 214.7,212.5 L 218.3,206.8 L 222.0,209.7 L 225.7,199.5 L 229.3,189.6 L 233.0,194.0 L 236.7,185.2 L 240.3,187.1 L 244.0,188.9 L 247.7,187.4 L 251.3,182.3 L 255.0,173.9 L 258.7,168.5 L 262.3,164.3 L 266.0,165.0 L 269.7,174.1 L 273.3,176.9 L 277.0,180.3 L 280.7,179.4 L 284.3,183.4 L 288.0,165.4 L 291.7,162.2 L 295.3,159.2 L 299.0,150.6 L 302.7,147.4 L 306.3,152.7 L 310.0,155.4 L 313.7,146.3 L 317.3,151.5 L 321.0,160.7 L 324.7,162.8 L 328.3,161.4 L 332.0,159.8 L 335.7,160.4 L 339.3,165.9 L 343.0,166.2 L 346.7,164.7 L 350.3,157.4 L 354.0,159.8 L 357.7,163.2 L 361.3,165.8 L 365.0,169.2 L 368.7,170.2 L 372.3,163.9 L 376.0,166.8 L 379.7,168.2 L 383.3,162.4 L 387.0,174.1 L 390.7,182.4 L 394.3,173.9 L 398.0,160.9 L 401.7,156.4 L 405.3,157.2 L 409.0,161.5 L 412.7,160.1 L 416.3,155.2 L 420.0,147.9 L 423.7,149.1 L 427.3,149.1 L 431.0,147.7 L 434.7,144.0 L 438.3,149.7 L 442.0,149.8 L 445.7,150.1 L 449.3,148.9 L 453.0,148.4 L 456.7,155.0 L 460.3,150.3 L 464.0,148.7 L 467.7,130.2 L 471.3,126.2 L 475.0,129.0 L 478.7,123.8 L 482.3,108.4 L 486.0,98.0 L 489.7,93.7 L 493.3,101.9 L 497.0,106.7 L 500.7,101.6 L 504.3,94.0 L 508.0,101.1 L 511.7,103.0 L 515.3,105.8 L 519.0,101.7 L 522.7,101.9 L 526.3,102.3 L 530.0,97.1 L 533.7,81.0 L 537.3,90.1 L 541.0,90.1 L 544.7,92.6 L 548.3,80.4 L 552.0,73.3 L 555.7,72.6 L 559.3,76.2 L 563.0,73.2 L 566.7,64.0 L 570.3,50.0 L 574.0,52.0 L 577.7,58.4 L 581.3,47.7 L 585.0,41.4 L 588.7,29.7 L 592.3,48.7 L 596.0,62.4 L 599.7,51.8 L 603.3,53.1 L 607.0,55.2 L 610.7,45.6 L 614.3,60.6 L 618.0,56.7" fill="none" stroke="#EF9F27" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<!-- Entry -->
+<circle cx="471.3" cy="126.2" r="5" fill="#1D9E75" opacity=".9"/>
+<line x1="471.3" y1="131" x2="471.3" y2="156" stroke="#1D9E75" stroke-width="1" opacity=".5" marker-end="url(#arrow)"/>
+<text class="ts" x="479" y="146" fill="#085041">Breakout + entrée 2179$</text>
+<text class="ts" x="479" y="159" fill="#085041">mars 2024</text>
+<!-- Target hit -->
+<circle cx="552.0" cy="73.3" r="5" fill="#1D9E75" opacity=".9"/>
+<text class="ts" x="558" y="68" fill="#085041">2500$ atteint · 19 août</text>
+<!-- Peak -->
+<circle cx="588.7" cy="29.7" r="5" fill="#EF9F27" opacity=".9"/>
+<text class="ts" x="583" y="22" text-anchor="end" fill="#633806">2788$ — oct. 2024</text>
+<!-- R/R box -->
+<rect x="60" y="190" width="200" height="30" rx="6" fill="#EAF3DE" stroke="#3B6D11" stroke-width="0.5"/>
+<text class="ts" x="160" y="202" text-anchor="middle" fill="#27500A">Entrée 2179$ · Stop 1985$</text>
+<text class="th" x="160" y="215" text-anchor="middle" fill="#085041">+321$ · R/R = 1.7:1 ✓</text>
+</svg>
+<p class="fig-caption">Fig. 6 — XAU/USD 2022-2024. Les 3 filtres pleinement alignés en mars 2024. Trade gagnant +321$/once — R/R = 1.7:1. Le sommet à 2 788$ en octobre 2024 confirme la thèse.</p>
+</div>
+  </section>
+
+  <!-- SYNTHESIS -->
+  <div class="synthesis">
+    <h2 class="synthesis-title">Résumé du Module VII</h2>
+    <p>Ce module est le pivot opérationnel de la formation — celui qui transforme l'analyse en action. La conviction fondamentale et le signal d'entrée sont deux décisions distinctes qui opèrent sur des horizons différents, et c'est leur convergence qui crée les situations à fort rapport risque/rendement.</p>
+    <div class="summary-grid">
+      <div class="summary-card"><div class="summary-section">VII.a</div><div class="summary-concept">Cadre en 3 filtres — ne jamais inverser l'ordre</div><div class="summary-tool">Fondamental → Macro/COT → Technique/Quant</div></div>
+      <div class="summary-card"><div class="summary-section">VII.b</div><div class="summary-concept">AT = lecture de structure, pas prédiction</div><div class="summary-tool">MM200, volume, Bollinger compression, algos</div></div>
+      <div class="summary-card"><div class="summary-section">VII.c</div><div class="summary-concept">5 stratégies · 3 techniques d'entrée</div><div class="summary-tool">Carry, trend, mean reversion, macro, relative value</div></div>
+      <div class="summary-card"><div class="summary-section">VII.d</div><div class="summary-concept">H &gt; 0.5 → trend · H &lt; 0.5 → mean rev · H ≈ 0.5 → attendre</div><div class="summary-tool">Méthode R/S · simulateur interactif</div></div>
+      <div class="summary-card"><div class="summary-section">VII.e</div><div class="summary-concept">Half-life calibre la durée · GARCH mesure la volatilité</div><div class="summary-tool">AR(1) OLS · GARCH(1,1) · sizing dynamique</div></div>
+      <div class="summary-card"><div class="summary-section">VII.f</div><div class="summary-concept">5 éléments · stop fondamental vs technique</div><div class="summary-tool">ATR · Pivots · Plan documenté · JPY + Or</div></div>
+    </div>
+    <div class="next-module">Module suivant — <strong>Module VIII : Gestion du Risque.</strong> On passe du plan de trade au sizing rigoureux — règles de risque par position, drawdown maximum, et gestion du portefeuille global.</div>
+  </div>
+
+  <div class="module-nav">
+    <button class="nav-btn" onclick="window.parent.postMessage({type:'navigate',index:5,markDone:false},'*')">← Module 06</button>
+    <button class="nav-btn primary" onclick="window.parent.postMessage({type:'navigate',index:7,markDone:true},'*')">Module 08 →</button>
+  </div>
+
+</div>
+</body>
+</html>  .strat-num{font-size:11px;font-weight:700;color:var(--accent);background:var(--accent-soft);border-radius:4px;padding:2px 8px;flex-shrink:0}
+  .strat-name{font-family:'DM Serif Display',Georgia,serif;font-size:17px;color:var(--text-1)}
+  .strat-body p{color:var(--text-2);font-size:13.5px;line-height:1.7;margin-bottom:8px}
+  .strat-body p:last-child{margin-bottom:0}
+  .strat-body strong{color:var(--text-1)}
+  /* Case study table */
+  .case-table{width:100%;border-collapse:collapse;margin:18px 0;font-size:13.5px}
+  .case-table tr{border-top:1px solid var(--border)}
+  .case-table tr:first-child{border-top:none}
+  .case-table td:first-child{font-weight:700;color:var(--text-1);padding:12px 16px 12px 0;width:160px;vertical-align:top}
+  .case-table td:last-child{color:var(--text-2);padding:12px 0;line-height:1.65}
+  .verdict{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:5px;margin-left:6px;vertical-align:middle}
+  .v-green{background:#EAF3DE;color:#27500A}
+  .v-blue{background:#E6F1FB;color:#0C447C}
+  .v-amber{background:#FAEEDA;color:#633806}
+  .v-red{background:#FCEBEB;color:#791F1F}
+  /* Summary */
+  .summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0}
+  @media(max-width:560px){.summary-grid{grid-template-columns:1fr}}
+  .summary-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px}
+  .summary-section{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:4px}
+  .summary-concept{font-weight:600;font-size:13.5px;color:var(--text-1);margin-bottom:4px}
+  .summary-tool{font-size:12.5px;color:var(--text-2)}
+  .synthesis{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px;margin-top:48px}
+  .synthesis-title{font-family:'DM Serif Display',Georgia,serif;font-size:22px;margin-bottom:18px}
+  .synthesis p{color:var(--text-2);margin-bottom:12px;line-height:1.75;font-size:14.5px}
+  .synthesis p:last-child{margin-bottom:0}
+  .next-module{margin-top:20px;padding-top:18px;border-top:1px solid var(--border);font-size:13px;color:var(--text-3);font-style:italic}
+  .next-module strong{color:var(--accent);font-style:normal}
+  .module-nav{display:flex;justify-content:space-between;align-items:center;margin-top:56px;padding-top:28px;border-top:1px solid var(--border);gap:12px}
+  .nav-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:10px;border:1px solid var(--border);font-size:13.5px;font-weight:500;font-family:inherit;cursor:pointer;transition:all .2s;background:var(--surface);color:var(--text-1)}
+  .nav-btn:hover{border-color:var(--accent);color:var(--accent)}
+  .nav-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .nav-btn.primary:hover{background:#0077ed}
+  .node{cursor:pointer}.node:hover{opacity:.85}
+  svg text{font-family:'DM Sans',-apple-system,sans-serif;fill:var(--text-1)}
+  svg .t{font-size:14px;font-weight:400;fill:var(--text-1)}
+  svg .ts{font-size:12px;font-weight:400;fill:var(--text-2)}
+  svg .th{font-size:14px;font-weight:600;fill:var(--text-1)}
+  .c-blue rect,.c-blue circle{fill:#E6F1FB;stroke:#185FA5}
+  .c-blue .th,.c-blue .t{fill:#0C447C}.c-blue .ts{fill:#185FA5}
+  .c-teal rect,.c-teal circle{fill:#E1F5EE;stroke:#0F6E56}
+  .c-teal .th,.c-teal .t{fill:#085041}.c-teal .ts{fill:#0F6E56}
+  .c-purple rect,.c-purple circle{fill:#EEEDFE;stroke:#534AB7}
+  .c-purple .th,.c-purple .t{fill:#3C3489}.c-purple .ts{fill:#534AB7}
+  .c-amber rect,.c-amber circle{fill:#FAEEDA;stroke:#854F0B}
+  .c-amber .th,.c-amber .t{fill:#633806}.c-amber .ts{fill:#854F0B}
+  .c-green rect,.c-green circle{fill:#EAF3DE;stroke:#3B6D11}
+  .c-green .th,.c-green .t{fill:#27500A}.c-green .ts{fill:#3B6D11}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="mod-header">
+    <div class="mod-kicker">Module 07 · ARK Investor Program</div>
+    <h1 class="mod-title">Prise de Position</h1>
+    <p class="mod-sub">Savoir quoi acheter ne suffit pas. Il faut encore savoir quand entrer, comment confirmer, et à quel prix invalider.</p>
+    <div class="mod-objective">Ce module est celui de l'exécution. Il couvre les outils d'analyse technique dans leur rôle de confirmation, les grandes stratégies directionnelles que le position trader peut déployer, les outils quantitatifs pour identifier le régime de marché, et la construction d'un plan de trade complet illustré par deux cas pratiques réels.</div>
+  </header>
+
+  <nav class="toc">
+    <div class="toc-title">Sommaire</div>
+    <ul class="toc-list">
+      <li><a href="#viia"><span class="toc-letter">a</span>Du Fondamental au Signal d'Entrée</a></li>
+      <li><a href="#viib"><span class="toc-letter">b</span>Analyse Technique Appliquée au Position Trading</a></li>
+      <li><a href="#viic"><span class="toc-letter">c</span>Stratégies Directionnelles et Techniques d'Entrée</a></li>
+      <li><a href="#viid"><span class="toc-letter">d</span>L'Exposant de Hurst : Identifier le Régime de Marché</a></li>
+      <li><a href="#viie"><span class="toc-letter">e</span>Modèles AR, Half-Life et GARCH</a></li>
+      <li><a href="#viif"><span class="toc-letter">f</span>Construire et Documenter un Plan de Trade</a></li>
+    </ul>
+  </nav>
+
+  <!-- SECTION A -->
+  <section class="section" id="viia">
+    <div class="section-label">Section A</div>
+    <h2 class="section-title">Du Fondamental au Signal d'Entrée</h2>
+    <div class="section-intro">L'investisseur fondamental fait face à un paradoxe de timing que peu de formations abordent franchement : un actif peut être fondamentalement sous-évalué pendant 12, 18, voire 24 mois avant que le marché ne le reconnaisse. Entrer trop tôt coûte autant qu'entrer trop tard.</div>
+
+    <div class="sub">
+      <h3 class="sub-title">Efficience des marchés et durée des inefficiences</h3>
+      <p>Les marchés sont partiellement efficients — et le degré d'efficience varie considérablement selon la liquidité du marché. Sur les marchés les plus liquides (grandes capitalisations américaines, EUR/USD, pétrole), des milliers d'algorithmes et d'institutionnels scrutent en permanence les mêmes informations. Les inefficiences y sont rares et se corrigent en quelques heures.</p>
+      <p>En revanche, sur les marchés moins suivis — minières juniors, uranium, métaux rares, small caps européennes, paires de devises émergentes — le nombre d'analystes actifs est bien moindre et les ajustements de prix plus lents. Une sous-évaluation fondamentale peut y persister 12 à 24 mois. C'est précisément dans ces zones que le position trader fondamental dispose de l'avantage structurel le plus durable.</p>
+      <div class="notion">
+        <div class="notion-title">Efficience et liquidité — La règle pratique</div>
+        <ul>
+          <li><strong>EUR/USD, Apple, S&P 500 :</strong> inefficiences de quelques heures à quelques jours — très difficile à exploiter</li>
+          <li><strong>Uranium, cuivre (minières juniors), small caps sectorielles :</strong> inefficiences de plusieurs mois à plusieurs années</li>
+          <li><strong>Marchés émergents, obligations souveraines périphériques :</strong> inefficiences structurelles liées aux flux de capitaux</li>
+        </ul>
+        <p>Concentrer l'attention sur les marchés où le consensus d'analystes est mince et où l'information primaire (EIA, COT, rapports de production) est sous-exploitée par la majorité des participants.</p>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Le cadre en 3 filtres</h3>
+      <p>Toute décision d'entrée en position repose sur la convergence de trois filtres distincts. Chaque filtre élimine les faux signaux que les autres ne voient pas. La règle est simple : on n'entre en position que lorsque les 3 filtres sont alignés. Un signal technique sans conviction fondamentale est du bruit. Une conviction fondamentale sans signal technique peut rester un trade perdant pendant deux ans.</p>
+    </div>
+    <div class="module-figure">
+<svg width="100%" viewBox="0 0 680 295" style="display:block">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+
+<!-- 3 filter boxes left to right -->
+<g class="node c-blue">
+  <rect x="28" y="40" width="190" height="100" rx="8" stroke-width="0.5"/>
+  <text class="th" x="123" y="68" text-anchor="middle">Filtre 1</text>
+  <text class="ts" x="123" y="86" text-anchor="middle">Fondamental</text>
+  <text class="ts" x="123" y="102" text-anchor="middle">Actif sous-évalué ?</text>
+  <text class="ts" x="123" y="118" text-anchor="middle">Catalyseur identifié ?</text>
+  <text class="ts" x="123" y="134" text-anchor="middle" fill="#0C447C" style="font-size:11px">DCF · Comparables · PPA</text>
+</g>
+
+<line x1="218" y1="90" x2="244" y2="90" stroke="var(--t)" stroke-width="1.5" opacity=".3" marker-end="url(#arrow)"/>
+
+<g class="node c-amber">
+  <rect x="244" y="40" width="190" height="100" rx="8" stroke-width="0.5"/>
+  <text class="th" x="339" y="68" text-anchor="middle">Filtre 2</text>
+  <text class="ts" x="339" y="86" text-anchor="middle">Macro / COT</text>
+  <text class="ts" x="339" y="102" text-anchor="middle">Contexte macro favorable ?</text>
+  <text class="ts" x="339" y="118" text-anchor="middle">Institutionnels s'accumulent ?</text>
+  <text class="ts" x="339" y="134" text-anchor="middle" fill="#633806" style="font-size:11px">COT Large Specs · Minutes BC</text>
+</g>
+
+<line x1="434" y1="90" x2="460" y2="90" stroke="var(--t)" stroke-width="1.5" opacity=".3" marker-end="url(#arrow)"/>
+
+<g class="node c-teal">
+  <rect x="460" y="40" width="192" height="100" rx="8" stroke-width="0.5"/>
+  <text class="th" x="556" y="68" text-anchor="middle">Filtre 3</text>
+  <text class="ts" x="556" y="86" text-anchor="middle">Technique / Quant</text>
+  <text class="ts" x="556" y="102" text-anchor="middle">Marché commence à bouger ?</text>
+  <text class="ts" x="556" y="118" text-anchor="middle">Hurst · Volume · Breakout</text>
+  <text class="ts" x="556" y="134" text-anchor="middle" fill="#085041" style="font-size:11px">Breakout · AR(1) · Supports</text>
+</g>
+
+<!-- Convergence arrow down to entry -->
+<line x1="123" y1="140" x2="123" y2="172" stroke="#185FA5" stroke-width="1" opacity=".3" stroke-dasharray="4 3"/>
+<line x1="339" y1="140" x2="339" y2="172" stroke="#854F0B" stroke-width="1" opacity=".3" stroke-dasharray="4 3"/>
+<line x1="556" y1="140" x2="556" y2="172" stroke="#0F6E56" stroke-width="1" opacity=".3" stroke-dasharray="4 3"/>
+<line x1="123" y1="172" x2="556" y2="172" stroke="var(--t)" stroke-width="1" opacity=".2"/>
+<line x1="339" y1="172" x2="339" y2="196" stroke="var(--t)" stroke-width="1.5" opacity=".3" marker-end="url(#arrow)"/>
+
+<!-- Entry validation box -->
+<rect x="214" y="200" width="250" height="36" rx="8" fill="#EAF3DE" stroke="#3B6D11" stroke-width="0.5"/>
+<text class="th" x="339" y="216" text-anchor="middle" fill="#04342C">✓ Entrée en position</text>
+<text class="ts" x="339" y="230" text-anchor="middle" fill="#085041">Les 3 filtres convergents = signal valide</text>
+
+<!-- Warning -->
+<rect x="28" y="252" width="624" height="28" rx="6" fill="#FCEBEB" stroke="#E24B4A" stroke-width="0.5" opacity=".8"/>
+<text class="ts" x="339" y="270" text-anchor="middle" fill="#791F1F">Signal technique sans conviction fondamentale = bruit · Conviction sans signal technique = capital immobilisé pour rien</text>
+
+</svg>
+<p class="fig-caption">Fig. 1 — Le cadre en 3 filtres. Chaque filtre élimine les faux signaux que les autres ne voient pas. L'entrée n'est valide que lorsque les 3 convergent.</p>
+</div>
+
+    <div class="sub">
+      <h3 class="sub-title">La distinction conviction fondamentale / signal d'entrée</h3>
+      <p>Ces deux notions opèrent sur des horizons différents. La <strong>conviction fondamentale</strong> répond à la question : cet actif vaut-il plus que son prix actuel, et pourquoi ? Le <strong>signal d'entrée</strong> répond à une question différente : est-ce que le marché est en train de commencer à reconnaître cette valeur maintenant ?</p>
+      <p>Un actif peut être fondamentalement sous-évalué depuis longtemps sans que le signal d'entrée soit là. Attendre le signal d'entrée optimise simplement le timing d'immobilisation du capital. L'uranium en 2020 était structurellement sous-évalué. Mais le signal d'entrée ne s'est cristallisé qu'en 2021-2022, quand les Large Specs du COT ont commencé leur accumulation et que le prix a cassé la résistance des 30$/lb avec du volume.</p>
+      <div class="callout yellow">John Maynard Keynes, qui était lui-même investisseur, a formulé ce risque : « Le marché peut rester irrationnel plus longtemps que vous ne pouvez rester solvable. » Le cadre en 3 filtres est la réponse opérationnelle à ce risque : on n'engage le capital que lorsque la thèse fondamentale est confirmée par le comportement réel du marché.</div>
+    </div>
+  </section>
+
+  <!-- SECTION B -->
+  <section class="section" id="viib">
+    <div class="section-label">Section B</div>
+    <h2 class="section-title">Analyse Technique Appliquée au Position Trading</h2>
+    <div class="section-intro">L'analyse technique en position trading fondamental ne sert pas à prédire où va le prix — elle sert à lire la structure actuelle du marché, à identifier les niveaux où l'offre et la demande s'affrontent, et à confirmer qu'un mouvement est en cours plutôt qu'à l'anticiper.</div>
+
+    <div class="sub">
+      <h3 class="sub-title">Supports, résistances et moyennes mobiles</h3>
+      <p>Les <strong>supports et résistances</strong> sont les niveaux de prix où le marché a historiquement marqué une pause, un retournement, ou une accélération. Pour le position trader, les résistances majeures sont des points d'observation critique : si une résistance testée à plusieurs reprises est finalement franchie avec du volume, c'est souvent le signal que quelque chose a changé dans l'équilibre offre/demande.</p>
+      <p>Les <strong>moyennes mobiles à 50 et 200 périodes</strong> sont les filtres de tendance les plus suivis par les institutionnels. La MM200 hebdomadaire sert souvent de ligne de démarcation entre tendance haussière et baissière structurelle. Le golden cross (MM50 qui croise la MM200 à la hausse) déclenche des flux achats algorithmiques significatifs. Leur limite : étant des moyennes de données passées, elles signalent un changement de tendance plusieurs semaines après qu'il a eu lieu. Utiles comme contexte de régime, pas comme déclencheur d'entrée.</p>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Indicateurs de momentum et leur latence structurelle</h3>
+      <p>Tous les indicateurs dérivés du prix partagent un défaut structurel : ils analysent ce qui s'est déjà passé. Sur un horizon de position trading, ce délai représente souvent 5 à 15% du mouvement total déjà réalisé avant que le signal n'apparaisse.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Indicateur</th><th>Principe</th><th>Usage en position trading</th><th>Latence</th></tr></thead>
+          <tbody>
+            <tr><td><strong>RSI</strong></td><td>Force relative des hausses vs baisses sur N périodes</td><td>Signal aux extrêmes (&lt;30 = survendu, &gt;70 = suracheté) — utile pour confirmer un retournement sur un niveau fondamental clé</td><td>Modérée — 1 à 3 semaines</td></tr>
+            <tr><td><strong>MACD</strong></td><td>Écart entre deux moyennes mobiles exponentielles (12/26) lissé par EMA(9)</td><td>Croisement comme confirmation de changement de momentum. Double lissage = double décalage</td><td>Élevée — 2 à 5 semaines</td></tr>
+            <tr><td><strong>Bandes de Bollinger</strong></td><td>Enveloppe à ±2 écarts-types autour d'une MM20</td><td>Compression des bandes = baisse de volatilité = breakout imminent. L'un des rares signaux avancés, non retardés</td><td>Faible sur la compression</td></tr>
+            <tr><td><strong>Stochastique</strong></td><td>Position du prix dans son range sur N périodes</td><td>Momentum court terme, particulièrement lisible sur les matières premières cycliques</td><td>Faible à modérée</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="notion">
+        <div class="notion-title">La hiérarchie des signaux — À mémoriser</div>
+        <ul>
+          <li><strong>1.</strong> Le fondamental définit la <strong>DIRECTION</strong> : cet actif doit monter parce que sa valeur est supérieure à son prix.</li>
+          <li><strong>2.</strong> La structure de prix définit le <strong>TIMING</strong> : le marché commence-t-il à bouger dans ce sens ?</li>
+          <li><strong>3.</strong> Les indicateurs techniques <strong>CONFIRMENT</strong> : ils ne déclenchent pas l'entrée, ils valident qu'on n'est pas seul.</li>
+        </ul>
+        <p>Inverser cet ordre — entrer sur un signal RSI sans conviction fondamentale — c'est faire du trading réactif, pas de l'investissement.</p>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Le volume : le seul indicateur non-lagging</h3>
+      <p>Le volume mesure l'activité réelle du moment — il n'est pas dérivé du prix passé. Un mouvement de prix accompagné d'un volume significativement supérieur à la moyenne signifie que de nombreux acteurs participent à ce mouvement, ce qui lui confère une légitimité et une probabilité de continuation.</p>
+      <p><strong>Règle pratique :</strong> tout breakout de résistance majeure doit être validé par un volume au moins 50% supérieur à la moyenne des 20 dernières séances. Sans cette confirmation, l'entrée est prématurée.</p>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Le trading algorithmique purement technique</h3>
+      <p>Les algos techniques représentent une fraction croissante des volumes quotidiens. Comprendre quand ils sont actifs permet d'anticiper certains mouvements de prix. Un CTA qui reçoit un signal de breakout sur la MM200 d'un actif va amplifier le mouvement — ce qui donne une valeur prédictive réelle à ce niveau, non pas parce qu'il est fondamentalement significatif, mais parce que suffisamment de participants réagissent dessus de façon systématique.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Stratégie</th><th>Principe</th><th>Horizon</th><th>Acteurs représentatifs</th></tr></thead>
+          <tbody>
+            <tr><td><strong>CTA / Managed Futures</strong></td><td>Suivi de tendance systématique sur futures via croisements de moyennes mobiles multi-timeframes</td><td>Jours à mois</td><td>Man AHL, Winton, Millburn</td></tr>
+            <tr><td><strong>Statistical Arbitrage</strong></td><td>Exploitation d'écarts statistiques entre actifs coïntégrés. Purement quantitatif</td><td>Secondes à jours</td><td>Renaissance, Two Sigma, DE Shaw</td></tr>
+            <tr><td><strong>High Frequency Trading</strong></td><td>Market making et arbitrage de latence — exploitation de la microstructure de marché</td><td>Microsecondes à secondes</td><td>Virtu Financial, Citadel Securities</td></tr>
+            <tr><td><strong>Momentum algo</strong></td><td>Achat systématique des actifs les plus performants sur 3 à 12 mois. Effet momentum documenté académiquement</td><td>Semaines à mois</td><td>AQR, Research Affiliates</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout blue">L'avantage structurel du fondamental sur l'algo technique : les algos ne savent pas pourquoi le prix bouge. Ils ne distinguent pas une tendance alimentée par un changement fondamental durable d'un mouvement spéculatif sans substance. Quand un CTA suit une tendance haussière sur le cuivre sans savoir que le déficit structurel est de 5 millions de tonnes, l'investisseur fondamental a une information que l'algo n'a pas.</div>
+    </div>
+  </section>
+
+  <!-- SECTION C -->
+  <section class="section" id="viic">
+    <div class="section-label">Section C</div>
+    <h2 class="section-title">Stratégies Directionnelles et Techniques d'Entrée</h2>
+    <div class="section-intro">Une fois la conviction fondamentale établie et le contexte macro validé, la question devient : quelle stratégie adopter pour exprimer cette conviction sur le marché ? Il existe cinq grandes approches que le position trader fondamental peut déployer, chacune adaptée à un régime de marché différent.</div>
+
+    <div class="strat-card">
+      <div class="strat-header"><span class="strat-num">1</span><span class="strat-name">Le Carry Trade</span></div>
+      <div class="strat-body">
+        <p>Le carry trade consiste à emprunter dans une devise ou un actif à taux bas pour investir dans une devise ou un actif à taux plus élevé, en capturant le différentiel de rendement. L'edge fondamental est simple : le différentiel de taux entre deux économies est mesurable, prévisible à court terme, et peut persister des années lorsque les banques centrales maintiennent des politiques monétaires divergentes.</p>
+        <div class="notion">
+          <div class="notion-title">Carry Trade — Structure et risques</div>
+          <ul>
+            <li><strong>Mécanisme :</strong> emprunter en JPY à 0.1%, investir en USD à 5.25% → carry de 5.15%/an</li>
+            <li><strong>Risque principal :</strong> le dénouement brutal (unwinding) — quand la devise de financement se renforce, les positions se dénouent en cascade</li>
+            <li><strong>Exemple :</strong> le yen en août 2024 — USD/JPY passe de 161 à 142 en 3 semaines lors du dénouement du carry trade JPY</li>
+            <li><strong>Signaux d'alerte :</strong> changement de politique de la banque centrale de la devise de financement · VIX &gt; 25 · COT retail à l'extrême short</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="strat-card">
+      <div class="strat-header"><span class="strat-num">2</span><span class="strat-name">Le Trend Following</span></div>
+      <div class="strat-body">
+        <p>Le trend following consiste à identifier une tendance de fond alimentée par un changement fondamental et à la suivre jusqu'à son épuisement. Son edge repose sur un fait documenté : les grandes tendances de marché sont alimentées par des rééquilibrages progressifs d'information — le marché intègre les changements fondamentaux progressivement, au fil des trimestres.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Élément</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Signal d'entrée</strong></td><td>Cassure de la MM200 avec volume, Hurst &gt; 0.6 sur horizon hebdomadaire, COT montrant une accumulation progressive des Large Specs</td></tr>
+              <tr><td><strong>Gestion en cours</strong></td><td>Pyramider : ajouter à la position sur les pullbacks tant que la tendance est intacte. Stop trailing sous MM50 ou dernier creux significatif</td></tr>
+              <tr><td><strong>Signal de sortie</strong></td><td>Hurst qui repasse sous 0.5, COT Large Specs à l'extrême long (tout le monde est dans le trade), cassure de la MM50 sur volume</td></tr>
+              <tr><td><strong>Quand éviter</strong></td><td>Hurst ≈ 0.5, GARCH en hausse (volatilité croissante), COT à l'extrême (tendance potentiellement en fin de vie)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="strat-card">
+      <div class="strat-header"><span class="strat-num">3</span><span class="strat-name">Le Mean Reversion</span></div>
+      <div class="strat-body">
+        <p>Le mean reversion exploite le retour d'un actif à sa valeur d'équilibre après un écart excessif. Cette stratégie requiert une ancre fondamentale solide — sans elle, on ne sait pas vers quoi l'actif doit revenir. Cette ancre peut être la parité de pouvoir d'achat pour une devise, le coût marginal de production pour une matière première, ou le multiple historique médian pour une action.</p>
+        <div class="callout purple">Mean Reversion vs Trend Following : le trend following suit la direction du marché. Le mean reversion va à contre-sens du marché récent. Il exige une ancre fondamentale forte (PPA, coût marginal, spread historique) et un sizing conservateur : l'actif peut s'écarter encore plus avant de revenir — il faut pouvoir tenir. La half-life AR(1) donne une estimation de la durée de détention attendue.</div>
+      </div>
+    </div>
+
+    <div class="strat-card">
+      <div class="strat-header"><span class="strat-num">4</span><span class="strat-name">Le Global Macro</span></div>
+      <div class="strat-body">
+        <p>Le global macro prend des positions directionnelles sur des classes d'actifs entières — devises, indices, obligations souveraines, matières premières — en se basant sur des anticipations macroéconomiques et géopolitiques de grande amplitude. C'est la stratégie de George Soros (la livre sterling en 1992), de Ray Dalio (Bridgewater) et de Stanley Druckenmiller.</p>
+        <p>Son edge repose sur la capacité à lire les grandes dynamiques macro avant qu'elles soient pleinement pricées : cycles de taux, flux de capitaux entre économies, déséquilibres commerciaux. C'est l'architecture exacte de la formation ARK : comprendre le monde d'abord (Modules II à IV), puis trouver le meilleur actif pour exprimer cette compréhension.</p>
+      </div>
+    </div>
+
+    <div class="strat-card">
+      <div class="strat-header"><span class="strat-num">5</span><span class="strat-name">L'Arbitrage de Valeur Relative</span></div>
+      <div class="strat-body">
+        <p>Plutôt que de parier sur la direction absolue d'un actif, cette stratégie exploite un écart de valorisation entre deux actifs liés — en achetant le moins cher et en vendant simultanément le plus cher. La position est « market neutral » : protégée contre les mouvements du marché global, car les deux jambes se compensent. Elle produit mécaniquement un Sharpe Ratio très élevé (2 à 4 vs 0.5 à 1 pour un portefeuille actions classique).</p>
+        <div class="notion">
+          <div class="notion-title">Exemples concrets d'arbitrage de valeur relative</div>
+          <ul>
+            <li><strong>Paires d'actions :</strong> long TotalEnergies / short Shell si Total est anormalement décotée sur l'EV/EBITDA</li>
+            <li><strong>Spread matières premières :</strong> long Brent / short WTI quand le spread historique de 3–4$ s'élargit à 8–10$ sans raison fondamentale</li>
+            <li><strong>Obligations souveraines :</strong> long BTP italiens / short Bunds allemands quand le spread de taux atteint des niveaux historiquement extrêmes</li>
+            <li><strong>Convergence de fusions :</strong> long la société cible / short l'acquéreur lors d'une fusion annoncée</li>
+          </ul>
+          <p><strong>Condition nécessaire :</strong> les deux actifs doivent être fondamentalement liés. Sans ce lien, ce n'est pas de l'arbitrage, c'est du risque directionnel déguisé.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Les 3 techniques d'entrée — applicables aux 5 stratégies</h3>
+      <ul class="styled-list">
+        <li><strong>Technique 1 — Le breakout :</strong> entrée au moment où le prix franchit un niveau de résistance majeur avec du volume. L'entrée la plus directe — on entre quand le marché confirme que quelque chose a changé. Le risque est l'entrée sur un fakeout. La validation par le volume est indispensable.</li>
+        <li><strong>Technique 2 — Le pullback :</strong> après un premier breakout, le prix revient souvent tester l'ancien niveau de résistance, qui devient un support. L'entrée la plus sûre : le niveau est validé, le stop est serré, et le rapport risque/rendement est meilleur qu'au breakout initial.</li>
+        <li><strong>Technique 3 — L'entrée progressive :</strong> fractionner l'entrée en 2 ou 3 tranches (⅓ au breakout, ⅓ au pullback, ⅓ à la confirmation). Cette approche réduit le risque de mauvais timing sans sacrifier l'exposition totale.</li>
+      </ul>
+    </div>
+    <div class="module-figure">
+<svg width="100%" viewBox="0 0 680 240" style="display:block">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+
+<!-- 3 mini charts side by side -->
+<!-- Technique 1: Breakout -->
+<rect x="20" y="16" width="196" height="188" rx="8" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="0.5"/>
+<text class="th" x="118" y="36" text-anchor="middle" fill="#0C447C">1. Breakout</text>
+
+<!-- resistance line -->
+<line x1="36" y1="100" x2="200" y2="100" stroke="#E24B4A" stroke-width="1.5" stroke-dasharray="5 3" opacity=".6"/>
+<text class="ts" x="204" y="103" fill="#A32D2D" style="font-size:11px">R</text>
+<!-- price building up then breaking out -->
+<path d="M 36 145 C 55 140, 72 130, 88 120 C 100 112, 108 106, 116 100 C 124 94, 136 80, 152 65 C 168 50, 180 44, 200 38"
+  fill="none" stroke="#185FA5" stroke-width="2" stroke-linecap="round"/>
+<!-- Entry arrow -->
+<circle cx="116" cy="100" r="5" fill="#1D9E75" opacity=".9"/>
+<line x1="116" y1="94" x2="116" y2="74" stroke="#1D9E75" stroke-width="1" opacity=".5" marker-end="url(#arrow)"/>
+<text class="ts" x="126" y="82" fill="#085041" style="font-size:11px">Entrée</text>
+<!-- Volume bar -->
+<rect x="104" y="168" width="24" height="20" rx="2" fill="#1D9E75" opacity=".5"/>
+<rect x="36" y="178" width="14" height="10" rx="2" fill="#888780" opacity=".3"/>
+<rect x="56" y="174" width="14" height="14" rx="2" fill="#888780" opacity=".3"/>
+<rect x="76" y="176" width="14" height="12" rx="2" fill="#888780" opacity=".3"/>
+<text class="ts" x="118" y="200" text-anchor="middle" fill="#185FA5" style="font-size:11px">Volume ↑ 50%+</text>
+
+<!-- Technique 2: Pullback -->
+<rect x="242" y="16" width="196" height="188" rx="8" fill="#EEEDFE" stroke="#AFA9EC" stroke-width="0.5"/>
+<text class="th" x="340" y="36" text-anchor="middle" fill="#3C3489">2. Pullback</text>
+
+<line x1="258" y1="100" x2="422" y2="100" stroke="#E24B4A" stroke-width="1.5" stroke-dasharray="5 3" opacity=".6"/>
+<text class="ts" x="426" y="103" fill="#A32D2D" style="font-size:11px">R→S</text>
+<!-- breakout then pullback then resume -->
+<path d="M 258 145 C 274 138, 284 120, 294 102 C 300 95, 308 78, 320 62 C 328 50, 340 102, 350 108 C 358 112, 366 104, 380 82 C 390 65, 402 50, 422 38"
+  fill="none" stroke="#534AB7" stroke-width="2" stroke-linecap="round"/>
+<!-- Entry on pullback -->
+<circle cx="350" cy="108" r="5" fill="#1D9E75" opacity=".9"/>
+<line x1="350" y1="114" x2="350" y2="134" stroke="#1D9E75" stroke-width="1" opacity=".5" marker-end="url(#arrow)"/>
+<text class="ts" x="362" y="142" fill="#085041" style="font-size:11px">Entrée</text>
+<text class="ts" x="340" y="200" text-anchor="middle" fill="#534AB7" style="font-size:11px">Stop serré sous support</text>
+
+<!-- Technique 3: Progressive -->
+<rect x="464" y="16" width="196" height="188" rx="8" fill="#EAF3DE" stroke="#9FE1CB" stroke-width="0.5"/>
+<text class="th" x="562" y="36" text-anchor="middle" fill="#085041">3. Progressive</text>
+
+<line x1="480" y1="100" x2="644" y2="100" stroke="#E24B4A" stroke-width="1.5" stroke-dasharray="5 3" opacity=".6"/>
+<!-- Price -->
+<path d="M 480 145 C 496 138, 510 108, 518 102 C 524 98, 530 104, 542 100 C 550 96, 556 72, 572 58 C 582 48, 594 42, 644 34"
+  fill="none" stroke="#1D9E75" stroke-width="2" stroke-linecap="round"/>
+<!-- 3 entry points -->
+<circle cx="518" cy="102" r="4" fill="#1D9E75" opacity=".7"/>
+<text class="ts" x="520" y="94" fill="#085041" style="font-size:10px">⅓</text>
+<circle cx="542" cy="100" r="4" fill="#1D9E75" opacity=".85"/>
+<text class="ts" x="544" y="92" fill="#085041" style="font-size:10px">⅓</text>
+<circle cx="570" cy="60" r="4" fill="#1D9E75"/>
+<text class="ts" x="572" y="52" fill="#085041" style="font-size:10px">⅓</text>
+<text class="ts" x="562" y="200" text-anchor="middle" fill="#085041" style="font-size:11px">Réduit le risque de mauvais timing</text>
+
+</svg>
+<p class="fig-caption">Fig. 2 — Les 3 techniques d'entrée. De gauche à droite : breakout direct, pullback sur support, entrée fractionnée en 3 tranches.</p>
+</div>
+
+    <div class="sub">
+      <h3 class="sub-title">Comment identifier un fakeout</h3>
+      <div class="notion">
+        <div class="notion-title">Signaux d'alerte d'un fakeout</div>
+        <ul>
+          <li>Volume faible au moment de la cassure (pas de conviction des acheteurs)</li>
+          <li>Clôture de la séance sous le niveau franchi (le marché a rejeté la cassure)</li>
+          <li>Réintégration rapide du range dans les 1 à 3 séances suivantes</li>
+          <li>COT en contradiction : les Large Specs réduisent leurs longs au moment du breakout</li>
+        </ul>
+        <p>La meilleure protection : attendre la clôture au-dessus du niveau (pas juste l'intraday) et vérifier le volume.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION D -->
+  <section class="section" id="viid">
+    <div class="section-label">Section D</div>
+    <h2 class="section-title">L'Exposant de Hurst : Identifier le Régime de Marché</h2>
+    <div class="section-intro">L'exposant de Hurst répond à une question que les indicateurs traditionnels ne posent jamais : quel est le régime statistique actuel de cet actif ? Est-il en tendance, en mean reversion, ou en marche aléatoire ? La réponse détermine directement quelle stratégie déployer.</div>
+
+    <div class="sub">
+      <h3 class="sub-title">Principe et calcul — La méthode R/S</h3>
+      <p>L'exposant de Hurst mesure la mémoire d'une série temporelle — la tendance d'une série à persister dans sa direction ou à revenir vers sa moyenne. Il est calculé par la méthode Rescaled Range (R/S), qui compare l'amplitude des fluctuations d'une série à sa déviation standard sur différentes fenêtres temporelles.</p>
+      <div class="notion">
+        <div class="notion-title">Calcul de l'exposant de Hurst — Méthode R/S</div>
+        <ul>
+          <li><strong>1.</strong> Diviser la série de prix en sous-périodes de longueur n</li>
+          <li><strong>2.</strong> Pour chaque sous-période, calculer : R = max cumulé − min cumulé (Range) · S = écart-type des variations</li>
+          <li><strong>3.</strong> Calculer E[R/S] pour différentes valeurs de n</li>
+          <li><strong>4.</strong> Régresser log(E[R/S]) sur log(n) → la pente est l'exposant H</li>
+        </ul>
+        <p><strong>H &lt; 0.5</strong> : mean-reversion · <strong>H ≈ 0.5</strong> : marche aléatoire · <strong>H &gt; 0.5</strong> : tendance persistante</p>
+        <p>Règle pratique : calculer H sur les 100 à 500 dernières périodes selon l'horizon de trading.</p>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Calibrage et table de décision</h3>
+      <p>La recommandation pratique : calculer H sur deux horizons simultanément (ex : 100 jours et 250 jours). Si les deux convergent, le régime est clair. S'ils divergent, le régime est en transition — attendre la convergence avant d'entrer.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>H calculé</th><th>Régime</th><th>Stratégie adaptée</th><th>Indicateurs complémentaires</th></tr></thead>
+          <tbody>
+            <tr><td><strong>H &gt; 0.6</strong></td><td>Tendance forte</td><td>Trend following — entrer au breakout, pyramider</td><td>MM200 cassée, COT accumulation Large Specs</td></tr>
+            <tr><td><strong>0.55 &lt; H &lt; 0.6</strong></td><td>Tendance modérée</td><td>Trend following prudent — entrée fractionnée</td><td>Volume de confirmation, RSI non extrême</td></tr>
+            <tr><td><strong>0.45 &lt; H &lt; 0.55</strong></td><td>Régime ambigu</td><td>Attente ou carry trade pur</td><td>Hurst sur deux horizons divergents</td></tr>
+            <tr><td><strong>0.4 &lt; H &lt; 0.45</strong></td><td>Mean reversion modérée</td><td>Mean reversion — entrer sur les extrêmes</td><td>RSI &lt; 30 ou &gt; 70, ancre fondamentale solide</td></tr>
+            <tr><td><strong>H &lt; 0.4</strong></td><td>Mean reversion forte</td><td>Mean reversion — taille pleine sur les extrêmes</td><td>Half-life courte, COT retail à l'extrême</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="module-figure">
+<svg width="100%" viewBox="0 0 680 210" style="display:block">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+
+<!-- H < 0.5 Mean reversion -->
+<rect x="20" y="16" width="196" height="164" rx="8" fill="#EEEDFE" stroke="#AFA9EC" stroke-width="0.5"/>
+<text class="th" x="118" y="38" text-anchor="middle" fill="#3C3489">H &lt; 0.5</text>
+<text class="ts" x="118" y="54" text-anchor="middle" fill="#534AB7">Mean-reversion</text>
+<!-- oscillating price -->
+<line x1="36" y1="108" x2="210" y2="108" stroke="#534AB7" stroke-width="1" stroke-dasharray="5 3" opacity=".35"/>
+<path d="M 36 108 C 52 80, 64 75, 76 108 C 88 140, 100 145, 112 108 C 124 72, 136 68, 148 108 C 160 148, 172 152, 184 108 C 192 80, 200 75, 210 108"
+  fill="none" stroke="#534AB7" stroke-width="2.5" stroke-linecap="round"/>
+<text class="ts" x="118" y="162" text-anchor="middle" fill="#534AB7">Acheter les creux · vendre les sommets</text>
+
+<!-- H ≈ 0.5 Random walk -->
+<rect x="242" y="16" width="196" height="164" rx="8" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="0.5"/>
+<text class="th" x="340" y="38" text-anchor="middle" fill="#2C2C2A">H ≈ 0.5</text>
+<text class="ts" x="340" y="54" text-anchor="middle" fill="#5F5E5A">Marche aléatoire</text>
+<path d="M 258 108 C 268 95, 276 112, 286 98 C 296 84, 306 120, 316 104 C 326 88, 336 118, 346 102 C 356 86, 366 110, 376 94 C 386 78, 396 112, 406 100 C 416 88, 422 105, 422 108"
+  fill="none" stroke="#888780" stroke-width="2.5" stroke-linecap="round"/>
+<text class="ts" x="340" y="162" text-anchor="middle" fill="#5F5E5A">Aucun avantage statistique — attendre</text>
+
+<!-- H > 0.5 Trend -->
+<rect x="464" y="16" width="196" height="164" rx="8" fill="#E1F5EE" stroke="#9FE1CB" stroke-width="0.5"/>
+<text class="th" x="562" y="38" text-anchor="middle" fill="#085041">H &gt; 0.5</text>
+<text class="ts" x="562" y="54" text-anchor="middle" fill="#0F6E56">Tendance persistante</text>
+<path d="M 480 155 C 496 148, 512 138, 528 124 C 544 110, 558 96, 574 80 C 590 64, 606 52, 644 34"
+  fill="none" stroke="#1D9E75" stroke-width="2.5" stroke-linecap="round"/>
+<text class="ts" x="562" y="162" text-anchor="middle" fill="#085041">Trend following · pyramider</text>
+
+</svg>
+<p class="fig-caption">Fig. 3 — Les 3 régimes de prix selon l'exposant de Hurst. H > 0.5 : tendance persistante. H ≈ 0.5 : marche aléatoire. H < 0.5 : mean reversion.</p>
+</div>
+  </section>
+
+  <!-- SECTION E -->
+  <section class="section" id="viie">
+    <div class="section-label">Section E</div>
+    <h2 class="section-title">Modèles AR, Half-Life et GARCH</h2>
+    <div class="section-intro">L'exposant de Hurst identifie le régime. Les modèles AR et GARCH permettent d'aller plus loin : quantifier précisément la durée de détention attendue d'une position mean reversion, et évaluer si la volatilité actuelle est en expansion ou en contraction — ce qui détermine directement le sizing optimal.</div>
+
+    <div class="sub">
+      <h3 class="sub-title">Le modèle AR(1) et la half-life</h3>
+      <p>Un modèle autorégressif d'ordre 1 — AR(1) — modélise le prix d'un actif comme une fonction linéaire de sa valeur précédente : <strong>P(t) = α × P(t−1) + ε(t)</strong>. Le coefficient α mesure la persistance de la série. La notion de <strong>half-life</strong> découle directement de ce coefficient : c'est le temps moyen nécessaire pour qu'un écart à la moyenne soit réduit de moitié.</p>
+      <div class="notion">
+        <div class="notion-title">Half-Life of Mean Reversion — Calcul et application</div>
+        <p><code>half-life = −ln(2) / ln(α)</code></p>
+        <ul>
+          <li>α = 0.90 → half-life ≈ <strong>6.6 périodes</strong></li>
+          <li>α = 0.75 → half-life ≈ <strong>2.4 périodes</strong></li>
+          <li>α = 0.50 → half-life = <strong>1.0 période</strong> (retour en 1 période)</li>
+        </ul>
+        <p>Application : si les données sont en jours et α = 0.90 → durée de détention cible : 7 à 14 jours. La half-life définit aussi le <strong>stop temporel</strong> : si après 2× la half-life la position ne revient pas à l'équilibre, la thèse mean reversion est peut-être invalide.</p>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Le modèle GARCH(1,1)</h3>
+      <p>Le modèle AR(1) suppose une volatilité constante dans le temps — ce qui est rarement vrai. On observe empiriquement que les périodes de forte volatilité ont tendance à se regrouper (clustering de volatilité). Le modèle GARCH reconnaît que la volatilité elle-même est une série temporelle avec sa propre persistance.</p>
+      <div class="notion">
+        <div class="notion-title">GARCH(1,1) — La formule et son interprétation</div>
+        <p><code>σ²(t) = ω + α × ε²(t−1) + β × σ²(t−1)</code></p>
+        <ul>
+          <li><strong>ω</strong> : terme constant — niveau de variance de long terme</li>
+          <li><strong>ε²(t−1)</strong> : carré du choc de prix de la période précédente (la "surprise" du marché)</li>
+          <li><strong>α</strong> : réactivité aux chocs récents (typiquement 0.05 à 0.15)</li>
+          <li><strong>β</strong> : persistance de la volatilité (typiquement 0.80 à 0.90)</li>
+          <li><strong>α + β &lt; 1</strong> : condition de stationnarité — la volatilité revient à sa moyenne de long terme</li>
+        </ul>
+        <p><strong>Application au sizing :</strong> quand la variance GARCH est en hausse, réduire la taille de la position pour maintenir un risque en euros constant. Quand la variance est basse et stable, dimensionner plus agressivement.</p>
+      </div>
+    </div>
+    <div class="module-figure">
+<svg width="100%" viewBox="0 0 680 230" style="display:block">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+
+<!-- Left: AR(1) half-life -->
+<rect x="20" y="16" width="300" height="192" rx="8" fill="#ffffff" stroke="rgba(19,18,18,.12)" stroke-width="0.5"/>
+<text class="th" x="170" y="38" text-anchor="middle">AR(1) — Retour à la moyenne</text>
+<line x1="40" y1="160" x2="310" y2="160" stroke="var(--t)" stroke-width="1" opacity=".2"/>
+<line x1="40" y1="60" x2="40" y2="160" stroke="var(--t)" stroke-width="1" opacity=".2"/>
+
+<!-- α = 0.90 (slow) green -->
+<path d="M 40 60 C 80 62, 100 68, 130 80 C 155 90, 175 105, 200 120 C 220 132, 245 148, 270 157 C 285 161, 300 162, 315 162"
+  fill="none" stroke="#1D9E75" stroke-width="2" stroke-linecap="round"/>
+<text class="ts" x="316" y="162" fill="#085041" style="font-size:11px">α=0.90</text>
+<text class="ts" x="316" y="174" fill="#085041" style="font-size:11px">HL≈6.6p</text>
+
+<!-- α = 0.75 (medium) amber -->
+<path d="M 40 60 C 65 68, 85 85, 110 105 C 130 120, 155 138, 175 150 C 195 158, 220 162, 250 162"
+  fill="none" stroke="#EF9F27" stroke-width="2" stroke-linecap="round"/>
+<text class="ts" x="252" y="156" fill="#633806" style="font-size:11px">α=0.75 HL≈2.4p</text>
+
+<!-- α = 0.50 (fast) blue -->
+<path d="M 40 60 C 55 80, 70 108, 90 130 C 108 148, 130 160, 160 162"
+  fill="none" stroke="#378ADD" stroke-width="2" stroke-linecap="round"/>
+<text class="ts" x="162" y="155" fill="#0C447C" style="font-size:11px">α=0.50 HL=1p</text>
+
+<!-- equilibrium line -->
+<line x1="40" y1="162" x2="315" y2="162" stroke="var(--t)" stroke-width="1" stroke-dasharray="4 3" opacity=".3"/>
+<text class="ts" x="44" y="158" fill="var(--text-3)" style="font-size:10px">équilibre</text>
+<text class="ts" x="44" y="56" fill="var(--text-3)" style="font-size:10px">écart</text>
+
+<!-- Right: GARCH clustering -->
+<rect x="348" y="16" width="312" height="192" rx="8" fill="#ffffff" stroke="rgba(19,18,18,.12)" stroke-width="0.5"/>
+<text class="th" x="504" y="38" text-anchor="middle">GARCH(1,1) — Clustering volatilité</text>
+
+<line x1="368" y1="120" x2="644" y2="120" stroke="var(--t)" stroke-width="1" opacity=".2" stroke-dasharray="3 3"/>
+<line x1="368" y1="50" x2="368" y2="185" stroke="var(--t)" stroke-width="1" opacity=".2"/>
+
+<!-- returns path (noisy) with clustering visible -->
+<path d="M 368 120 C 378 118, 382 122, 386 116 C 390 110, 392 124, 396 120 
+  C 402 115, 406 118, 410 122 C 412 124, 414 118, 416 120
+  C 425 80, 430 48, 435 95 C 440 140, 445 160, 450 80
+  C 455 50, 460 90, 465 140 C 470 170, 475 100, 480 120
+  C 488 118, 492 122, 496 118 C 500 115, 502 122, 506 120
+  C 514 118, 518 122, 522 116 C 526 110, 528 125, 532 120
+  C 536 115, 540 118, 544 122"
+  fill="none" stroke="#888780" stroke-width="1.5" stroke-linecap="round"/>
+
+<!-- Clustering zone highlight -->
+<rect x="420" y="46" width="64" height="136" rx="4" fill="#E24B4A" fill-opacity=".08" stroke="#E24B4A" stroke-width="0.5" stroke-dasharray="4 2" opacity=".7"/>
+<text class="ts" x="452" y="194" text-anchor="middle" fill="#A32D2D" style="font-size:11px">Zone haute vol.</text>
+
+<text class="ts" x="374" y="108" fill="var(--text-3)" style="font-size:10px">0</text>
+<text class="ts" x="504" y="204" text-anchor="middle" fill="var(--text-3)" style="font-size:11px">La volatilité se regroupe — GARCH l'anticipe</text>
+
+</svg>
+<p class="fig-caption">Fig. 4 — À gauche : retour à la moyenne selon le coefficient α — plus α est proche de 1, plus la half-life est longue. À droite : clustering de volatilité GARCH(1,1) — les zones rouges montrent les périodes où la volatilité se regroupe.</p>
+</div>
+  </section>
+
+  <!-- SECTION F -->
+  <section class="section" id="viif">
+    <div class="section-label">Section F</div>
+    <h2 class="section-title">Construire et Documenter un Plan de Trade</h2>
+    <div class="section-intro">Une thèse d'investissement sans plan de trade est une intention, pas une décision. Le plan de trade est le document qui transforme une conviction fondamentale en action précise et reproductible — rédigé à froid, il est la référence objective une fois la position ouverte.</div>
+
+    <div class="sub">
+      <h3 class="sub-title">Les 5 éléments du plan de trade</h3>
+      <ul class="styled-list">
+        <li><strong>Élément 1 — Point d'entrée :</strong> le prix exact ou la condition de déclenchement. Ce n'est pas "autour de 150" — c'est soit un prix précis, soit une condition de marché (entrée à la clôture si la séance clôture au-dessus de 152 avec un volume &gt; 150% de la moyenne). La précision force à réfléchir au timing plutôt qu'à entrer impulsivement.</li>
+        <li><strong>Élément 2 — Stop-loss :</strong> le niveau à partir duquel la thèse est invalidée — et la position fermée sans discussion. Ce n'est pas un chiffre arbitraire : c'est un niveau fondamental ou technique au-delà duquel le raisonnement ne tient plus.</li>
+        <li><strong>Élément 3 — Objectif de prix :</strong> le niveau cible basé sur la valorisation fondamentale ou un niveau technique majeur. Il définit le rapport risque/rendement de la position.</li>
+        <li><strong>Élément 4 — Taille de position :</strong> calculée mécaniquement à partir du stop-loss et de la règle de risque maximale par trade (Module VIII). La taille est calculée pour que la perte maximale si le stop est atteint représente 1 à 2% du portefeuille.</li>
+        <li><strong>Élément 5 — Durée de détention anticipée :</strong> pour les positions mean reversion, estimée par la half-life AR(1). Au-delà de 2 fois la half-life sans retour à l'équilibre, il faut réévaluer la thèse.</li>
+      </ul>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Stop fondamental vs stop technique</h3>
+      <div class="notion">
+        <div class="notion-title">La distinction cruciale</div>
+        <p><strong>Stop fondamental</strong> : invalide la thèse. Exemple — on est long USD/JPY sur la thèse d'un différentiel de taux Fed/BoJ favorable. Stop fondamental : la BoJ annonce une hausse de taux surprise de 50bp → le différentiel se réduit brutalement → on ferme la position indépendamment du prix.</p>
+        <p><strong>Stop technique</strong> : invalide le signal d'entrée. Exemple — on entre sur un breakout de la MM200 à 148. Stop technique : retour sous 145 → le signal d'entrée était faux → on ferme la position, mais la thèse fondamentale peut rester valide pour une prochaine entrée.</p>
+        <p><strong>Règle absolue : le stop est défini avant l'entrée. Il ne se modifie jamais à la baisse après l'entrée.</strong></p>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Placer son stop avec des outils quantitatifs</h3>
+      <div class="notion">
+        <div class="notion-title">Points pivots — Niveaux calculés, non choisis</div>
+        <p>Les points pivots sont des niveaux de support et résistance calculés à partir des données de la séance précédente :</p>
+        <p><code>P = (Haut + Bas + Clôture) / 3</code></p>
+        <p><code>R1 = 2P − Bas · S1 = 2P − Haut · R2 = P + (Haut−Bas) · S2 = P − (Haut−Bas)</code></p>
+        <p>Usage en stop-loss : placer le stop juste sous le support pivot S1 (position longue) ou juste au-dessus de R1 (position courte). Ces niveaux sont suivis par de nombreux participants institutionnels — un franchissement confirme que la structure de prix s'est brisée.</p>
+      </div>
+      <div class="notion">
+        <div class="notion-title">ATR — Adapter le stop à la volatilité réelle</div>
+        <p><code>ATR(N) = moyenne des True Ranges sur N périodes</code></p>
+        <p><code>True Range = max(Haut−Bas, |Haut−Clôture préc.|, |Bas−Clôture préc.|)</code></p>
+        <p>Un stop placé à 1.5× ou 2.5× l'ATR(14) sous le point d'entrée est un stop qui respire avec la volatilité naturelle de l'actif — il n'est pas déclenché par le bruit normal du marché. En période GARCH élevé, l'ATR augmente et le stop s'élargit en conséquence.</p>
+        <p><strong>Règle d'or :</strong> si votre stop est déclenché plus de 30% du temps avant que l'objectif soit atteint, il est trop serré — recalculez avec 2× ATR.</p>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Cas pratique 1 — Le yen japonais (USD/JPY) 2021-2024</h3>
+      <p>Le yen japonais illustre la convergence des couches d'analyse et la construction d'un plan de trade complet. Entre 2021 et 2024, le yen a connu l'une des dépréciations les plus importantes de son histoire récente, passant de 103 à un pic de 161 en juillet 2024 (+56%). La cause : le différentiel massif entre les taux américains (0% → 5.25%) et japonais (-0.1%, maintenu par le YCC de la BoJ).</p>
+      <p>La thèse de retournement reposait sur 4 couches convergentes : sous-évaluation PPA extrême (OCDE : 100-110 vs cours 155-160), changement imminent de politique BoJ (catalyseur), COT montrant un positioning short JPY historiquement extrême chez le retail, et fin de cycle de resserrement de la Fed.</p>
+      <div class="table-wrap">
+        <table class="case-table">
+          <tbody>
+            <tr><td>Thèse</td><td>JPY structurellement sous-évalué (PPA OCDE : 100–110 USD/JPY vs cours 155–160). Catalyseur : fin du YCC et premières hausses BoJ. Réduction du différentiel Fed/BoJ.</td></tr>
+            <tr><td>Stratégie</td><td>Mean reversion vers la PPA + dénouement du carry trade. Position : LONG JPY / SHORT USD (vendre USD/JPY)</td></tr>
+            <tr><td>Point d'entrée</td><td>Vente de USD/JPY à 155.00 après confirmation d'une clôture hebdomadaire sous la MM50 hebdomadaire, avec volume supérieur à la moyenne. Signal COT : Large Specs commencent à réduire le short JPY.</td></tr>
+            <tr><td>Stop-loss</td><td>159.50 — au-dessus du dernier pic de résistance majeur et du niveau psychologique de 160. Stop fondamental : si la BoJ revient sur sa normalisation. <span class="verdict v-red">Règle absolue</span></td></tr>
+            <tr><td>Objectif primaire</td><td>142.00 — niveau de support historique majeur et cible COT (dénouement du carry retail)</td></tr>
+            <tr><td>Objectif secondaire</td><td>130.00 — zone PPA OCDE à moyen terme</td></tr>
+            <tr><td>Taille de position</td><td>Calculée pour que si le stop à 159.50 est atteint, la perte représente 1.5% du portefeuille total (Module VIII)</td></tr>
+            <tr><td>Durée anticipée</td><td>3 à 9 mois — half-life AR(1) sur données hebdomadaires USD/JPY ≈ 6–8 semaines</td></tr>
+            <tr><td>Risk/Reward</td><td>Entrée 155, stop 159.50 (−4.50), objectif 142 (+13.00) → <span class="verdict v-green">R/R = 2.9:1</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="module-figure">
+<svg width="100%" viewBox="0 0 680 260" style="display:block">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
 
 <!-- Axes -->
 <line x1="60" y1="20" x2="60" y2="220" stroke="var(--t)" stroke-width="1" opacity=".25"/>
