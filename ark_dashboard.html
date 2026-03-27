@@ -1301,7 +1301,10 @@ async function activateCode() {
     return;
   }
 
+  // Vider la progression du localStorage pour repartir de zéro
+  localStorage.removeItem('ark_progress');
   await loadAccessStatus();
+  updateDashboard({ current: 0, done: [] });
 }
 
 // ── Init ──
