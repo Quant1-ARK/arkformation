@@ -3,180 +3,681 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ARK — Module 04 · Analyse des Actifs</title>
+<title>Module 04 — Géopolitique Appliquée</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #f5f5f5;
-    --border: rgba(19,18,18,.41);
-    --border-active: rgba(255,255,255,.14);
-    --text-1: #000;
-    --text-2: #59595e;
-    --text-3: #48484c;
-    --accent: #0071e3;
-    --accent-glow: rgba(0,113,227,.18);
-    --accent-soft: rgba(0,113,227,.12);
-    --gold: #c9a84c;
-    --gold-soft: rgba(201,168,76,.1);
+    --bg:#f5f5f5;--surface:#ffffff;--border:rgba(19,18,18,.12);
+    --text-1:#0a0a0a;--text-2:#59595e;--text-3:#8a8a8e;
+    --accent:#0071e3;--accent-soft:rgba(0,113,227,.08);
+    --green:#30d158;--yellow:#ffd60a;--red:#ff453a;
   }
-
   *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--bg);color:var(--text-1);font-family:'DM Sans',-apple-system,sans-serif;font-size:15px;-webkit-font-smoothing:antialiased;padding:48px clamp(24px,5vw,80px) 80px;overflow-y:auto;min-height:100vh}
-  @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-  .page{animation:fadeIn .3s ease}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text-1);font-family:'DM Sans',-apple-system,sans-serif;font-size:15px;line-height:1.75;-webkit-font-smoothing:antialiased}
+  .page{max-width:780px;margin:0 auto;padding:48px 24px 120px}
 
-  /* VIDEO */
-  .mod-video{margin-bottom:36px;border-radius:16px;overflow:hidden;aspect-ratio:16/9;background:#1a1a1a;display:none}
-  .mod-video.has-video{display:block}
-  .mod-video iframe{width:100%;height:100%;border:none}
+  .mod-header{margin-bottom:56px;padding-bottom:40px;border-bottom:1px solid var(--border)}
+  .mod-kicker{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+  .mod-title{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(30px,5vw,46px);line-height:1.1;margin-bottom:20px}
+  .mod-objective{background:var(--accent-soft);border-left:3px solid var(--accent);border-radius:0 10px 10px 0;padding:16px 20px;font-size:14px;color:var(--text-2);line-height:1.65;font-style:italic}
 
-  /* MODULE HEADER */
-  .mod-number{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;display:flex;align-items:center;gap:8px}
-  .mod-number::before{content:'';display:inline-block;width:20px;height:1px;background:var(--accent)}
-  .mod-title{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(28px,4vw,44px);font-weight:400;line-height:1.15;letter-spacing:-.01em;color:var(--text-1);margin-bottom:16px}
-  .mod-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:28px}
-  .mod-tag{font-size:11px;font-weight:500;color:var(--accent);background:var(--accent-soft);padding:3px 10px;border-radius:980px;border:1px solid rgba(0,113,227,.15)}
-  .mod-divider{height:1px;background:var(--border);margin:28px 0}
-  .mod-intro{font-size:17px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:36px;font-style:italic;border-left:2px solid var(--accent);padding-left:20px}
-  .mod-section-title{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:16px}
+  .toc{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px 28px;margin-bottom:56px}
+  .toc-title{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:16px}
+  .toc-list{list-style:none;display:flex;flex-direction:column;gap:6px}
+  .toc-list li a{display:flex;align-items:baseline;gap:10px;text-decoration:none;color:var(--text-2);font-size:13.5px;transition:color .15s}
+  .toc-list li a:hover{color:var(--accent)}
+  .toc-letter{font-size:10px;font-weight:700;color:var(--accent);background:var(--accent-soft);border-radius:4px;padding:1px 6px;flex-shrink:0}
 
-  /* OBJECTIVES */
-  .mod-objectives{list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:36px}
-  .mod-objectives li{display:flex;align-items:flex-start;gap:12px;font-size:14px;color:var(--text-2);line-height:1.6}
-  .obj-check{width:18px;height:18px;border-radius:50%;border:1px solid var(--border-active);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--text-3)}
+  .section{margin-bottom:72px}
+  .section-label{display:inline-flex;align-items:center;gap:8px;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);border-radius:6px;padding:4px 10px;margin-bottom:20px}
+  .section-title{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(22px,3.5vw,30px);line-height:1.2;margin-bottom:28px}
+  .section-intro{font-size:15px;color:var(--text-2);line-height:1.75;margin-bottom:32px;padding-bottom:28px;border-bottom:1px solid var(--border)}
 
-  /* CONCEPTS */
-  .mod-concepts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:36px}
-  .concept-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px;transition:border-color .2s,background .2s}
-  .concept-card:hover{border-color:var(--border-active);background:var(--bg)}
-  .concept-icon{font-size:20px;margin-bottom:8px}
-  .concept-name{font-size:13px;font-weight:600;color:var(--text-1);margin-bottom:4px}
-  .concept-desc{font-size:12px;color:var(--text-2);line-height:1.5;font-weight:300}
+  .sub{margin-bottom:40px;border-left:3px solid var(--accent);padding-left:20px}
+  .sub-title{font-family:'DM Serif Display',Georgia,serif;font-size:20px;margin-bottom:16px}
+  .sub p{color:var(--text-2);margin-bottom:14px}
+  .sub p:last-child{margin-bottom:0}
+  .sub strong{color:var(--text-1)}
 
-  /* QUOTE */
-  .mod-quote{background:var(--gold-soft);border:1px solid rgba(201,168,76,.15);border-radius:16px;padding:24px 28px;margin-bottom:36px}
-  .mod-quote-text{font-family:'DM Serif Display',Georgia,serif;font-size:18px;line-height:1.6;color:var(--gold);margin-bottom:8px;font-style:italic}
-  .mod-quote-source{font-size:11px;color:var(--text-3);letter-spacing:.05em;text-transform:uppercase}
+  .styled-list{list-style:none;margin:16px 0 20px;display:flex;flex-direction:column;gap:10px}
+  .styled-list li{color:var(--text-2);font-size:14px;line-height:1.65}
+  .styled-list li strong{color:var(--text-1)}
 
-  /* FIGURES & TABLES */
-  .mod-figure{margin:28px 0;text-align:center}
-  .mod-figure img{max-width:100%;height:auto;border-radius:12px;border:1px solid var(--border);cursor:zoom-in;transition:opacity .2s,transform .2s}
-  .mod-figure img:hover{opacity:.9;transform:scale(1.01)}
-  .mod-figure figcaption{margin-top:10px;font-size:12px;color:var(--text-3);font-style:italic;line-height:1.5}
+  .callout{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--yellow);border-radius:0 10px 10px 0;padding:14px 18px;margin:24px 0;font-size:13.5px;color:var(--text-2);font-style:italic}
+  .callout.blue{border-left-color:var(--accent)}
+  .callout.green{border-left-color:var(--green)}
+  .callout.red{border-left-color:var(--red)}
 
-  /* LIGHTBOX */
-  .lightbox{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:32px;opacity:0;pointer-events:none;transition:opacity .25s ease}
-  .lightbox.open{opacity:1;pointer-events:all}
-  .lightbox-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(4px)}
-  .lightbox-img-wrap{position:relative;z-index:1;max-width:90vw;max-height:88vh;display:flex;flex-direction:column;align-items:center;gap:14px;transform:scale(.94);transition:transform .25s ease}
-  .lightbox.open .lightbox-img-wrap{transform:scale(1)}
-  .lightbox-img-wrap img{max-width:100%;max-height:80vh;height:auto;border-radius:14px;box-shadow:0 32px 80px rgba(0,0,0,.5);display:block}
-  .lightbox-caption{font-size:13px;color:rgba(255,255,255,.65);font-style:italic;text-align:center;max-width:640px;line-height:1.5}
-  .lightbox-close{position:absolute;top:-14px;right:-14px;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s;line-height:1}
-  .lightbox-close:hover{background:rgba(255,255,255,.25)}
+  /* Power cards grid */
+  .power-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:28px}
+  .power-header{display:flex;align-items:baseline;gap:12px;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--border)}
+  .power-flag{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+  .power-name{font-family:'DM Serif Display',Georgia,serif;font-size:18px}
+  .power-body p{color:var(--text-2);font-size:14px;line-height:1.7;margin-bottom:10px}
+  .power-body p:last-child{margin-bottom:0}
+  .power-body strong{color:var(--text-1)}
+  .power-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+  .tag{font-size:11px;font-weight:600;padding:3px 9px;border-radius:5px;letter-spacing:.04em}
+  .tag.opp{background:#EAF3DE;color:#27500A}
+  .tag.risk{background:#FCEBEB;color:#791F1F}
 
-  .mod-table-wrap{overflow-x:auto;margin:24px 0;border-radius:12px;border:1px solid var(--border)}
-  .mod-table{width:100%;border-collapse:collapse;font-size:13px}
-  .mod-table th{background:var(--accent-soft);color:var(--accent);font-weight:600;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:10px 14px;text-align:left;border-bottom:1px solid var(--border)}
-  .mod-table td{padding:10px 14px;color:var(--text-2);border-bottom:1px solid var(--border);vertical-align:top;line-height:1.6;font-weight:300}
-  .mod-table tr:last-child td{border-bottom:none}
-  .mod-table td strong{color:var(--text-1);font-weight:600}
+  /* Table */
+  .table-wrap{overflow-x:auto;margin:20px 0 28px;border-radius:12px;border:1px solid var(--border)}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  thead tr{background:var(--accent-soft)}
+  thead th{padding:10px 14px;text-align:left;font-size:11px;font-weight:700;letter-spacing:.05em;color:var(--accent);white-space:nowrap}
+  tbody tr{border-top:1px solid var(--border)}
+  tbody tr:hover{background:rgba(0,0,0,.02)}
+  tbody td{padding:10px 14px;color:var(--text-2);vertical-align:top;line-height:1.55}
+  tbody td strong{color:var(--text-1)}
 
-  /* MODULE BODY */
-  .mod-body{margin-top:40px}
-  .mod-body h2{font-family:'DM Serif Display',Georgia,serif;font-size:22px;font-weight:400;color:var(--text-1);margin:44px 0 14px;padding-top:12px;border-top:1px solid var(--border)}
-  .mod-body h3{font-size:15px;font-weight:600;color:var(--text-1);margin:28px 0 10px}
-  .mod-body p{font-size:15px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:16px}
-  .mod-body ul,.mod-body ol{margin:0 0 20px;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:10px}
-  .mod-body li{position:relative;padding-left:22px;font-size:14px;font-weight:300;color:var(--text-2);line-height:1.7;overflow-wrap:break-word}
-  .mod-body li::before{content:'—';color:var(--accent);font-size:13px;position:absolute;left:0;top:0;line-height:1.7}
-  .mod-body li strong,.mod-body strong{color:var(--text-1);font-weight:600}
-  .mod-body blockquote{border-left:2px solid var(--accent);padding:10px 0 10px 20px;margin:20px 0;font-style:italic;font-weight:300;color:var(--text-2);font-size:14px;line-height:1.7}
-  .formula-box,.warning-box,.summary-box{border-radius:12px;padding:16px 20px;margin:20px 0;font-size:14px;line-height:1.7}
-  .formula-box{background:var(--accent-soft);border:1px solid rgba(0,113,227,.15);font-weight:500;font-style:italic}
-  .warning-box{background:rgba(255,149,0,.08);border:1px solid rgba(255,149,0,.2);color:var(--text-2)}
-  .summary-box{background:var(--gold-soft);border:1px solid rgba(201,168,76,.15);font-style:italic;color:var(--text-2)}
-  .profile-block{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:20px;margin:16px 0}
-  .profile-block h3{margin-top:0}
-  .profile-meta{font-size:12px;color:var(--accent);font-style:italic;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+  .module-figure{margin:28px 0 36px;background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;padding:16px}
+  .module-figure svg{width:100%;display:block}
+  .fig-caption{margin-top:10px;font-size:12px;color:var(--text-3);font-style:italic;text-align:center}
 
-  /* NAV */
-  .mod-nav{display:flex;justify-content:space-between;align-items:center;margin-top:52px;padding-top:24px;border-top:1px solid var(--border);gap:12px}
-  .mod-nav-btn{display:flex;align-items:center;gap:8px;padding:10px 16px;border:1px solid var(--border);border-radius:10px;background:var(--bg);color:var(--text-2);cursor:pointer;font-size:13px;font-weight:500;transition:all .15s;font-family:inherit}
-  .mod-nav-btn:hover:not(:disabled){border-color:var(--border-active);color:var(--text-1)}
-  .mod-nav-btn:disabled{opacity:.3;cursor:default}
-  .mod-nav-label{font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em}
+  .highlight{background:var(--accent-soft);border:1px solid rgba(0,113,227,.15);border-radius:12px;padding:20px 24px;margin:20px 0}
+  .highlight p{color:var(--text-2);margin-bottom:8px;font-size:14px;line-height:1.7}
+  .highlight p:last-child{margin-bottom:0}
+  .highlight p strong{color:var(--text-1)}
 
-  @media(max-width:768px){
-    body{padding:32px 20px 60px}
-  }
+  .synthesis{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px;margin-top:64px}
+  .synthesis-title{font-family:'DM Serif Display',Georgia,serif;font-size:22px;margin-bottom:20px}
+  .synthesis p{color:var(--text-2);margin-bottom:14px;line-height:1.75}
+  .synthesis p:last-child{margin-bottom:0}
+  .next-module{margin-top:24px;padding-top:20px;border-top:1px solid var(--border);font-size:13px;color:var(--text-3);font-style:italic}
+  .next-module strong{color:var(--accent);font-style:normal}
+
+  .module-nav{display:flex;justify-content:space-between;align-items:center;margin-top:64px;padding-top:32px;border-top:1px solid var(--border);gap:12px}
+  .nav-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:10px;border:1px solid var(--border);font-size:13.5px;font-weight:500;font-family:inherit;cursor:pointer;transition:all .2s;text-decoration:none;background:var(--surface);color:var(--text-1)}
+  .nav-btn:hover{border-color:var(--accent);color:var(--accent)}
+  .nav-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .nav-btn.primary:hover{background:#0077ed}
+
+  /* SVG classes */
+  .node{cursor:pointer}.node:hover{opacity:.85}
+  .arr{stroke:var(--text-3);stroke-width:1.5;fill:none}
+  .leader{stroke:var(--text-3);stroke-width:0.5;stroke-dasharray:3 3;fill:none}
+  svg text{font-family:'DM Sans',-apple-system,sans-serif;fill:var(--text-1)}
+  svg .t{font-size:14px;font-weight:400;fill:var(--text-1)}
+  svg .ts{font-size:12px;font-weight:400;fill:var(--text-2)}
+  svg .th{font-size:14px;font-weight:600;fill:var(--text-1)}
+  .c-blue rect,.c-blue circle{fill:#E6F1FB;stroke:#185FA5}
+  .c-blue .th,.c-blue .t{fill:#0C447C}.c-blue .ts{fill:#185FA5}
+  .c-teal rect,.c-teal circle{fill:#E1F5EE;stroke:#0F6E56}
+  .c-teal .th,.c-teal .t{fill:#085041}.c-teal .ts{fill:#0F6E56}
+  .c-purple rect,.c-purple circle{fill:#EEEDFE;stroke:#534AB7}
+  .c-purple .th,.c-purple .t{fill:#3C3489}.c-purple .ts{fill:#534AB7}
+  .c-amber rect,.c-amber circle{fill:#FAEEDA;stroke:#854F0B}
+  .c-amber .th,.c-amber .t{fill:#633806}.c-amber .ts{fill:#854F0B}
+  .c-green rect,.c-green circle{fill:#EAF3DE;stroke:#3B6D11}
+  .c-green .th,.c-green .t{fill:#27500A}.c-green .ts{fill:#3B6D11}
+  .c-coral rect,.c-coral circle{fill:#FAECE7;stroke:#993C1D}
+  .c-coral .th,.c-coral .t{fill:#712B13}.c-coral .ts{fill:#993C1D}
 </style>
 </head>
 <body>
 <div class="page">
 
-  <!-- VIDEO: remplacer la ligne ci-dessous par <div class="mod-video has-video"><iframe src="https://www.youtube.com/embed/VOTRE_ID" allowfullscreen></iframe></div> -->
-  <div class="mod-video"></div>
+  <header class="mod-header">
+    <div class="mod-kicker">Module 04 · ARK Investor Program</div>
+    <h1 class="mod-title">Géopolitique Appliquée</h1>
+    <div class="mod-objective">Transformer un événement géopolitique en thèse d'investissement chiffrée. Comprendre les logiques stratégiques des grandes puissances, les ressources qui structurent les rapports de force, et les mécanismes par lesquels la géopolitique crée — ou détruit — de la valeur pour l'investisseur.</div>
+  </header>
 
-  <div class="mod-number">Module 04</div>
-  <h1 class="mod-title">Analyse des Actifs</h1>
-  <div class="mod-tags"><span class="mod-tag">Actions</span><span class="mod-tag">Obligations</span><span class="mod-tag">Forex</span><span class="mod-tag">Matières premières</span></div>
-  <p class="mod-intro">Actions, obligations, devises, matières premières — comprendre chaque classe d'actif, ses drivers et son comportement dans différents régimes de marché.</p>
+  <nav class="toc">
+    <div class="toc-title">Sommaire</div>
+    <ul class="toc-list">
+      <li><a href="#section-a"><span class="toc-letter">a</span>Pourquoi la géopolitique compte pour l'investisseur</a></li>
+      <li><a href="#section-b"><span class="toc-letter">b</span>Les grandes puissances et leurs logiques stratégiques</a></li>
+      <li><a href="#section-c"><span class="toc-letter">c</span>Les ressources stratégiques comme levier géopolitique</a></li>
+      <li><a href="#section-d"><span class="toc-letter">d</span>Conflits, sanctions et disruptions de marché</a></li>
+      <li><a href="#section-e"><span class="toc-letter">e</span>De l'événement géopolitique à la thèse chiffrée</a></li>
+    </ul>
+  </nav>
 
-  <div class="mod-section-title">Ce que tu vas apprendre</div>
-  <ul class="mod-objectives"><li><div class="obj-check">○</div><span>Comprendre les drivers fondamentaux de chaque classe d'actif</span></li><li><div class="obj-check">○</div><span>Analyser une action à travers ses multiples de valorisation</span></li><li><div class="obj-check">○</div><span>Lire le marché obligataire et comprendre la relation taux/prix</span></li><li><div class="obj-check">○</div><span>Identifier les facteurs géopolitiques et macro qui meuvent les devises et matières premières</span></li></ul>
+  <!-- SECTION A -->
+  <section class="section" id="section-a">
+    <div class="section-label">Section A</div>
+    <h2 class="section-title">Pourquoi la géopolitique compte pour l'investisseur</h2>
+    <div class="section-intro">La géopolitique est un catalyseur — elle n'inverse pas les tendances de fond, elle les accélère, les amplifie ou les interrompt brutalement. Le trader qui la comprend ne cherche pas à prédire les événements. Il cherche à comprendre comment les marchés réagissent à ces événements, pourquoi ils se trompent systématiquement dans un premier temps, et comment exploiter ces erreurs dans le prix.</div>
 
-  <div class="mod-divider"></div>
+    <div class="sub">
+      <h3 class="sub-title">Signal vs bruit — la première distinction</h3>
+      <p>Tous les événements géopolitiques ne méritent pas une révision de portefeuille. La grande majorité est du bruit : des tensions qui n'aboutissent pas, des déclarations qui ne se concrétisent pas, des crises qui se résolvent dans le calme. <strong>Un signal géopolitique réel répond à plusieurs critères :</strong></p>
+      <ul class="styled-list">
+        <li>Il implique des acteurs majeurs (grandes puissances, institutions multilatérales, producteurs de ressources critiques)</li>
+        <li>Il affecte directement des flux économiques mesurables : routes commerciales, chaînes d'approvisionnement, flux de capitaux, prix des matières premières</li>
+        <li>Il crée un choc ou modifie une règle du jeu établie</li>
+        <li>Il a des effets qui durent au-delà de quelques semaines</li>
+      </ul>
+      <p>Le bruit génère de la volatilité à court terme sans modifier les fondamentaux. Une déclaration belliqueuse qui ne se traduit pas en action, une élection dans un pays de taille limitée, une tension diplomatique qui suit les canaux habituels : autant d'événements qui font réagir les marchés sur 24 à 48 heures, puis qui s'absorbent.</p>
+    </div>
 
-  <div class="mod-section-title">Concepts clés</div>
-  <div class="mod-concepts-grid"><div class="concept-card"><div class="concept-icon">📈</div><div class="concept-name">Actions</div><div class="concept-desc">PER, EV/EBITDA, FCF yield — les multiples qui révèlent la valeur</div></div><div class="concept-card"><div class="concept-icon">📜</div><div class="concept-name">Obligations</div><div class="concept-desc">Duration, yield, spread de crédit — le marché qui anticipe tout</div></div><div class="concept-card"><div class="concept-icon">💱</div><div class="concept-name">Forex</div><div class="concept-desc">Différentiel de taux, flux commerciaux, sentiment — les trois piliers</div></div><div class="concept-card"><div class="concept-icon">🛢️</div><div class="concept-name">Matières premières</div><div class="concept-desc">Offre/demande physique, géopolitique, dollar — les vrais moteurs</div></div></div>
+    <div class="sub">
+      <h3 class="sub-title">Le pricing des événements géopolitiques</h3>
+      <p>Les marchés financiers sont structurellement mauvais pour pricer les événements géopolitiques — et ce pour des raisons profondes.</p>
+      <ul class="styled-list">
+        <li><strong>Ils sur-réagissent dans l'urgence.</strong> La panique, la liquidation de positions, la fuite vers les actifs refuges créent des mouvements de prix disproportionnés par rapport à l'impact fondamental réel. Les algorithmes de gestion du risque déclenchent des ventes automatiques, les gérants institutionnels réduisent leur exposition pour montrer à leurs clients qu'ils « gèrent ».</li>
+        <li><strong>Ils sous-réagissent sur la durée.</strong> Une fois le choc initial absorbé, les marchés reviennent trop vite à la normale — comme si l'événement n'avait pas eu lieu. Ils intègrent mal les effets de second et troisième ordre : réorganisations de chaînes d'approvisionnement, nouvelles alliances commerciales, investissements dans les alternatives stratégiques.</li>
+        <li><strong>Ils pricent les événements avant qu'ils se produisent.</strong> La rumeur, l'anticipation, les fuites diplomatiques se retrouvent dans les prix avant l'annonce officielle. L'investisseur qui agit à l'annonce arrive généralement trop tard.</li>
+      </ul>
+    </div>
 
-  <div class="mod-quote">
-    <div class="mod-quote-text">"Chaque actif a sa propre logique. Confondre les règles du Forex avec celles des actions, c'est perdre avant d'avoir joué."</div>
-    <div class="mod-quote-source">— ARK — Module 04</div>
+    <div class="sub">
+      <h3 class="sub-title">Les trois fenêtres d'opportunité</h3>
+      <ul class="styled-list">
+        <li><strong>Fenêtre 1 — avant le choc : l'anticipation.</strong> Quand les tensions montent mais que l'événement n'est pas encore survenu, une fenêtre d'entrée s'ouvre sur les actifs qui bénéficieront du choc. Les investisseurs les plus sophistiqués construisent des positions progressives sur l'énergie, la défense, ou l'or bien avant que la crise n'éclate.</li>
+        <li><strong>Fenêtre 2 — pendant le choc : l'opportunité contra-cyclique.</strong> La plus difficile psychologiquement, mais souvent la plus rémunératrice. Dans les jours qui suivent un événement majeur, les marchés sur-vendent des actifs de qualité par contagion. Des entreprises sans lien direct avec la crise perdent 15–30% simplement parce que les gérants liquident leurs positions risquées.</li>
+        <li><strong>Fenêtre 3 — après le choc : les effets de second ordre.</strong> La fenêtre la plus longue et la plus mal exploitée. Après la normalisation apparente, les effets structurels continuent de se déployer sur des mois ou des années. Les secteurs qui bénéficient de ces effets offrent des thèses avec un horizon de 12 à 36 mois.</li>
+      </ul>
+      <div class="callout red">Règle pratique : plus un événement géopolitique génère de couverture médiatique, plus il est probablement déjà intégré dans les prix. L'opportunité réelle est souvent dans les conséquences secondaires — moins visibles, moins médiatisées, et donc sous-évaluées.</div>
+    </div>
+<div class="module-figure">
+<svg width="100%" viewBox="0 0 680 340" style="display:block">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+
+<!-- Axes -->
+<line x1="52" y1="24" x2="52" y2="300" stroke="var(--t)" stroke-width="1" opacity=".3"/>
+<line x1="52" y1="300" x2="640" y2="300" stroke="var(--t)" stroke-width="1" opacity=".3"/>
+<text class="ts" x="36" y="28" text-anchor="middle" opacity=".4">Prix</text>
+
+<!-- Phase zones -->
+<rect x="52"  y="24" width="148" height="276" fill="#378ADD" opacity=".05"/>
+<rect x="200" y="24" width="148" height="276" fill="#E24B4A" opacity=".05"/>
+<rect x="348" y="24" width="292" height="276" fill="#1D9E75" opacity=".05"/>
+
+<!-- Phase separators -->
+<line x1="200" y1="24" x2="200" y2="300" stroke="var(--t)" stroke-width="1" stroke-dasharray="4 3" opacity=".15"/>
+<line x1="348" y1="24" x2="348" y2="300" stroke="var(--t)" stroke-width="1" stroke-dasharray="4 3" opacity=".15"/>
+
+<!-- Phase labels -->
+<text class="th" x="126" y="44" text-anchor="middle" fill="#185FA5">Fenêtre 1</text>
+<text class="ts" x="126" y="59" text-anchor="middle" fill="#185FA5">Anticipation</text>
+<text class="th" x="274" y="44" text-anchor="middle" fill="#A32D2D">Fenêtre 2</text>
+<text class="ts" x="274" y="59" text-anchor="middle" fill="#A32D2D">Choc</text>
+<text class="th" x="494" y="44" text-anchor="middle" fill="#085041">Fenêtre 3</text>
+<text class="ts" x="494" y="59" text-anchor="middle" fill="#085041">Effets de second ordre</text>
+
+<!-- Event marker -->
+<line x1="200" y1="24" x2="200" y2="300" stroke="#E24B4A" stroke-width="2" opacity=".4"/>
+<text class="ts" x="206" y="300" fill="#A32D2D" opacity=".7">Événement</text>
+
+<!-- Price curve -->
+<!-- Phase 1: progressive rise (anticipation) -->
+<path d="M 60 230 C 90 225, 120 215, 160 200 C 180 193, 195 188, 200 185"
+  fill="none" stroke="#378ADD" stroke-width="2.5" stroke-linecap="round"/>
+<!-- Phase 2: crash then partial recovery -->
+<path d="M 200 185 C 210 182, 215 178, 220 160 C 228 135, 232 115, 240 95 C 248 115, 255 145, 262 175 C 270 200, 280 215, 290 222 C 310 228, 330 230, 348 228"
+  fill="none" stroke="#E24B4A" stroke-width="2.5" stroke-linecap="round"/>
+<!-- Phase 3: structural recovery -->
+<path d="M 348 228 C 380 222, 420 210, 460 190 C 500 170, 540 148, 580 130 C 600 122, 620 116, 640 110"
+  fill="none" stroke="#1D9E75" stroke-width="2.5" stroke-linecap="round"/>
+
+<!-- Sur-réaction low point annotation -->
+<circle cx="240" cy="95" r="5" fill="#E24B4A" opacity=".8"/>
+<line x1="244" y1="90" x2="290" y2="70" stroke="#E24B4A" stroke-width="1" opacity=".5" marker-end="url(#arrow)"/>
+<text class="ts" x="296" y="67" fill="#A32D2D">Sur-réaction</text>
+<text class="ts" x="296" y="82" fill="#A32D2D">actifs bradés</text>
+
+<!-- Opportunity annotations -->
+<rect x="60" y="248" width="126" height="40" rx="6" fill="#378ADD" fill-opacity=".1" stroke="#378ADD" stroke-width="0.5" opacity=".7"/>
+<text class="ts" x="123" y="264" text-anchor="middle" fill="#0C447C">Construire positions</text>
+<text class="ts" x="123" y="279" text-anchor="middle" fill="#0C447C">sur refuges + bénéficiaires</text>
+
+<rect x="208" y="248" width="126" height="40" rx="6" fill="#E24B4A" fill-opacity=".1" stroke="#E24B4A" stroke-width="0.5" opacity=".7"/>
+<text class="ts" x="271" y="264" text-anchor="middle" fill="#791F1F">Acheter qualité</text>
+<text class="ts" x="271" y="279" text-anchor="middle" fill="#791F1F">massacrée par panique</text>
+
+<rect x="356" y="248" width="142" height="40" rx="6" fill="#1D9E75" fill-opacity=".1" stroke="#1D9E75" stroke-width="0.5" opacity=".7"/>
+<text class="ts" x="427" y="264" text-anchor="middle" fill="#085041">Thèses 12–36M :</text>
+<text class="ts" x="427" y="279" text-anchor="middle" fill="#085041">défense, énergie, agri</text>
+
+<!-- X labels -->
+<text class="ts" x="60"  y="318" text-anchor="middle" opacity=".45">Tensions</text>
+<text class="ts" x="200" y="318" text-anchor="middle" opacity=".45">J0</text>
+<text class="ts" x="290" y="318" text-anchor="middle" opacity=".45">J+30</text>
+<text class="ts" x="490" y="318" text-anchor="middle" opacity=".45">M+6 → M+36</text>
+
+</svg>
+<p class="fig-caption">Anatomie de la réaction du marché à un événement géopolitique — les trois fenêtres d'opportunité</p>
+</div>
+  </section>
+
+  <!-- SECTION B -->
+  <section class="section" id="section-b">
+    <div class="section-label">Section B</div>
+    <h2 class="section-title">Les grandes puissances et leurs logiques stratégiques</h2>
+    <div class="section-intro">Chaque grande puissance opère selon une logique stratégique qui lui est propre — une combinaison d'intérêts économiques, de contraintes géographiques, d'histoire et d'idéologie. L'investisseur qui comprend ces logiques peut anticiper les décisions politiques, les tensions et les alliances bien avant qu'elles ne deviennent évidentes pour le consensus. Mais chaque modèle a ses failles — et ces failles sont précisément là où se trouvent les opportunités.</div>
+
+    <div class="power-card">
+      <div class="power-header">
+        <div class="power-flag">États-Unis</div>
+        <div class="power-name">L'hégémonie sous pression</div>
+      </div>
+      <div class="power-body">
+        <p>La puissance américaine repose sur deux piliers : la supériorité militaire et le dollar comme monnaie de réserve mondiale (60%+ des transactions mondiales). Cette domination confère un privilège extraordinaire : emprunter indéfiniment dans leur propre monnaie et imposer des sanctions financières dévastatrices via la « weaponization » du dollar — exclusion du système SWIFT, sanctions secondaires, contrôle des flux de capitaux.</p>
+        <p><strong>Limites :</strong> dette publique à 120% du PIB, reshoring coûteux et inflationniste, polarisation politique interne, et weaponization du dollar qui pousse les adversaires vers des alternatives (BRICS+, accords bilatéraux yuan-rupee).</p>
+        <p><strong>Opportunités :</strong> reshoring américain sur l'industrie manufacturière (semi-conducteurs, défense, énergie), actifs alternatifs au système dollar (or, certaines devises émergentes), et marchés obligataires extrêmement sensibles aux signaux d'inflation.</p>
+      </div>
+      <div class="power-tags">
+        <span class="tag opp">Reshoring industriel</span>
+        <span class="tag opp">Défense · Aerospace</span>
+        <span class="tag opp">Semi-conducteurs US</span>
+        <span class="tag risk">Dette 120% PIB</span>
+        <span class="tag risk">Weaponization s'émousse</span>
+      </div>
+    </div>
+
+    <div class="power-card">
+      <div class="power-header">
+        <div class="power-flag">Chine</div>
+        <div class="power-name">L'ambition multipolaire</div>
+      </div>
+      <div class="power-body">
+        <p>La Chine poursuit un objectif clair depuis 40 ans : première puissance mondiale à l'horizon 2049. La Belt and Road Initiative (BRI) connecte 140 pays par des infrastructures financées par Pékin, créant une zone d'influence massive et un levier de dépendance sur les pays endettés.</p>
+        <p><strong>Limites :</strong> vieillissement démographique accéléré, crise immobilière structurelle (Evergrande), dépendance persistante sur les semi-conducteurs avancés, et risque Taïwan — le tail risk extrême qui serait la plus grande disruption économique de l'histoire moderne.</p>
+        <p><strong>Opportunités :</strong> transition vers la consommation intérieure (santé, tourisme), producteurs alternatifs de semi-conducteurs (Japon, Corée, USA), matières premières et infrastructures dans les pays BRI, actifs refuges et défense pour couvrir le risque Taïwan.</p>
+      </div>
+      <div class="power-tags">
+        <span class="tag opp">Semi-conducteurs hors Chine</span>
+        <span class="tag opp">MP pays BRI</span>
+        <span class="tag opp">Inde (bénéficiaire)</span>
+        <span class="tag risk">Risque Taïwan</span>
+        <span class="tag risk">Crise immo structurelle</span>
+      </div>
+    </div>
+
+    <div class="power-card">
+      <div class="power-header">
+        <div class="power-flag">Europe</div>
+        <div class="power-name">La puissance fragmentée</div>
+      </div>
+      <div class="power-body">
+        <p>L'Europe est la première puissance économique en PIB cumulé mais une puissance géopolitique fragmentée. La guerre en Ukraine a exposé sa dépendance au gaz russe — levier géopolitique entre les mains de Moscou — et forcé un réarmement massif après des décennies de dividendes de la paix. La gouvernance à 27 est lente ; les divergences Nord/Sud créent des tensions permanentes dans la zone euro.</p>
+        <p><strong>Opportunités :</strong> réarmement européen (Rheinmetall, Thales, Leonardo — thèse 10–15 ans), transition énergétique forcée (renouvelables, hydrogène, efficacité), décotes de valorisation historiquement élevées des actifs européens vs américains.</p>
+      </div>
+      <div class="power-tags">
+        <span class="tag opp">Défense EU · Rheinmetall</span>
+        <span class="tag opp">Éolien · Solaire · H2</span>
+        <span class="tag opp">Value EU décoté</span>
+        <span class="tag risk">Fragmentation politique</span>
+        <span class="tag risk">Dette périphérique</span>
+      </div>
+    </div>
+
+    <div class="power-card">
+      <div class="power-header">
+        <div class="power-flag">Russie</div>
+        <div class="power-name">L'économie de guerre</div>
+      </div>
+      <div class="power-body">
+        <p>Post-2022 : grande puissance soumise aux sanctions les plus sévères de l'histoire moderne. La réponse a été une économie de guerre — dépense militaire keynésienne, pivot vers les pays non-alignés (Inde, Chine, Turquie), substitution aux importations occidentales. Malgré les sanctions, croissance maintenue grâce aux recettes énergétiques. Mais accumulation de déséquilibres : inflation structurelle, fuite des cerveaux, dépendance croissante à la Chine.</p>
+        <p><strong>Opportunités indirectes :</strong> la disruption des exportations russes bénéficie aux producteurs alternatifs de GNL, aux agriculteurs américains et brésiliens, aux producteurs d'engrais du Moyen-Orient, et aux infrastructures de transport (terminaux GNL, tankers).</p>
+      </div>
+      <div class="power-tags">
+        <span class="tag opp">GNL US/Qatar</span>
+        <span class="tag opp">Agri US/Brésil</span>
+        <span class="tag opp">Tankers · Terminaux GNL</span>
+        <span class="tag risk">Marchés inaccessibles</span>
+        <span class="tag risk">Vassalité économique Chine</span>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Les puissances émergentes — le Sud global</h3>
+      <p>L'un des effets les moins médiatisés de la polarisation actuelle est l'émergence d'un « Sud global » qui refuse de choisir entre les blocs. Inde, Brésil, Turquie, Arabie Saoudite, Émirats, Indonésie pratiquent une diplomatie de l'équidistance — ils commercent avec tout le monde et évitent de s'aligner officiellement dans les conflits entre grandes puissances.</p>
+      <p><strong>L'Inde</strong> est la grande bénéficiaire de la fragmentation : 1,4 milliard d'habitants, démographie favorable, diaspora technologique massive, positionnement géographique entre les deux blocs. La thèse Inde est une des plus solides sur un horizon de 10 à 20 ans.</p>
+      <p><strong>Les pays du Golfe</strong> (Arabie Saoudite, Émirats, Qatar) jouent un rôle de pivot énergétique et financier. Leur capacité à fixer le prix du pétrole via l'OPEP+, leurs fonds souverains massifs (ADIA, PIF, QIA), et leur ambition Vision 2030 en font des acteurs incontournables.</p>
+      <div class="callout blue">Fil conducteur : aucune grande puissance n'est omnipotente. Chaque modèle a ses failles structurelles — et ces failles sont précisément là où se situent les opportunités d'investissement à contre-courant du consensus.</div>
+    </div>
+  </section>
+
+  <!-- SECTION C -->
+  <section class="section" id="section-c">
+    <div class="section-label">Section C</div>
+    <h2 class="section-title">Les ressources stratégiques comme levier géopolitique</h2>
+    <div class="section-intro">Les ressources stratégiques sont les nouvelles armes de la géopolitique du XXIe siècle. Contrôler une ressource critique — pétrole, gaz, terres rares, eau, semi-conducteurs — c'est disposer d'un levier sur les économies qui en dépendent. Pour l'investisseur, comprendre ces dépendances, c'est anticiper à la fois les risques de disruption et les opportunités créées par les efforts de diversification.</div>
+<div class="module-figure">
+<svg width="100%" viewBox="0 0 680 310" style="display:block">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+
+<!-- Title row: 4 resource types -->
+<g class="node c-amber"><rect x="28" y="24" width="138" height="44" rx="8" stroke-width="0.5"/><text class="th" x="97" y="50" text-anchor="middle" dominant-baseline="central">Pétrole / Gaz</text></g>
+<g class="node c-teal"><rect x="182" y="24" width="138" height="44" rx="8" stroke-width="0.5"/><text class="th" x="251" y="50" text-anchor="middle" dominant-baseline="central">Métaux critiques</text></g>
+<g class="node c-blue"><rect x="336" y="24" width="138" height="44" rx="8" stroke-width="0.5"/><text class="th" x="405" y="50" text-anchor="middle" dominant-baseline="central">Semi-conducteurs</text></g>
+<g class="node c-green"><rect x="490" y="24" width="162" height="44" rx="8" stroke-width="0.5"/><text class="th" x="571" y="50" text-anchor="middle" dominant-baseline="central">Alimentation / Eau</text></g>
+
+<!-- Arrows down -->
+<line x1="97"  y1="68" x2="97"  y2="92" stroke="var(--t)" opacity=".2" marker-end="url(#arrow)"/>
+<line x1="251" y1="68" x2="251" y2="92" stroke="var(--t)" opacity=".2" marker-end="url(#arrow)"/>
+<line x1="405" y1="68" x2="405" y2="92" stroke="var(--t)" opacity=".2" marker-end="url(#arrow)"/>
+<line x1="571" y1="68" x2="571" y2="92" stroke="var(--t)" opacity=".2" marker-end="url(#arrow)"/>
+
+<!-- Who controls -->
+<rect x="28"  y="92" width="138" height="68" rx="8" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5"/>
+<text class="ts" x="97"  y="110" text-anchor="middle" opacity=".6">Contrôle</text>
+<text class="ts" x="97"  y="126" text-anchor="middle">OPEP+ · Russie</text>
+<text class="ts" x="97"  y="142" text-anchor="middle">USA (shale)</text>
+<text class="ts" x="97"  y="157" text-anchor="middle" opacity=".5">~40% prod. mondiale</text>
+
+<rect x="182" y="92" width="138" height="68" rx="8" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5"/>
+<text class="ts" x="251" y="110" text-anchor="middle" opacity=".6">Contrôle</text>
+<text class="ts" x="251" y="126" text-anchor="middle">Chine (terres rares)</text>
+<text class="ts" x="251" y="142" text-anchor="middle">Congo (cobalt)</text>
+<text class="ts" x="251" y="157" text-anchor="middle" opacity=".5">60–85% raffinage</text>
+
+<rect x="336" y="92" width="138" height="68" rx="8" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5"/>
+<text class="ts" x="405" y="110" text-anchor="middle" opacity=".6">Contrôle</text>
+<text class="ts" x="405" y="126" text-anchor="middle">TSMC (90% avancés)</text>
+<text class="ts" x="405" y="142" text-anchor="middle">ASML (EUV seul)</text>
+<text class="ts" x="405" y="157" text-anchor="middle" opacity=".5">Taïwan = risque tail</text>
+
+<rect x="490" y="92" width="162" height="68" rx="8" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5"/>
+<text class="ts" x="571" y="110" text-anchor="middle" opacity=".6">Contrôle</text>
+<text class="ts" x="571" y="126" text-anchor="middle">Ukraine/Russie (blé)</text>
+<text class="ts" x="571" y="142" text-anchor="middle">Nil / Mékong (eau)</text>
+<text class="ts" x="571" y="157" text-anchor="middle" opacity=".5">~30% exports blé</text>
+
+<!-- Arrows down -->
+<line x1="97"  y1="160" x2="97"  y2="184" stroke="var(--t)" opacity=".2" marker-end="url(#arrow)"/>
+<line x1="251" y1="160" x2="251" y2="184" stroke="var(--t)" opacity=".2" marker-end="url(#arrow)"/>
+<line x1="405" y1="160" x2="405" y2="184" stroke="var(--t)" opacity=".2" marker-end="url(#arrow)"/>
+<line x1="571" y1="160" x2="571" y2="184" stroke="var(--t)" opacity=".2" marker-end="url(#arrow)"/>
+
+<!-- Opportunities -->
+<rect x="28"  y="184" width="138" height="68" rx="8" fill="#1D9E75" fill-opacity=".08" stroke="#1D9E75" stroke-width="0.5"/>
+<text class="ts" x="97"  y="202" text-anchor="middle" fill="#085041">Opportunités</text>
+<text class="ts" x="97"  y="218" text-anchor="middle" fill="#085041">GNL alternatif</text>
+<text class="ts" x="97"  y="234" text-anchor="middle" fill="#085041">Renouvelables</text>
+<text class="ts" x="97"  y="250" text-anchor="middle" fill="#085041">CAD · NOK · AUD</text>
+
+<rect x="182" y="184" width="138" height="68" rx="8" fill="#1D9E75" fill-opacity=".08" stroke="#1D9E75" stroke-width="0.5"/>
+<text class="ts" x="251" y="202" text-anchor="middle" fill="#085041">Opportunités</text>
+<text class="ts" x="251" y="218" text-anchor="middle" fill="#085041">Mineurs alternatifs</text>
+<text class="ts" x="251" y="234" text-anchor="middle" fill="#085041">Recyclage · Substituts</text>
+<text class="ts" x="251" y="250" text-anchor="middle" fill="#085041">AUS · CHL · CAN</text>
+
+<rect x="336" y="184" width="138" height="68" rx="8" fill="#1D9E75" fill-opacity=".08" stroke="#1D9E75" stroke-width="0.5"/>
+<text class="ts" x="405" y="202" text-anchor="middle" fill="#085041">Opportunités</text>
+<text class="ts" x="405" y="218" text-anchor="middle" fill="#085041">Équipementiers</text>
+<text class="ts" x="405" y="234" text-anchor="middle" fill="#085041">ASML · NVDA · AMD</text>
+<text class="ts" x="405" y="250" text-anchor="middle" fill="#085041">Fonderies JPN/KOR</text>
+
+<rect x="490" y="184" width="162" height="68" rx="8" fill="#1D9E75" fill-opacity=".08" stroke="#1D9E75" stroke-width="0.5"/>
+<text class="ts" x="571" y="202" text-anchor="middle" fill="#085041">Opportunités</text>
+<text class="ts" x="571" y="218" text-anchor="middle" fill="#085041">Agri US/Brésil</text>
+<text class="ts" x="571" y="234" text-anchor="middle" fill="#085041">Engrais · Semences</text>
+<text class="ts" x="571" y="250" text-anchor="middle" fill="#085041">Eau · Dessalement</text>
+
+<!-- Geopolitical risk label -->
+<rect x="28" y="268" width="624" height="30" rx="6" fill="#E24B4A" fill-opacity=".06" stroke="#E24B4A" stroke-width="0.5" opacity=".6"/>
+<text class="ts" x="340" y="287" text-anchor="middle" fill="#A32D2D">Contrôler une ressource critique = levier géopolitique · Dépendre = vulnérabilité · Diversifier = opportunité d'investissement</text>
+
+</svg>
+<p class="fig-caption">Ressources stratégiques — contrôle, dépendances mondiales, risques et opportunités sectorielles</p>
+</div>
+    <div class="sub">
+      <h3 class="sub-title">Pétrole et gaz — le levier énergétique</h3>
+      <p>L'OPEP+, qui contrôle environ 40% de la production mondiale de pétrole, peut faire varier les prix de 20 à 40% en quelques semaines en ajustant ses quotas. Les routes maritimes énergétiques sont un autre vecteur de risque : le détroit d'Ormuz (20% du pétrole mondial), Malacca (approvisionnements asiatiques), et Suez (GNL européen) sont des points d'étranglement dont la fermeture crée des chocs de prix immédiats.</p>
+      <p>La transition énergétique déplace la géopolitique de l'énergie fossile vers les métaux critiques nécessaires aux technologies vertes — sans faire disparaître la dépendance, elle la réoriente.</p>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Métaux critiques — la nouvelle géographie du pouvoir</h3>
+      <p>Lithium, cobalt, nickel, terres rares, graphite sont aux industries du XXIe siècle ce que le pétrole était au XXe. La Chine contrôle plus de 60% de la production mondiale de terres rares et plus de 85% du raffinage. Les restrictions chinoises aux exportations de germanium, gallium et graphite depuis 2023 ont rappelé aux pays occidentaux leur vulnérabilité structurelle.</p>
+      <p>La réponse occidentale — mines alternatives, recyclage, accords avec l'Australie, le Chili, la RDC et le Canada — crée des thèses d'investissement sur plusieurs décennies sur les producteurs miniers diversifiés et les technologies de substitution.</p>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Semi-conducteurs — la guerre des puces</h3>
+      <p>La chaîne de valeur des semi-conducteurs est remarquablement concentrée : TSMC (Taïwan) fabrique plus de 90% des puces les plus avancées, ASML (Pays-Bas) est le seul fabricant mondial de machines lithographiques EUV, ARM (Royaume-Uni) fournit l'architecture quasi-universelle des puces mobiles. Les restrictions américaines aux exportations vers la Chine (octobre 2022, renforcées en 2023) ont déclenché une course à l'autonomie technologique : CHIPS Act (52 Md$), European Chips Act (43 Md$), investissements massifs au Japon et en Corée.</p>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Alimentation et eau</h3>
+      <p>La guerre en Ukraine a rappelé que l'alimentation est une arme géopolitique : Ukraine et Russie représentent ensemble ~30% des exports mondiaux de blé, 15% du maïs et plus de 50% de l'huile de tournesol. L'eau douce est le vecteur de tension le moins médiatisé mais potentiellement le plus explosif sur 20 à 30 ans — tensions autour du Nil, du Mékong, du Jourdain — que le réchauffement climatique va amplifier.</p>
+    </div>
+  </section>
+
+  <!-- SECTION D -->
+  <section class="section" id="section-d">
+    <div class="section-label">Section D</div>
+    <h2 class="section-title">Conflits, sanctions et disruptions de marché</h2>
+    <div class="section-intro">Un conflit armé ou un régime de sanctions est rarement une surprise totale — les tensions montent, les signaux s'accumulent. Ce qui est systématiquement surprenant, c'est l'amplitude des réactions et la durée des effets. Comprendre la mécanique de ces disruptions, c'est se donner les outils pour les anticiper, les traverser, et les exploiter.</div>
+
+    <div class="sub">
+      <h3 class="sub-title">Anatomie d'un conflit armé</h3>
+      <p>Les marchés réagissent aux conflits armés selon un schéma remarquablement stable. La <strong>phase d'escalade</strong> est marquée par une montée progressive des actifs refuges (or, dollar, obligations souveraines des pays stables) et une hausse des matières premières si la région concernée en est productrice. Le <strong>déclenchement du conflit</strong> provoque presque invariablement un choc de volatilité : le VIX s'envole, les actifs risqués sont vendus sans discrimination. Cette phase dure généralement de quelques jours à quelques semaines — c'est la phase la plus dangereuse pour réagir.</p>
+      <p>La <strong>phase de stabilisation</strong> est souvent la moins bien exploitée : une fois que le marché a intégré la nouvelle réalité, les actifs sur-vendus se reprennent. La <strong>phase longue</strong> enfin est celle des effets structurels — conflits durables qui réorganisent les chaînes d'approvisionnement, accélèrent les transitions technologiques, redessinent les alliances. C'est ici que se construisent les thèses à 12–36 mois.</p>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Les sanctions économiques — mécanismes, limites, effets de bord</h3>
+      <p>Les sanctions les plus efficaces ciblent les points d'étranglement du système financier international : exclusion du système SWIFT, gel des réserves de change (300 milliards de dollars gelés pour la Russie en 2022), interdiction d'accès aux technologies sous contrôle Export Administration Regulations.</p>
+      <p>Mais les sanctions créent toujours des effets de bord exploitables. Elles réorientent les flux commerciaux vers des pays tiers non alignés — créant des opportunités sur ces marchés. Elles accélèrent les efforts d'autonomie stratégique dans le pays sanctionné — créant des thèses sur les producteurs alternatifs. Et elles génèrent des pressions inflationnistes dans les économies qui les imposent.</p>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Cas d'étude : Ukraine 2022</h3>
+      <p>Le 24 février 2022, la Russie envahit l'Ukraine. En moins de 48 heures : pétrole à 130 dollars, gaz naturel européen ×4, blé à des sommets historiques, actions européennes –10 à –15%, rouble effondré. La réaction initiale était cohérente avec les fondamentaux — mais disproportionnée dans son ampleur.</p>
+      <p>Trois thèses structurelles se dessinaient clairement dès les premières semaines. Premièrement, les pays européens allaient massivement investir dans l'indépendance énergétique. Deuxièmement, le conflit allait nécessiter un réarmement massif de l'Europe. Troisièmement, la disruption des exportations agricoles ukrainiennes allait bénéficier aux producteurs alternatifs.</p>
+      <p>Ces thèses se sont toutes matérialisées : Rheinmetall ×5 en deux ans, producteurs de GNL américains dans leur meilleur cycle en décennies, engrais (Nutrien, Mosaic) avec des rendements exceptionnels en 2022.</p>
+    </div>
+  </section>
+
+  <!-- SECTION E -->
+  <section class="section" id="section-e">
+    <div class="section-label">Section E</div>
+    <h2 class="section-title">De l'événement géopolitique à la thèse d'investissement chiffrée</h2>
+    <div class="section-intro">Comprendre la géopolitique est une chose. La traduire en décisions d'investissement concrètes en est une autre. Cette section pose le framework opérationnel — les étapes, les outils, et les exemples qui permettent de passer de l'événement à la position.</div>
+<div class="module-figure">
+<svg width="100%" viewBox="0 0 680 340" style="display:block">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+
+<!-- 4 steps horizontal -->
+<!-- Step 1: Identifier -->
+<g class="node c-blue">
+  <rect x="28" y="60" width="138" height="80" rx="8" stroke-width="0.5"/>
+  <text class="th" x="97" y="88" text-anchor="middle" dominant-baseline="central">1. Identifier</text>
+  <text class="ts" x="97" y="108" text-anchor="middle">Signal ou bruit ?</text>
+  <text class="ts" x="97" y="124" text-anchor="middle">Grande puissance ?</text>
+  <text class="ts" x="97" y="139" text-anchor="middle">Flux mesurable ?</text>
+</g>
+
+<line x1="166" y1="100" x2="188" y2="100" stroke="var(--t)" opacity=".3" marker-end="url(#arrow)"/>
+
+<!-- Step 2: Qualifier -->
+<g class="node c-purple">
+  <rect x="188" y="60" width="138" height="80" rx="8" stroke-width="0.5"/>
+  <text class="th" x="257" y="88" text-anchor="middle" dominant-baseline="central">2. Qualifier</text>
+  <text class="ts" x="257" y="108" text-anchor="middle">Intensité ?</text>
+  <text class="ts" x="257" y="124" text-anchor="middle">Durée attendue ?</text>
+  <text class="ts" x="257" y="139" text-anchor="middle">Risque contagion ?</text>
+</g>
+
+<line x1="326" y1="100" x2="348" y2="100" stroke="var(--t)" opacity=".3" marker-end="url(#arrow)"/>
+
+<!-- Step 3: Chiffrer -->
+<g class="node c-amber">
+  <rect x="348" y="60" width="138" height="80" rx="8" stroke-width="0.5"/>
+  <text class="th" x="417" y="88" text-anchor="middle" dominant-baseline="central">3. Chiffrer</text>
+  <text class="ts" x="417" y="108" text-anchor="middle">Impact sectoriel</text>
+  <text class="ts" x="417" y="124" text-anchor="middle">Élasticité des prix</text>
+  <text class="ts" x="417" y="139" text-anchor="middle">Délai transmission</text>
+</g>
+
+<line x1="486" y1="100" x2="508" y2="100" stroke="var(--t)" opacity=".3" marker-end="url(#arrow)"/>
+
+<!-- Step 4: Positionner -->
+<g class="node c-teal">
+  <rect x="508" y="60" width="144" height="80" rx="8" stroke-width="0.5"/>
+  <text class="th" x="580" y="88" text-anchor="middle" dominant-baseline="central">4. Positionner</text>
+  <text class="ts" x="580" y="108" text-anchor="middle">Taille ≠ 100%</text>
+  <text class="ts" x="580" y="124" text-anchor="middle">Horizon 12–36M</text>
+  <text class="ts" x="580" y="139" text-anchor="middle">Scénario de sortie</text>
+</g>
+
+<!-- Criteria boxes below each step -->
+<rect x="28"  y="166" width="138" height="52" rx="6" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5"/>
+<text class="ts" x="97"  y="184" text-anchor="middle" opacity=".6">Critères signal :</text>
+<text class="ts" x="97"  y="200" text-anchor="middle">≥3 sur 4 : puissance,</text>
+<text class="ts" x="97"  y="215" text-anchor="middle">flux, règle, 6M+</text>
+
+<rect x="188" y="166" width="138" height="52" rx="6" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5"/>
+<text class="ts" x="257" y="184" text-anchor="middle" opacity=".6">Conflit localisé ≠</text>
+<text class="ts" x="257" y="200" text-anchor="middle">conflit producteur</text>
+<text class="ts" x="257" y="215" text-anchor="middle">de ressources crit.</text>
+
+<rect x="348" y="166" width="138" height="52" rx="6" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5"/>
+<text class="ts" x="417" y="184" text-anchor="middle" opacity=".6">Exemple blé :</text>
+<text class="ts" x="417" y="200" text-anchor="middle">–30% offre → +40–80%</text>
+<text class="ts" x="417" y="215" text-anchor="middle">prix → marges agricoles</text>
+
+<rect x="508" y="166" width="144" height="52" rx="6" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5"/>
+<text class="ts" x="580" y="184" text-anchor="middle" opacity=".6">Définir à l'avance :</text>
+<text class="ts" x="580" y="200" text-anchor="middle">qu'est-ce qui invalide</text>
+<text class="ts" x="580" y="215" text-anchor="middle">la thèse ?</text>
+
+<!-- Warning banner -->
+<rect x="28" y="238" width="624" height="40" rx="8" fill="#E24B4A" fill-opacity=".06" stroke="#E24B4A" stroke-width="0.5" opacity=".7"/>
+<text class="ts" x="340" y="254" text-anchor="middle" fill="#A32D2D">Règle : quand l'événement fait la une du JT de 20h, le marché l'a déjà pricé</text>
+<text class="ts" x="340" y="270" text-anchor="middle" fill="#A32D2D" opacity=".7">Les 48 premières heures après un choc sont les plus dangereuses pour agir</text>
+
+<!-- Step numbers top -->
+<text class="ts" x="97"  y="52" text-anchor="middle" opacity=".4">Étape 1</text>
+<text class="ts" x="257" y="52" text-anchor="middle" opacity=".4">Étape 2</text>
+<text class="ts" x="417" y="52" text-anchor="middle" opacity=".4">Étape 3</text>
+<text class="ts" x="580" y="52" text-anchor="middle" opacity=".4">Étape 4</text>
+
+</svg>
+<p class="fig-caption">Framework en 4 étapes — de l'événement géopolitique à la thèse d'investissement</p>
+</div>
+    <div class="sub">
+      <h3 class="sub-title">Étape 1 — Identifier : signal ou bruit ?</h3>
+      <p>Un signal modifie les fondamentaux — les flux de matières premières, les chaînes d'approvisionnement, les équilibres de puissance, les dépenses publiques. Si l'événement implique une grande puissance, affecte un flux économique mesurable, crée un précédent, et a des effets susceptibles de durer plus de six mois : c'est un signal qui justifie une analyse approfondie.</p>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Étape 2 — Qualifier : intensité, durée, contagion</h3>
+      <p>Qualifier selon trois dimensions : l'<strong>intensité</strong> (un conflit dans un pays sans ressources stratégiques a un impact limité vs un producteur majeur), la <strong>durée attendue</strong> (une crise qui se résout en semaines appelle une stratégie différente d'un conflit qui peut durer des années), et le <strong>risque de contagion</strong> (les conflits dans des zones de transit comme la mer Rouge ont des effets de contagion bien supérieurs aux conflits terrestres enclavés).</p>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Étape 3 — Chiffrer : quantifier l'impact sectoriel</h3>
+      <p>Il ne suffit pas de dire « le conflit va faire monter le pétrole » — il faut chiffrer : de combien, dans quel délai, et quel est l'impact sur les marges. Exemple blé Ukraine : blocage de 30% du commerce mondial → prix du blé +40 à +80% → entreprises agricoles US et Brésil avec prix de vente en hausse et coûts de production largement fixes → impact direct sur les marges. Les producteurs d'engrais profitent de la hausse des prix agricoles. Les entreprises alimentaires très exposées au blé (boulangerie industrielle, pâtes) voient leurs marges comprimées.</p>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Étape 4 — Positionner : taille, horizon, scénario de sortie</h3>
+      <p>Trois décisions à prendre. La <strong>taille</strong> : les positions géopolitiques doivent être dimensionnées pour résister à une volatilité élevée et à des horizons plus longs que prévu — elles ne devraient jamais représenter l'intégralité d'un portefeuille. L'<strong>horizon</strong> : 12 à 36 mois sur les effets structurels, quelques semaines sur les effets de choc immédiat. Le <strong>scénario de sortie</strong> : définir à l'avance le déclencheur de sortie — si le conflit se résout, si les sanctions sont levées, si un acteur tiers comble le manque — pour éviter le biais d'ancrage.</p>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">La grille événement → actifs</h3>
+    </div>
+<div class="module-figure">
+<svg width="100%" viewBox="0 0 680 380" style="display:block">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+
+<!-- Header row -->
+<rect x="28"  y="24" width="240" height="36" rx="6" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5"/>
+<text class="th" x="148" y="46" text-anchor="middle" dominant-baseline="central">Événement géopolitique</text>
+<rect x="284" y="24" width="172" height="36" rx="6" fill="#1D9E75" fill-opacity=".12" stroke="#1D9E75" stroke-width="0.5"/>
+<text class="th" x="370" y="46" text-anchor="middle" dominant-baseline="central" fill="#085041">✦ Gagnants</text>
+<rect x="472" y="24" width="180" height="36" rx="6" fill="#E24B4A" fill-opacity=".1" stroke="#E24B4A" stroke-width="0.5"/>
+<text class="th" x="562" y="46" text-anchor="middle" dominant-baseline="central" fill="#A32D2D">✗ Perdants</text>
+
+<!-- Row 1 -->
+<rect x="28"  y="76" width="240" height="44" rx="0" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5"/>
+<text class="ts" x="40" y="94" fill="#0C447C">Conflit armé</text>
+<text class="ts" x="40" y="112" opacity=".6">producteur énergie/MP</text>
+<rect x="284" y="76" width="172" height="44" rx="0" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5"/>
+<text class="ts" x="296" y="94" fill="#085041">Or · Défense · CAD · AUD</text>
+<text class="ts" x="296" y="112" fill="#085041">GNL · Agri alternatives</text>
+<rect x="472" y="76" width="180" height="44" rx="0" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5"/>
+<text class="ts" x="484" y="94" fill="#A32D2D">EUR/USD · Actions EU</text>
+<text class="ts" x="484" y="112" fill="#A32D2D">Importateurs énergie</text>
+
+<!-- Row 2 -->
+<rect x="28"  y="120" width="240" height="44" rx="0" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5"/>
+<text class="ts" x="40" y="138" fill="#0C447C">Sanctions économiques</text>
+<text class="ts" x="40" y="156" opacity=".6">grandes puissances</text>
+<rect x="284" y="120" width="172" height="44" rx="0" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5"/>
+<text class="ts" x="296" y="138" fill="#085041">Or · Actifs non-dollar</text>
+<text class="ts" x="296" y="156" fill="#085041">Producteurs alternatifs</text>
+<rect x="472" y="120" width="180" height="44" rx="0" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5"/>
+<text class="ts" x="484" y="138" fill="#A32D2D">Pays sanctionné</text>
+<text class="ts" x="484" y="156" fill="#A32D2D">Partenaires exposés</text>
+
+<!-- Row 3 -->
+<rect x="28"  y="164" width="240" height="44" rx="0" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5"/>
+<text class="ts" x="40" y="182" fill="#0C447C">Tension technologique</text>
+<text class="ts" x="40" y="200" opacity=".6">USA vs Chine (puces)</text>
+<rect x="284" y="164" width="172" height="44" rx="0" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5"/>
+<text class="ts" x="296" y="182" fill="#085041">TSMC · ASML · NVDA</text>
+<text class="ts" x="296" y="200" fill="#085041">Semi JPN/KOR · Defense</text>
+<rect x="472" y="164" width="180" height="44" rx="0" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5"/>
+<text class="ts" x="484" y="182" fill="#A32D2D">Tech Chine · BABA</text>
+<text class="ts" x="484" y="200" fill="#A32D2D">Supply chain intégrée</text>
+
+<!-- Row 4 -->
+<rect x="28"  y="208" width="240" height="44" rx="0" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5"/>
+<text class="ts" x="40" y="226" fill="#0C447C">Pivot banque centrale</text>
+<text class="ts" x="40" y="244" opacity=".6">hausse / baisse taux</text>
+<rect x="284" y="208" width="172" height="44" rx="0" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5"/>
+<text class="ts" x="296" y="226" fill="#085041">Obligations (baisse taux)</text>
+<text class="ts" x="296" y="244" fill="#085041">Émergents · Croissance</text>
+<rect x="472" y="208" width="180" height="44" rx="0" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5"/>
+<text class="ts" x="484" y="226" fill="#A32D2D">Obligations (hausse taux)</text>
+<text class="ts" x="484" y="244" fill="#A32D2D">Tech growth · Immo</text>
+
+<!-- Row 5 -->
+<rect x="28"  y="252" width="240" height="44" rx="0" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5"/>
+<text class="ts" x="40" y="270" fill="#0C447C">Réarmement massif</text>
+<text class="ts" x="40" y="288" opacity=".6">guerre en Europe</text>
+<rect x="284" y="252" width="172" height="44" rx="0" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5"/>
+<text class="ts" x="296" y="270" fill="#085041">Défense · Aerospace</text>
+<text class="ts" x="296" y="288" fill="#085041">Cyber · Rheinmetall</text>
+<rect x="472" y="252" width="180" height="44" rx="0" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5"/>
+<text class="ts" x="484" y="270" fill="#A32D2D">Budgets sociaux</text>
+<text class="ts" x="484" y="288" fill="#A32D2D">Consommation discr.</text>
+
+<!-- Bottom note -->
+<rect x="28" y="312" width="624" height="30" rx="6" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5" opacity=".6"/>
+<text class="ts" x="340" y="331" text-anchor="middle" opacity=".6">Cette grille accélère l'analyse — elle ne la remplace pas. Identifier → Qualifier → Chiffrer → Positionner.</text>
+
+</svg>
+<p class="fig-caption">Grille de lecture — événement géopolitique et actifs impactés (gagnants et perdants)</p>
+</div>
+    <div class="sub">
+      <h3 class="sub-title">Cas pratique — La fragmentation du monde comme thèse</h3>
+      <p>La thèse de la fragmentation du monde est la thèse géopolitique structurelle de notre décennie. Le monde se divise progressivement en blocs économiques moins intégrés, avec des chaînes d'approvisionnement plus courtes, des dépendances plus localisées, et des règles commerciales différenciées selon l'appartenance géopolitique.</p>
+      <p>Cette thèse se traduit en plusieurs positions concrètes :</p>
+      <ul class="styled-list">
+        <li>Le reshoring industriel dans les pays développés bénéficie aux secteurs de la construction industrielle, de l'automatisation et de la robotique — les coûts de main-d'œuvre plus élevés rendent l'automatisation obligatoire</li>
+        <li>La diversification des chaînes d'approvisionnement bénéficie aux pays se positionnant comme hubs alternatifs : Inde, Vietnam, Mexique, Maroc</li>
+        <li>L'investissement dans les ressources stratégiques domestiques (mines critiques, capacités de raffinage, usines de semi-conducteurs) crée des thèses sur des secteurs qui n'intéressaient personne il y a dix ans</li>
+      </ul>
+      <div class="callout">Le risque de cette thèse : elle prend plus de temps que prévu. La fragmentation est un processus lent, non-linéaire, ponctué de revirements diplomatiques. L'investisseur doit avoir l'horizon et la patience d'un investisseur de long terme.</div>
+    </div>
+  </section>
+
+  <!-- SYNTHESIS -->
+  <div class="synthesis">
+    <h2 class="synthesis-title">Synthèse du module</h2>
+    <p>Le Module IV établit le pont entre la compréhension macro du Module III et l'analyse fondamentale du Module V. La géopolitique n'est pas une variable exogène qu'on subit — c'est un cadre de lecture qui, maîtrisé, offre des avantages compétitifs réels.</p>
+    <p>La section a pose le principe fondamental : les marchés se trompent systématiquement sur le pricing des événements géopolitiques, en sur-réagissant à court terme et en sous-réagissant à long terme. Ces deux erreurs symétriques créent trois fenêtres d'opportunité — avant, pendant, et après le choc.</p>
+    <p>La section b démontre que chaque grande puissance a des failles structurelles — reshoring américain, risque Taïwan, réarmement européen, effets de bord des sanctions russes, essor du Sud global — autant de thèses qui se déploieront sur 10 à 20 ans.</p>
+    <p>Les sections c et d traduisent ces logiques en impacts sectoriels concrets. La section e donne le framework opérationnel en 4 étapes — Identifier, Qualifier, Chiffrer, Positionner — qui permet de passer de l'événement à la décision. La géopolitique ne donne pas de certitudes. Elle donne des probabilités, des cadres et des asymétries.</p>
+    <div class="next-module">Module suivant — <strong>Module V : Lire &amp; Valoriser un Actif.</strong> On descend du macro au micro : comment lire un bilan, valoriser une action, construire une thèse chiffrée de A à Z.</div>
   </div>
 
-  
-
-  <div class="mod-nav">
-    <button class="mod-nav-btn" onclick="navigate(2)" >← Précédent</button>
-    <span class="mod-nav-label">4 / 12</span>
-    <button class="mod-nav-btn" onclick="navigate(4, true)" >Suivant →</button>
+  <div class="module-nav">
+    <button class="nav-btn" onclick="window.parent.postMessage({type:'navigate',index:2,markDone:false},'*')">← Module 03</button>
+    <button class="nav-btn primary" onclick="window.parent.postMessage({type:'navigate',index:4,markDone:true},'*')">Module 05 →</button>
   </div>
 
 </div>
-
-<!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox">
-  <div class="lightbox-backdrop" id="lightboxBackdrop"></div>
-  <div class="lightbox-img-wrap">
-    <button class="lightbox-close" id="lightboxClose">✕</button>
-    <img id="lightboxImg" src="" alt=""/>
-    <div class="lightbox-caption" id="lightboxCaption"></div>
-  </div>
-</div>
-
-<script>
-function navigate(index, markDone) {
-  window.parent.postMessage({ type: 'navigate', index: index, markDone: !!markDone }, '*');
-}
-function openLightbox(src, caption) {
-  document.getElementById('lightboxImg').src = src;
-  document.getElementById('lightboxCaption').textContent = caption;
-  document.getElementById('lightbox').classList.add('open');
-}
-function closeLightbox() {
-  document.getElementById('lightbox').classList.remove('open');
-}
-document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
-document.getElementById('lightboxBackdrop').addEventListener('click', closeLightbox);
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
-document.addEventListener('click', e => {
-  const img = e.target.closest('.mod-figure img');
-  if (!img) return;
-  const caption = img.closest('.mod-figure')?.querySelector('figcaption')?.textContent || '';
-  openLightbox(img.src, caption);
-});
-</script>
 </body>
 </html>
