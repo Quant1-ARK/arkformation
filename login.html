@@ -82,9 +82,34 @@ const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON, {
   auth: { persistSession: true, storageKey: 'ark_session' }
 });
 
-db.auth.getSession().then(({ data: { session } }) => {
+// Gérer le callback de confirmation email
+(async () => {
+  const hash = window.location.hash;
+  const params = new URLSearchParams(window.location.search);
+
+  // Supabase redirige avec #access_token ou ?token_hash
+  if (hash && hash.includes('access_token')) {
+    const hashParams = new URLSearchParams(hash.slice(1));
+    const { error } = await db.auth.setSession({
+      access_token: hashParams.get('access_token'),
+      refresh_token: hashParams.get('refresh_token'),
+    });
+    if (!error) { window.location.href = 'ark_dashboard.html'; return; }
+  }
+
+  // Token hash dans l'URL (nouveau format Supabase)
+  if (params.get('token_hash') && params.get('type')) {
+    const { error } = await db.auth.verifyOtp({
+      token_hash: params.get('token_hash'),
+      type: params.get('type'),
+    });
+    if (!error) { window.location.href = 'ark_dashboard.html'; return; }
+  }
+
+  // Session déjà active
+  const { data: { session } } = await db.auth.getSession();
   if (session && session.user) window.location.href = 'ark_dashboard.html';
-});
+})();
 
 function setLoading(on) {
   document.getElementById('btn').disabled = on;
