@@ -3,180 +3,616 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ARK — Module 11 · Métriques de Trading</title>
+<title>Module 11 — Métriques de Performance & Lettres Grecques</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #f5f5f5;
-    --border: rgba(19,18,18,.41);
-    --border-active: rgba(255,255,255,.14);
-    --text-1: #000;
-    --text-2: #59595e;
-    --text-3: #48484c;
-    --accent: #0071e3;
-    --accent-glow: rgba(0,113,227,.18);
-    --accent-soft: rgba(0,113,227,.12);
-    --gold: #c9a84c;
-    --gold-soft: rgba(201,168,76,.1);
-  }
-
+  :root{--bg:#f5f5f5;--surface:#fff;--border:rgba(19,18,18,.1);--text-1:#0a0a0a;--text-2:#3d3d3a;--text-3:#6b6b67;--accent:#0071e3;--accent-soft:rgba(0,113,227,.07)}
   *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--bg);color:var(--text-1);font-family:'DM Sans',-apple-system,sans-serif;font-size:15px;-webkit-font-smoothing:antialiased;padding:48px clamp(24px,5vw,80px) 80px;overflow-y:auto;min-height:100vh}
-  @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-  .page{animation:fadeIn .3s ease}
-
-  /* VIDEO */
-  .mod-video{margin-bottom:36px;border-radius:16px;overflow:hidden;aspect-ratio:16/9;background:#1a1a1a;display:none}
-  .mod-video.has-video{display:block}
-  .mod-video iframe{width:100%;height:100%;border:none}
-
-  /* MODULE HEADER */
-  .mod-number{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;display:flex;align-items:center;gap:8px}
-  .mod-number::before{content:'';display:inline-block;width:20px;height:1px;background:var(--accent)}
-  .mod-title{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(28px,4vw,44px);font-weight:400;line-height:1.15;letter-spacing:-.01em;color:var(--text-1);margin-bottom:16px}
-  .mod-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:28px}
-  .mod-tag{font-size:11px;font-weight:500;color:var(--accent);background:var(--accent-soft);padding:3px 10px;border-radius:980px;border:1px solid rgba(0,113,227,.15)}
-  .mod-divider{height:1px;background:var(--border);margin:28px 0}
-  .mod-intro{font-size:17px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:36px;font-style:italic;border-left:2px solid var(--accent);padding-left:20px}
-  .mod-section-title{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:16px}
-
-  /* OBJECTIVES */
-  .mod-objectives{list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:36px}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text-1);font-family:'DM Sans',-apple-system,sans-serif;font-size:15px;line-height:1.75;-webkit-font-smoothing:antialiased}
+  .page{max-width:100%;margin:0 auto;padding:48px 48px 120px}
+  .mod-header{margin-bottom:40px;padding-bottom:32px;border-bottom:1px solid var(--border)}
+  .mod-kicker{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+  .mod-title{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(30px,5vw,46px);line-height:1.1;margin-bottom:14px}
+  .mod-sub{font-size:15px;color:var(--text-2);font-style:italic;margin-bottom:20px}
+  .mod-objective{background:var(--accent-soft);border-left:3px solid var(--accent);border-radius:0 10px 10px 0;padding:16px 20px;font-size:14px;color:var(--text-2);line-height:1.65}
+  /* Objectives & concepts */
+  .mod-section-label{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:16px;margin-top:32px}
+  .mod-objectives{list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:32px}
   .mod-objectives li{display:flex;align-items:flex-start;gap:12px;font-size:14px;color:var(--text-2);line-height:1.6}
-  .obj-check{width:18px;height:18px;border-radius:50%;border:1px solid var(--border-active);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--text-3)}
-
-  /* CONCEPTS */
-  .mod-concepts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:36px}
-  .concept-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px;transition:border-color .2s,background .2s}
-  .concept-card:hover{border-color:var(--border-active);background:var(--bg)}
+  .obj-check{width:18px;height:18px;border-radius:50%;border:1px solid var(--border);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--text-3)}
+  .mod-concepts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:32px}
+  .concept-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;transition:border-color .2s}
+  .concept-card:hover{border-color:rgba(0,113,227,.3)}
   .concept-icon{font-size:20px;margin-bottom:8px}
   .concept-name{font-size:13px;font-weight:600;color:var(--text-1);margin-bottom:4px}
-  .concept-desc{font-size:12px;color:var(--text-2);line-height:1.5;font-weight:300}
-
-  /* QUOTE */
-  .mod-quote{background:var(--gold-soft);border:1px solid rgba(201,168,76,.15);border-radius:16px;padding:24px 28px;margin-bottom:36px}
-  .mod-quote-text{font-family:'DM Serif Display',Georgia,serif;font-size:18px;line-height:1.6;color:var(--gold);margin-bottom:8px;font-style:italic}
+  .concept-desc{font-size:12px;color:var(--text-2);line-height:1.5}
+  .mod-quote-block{background:rgba(201,168,76,.07);border:1px solid rgba(201,168,76,.18);border-radius:14px;padding:20px 24px;margin-bottom:40px}
+  .mod-quote-text{font-family:'DM Serif Display',Georgia,serif;font-size:17px;line-height:1.6;color:#b8922e;font-style:italic;margin-bottom:6px}
   .mod-quote-source{font-size:11px;color:var(--text-3);letter-spacing:.05em;text-transform:uppercase}
-
-  /* FIGURES & TABLES */
-  .mod-figure{margin:28px 0;text-align:center}
-  .mod-figure img{max-width:100%;height:auto;border-radius:12px;border:1px solid var(--border);cursor:zoom-in;transition:opacity .2s,transform .2s}
-  .mod-figure img:hover{opacity:.9;transform:scale(1.01)}
-  .mod-figure figcaption{margin-top:10px;font-size:12px;color:var(--text-3);font-style:italic;line-height:1.5}
-
-  /* LIGHTBOX */
-  .lightbox{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:32px;opacity:0;pointer-events:none;transition:opacity .25s ease}
-  .lightbox.open{opacity:1;pointer-events:all}
-  .lightbox-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(4px)}
-  .lightbox-img-wrap{position:relative;z-index:1;max-width:90vw;max-height:88vh;display:flex;flex-direction:column;align-items:center;gap:14px;transform:scale(.94);transition:transform .25s ease}
-  .lightbox.open .lightbox-img-wrap{transform:scale(1)}
-  .lightbox-img-wrap img{max-width:100%;max-height:80vh;height:auto;border-radius:14px;box-shadow:0 32px 80px rgba(0,0,0,.5);display:block}
-  .lightbox-caption{font-size:13px;color:rgba(255,255,255,.65);font-style:italic;text-align:center;max-width:640px;line-height:1.5}
-  .lightbox-close{position:absolute;top:-14px;right:-14px;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s;line-height:1}
-  .lightbox-close:hover{background:rgba(255,255,255,.25)}
-
-  .mod-table-wrap{overflow-x:auto;margin:24px 0;border-radius:12px;border:1px solid var(--border)}
-  .mod-table{width:100%;border-collapse:collapse;font-size:13px}
-  .mod-table th{background:var(--accent-soft);color:var(--accent);font-weight:600;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:10px 14px;text-align:left;border-bottom:1px solid var(--border)}
-  .mod-table td{padding:10px 14px;color:var(--text-2);border-bottom:1px solid var(--border);vertical-align:top;line-height:1.6;font-weight:300}
-  .mod-table tr:last-child td{border-bottom:none}
-  .mod-table td strong{color:var(--text-1);font-weight:600}
-
-  /* MODULE BODY */
-  .mod-body{margin-top:40px}
-  .mod-body h2{font-family:'DM Serif Display',Georgia,serif;font-size:22px;font-weight:400;color:var(--text-1);margin:44px 0 14px;padding-top:12px;border-top:1px solid var(--border)}
-  .mod-body h3{font-size:15px;font-weight:600;color:var(--text-1);margin:28px 0 10px}
-  .mod-body p{font-size:15px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:16px}
-  .mod-body ul,.mod-body ol{margin:0 0 20px;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:10px}
-  .mod-body li{position:relative;padding-left:22px;font-size:14px;font-weight:300;color:var(--text-2);line-height:1.7;overflow-wrap:break-word}
-  .mod-body li::before{content:'—';color:var(--accent);font-size:13px;position:absolute;left:0;top:0;line-height:1.7}
-  .mod-body li strong,.mod-body strong{color:var(--text-1);font-weight:600}
-  .mod-body blockquote{border-left:2px solid var(--accent);padding:10px 0 10px 20px;margin:20px 0;font-style:italic;font-weight:300;color:var(--text-2);font-size:14px;line-height:1.7}
-  .formula-box,.warning-box,.summary-box{border-radius:12px;padding:16px 20px;margin:20px 0;font-size:14px;line-height:1.7}
-  .formula-box{background:var(--accent-soft);border:1px solid rgba(0,113,227,.15);font-weight:500;font-style:italic}
-  .warning-box{background:rgba(255,149,0,.08);border:1px solid rgba(255,149,0,.2);color:var(--text-2)}
-  .summary-box{background:var(--gold-soft);border:1px solid rgba(201,168,76,.15);font-style:italic;color:var(--text-2)}
-  .profile-block{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:20px;margin:16px 0}
-  .profile-block h3{margin-top:0}
-  .profile-meta{font-size:12px;color:var(--accent);font-style:italic;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
-
-  /* NAV */
-  .mod-nav{display:flex;justify-content:space-between;align-items:center;margin-top:52px;padding-top:24px;border-top:1px solid var(--border);gap:12px}
-  .mod-nav-btn{display:flex;align-items:center;gap:8px;padding:10px 16px;border:1px solid var(--border);border-radius:10px;background:var(--bg);color:var(--text-2);cursor:pointer;font-size:13px;font-weight:500;transition:all .15s;font-family:inherit}
-  .mod-nav-btn:hover:not(:disabled){border-color:var(--border-active);color:var(--text-1)}
-  .mod-nav-btn:disabled{opacity:.3;cursor:default}
-  .mod-nav-label{font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em}
-
-  @media(max-width:768px){
-    body{padding:32px 20px 60px}
-  }
+  /* TOC */
+  .toc{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px 28px;margin-bottom:56px}
+  .toc-title{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:16px}
+  .toc-list{list-style:none;display:flex;flex-direction:column;gap:6px}
+  .toc-list li a{display:flex;align-items:baseline;gap:10px;text-decoration:none;color:var(--text-2);font-size:13.5px;transition:color .15s}
+  .toc-list li a:hover{color:var(--accent)}
+  .toc-letter{font-size:10px;font-weight:700;color:var(--accent);background:var(--accent-soft);border-radius:4px;padding:1px 6px;flex-shrink:0}
+  /* Sections */
+  .section{margin-bottom:64px}
+  .section-label{display:inline-flex;align-items:center;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);border-radius:6px;padding:4px 10px;margin-bottom:18px}
+  .section-title{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(22px,3.5vw,30px);line-height:1.2;margin-bottom:24px}
+  .section-intro{font-size:15px;color:var(--text-2);line-height:1.75;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid var(--border)}
+  .sub{margin-bottom:36px;border-left:3px solid var(--accent);padding-left:20px}
+  .sub-title{font-family:'DM Serif Display',Georgia,serif;font-size:19px;margin-bottom:14px;color:var(--text-1)}
+  .sub p{color:var(--text-2);margin-bottom:12px;font-size:14.5px;line-height:1.72}
+  .sub p:last-child{margin-bottom:0}
+  .sub strong{color:var(--text-1)}
+  .styled-list{list-style:none;margin:12px 0 16px;display:flex;flex-direction:column;gap:8px}
+  .styled-list li{color:var(--text-2);font-size:14px;line-height:1.65}
+  .styled-list li strong{color:var(--text-1)}
+  /* Callouts */
+  .callout{border-radius:0 10px 10px 0;border-left:3px solid;padding:14px 18px;margin:18px 0;font-size:13.5px;line-height:1.65}
+  .callout.yellow{background:#FAEEDA;border-color:#854F0B;color:#412402}
+  .callout.blue{background:#E6F1FB;border-color:#185FA5;color:#042C53}
+  .callout.green{background:#EAF3DE;border-color:#3B6D11;color:#173404}
+  .callout.red{background:#FCEBEB;border-color:#A32D2D;color:#501313}
+  .callout.purple{background:#EEEDFE;border-color:#534AB7;color:#26215C}
+  .callout strong{color:inherit}
+  /* Notion boxes */
+  .notion{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px 22px;margin:18px 0}
+  .notion-title{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px}
+  .notion p,.notion li{color:var(--text-1);font-size:13.5px;line-height:1.7;margin-bottom:6px}
+  .notion p:last-child,.notion li:last-child{margin-bottom:0}
+  .notion ul{list-style:none;display:flex;flex-direction:column;gap:4px}
+  .notion strong{color:var(--text-1)}
+  /* Formula */
+  .formula{background:var(--accent-soft);border:1px solid rgba(0,113,227,.15);border-radius:10px;padding:16px 24px;margin:16px 0;text-align:center}
+  .formula .MJX-TEX{font-size:1.1em}
+  .formula-vars{font-size:12.5px;color:var(--text-2);margin-top:10px;line-height:1.8;text-align:left}
+  /* Tables */
+  .table-wrap{overflow-x:auto;margin:18px 0 24px;border-radius:12px;border:1px solid var(--border)}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  thead tr{background:#f0efe8}
+  thead th{padding:10px 14px;text-align:left;font-size:11px;font-weight:700;letter-spacing:.05em;color:var(--text-1);white-space:nowrap}
+  tbody tr{border-top:1px solid var(--border)}
+  tbody tr:hover{background:rgba(0,0,0,.02)}
+  tbody td{padding:10px 14px;color:var(--text-2);vertical-align:top;line-height:1.55}
+  tbody td strong{color:var(--text-1)}
+  /* Figures */
+  .module-figure{margin:24px 0 32px;background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;padding:16px}
+  .module-figure svg{width:100%;display:block}
+  .fig-caption{margin-top:10px;font-size:12px;color:var(--text-3);font-style:italic;text-align:center}
+  /* Greek badge */
+  .greek-badge{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:8px;background:var(--accent-soft);color:var(--accent);font-size:18px;font-weight:600;margin-right:10px;flex-shrink:0;font-family:'DM Serif Display',Georgia,serif}
+  .greek-row{display:flex;align-items:flex-start;gap:0;margin-bottom:28px;border-left:3px solid var(--accent);padding-left:20px}
+  .greek-content{flex:1}
+  .greek-content .sub-title{display:flex;align-items:center}
+  /* Summary */
+  .summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0}
+  @media(max-width:560px){.summary-grid{grid-template-columns:1fr}}
+  .summary-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px}
+  .summary-section{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:4px}
+  .summary-concept{font-weight:600;font-size:13.5px;color:var(--text-1);margin-bottom:4px}
+  .summary-tool{font-size:12.5px;color:var(--text-2)}
+  .synthesis{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px;margin-top:48px}
+  .synthesis-title{font-family:'DM Serif Display',Georgia,serif;font-size:22px;margin-bottom:18px}
+  .synthesis p{color:var(--text-2);margin-bottom:12px;line-height:1.75;font-size:14.5px}
+  .prev-module{margin-top:20px;padding-top:18px;border-top:1px solid var(--border);font-size:13px;color:var(--text-3);font-style:italic}
+  .prev-module strong{color:var(--accent);font-style:normal}
+  /* Nav */
+  .module-nav{display:flex;justify-content:space-between;align-items:center;margin-top:56px;padding-top:28px;border-top:1px solid var(--border);gap:12px}
+  .nav-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:10px;border:1px solid var(--border);font-size:13.5px;font-weight:500;font-family:inherit;cursor:pointer;transition:all .2s;background:var(--surface);color:var(--text-1)}
+  .nav-btn:hover{border-color:var(--accent);color:var(--accent)}
+  .nav-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .nav-btn.primary:hover{background:#0077ed}
+  svg text{font-family:'DM Sans',-apple-system,sans-serif;fill:var(--text-1)}
+  svg .t{font-size:14px;font-weight:400;fill:var(--text-1)}
+  svg .ts{font-size:12px;font-weight:400;fill:var(--text-2)}
+  svg .th{font-size:14px;font-weight:600;fill:var(--text-1)}
 </style>
+<script>
+MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$']] },
+  options: { skipHtmlTags: ['script','noscript','style','textarea'] }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 </head>
 <body>
 <div class="page">
 
-  <!-- VIDEO: remplacer la ligne ci-dessous par <div class="mod-video has-video"><iframe src="https://www.youtube.com/embed/VOTRE_ID" allowfullscreen></iframe></div> -->
-  <div class="mod-video"></div>
+  <header class="mod-header">
+    <div class="mod-kicker">Module 11 · ARK Investor Program</div>
+    <h1 class="mod-title">Métriques de Performance & Lettres Grecques</h1>
+    <p class="mod-sub">Ce qui ne se mesure pas ne s'améliore pas. Mais ce qui se mesure mal induit en erreur.</p>
+    <div class="mod-objective">Ce module répond à la question que les dix premiers ne permettent pas de trancher : est-ce que ça fonctionne vraiment ? Il couvre les métriques de rendement et de risque, les ratios combinés (Sharpe, Sortino, Calmar), la significativité statistique, et les lettres grecques — les outils qui permettent de comprendre précisément à quoi un portefeuille est réellement exposé.</div>
+  </header>
 
-  <div class="mod-number">Module 11</div>
-  <h1 class="mod-title">Métriques de Trading</h1>
-  <div class="mod-tags"><span class="mod-tag">Win rate</span><span class="mod-tag">Drawdown</span><span class="mod-tag">Sharpe ratio</span><span class="mod-tag">Journal</span></div>
-  <p class="mod-intro">Win rate, risk/reward, expectancy, drawdown, Sharpe ratio — les indicateurs pour évaluer objectivement une stratégie et tenir un journal rigoureux.</p>
+  <!-- OBJECTIFS -->
+  <div class="mod-section-label">Ce que tu vas apprendre</div>
+  <ul class="mod-objectives">
+    <li><div class="obj-check">○</div><span>Calculer et interpréter le CAGR, le TWR et le MWR — et comprendre pourquoi le rendement arithmétique ment</span></li>
+    <li><div class="obj-check">○</div><span>Lire un drawdown maximum et une underwater curve pour mesurer le risque vécu dans sa dimension temporelle</span></li>
+    <li><div class="obj-check">○</div><span>Distinguer Sharpe, Sortino et Calmar — et savoir lequel utiliser selon la question posée</span></li>
+    <li><div class="obj-check">○</div><span>Comprendre pourquoi un historique de 20 trades ne prouve rien statistiquement, et combien il en faut</span></li>
+    <li><div class="obj-check">○</div><span>Utiliser le MAE et le MFE pour détecter des sorties trop précoces et des stops trop serrés</span></li>
+    <li><div class="obj-check">○</div><span>Maîtriser alpha, beta, gamma, vega et theta pour piloter l'exposition réelle du portefeuille</span></li>
+  </ul>
 
-  <div class="mod-section-title">Ce que tu vas apprendre</div>
-  <ul class="mod-objectives"><li><div class="obj-check">○</div><span>Calculer et interpréter les métriques essentielles d'une stratégie de trading</span></li><li><div class="obj-check">○</div><span>Comprendre pourquoi un win rate élevé ne garantit pas la profitabilité</span></li><li><div class="obj-check">○</div><span>Tenir un journal de trading structuré et exploitable</span></li><li><div class="obj-check">○</div><span>Évaluer objectivement sa performance sur le long terme</span></li></ul>
-
-  <div class="mod-divider"></div>
-
-  <div class="mod-section-title">Concepts clés</div>
-  <div class="mod-concepts-grid"><div class="concept-card"><div class="concept-icon">✅</div><div class="concept-name">Win rate</div><div class="concept-desc">Le pourcentage de trades gagnants — seul, il ne dit rien</div></div><div class="concept-card"><div class="concept-icon">📉</div><div class="concept-name">Drawdown</div><div class="concept-desc">La perte maximale depuis un pic — mesure de la résistance</div></div><div class="concept-card"><div class="concept-icon">📐</div><div class="concept-name">Expectancy</div><div class="concept-desc">Le gain moyen attendu par trade — la vraie métrique de performance</div></div><div class="concept-card"><div class="concept-icon">📓</div><div class="concept-name">Journal de trading</div><div class="concept-desc">L'outil le plus sous-estimé pour progresser</div></div></div>
-
-  <div class="mod-quote">
-    <div class="mod-quote-text">"Ce qui ne se mesure pas ne s'améliore pas."</div>
-    <div class="mod-quote-source">— Peter Drucker</div>
+  <div class="mod-section-label">Concepts clés</div>
+  <div class="mod-concepts-grid">
+    <div class="concept-card"><div class="concept-icon">📊</div><div class="concept-name">CAGR vs arithmétique</div><div class="concept-desc">Le rendement géométrique est la seule mesure honnête — la moyenne arithmétique surestime toujours la réalité</div></div>
+    <div class="concept-card"><div class="concept-icon">📉</div><div class="concept-name">Sharpe vs Sortino</div><div class="concept-desc">Le Sharpe pénalise toute volatilité. Le Sortino ne pénalise que les baisses — bien plus pertinent pour un investisseur</div></div>
+    <div class="concept-card"><div class="concept-icon">⚗️</div><div class="concept-name">Alpha & Beta</div><div class="concept-desc">L'alpha mesure la valeur ajoutée réelle. Le beta mesure l'exposition au marché. Piloter les deux ensemble est l'aboutissement de la formation</div></div>
+    <div class="concept-card"><div class="concept-icon">🎯</div><div class="concept-name">MAE / MFE</div><div class="concept-desc">Les métriques les plus sous-utilisées — elles révèlent si on sort trop tôt et si les stops sont trop serrés, trade par trade</div></div>
   </div>
 
-  
+  <div class="mod-quote-block">
+    <div class="mod-quote-text">"Connaître son alpha et son beta transforme 'j'ai fait +18% cette année' en 'j'ai fait +18% dont +12% venaient du marché et +6% de mon edge réel.'"</div>
+    <div class="mod-quote-source">— ARK — Module 11</div>
+  </div>
 
-  <div class="mod-nav">
-    <button class="mod-nav-btn" onclick="navigate(9)" >← Précédent</button>
-    <span class="mod-nav-label">11 / 12</span>
-    <button class="mod-nav-btn" onclick="navigate(11, true)" >Suivant →</button>
+  <nav class="toc">
+    <div class="toc-title">Sommaire</div>
+    <ul class="toc-list">
+      <li><a href="#xia"><span class="toc-letter">a</span>Métriques de Rendement Pur</a></li>
+      <li><a href="#xib"><span class="toc-letter">b</span>Métriques de Risque</a></li>
+      <li><a href="#xic"><span class="toc-letter">c</span>Métriques Combinées Rendement / Risque</a></li>
+      <li><a href="#xid"><span class="toc-letter">d</span>Benchmarks et Comparaison</a></li>
+      <li><a href="#xie"><span class="toc-letter">e</span>Significativité Statistique et Taille d'Échantillon</a></li>
+      <li><a href="#xif"><span class="toc-letter">f</span>Implémentation Pratique</a></li>
+      <li><a href="#xig"><span class="toc-letter">g</span>Les Lettres Grecques</a></li>
+    </ul>
+  </nav>
+
+  <!-- SECTION A -->
+  <section class="section" id="xia">
+    <div class="section-label">Section A</div>
+    <h2 class="section-title">Métriques de Rendement Pur</h2>
+    <div class="section-intro"><em>Un rendement de +20% sans contexte ne signifie rien. Tout dépend de sur combien de temps, avec quelle volatilité, et par rapport à quoi.</em></div>
+
+    <div class="sub">
+      <h3 class="sub-title">Rendement absolu : la métrique la plus simple et la plus trompeuse</h3>
+      <p>Le rendement absolu est le point de départ — mais il ne peut pas être utilisé seul. +20% sur un an avec une volatilité de 40% est une performance médiocre. +15% sur un an avec une volatilité de 8% est une performance excellente. Le rendement brut doit toujours être contextualisé par le risque pris pour l'obtenir.</p>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">CAGR — Compound Annual Growth Rate</h3>
+      <p>Le CAGR est la seule façon honnête de comparer des performances sur des horizons différents. Il mesure le taux de croissance annuel composé qui, appliqué à chaque année, produirait exactement la performance totale observée.</p>
+      <div class="formula">
+        $$\text{CAGR} = \left(\frac{V_f}{V_i}\right)^{\!1/n} - 1$$
+        <div class="formula-vars">
+          <strong>V_f</strong> = valeur finale &nbsp;·&nbsp; <strong>V_i</strong> = valeur initiale &nbsp;·&nbsp; <strong>n</strong> = nombre d'années<br>
+          Exemple : 50 000€ → 82 000€ en 4 ans → CAGR = (82 000/50 000)<sup>0.25</sup> − 1 = <strong>13.1%/an</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Le piège du rendement arithmétique vs géométrique</h3>
+      <p>Le rendement arithmétique est la moyenne simple des rendements annuels. Le CAGR (géométrique) tient compte de l'effet des intérêts composés. Les deux divergent significativement en présence de volatilité — et c'est toujours le géométrique qui reflète la réalité.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Année</th><th>Rendement annuel</th><th>Capital cumulé</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Année 1</strong></td><td>+50%</td><td>150 000€</td></tr>
+            <tr><td><strong>Année 2</strong></td><td>−33%</td><td>100 500€</td></tr>
+            <tr><td><strong>Moyenne arithmétique</strong></td><td>+8.5%/an</td><td>Suggère une croissance positive</td></tr>
+            <tr><td><strong>CAGR réel</strong></td><td>+0.25%/an</td><td>La réalité : quasi-stagnation</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Cet exemple illustre pourquoi communiquer des rendements arithmétiques est trompeur : la moyenne de +50% et −33% suggère une belle performance, alors que le capital a à peine bougé.</p>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">TWR vs MWR : deux questions différentes</h3>
+      <p><strong>TWR (Time-Weighted Return) :</strong> mesure la performance de la stratégie indépendamment des apports et retraits de capital. C'est la métrique des gérants de fonds — elle isole la compétence du gérant du timing des flux clients.</p>
+      <p><strong>MWR (Money-Weighted Return / IRR) :</strong> mesure la performance réelle de l'investisseur en tenant compte de ses flux. Si l'investisseur a apporté du capital juste avant une mauvaise période, son MWR sera inférieur au TWR — même si la stratégie est bonne.</p>
+      <div class="notion">
+        <div class="notion-title">Quand TWR et MWR divergent</div>
+        <p><strong>TWR &gt; MWR :</strong> l'investisseur a apporté des fonds au mauvais moment (juste avant une baisse).</p>
+        <p><strong>MWR &gt; TWR :</strong> l'investisseur a apporté des fonds au bon moment (juste avant une hausse).</p>
+        <p>Pour évaluer une stratégie objectivement → utiliser le <strong>TWR</strong>. Pour évaluer sa propre performance réelle → utiliser le <strong>MWR</strong>.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION B -->
+  <section class="section" id="xib">
+    <div class="section-label">Section B</div>
+    <h2 class="section-title">Métriques de Risque</h2>
+    <div class="section-intro"><em>Le risque n'est pas la volatilité. La volatilité est une mesure du risque — imparfaite, mais la plus utilisée.</em></div>
+
+    <div class="sub">
+      <h3 class="sub-title">Volatilité annualisée</h3>
+      <p>La volatilité annualisée est l'écart-type des rendements journaliers multiplié par la racine carrée de 252 (jours de bourse dans une année). Elle mesure la dispersion des rendements autour de leur moyenne.</p>
+      <div class="formula">
+        $$\sigma_{\text{ann}} = \sigma_{\text{daily}} \times \sqrt{252}$$
+        <div class="formula-vars">
+          <strong>σ_ann</strong> = volatilité annualisée &nbsp;·&nbsp; <strong>σ_daily</strong> = écart-type des rendements journaliers &nbsp;·&nbsp; <strong>252</strong> = jours de bourse par an
+        </div>
+      </div>
+      <div class="callout yellow"><strong>La limite principale de la volatilité :</strong> elle pénalise également les mouvements à la hausse et à la baisse. Une stratégie qui monte régulièrement avec quelques fortes hausses aura une volatilité élevée — mais ce n'est pas un risque, c'est une opportunité. C'est précisément pour corriger cette limite que le Sortino Ratio a été développé.</div>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Drawdown Maximum (MDD)</h3>
+      <p>Le MDD est le recul le plus important du portefeuille depuis son pic historique jusqu'à son point le plus bas. C'est la mesure la plus honnête du risque réel vécu par l'investisseur — et souvent celle qui détermine si une stratégie est psychologiquement tenable.</p>
+      <p>La relation non-linéaire perte/récupération s'applique directement : un MDD de 30% nécessite un gain de +42.9% pour être effacé. Un MDD de 50% nécessite un doublement. <strong>Le MDD historique n'est pas le pire scénario futur — il en est le minimum.</strong></p>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">L'Underwater curve : la durée compte autant que l'amplitude</h3>
+      <p>L'underwater curve représente l'évolution du drawdown dans le temps — la zone de valeur du portefeuille sous son pic historique. Elle révèle ce que le MDD seul ne montre pas : la durée pendant laquelle l'investisseur est resté sous son pic.</p>
+      <p>Un MDD de 20% récupéré en 3 semaines et un MDD de 20% récupéré en 18 mois représentent des expériences psychologiques et des implications pratiques totalement différentes. L'underwater curve rend visible cette dimension temporelle.</p>
+    </div>
+
+    <div class="module-figure">
+<svg width="100%" viewBox="0 0 680 300" style="display:block">
+<!-- Panel 1: Price & peak -->
+<text class="ts" x="64" y="18" style="font-weight:600;fill:#185FA5">Prix & pic historique</text>
+<line x1="60" y1="130" x2="620" y2="130" stroke="var(--text-2)" stroke-width="0.5" opacity=".15"/>
+<!-- Price path -->
+<path d="M 68,110 L 110,90 L 150,70 L 180,60 L 200,80 L 230,90 L 260,65 L 290,75 L 320,50 L 340,55 L 360,80 L 390,95 L 410,85 L 440,100 L 470,88 L 500,105 L 540,95 L 580,108 L 615,100" fill="none" stroke="#185FA5" stroke-width="2" stroke-linecap="round"/>
+<!-- Peak line -->
+<path d="M 68,110 L 110,90 L 150,70 L 180,60 L 260,60 L 320,50 L 340,50 L 620,50" fill="none" stroke="#E24B4A" stroke-width="1" stroke-dasharray="5 3" opacity=".6"/>
+<!-- Fill underwater zone -->
+<path d="M 340,50 L 360,80 L 390,95 L 410,85 L 440,100 L 470,88 L 500,105 L 540,95 L 580,108 L 615,100 L 615,50 L 340,50 Z" fill="#FCEBEB" opacity=".35"/>
+<text class="ts" x="480" y="45" fill="#A32D2D" style="font-size:11px">Pic historique</text>
+<text class="ts" x="450" y="90" fill="#A32D2D" style="font-size:11px">Zone underwater</text>
+
+<!-- Panel 2: Drawdown depth -->
+<line x1="60" y1="148" x2="620" y2="148" stroke="var(--text-2)" stroke-width="0.5" opacity=".2"/>
+<text class="ts" x="64" y="165" style="font-weight:600;fill:#A32D2D">Profondeur du drawdown</text>
+<path d="M 68,175 L 180,175 L 200,185 L 230,190 L 260,175 L 290,180 L 320,175 L 340,175 L 360,195 L 390,210 L 410,205 L 440,218 L 470,210 L 500,225 L 540,215 L 580,222 L 615,218" fill="none" stroke="#E24B4A" stroke-width="2" stroke-linecap="round"/>
+<path d="M 340,175 L 360,195 L 390,210 L 410,205 L 440,218 L 470,210 L 500,225 L 540,215 L 580,222 L 615,218 L 615,175 L 340,175 Z" fill="#FCEBEB" opacity=".35"/>
+<!-- MDD marker -->
+<line x1="500" y1="155" x2="500" y2="225" stroke="#A32D2D" stroke-width="1" stroke-dasharray="3 3" opacity=".5"/>
+<text class="ts" x="504" y="245" fill="#A32D2D">MDD max</text>
+<!-- Duration brace -->
+<line x1="340" y1="270" x2="615" y2="270" stroke="#A32D2D" stroke-width="1" opacity=".4"/>
+<line x1="340" y1="265" x2="340" y2="275" stroke="#A32D2D" stroke-width="1" opacity=".4"/>
+<line x1="615" y1="265" x2="615" y2="275" stroke="#A32D2D" stroke-width="1" opacity=".4"/>
+<text class="ts" x="478" y="286" text-anchor="middle" fill="#A32D2D">Durée de la période underwater</text>
+</svg>
+<p class="fig-caption">Fig. 1 — Underwater curve en deux panels. Haut : prix et pic historique, zone rouge = sous le peak. Bas : profondeur du drawdown dans le temps. La durée des périodes underwater est aussi révélatrice que leur amplitude maximale.</p>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">VaR et CVaR calculées sur l'historique réel</h3>
+      <p>Contrairement à la VaR paramétrique qui suppose une distribution normale, la <strong>VaR historique</strong> est calculée directement depuis les rendements réels observés — sans hypothèse sur leur distribution. Elle capture les vraies queues, y compris les événements extrêmes que le modèle gaussien ignorerait.</p>
+      <p>La <strong>CVaR (Expected Shortfall)</strong> complète la VaR en mesurant la perte moyenne au-delà du seuil VaR. Sur un historique réel, ces deux métriques donnent une image fidèle du risque de queue — incluant les cygnes noirs déjà vécus par la stratégie.</p>
+    </div>
+  </section>
+
+  <!-- SECTION C -->
+  <section class="section" id="xic">
+    <div class="section-label">Section C</div>
+    <h2 class="section-title">Métriques Combinées Rendement / Risque</h2>
+    <div class="section-intro"><em>L'objectif n'est pas de maximiser le rendement. C'est de maximiser le rendement par unité de risque pris.</em></div>
+
+    <div class="sub">
+      <h3 class="sub-title">Sharpe Ratio</h3>
+      <p>Le Sharpe Ratio est la métrique la plus utilisée en finance pour comparer des stratégies sur une base ajustée du risque. Il mesure combien d'unités de rendement excédentaire (au-dessus du taux sans risque) sont générées pour chaque unité de risque total.</p>
+      <div class="formula">
+        $$\text{Sharpe} = \frac{R_p - R_f}{\sigma_p}$$
+        <div class="formula-vars">
+          <strong>R_p</strong> = rendement annualisé &nbsp;·&nbsp; <strong>R_f</strong> = taux sans risque (OAT 1 an, ~2–4%) &nbsp;·&nbsp; <strong>σ_p</strong> = volatilité annualisée<br>
+          Valeurs de référence : &lt; 0.5 médiocre · 0.5–1.0 acceptable · 1.0–2.0 bon · &gt; 2.0 excellent
+        </div>
+      </div>
+      <div class="callout red"><strong>Les limites critiques du Sharpe :</strong> suppose une distribution normale — sous-estime les queues épaisses. Pénalise la volatilité à la hausse autant qu'à la baisse. Un fonds qui vend des options nues a un Sharpe élevé et stable… jusqu'au jour où ça explose. Sensible à la fréquence de mesure.</div>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Sortino Ratio</h3>
+      <p>Le Sortino Ratio corrige la principale limite du Sharpe : il ne pénalise que la <strong>volatilité négative</strong> (downside deviation), pas la volatilité totale. C'est une mesure plus pertinente pour un investisseur qui ne se préoccupe que des pertes, pas des hausses.</p>
+      <div class="formula">
+        $$\text{Sortino} = \frac{R_p - R_f}{\sigma_{\text{downside}}}$$
+        <div class="formula-vars">
+          <strong>σ_downside</strong> = écart-type des rendements inférieurs au taux sans risque uniquement<br>
+          Quand <strong>Sortino &gt; Sharpe</strong> : la stratégie a plus de volatilité à la hausse qu'à la baisse — profil asymétrique favorable.
+        </div>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Calmar Ratio</h3>
+      <p>Le Calmar Ratio mesure le rendement annualisé par rapport au drawdown maximum historique. C'est la métrique la plus adaptée à l'évaluation de stratégies sur horizon long — elle pénalise directement les drawdowns extrêmes qui rendent une stratégie psychologiquement intenable.</p>
+      <div class="formula">
+        $$\text{Calmar} = \frac{\text{CAGR}}{|\text{MDD}|}$$
+        <div class="formula-vars">
+          Exemple : CAGR = 18%, MDD = −24% → Calmar = 18/24 = <strong>0.75</strong><br>
+          Valeurs de référence : &lt; 0.5 faible · 0.5–1.0 correct · &gt; 1.0 solide · &gt; 3.0 exceptionnel
+        </div>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Information Ratio</h3>
+      <p>L'Information Ratio mesure la régularité avec laquelle un portefeuille surperforme son benchmark. Un IR élevé signifie que la surperformance est régulière, pas due à la chance d'une bonne année.</p>
+      <div class="formula">
+        $$\text{IR} = \frac{R_p - R_b}{\text{TE}}$$
+        <div class="formula-vars">
+          <strong>R_b</strong> = rendement du benchmark &nbsp;·&nbsp; <strong>TE</strong> = Tracking Error = écart-type des rendements excédentaires \(R_p - R_b\)
+        </div>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Métrique</th><th>Question posée</th><th>Numérateur</th><th>Dénominateur</th><th>Limite principale</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Sharpe</strong></td><td>Rendement / risque total ?</td><td>R_p − R_f</td><td>Volatilité totale</td><td>Pénalise la volatilité haussière</td></tr>
+          <tr><td><strong>Sortino</strong></td><td>Rendement / risque baissier ?</td><td>R_p − R_f</td><td>Volatilité downside</td><td>Ignore la fréquence des drawdowns</td></tr>
+          <tr><td><strong>Calmar</strong></td><td>Rendement / pire drawdown ?</td><td>CAGR</td><td>MDD absolu</td><td>Sensible à un seul événement extrême</td></tr>
+          <tr><td><strong>Info. Ratio</strong></td><td>Alpha / régularité de l'alpha ?</td><td>R_p − R_b</td><td>Tracking Error</td><td>Dépend du choix du benchmark</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- SECTION D -->
+  <section class="section" id="xid">
+    <div class="section-label">Section D</div>
+    <h2 class="section-title">Benchmarks et Comparaison</h2>
+    <div class="section-intro"><em>Se comparer au mauvais benchmark peut faire paraître une stratégie excellente ou médiocre — indépendamment de sa qualité réelle.</em></div>
+
+    <div class="sub">
+      <h3 class="sub-title">Pourquoi le choix du benchmark est une décision stratégique</h3>
+      <p>Le benchmark doit refléter l'univers d'investissement réel de la stratégie et le risque systématique qu'elle supporte. Se comparer au CAC40 quand on trade des matières premières n'a aucun sens — les deux actifs n'ont pas les mêmes drivers fondamentaux, pas les mêmes régimes, pas le même profil de risque.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Type de stratégie</th><th>Benchmark adapté</th><th>Justification</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Position trading global macro</strong></td><td>MSCI World ou 60/40</td><td>Univers d'investissement global, risque systématique mondial</td></tr>
+            <tr><td><strong>Matières premières</strong></td><td>Bloomberg Commodity Index</td><td>Même classe d'actif, même exposition aux cycles commodités</td></tr>
+            <tr><td><strong>Devises (FX)</strong></td><td>DXY ou panier pondéré</td><td>Référence naturelle pour les positions de change</td></tr>
+            <tr><td><strong>Stratégie market neutral</strong></td><td>Taux sans risque (OAT 1 an)</td><td>Beta neutre = aucune exposition au marché</td></tr>
+            <tr><td><strong>Actions sectorielles</strong></td><td>ETF sectoriel correspondant</td><td>Isoler l'alpha intra-sectoriel du beta du secteur</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Le portefeuille 60/40 comme benchmark de référence universelle</h3>
+      <p>Le portefeuille 60% actions monde / 40% obligations court terme est le benchmark que tout investisseur actif doit battre pour justifier ses efforts. Il est accessible à tous via deux ETF, sans analyse, sans surveillance quotidienne, avec des frais proches de zéro. Il produit historiquement 7 à 9% annualisé sur le long terme.</p>
+      <p>C'est le coût d'opportunité de la gestion active : si votre stratégie ne bat pas le 60/40 sur un horizon de 3 à 5 ans après frais, vous avez travaillé gratuitement — ou payé pour sous-performer.</p>
+      <div class="callout blue"><strong>La limite du 60/40 en période de corrélation positive :</strong> en 2022, actions et obligations ont chuté simultanément — le 60/40 a perdu −16%, sa pire année depuis 2008. Quand les banques centrales resserrent agressivement, la corrélation traditionnellement négative actions/obligations disparaît. C'est précisément l'environnement où un edge fondamental global macro se matérialise.</div>
+    </div>
+  </section>
+
+  <!-- SECTION E -->
+  <section class="section" id="xie">
+    <div class="section-label">Section E</div>
+    <h2 class="section-title">Significativité Statistique et Taille d'Échantillon</h2>
+    <div class="section-intro"><em>Un Sharpe de 1.5 sur 15 trades peut être indistinguable de zéro sur le plan statistique. La confiance en un edge se mérite — elle s'achète avec du temps et du nombre de trades.</em></div>
+
+    <div class="sub">
+      <h3 class="sub-title">Le problème fondamental : combien de trades pour avoir confiance ?</h3>
+      <p>L'intuition humaine surestime systématiquement ce qu'une petite série de trades permet de conclure. Un win rate de 60% sur 10 trades est statistiquement indistinguable d'un win rate de 50% — l'intervalle de confiance est trop large pour trancher. Il faut un grand nombre d'observations pour que la moyenne empirique converge vers l'espérance réelle.</p>
+    </div>
+
+    <div class="module-figure">
+<svg width="100%" viewBox="0 0 680 220" style="display:block">
+<!-- Left panel: IC width vs sample size -->
+<text class="ts" x="170" y="18" text-anchor="middle" style="font-weight:600">IC 95% du Sharpe selon le nombre de trades</text>
+<line x1="60" y1="180" x2="280" y2="180" stroke="var(--text-2)" stroke-width="1" opacity=".2"/>
+<line x1="60" y1="30" x2="60" y2="180" stroke="var(--text-2)" stroke-width="1" opacity=".2"/>
+<!-- X labels -->
+<text class="ts" x="80" y="196" text-anchor="middle" opacity=".5">20</text>
+<text class="ts" x="130" y="196" text-anchor="middle" opacity=".5">50</text>
+<text class="ts" x="180" y="196" text-anchor="middle" opacity=".5">80</text>
+<text class="ts" x="240" y="196" text-anchor="middle" opacity=".5">120</text>
+<text class="ts" x="170" y="210" text-anchor="middle" opacity=".4">Nombre de trades</text>
+<!-- Zero line -->
+<line x1="60" y1="105" x2="280" y2="105" stroke="#E24B4A" stroke-width="1" stroke-dasharray="4 3" opacity=".5"/>
+<text class="ts" x="285" y="109" fill="#A32D2D" style="font-size:10px">Sharpe = 0</text>
+<!-- IC bands (wide at left, narrow at right) -->
+<path d="M 80,40 L 130,60 L 180,75 L 240,85" fill="none" stroke="#185FA5" stroke-width="1.5" stroke-linecap="round"/>
+<path d="M 80,170 L 130,150 L 180,135 L 240,125" fill="none" stroke="#185FA5" stroke-width="1.5" stroke-linecap="round"/>
+<path d="M 80,40 L 130,60 L 180,75 L 240,85 L 240,125 L 180,135 L 130,150 L 80,170 Z" fill="#E6F1FB" opacity=".4"/>
+<!-- Sharpe observed -->
+<line x1="60" y1="90" x2="280" y2="90" stroke="#3B6D11" stroke-width="1.5" stroke-dasharray="5 3" opacity=".7"/>
+<text class="ts" x="64" y="86" fill="#27500A" style="font-size:10px">Sharpe observé = 1.2</text>
+<!-- Significance threshold -->
+<line x1="180" y1="30" x2="180" y2="180" stroke="#854F0B" stroke-width="1" stroke-dasharray="3 3" opacity=".5"/>
+<text class="ts" x="182" y="44" fill="#633806" style="font-size:10px">~80 trades</text>
+<text class="ts" x="182" y="56" fill="#633806" style="font-size:10px">seuil sign.</text>
+<!-- Red zone label -->
+<rect x="62" y="32" width="116" height="20" rx="4" fill="#FCEBEB" opacity=".7"/>
+<text class="ts" x="120" y="45" text-anchor="middle" fill="#791F1F">IC inclut 0 → non significatif</text>
+
+<!-- Separator -->
+<line x1="340" y1="10" x2="340" y2="210" stroke="var(--border)" stroke-width="1"/>
+
+<!-- Right panel: distributions -->
+<text class="ts" x="510" y="18" text-anchor="middle" style="font-weight:600">Distribution du Sharpe estimé</text>
+<!-- 20 trades: wide distribution -->
+<path d="M 360,170 L 380,168 L 400,160 L 420,140 L 440,110 L 460,90 L 480,110 L 500,140 L 520,160 L 540,168 L 560,170" fill="none" stroke="#E24B4A" stroke-width="1.5" stroke-linecap="round"/>
+<path d="M 360,170 L 380,168 L 400,160 L 420,140 L 440,110 L 460,90 L 480,110 L 500,140 L 520,160 L 540,168 L 560,170 L 560,170 L 360,170 Z" fill="#FCEBEB" opacity=".3"/>
+<text class="ts" x="555" y="105" fill="#A32D2D" style="font-size:11px">20 trades</text>
+<!-- 100 trades: narrow distribution -->
+<path d="M 420,170 L 435,168 L 450,155 L 460,130 L 467,100 L 472,75 L 477,60 L 480,52 L 483,60 L 488,75 L 495,100 L 502,130 L 512,155 L 527,168 L 545,170" fill="none" stroke="#185FA5" stroke-width="1.5" stroke-linecap="round"/>
+<path d="M 420,170 L 435,168 L 450,155 L 460,130 L 467,100 L 472,75 L 477,60 L 480,52 L 483,60 L 488,75 L 495,100 L 502,130 L 512,155 L 527,168 L 545,170 L 545,170 L 420,170 Z" fill="#E6F1FB" opacity=".4"/>
+<text class="ts" x="550" y="65" fill="#0C447C" style="font-size:11px">100 trades</text>
+<!-- Zero reference -->
+<line x1="390" y1="170" x2="390" y2="30" stroke="#E24B4A" stroke-width="1" stroke-dasharray="3 3" opacity=".4"/>
+<text class="ts" x="392" y="35" fill="#A32D2D" style="font-size:10px">0</text>
+</svg>
+<p class="fig-caption">Fig. 2 — Intervalle de confiance 95% du Sharpe Ratio selon le nombre de trades. Sous ~80 trades, l'IC inclut 0 — le Sharpe observé est statistiquement non significatif. Plus l'échantillon est grand, plus la distribution se resserre.</p>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">L'intervalle de confiance du Sharpe Ratio</h3>
+      <div class="formula">
+        $$\sigma(\widehat{SR}) \approx \sqrt{\frac{1 + \widehat{SR}^2/2}{T}}$$
+        <div class="formula-vars">
+          <strong>σ(SR)</strong> = erreur standard du Sharpe estimé &nbsp;·&nbsp; <strong>T</strong> = nombre de périodes<br>
+          IC 95% : \(\widehat{SR} \pm 1.96 \times \sigma(\widehat{SR})\)<br>
+          Exemple : SR = 1.2 sur 20 trades → σ(SR) = 0.40 → IC 95% = [0.42 ; 1.98] — inclut des valeurs très faibles
+        </div>
+      </div>
+      <div class="callout purple">Règle pratique : il faut au minimum <strong>50–80 trades</strong> pour commencer à avoir confiance dans un Sharpe. Une stratégie fondamentale produisant 20 à 50 trades par an nécessite donc 2 à 5 ans de données pour tirer des conclusions robustes.</div>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Le cas particulier de la stratégie fondamentale discrétionnaire</h3>
+      <p>Les méthodes statistiques supposent un nombre de trades suffisamment élevé. C'est réaliste pour un algorithme qui passe 500 trades par an — pas pour un position trader fondamental qui en passe 20 à 50.</p>
+      <p>Ce n'est pas une raison de ne pas mesurer — c'est une raison de mesurer avec humilité. Les métriques restent utiles pour détecter des dérives de comportement, comparer des périodes entre elles, et maintenir une discipline de suivi. La vraie validation d'une stratégie fondamentale passe moins par les métriques statistiques que par la <strong>cohérence du processus</strong> : les 3 filtres respectés, le plan documenté avant l'entrée, le sizing conforme aux règles.</p>
+    </div>
+  </section>
+
+  <!-- SECTION F -->
+  <section class="section" id="xif">
+    <div class="section-label">Section F</div>
+    <h2 class="section-title">Implémentation Pratique</h2>
+    <div class="section-intro"><em>Un dashboard de métriques n'a de valeur que s'il est mis à jour et lu régulièrement. La mesure sans action est du bruit.</em></div>
+
+    <div class="sub">
+      <h3 class="sub-title">Les 5 métriques minimales à suivre chaque mois</h3>
+      <ul class="styled-list">
+        <li><strong>CAGR depuis le début de l'année</strong> (ou depuis le lancement de la stratégie). Calcul : (valeur finale / valeur initiale)^(1/n_années) − 1, où la valeur est le capital total après chaque mois.</li>
+        <li><strong>MDD actuel et MDD maximum historique.</strong> Noter la valeur du portefeuille après chaque semaine, calculer le recul depuis le pic le plus récent.</li>
+        <li><strong>Sharpe Ratio glissant sur 12 mois.</strong> Moyenne des rendements mensuels moins le taux sans risque, divisée par l'écart-type des rendements mensuels, multiplié par √12. Surveiller sa tendance plus que son niveau absolu.</li>
+        <li><strong>Sortino Ratio glissant sur 12 mois.</strong> Même calcul que le Sharpe, mais le dénominateur n'utilise que les mois avec un rendement négatif. Si le Sortino diverge du Sharpe à la hausse, la stratégie génère des gains asymétriques.</li>
+        <li><strong>Calmar Ratio depuis le début.</strong> CAGR annualisé divisé par la valeur absolue du MDD maximum historique. Ne changer ses paramètres que si le Calmar descend durablement sous 0.5.</li>
+      </ul>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">MAE et MFE : les métriques les plus sous-utilisées</h3>
+      <p>Le <strong>Maximum Adverse Excursion (MAE)</strong> et le <strong>Maximum Favorable Excursion (MFE)</strong> sont des métriques par trade qui révèlent des patterns invisibles dans les métriques globales. Ils permettent d'améliorer le sizing et le timing de sortie sans changer la stratégie elle-même.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Signal MAE/MFE</th><th>Diagnostic</th><th>Action corrective</th></tr></thead>
+          <tbody>
+            <tr><td><strong>MFE &gt;&gt; Réalisé sur la majorité des gagnants</strong></td><td>On sort systématiquement trop tôt</td><td>Élargir les objectifs ou utiliser un trailing stop</td></tr>
+            <tr><td><strong>MAE proche du stop sur les gagnants</strong></td><td>Stop trop serré — filtre les bons trades</td><td>Élargir le stop ou réduire le sizing pour compenser</td></tr>
+            <tr><td><strong>MAE &gt;&gt; Stop théorique sur les perdants</strong></td><td>Stop non respecté ou déplacé</td><td>Vérifier la discipline d'exécution</td></tr>
+            <tr><td><strong>MFE faible sur les gagnants</strong></td><td>La stratégie génère peu de tendance</td><td>Revoir les filtres d'entrée — chercher de meilleurs R/R</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="notion">
+        <div class="notion-title">Exemple chiffré — MAE/MFE sur 30 trades gagnants</div>
+        <p>MFE moyen = 2.8R, rendement réalisé moyen = 1.3R → on sort en moyenne à <strong>46% du potentiel maximum</strong> de chaque trade.</p>
+        <p>Diagnostic : sortie systématiquement trop précoce. Action : passer d'un objectif fixe à un trailing stop sur MM50.</p>
+        <p>MAE moyen = −0.82R sur les gagnants, stop théorique = −1R → 12 trades sur 30 auraient été stoppés si le stop était à −0.7R.</p>
+        <p>Diagnostic : stop trop serré. Action : élargir le stop à <strong>1.5× ATR(14)</strong> plutôt qu'à 1× ATR(14).</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION G -->
+  <section class="section" id="xig">
+    <div class="section-label">Section G</div>
+    <h2 class="section-title">Les Lettres Grecques</h2>
+    <div class="section-intro"><em>Connaître son alpha et son beta transforme 'j'ai fait +18% cette année' en 'j'ai fait +18% dont +12% venaient du marché et +6% de mon edge réel.'</em></div>
+
+    <div class="sub">
+      <h3 class="sub-title">Alpha (α) — La surperformance réelle</h3>
+      <p>L'alpha est le rendement excédentaire d'un portefeuille par rapport à ce que son niveau de risque (beta) prédit. C'est la seule mesure de valeur ajoutée réelle — la part de performance qui vient de l'investisseur, pas du marché.</p>
+      <div class="formula">
+        $$\alpha = R_p - \bigl[R_f + \beta\,(R_m - R_f)\bigr]$$
+        <div class="formula-vars">
+          <strong>α &gt; 0</strong> : valeur ajoutée réelle &nbsp;·&nbsp; <strong>α = 0</strong> : performance de marché pur &nbsp;·&nbsp; <strong>α &lt; 0</strong> : destruction de valeur
+        </div>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Beta (β) — La corrélation au marché</h3>
+      <p>Le beta mesure la sensibilité du portefeuille aux mouvements du marché de référence. C'est la pente de la droite de régression des rendements du portefeuille sur les rendements du benchmark.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Beta</th><th>Comportement</th><th>Profil de stratégie</th><th>Exemple</th></tr></thead>
+          <tbody>
+            <tr><td><strong>β &gt; 1</strong></td><td>Amplifie les mouvements du marché</td><td>Stratégie agressive / cyclique</td><td>β = 1.5 : +15% si marché +10%</td></tr>
+            <tr><td><strong>β = 1</strong></td><td>Suit le marché parfaitement</td><td>Réplication passive</td><td>ETF indiciel</td></tr>
+            <tr><td><strong>β &lt; 1</strong></td><td>Moins sensible que le marché</td><td>Stratégie défensive / low vol</td><td>β = 0.4 : +4% si marché +10%</td></tr>
+            <tr><td><strong>β = 0</strong></td><td>Indépendant du marché</td><td>Stratégie market neutral</td><td>Arbitrage, pairs trading</td></tr>
+            <tr><td><strong>β &lt; 0</strong></td><td>Inversement corrélé au marché</td><td>Couverture / contrariante</td><td>Or, obligations longues en crise</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout blue"><strong>Corrélation vs Beta — la confusion fréquente :</strong> une corrélation élevée ne signifie pas un beta élevé. La corrélation mesure la force de la relation linéaire. Le beta mesure l'amplitude de la réponse. Exemple : ρ = 0.90, σ_actif = 5%, σ_marché = 15% → β = 0.90 × (5/15) = 0.30. L'actif est très corrélé mais peu amplifié.</div>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Gamma (γ) — La convexité du portefeuille</h3>
+      <p>Le gamma mesure dans quelle mesure le beta d'un portefeuille change en fonction des mouvements du marché. Un portefeuille avec un <strong>gamma positif</strong> voit son beta augmenter quand le marché monte et diminuer quand le marché baisse — il capture plus de la hausse et s'expose moins à la baisse.</p>
+      <div class="notion">
+        <div class="notion-title">Gamma positif en pratique</div>
+        <p>Marché monte de +10% : le portefeuille a renforcé ses positions en tendance → exposition effective +14% (beta monté à 1.4).</p>
+        <p>Marché baisse de −10% : le portefeuille a réduit ses positions via les stops → exposition effective −7% (beta descendu à 0.7).</p>
+        <p>La règle <em>'laisser courir les gagnants, couper vite les perdants'</em> (Module VII) est exactement une règle de gamma positif.</p>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Vega (ν) — La sensibilité à la volatilité</h3>
+      <p>Le vega mesure la sensibilité de la valeur d'un portefeuille à une variation de la volatilité implicite du marché. Un portefeuille <strong>long vega</strong> bénéficie d'une hausse de la volatilité — il vaut plus quand les marchés deviennent agités.</p>
+      <p>Pour un position trader sans options, le vega s'exprime indirectement : l'or monte typiquement quand la volatilité des marchés actions augmente. Une position sur cet actif en crise est une position long vega déguisée.</p>
+      <div class="callout green"><strong>Vega et antifragilité :</strong> maintenir 5–10% du portefeuille en or physique ou ETF or crée une exposition long vega permanente. Lors d'un choc de marché (VIX &gt; 30) : l'or monte, les obligations montent — le vega du portefeuille génère un gain qui compense partiellement les pertes sur les positions directionnelles. Ce n'est pas de la diversification naïve — c'est une exposition délibérée à la volatilité comme source de rendement.</div>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Theta (θ) — Le coût du temps</h3>
+      <p>Le theta mesure combien de valeur un portefeuille perd chaque jour qui passe, toutes choses égales par ailleurs. Il est principalement pertinent pour les positions en options : chaque jour qui passe érode la valeur temps — c'est le <em>theta decay</em>.</p>
+      <p>Pour un position trader fondamental sans options, le theta est quasi-inexistant sur les positions directionnelles classiques. Il devient central dès qu'on utilise des options comme couverture.</p>
+      <div class="callout yellow"><strong>Theta en pratique :</strong> si vous achetez un put sur le CAC40 à 3 mois pour couvrir votre portefeuille, et que le marché reste stable 2 mois, le put a perdu 60–70% de sa valeur par theta decay seul — sans que le marché ait bougé. Le theta est le coût de l'assurance : on ne peut pas être long vega (bénéficier d'un choc) sans payer le theta (perdre de la valeur chaque jour calme).</div>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Construire une stratégie autour de ses grecques</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Objectif</th><th>Beta cible</th><th>Vega</th><th>Exemple concret</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Alpha pur, sans exposition marché</strong></td><td>β = 0</td><td>Neutre</td><td>Long TotalEnergies / Short ETF énergie — seul l'alpha sectoriel reste</td></tr>
+            <tr><td><strong>Réduction risque en incertitude</strong></td><td>β = 0.3–0.6</td><td>Neutre</td><td>Alléger les positions cycliques, renforcer le cash</td></tr>
+            <tr><td><strong>Amplification en bull market</strong></td><td>β &gt; 1.2</td><td>Neutre</td><td>Surpondérer les actifs cycliques à fort levier opérationnel</td></tr>
+            <tr><td><strong>Protection contre crise</strong></td><td>β &lt; 0</td><td>Long</td><td>Or, obligations longues, puts sur indices</td></tr>
+            <tr><td><strong>Rendement régulier, faible vol.</strong></td><td>β = 0.5–0.8</td><td>Neutre</td><td>Architecture Core/Satellite équilibrée (Module IX)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="notion">
+        <div class="notion-title">La stratégie beta neutre — exemple concret</div>
+        <p>Objectif : s'exposer uniquement à l'alpha — être indépendant de la direction du marché.</p>
+        <p>Mécanique : pour chaque position longue de beta β_L et taille T_L, ajouter une position courte dont β_court × T_court = β_L × T_L.</p>
+        <p>Exemple : Long TotalEnergies (β = 0.85, 10 000€) + Short ETF CAC40 (β = 1.0) de 8 500€ → <strong>beta net = 0.85 × 10 000 − 1.0 × 8 500 = 0.</strong></p>
+        <p>Ce qui reste une fois le beta neutralisé : l'alpha pur de la thèse sur Total — indépendant du marché.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SYNTHESIS -->
+  <div class="synthesis">
+    <h2 class="synthesis-title">Résumé du Module XI</h2>
+    <p>Ce module a fourni les outils pour mesurer objectivement ce qu'un système de trading produit réellement. Le CAGR et le TWR mesurent le rendement honnêtement. Le MDD et l'underwater curve mesurent le risque vécu. Le Sharpe, le Sortino et le Calmar combinent rendement et risque pour permettre des comparaisons rigoureuses.</p>
+    <p>La section sur la significativité statistique rappelle une vérité inconfortable : la plupart des historiques de trading sont trop courts pour conclure quoi que ce soit avec confiance. Il faut 80 à 100 trades minimum pour qu'un Sharpe de 1.2 soit statistiquement significatif. Le MAE et le MFE sont les métriques les plus sous-utilisées — elles révèlent des patterns d'amélioration concrets sans changer la stratégie.</p>
+    <p>Les lettres grecques clôturent la formation sur son niveau le plus sophistiqué : comprendre précisément à quoi son portefeuille est exposé et construire une stratégie autour d'un objectif d'exposition défini. L'alpha mesure la valeur ajoutée réelle. Le beta mesure l'exposition au marché. Piloter ces deux paramètres ensemble est l'aboutissement de tout ce que la formation ARK a construit.</p>
+    <div class="summary-grid">
+      <div class="summary-card"><div class="summary-section">XI.a — Rendement</div><div class="summary-concept">CAGR = seule mesure honnête. Rendement géométrique ≠ arithmétique. TWR pour la stratégie, MWR pour l'investisseur.</div><div class="summary-tool">CAGR, TWR, MWR</div></div>
+      <div class="summary-card"><div class="summary-section">XI.b — Risque</div><div class="summary-concept">MDD + underwater curve : amplitude ET durée. VaR historique sur rendements réels — sans hypothèse de distribution.</div><div class="summary-tool">MDD, Underwater curve, VaR/CVaR</div></div>
+      <div class="summary-card"><div class="summary-section">XI.c — Combinées</div><div class="summary-concept">Sharpe (risque total), Sortino (downside uniquement), Calmar (drawdown max), IR (régularité vs benchmark).</div><div class="summary-tool">Sharpe, Sortino, Calmar, IR</div></div>
+      <div class="summary-card"><div class="summary-section">XI.d — Benchmarks</div><div class="summary-concept">Le benchmark doit refléter l'univers réel. Le 60/40 est le coût d'opportunité de la gestion active.</div><div class="summary-tool">60/40, benchmark sectoriel</div></div>
+      <div class="summary-card"><div class="summary-section">XI.e — Significativité</div><div class="summary-concept">80–100 trades minimum pour un Sharpe significatif. En fondamental discrétionnaire : mesurer avec humilité.</div><div class="summary-tool">IC du Sharpe, hold-out, walk-forward</div></div>
+      <div class="summary-card"><div class="summary-section">XI.f — Pratique</div><div class="summary-concept">5 métriques mensuelles. MAE/MFE par trade pour détecter sortie trop précoce et stop trop serré.</div><div class="summary-tool">MAE, MFE, dashboard mensuel</div></div>
+      <div class="summary-card"><div class="summary-section">XI.g — Grecques</div><div class="summary-concept">Alpha = valeur ajoutée réelle. Beta = exposition au marché. Gamma, Vega, Theta pour les profils avancés.</div><div class="summary-tool">α, β, γ, ν, θ</div></div>
+    </div>
+    <div class="prev-module">Fin de la formation — <strong>11 modules complétés.</strong> Du cadre de pensée à la mesure rigoureuse de la performance : comprendre le monde → lire la valeur → prendre position → protéger le capital → mesurer l'edge.</div>
+  </div>
+
+  <div class="module-nav">
+    <button class="nav-btn" onclick="window.parent.postMessage({type:'navigate',index:9,markDone:false},'*')">← Module 10</button>
+    <button class="nav-btn primary" onclick="window.parent.postMessage({type:'navigate',index:11,markDone:true},'*')">Module 12 →</button>
   </div>
 
 </div>
-
-<!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox">
-  <div class="lightbox-backdrop" id="lightboxBackdrop"></div>
-  <div class="lightbox-img-wrap">
-    <button class="lightbox-close" id="lightboxClose">✕</button>
-    <img id="lightboxImg" src="" alt=""/>
-    <div class="lightbox-caption" id="lightboxCaption"></div>
-  </div>
-</div>
-
-<script>
-function navigate(index, markDone) {
-  window.parent.postMessage({ type: 'navigate', index: index, markDone: !!markDone }, '*');
-}
-function openLightbox(src, caption) {
-  document.getElementById('lightboxImg').src = src;
-  document.getElementById('lightboxCaption').textContent = caption;
-  document.getElementById('lightbox').classList.add('open');
-}
-function closeLightbox() {
-  document.getElementById('lightbox').classList.remove('open');
-}
-document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
-document.getElementById('lightboxBackdrop').addEventListener('click', closeLightbox);
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
-document.addEventListener('click', e => {
-  const img = e.target.closest('.mod-figure img');
-  if (!img) return;
-  const caption = img.closest('.mod-figure')?.querySelector('figcaption')?.textContent || '';
-  openLightbox(img.src, caption);
-});
-</script>
 </body>
 </html>
