@@ -775,9 +775,10 @@ function nav(id, el) {
   if (el) el.classList.add('active');
   document.getElementById('sidebar').classList.remove('open');
   if (id === 'dashboard') animProgress();
-  if (id === 'bonus') {
-    const banner = document.getElementById('bonus-locked-banner');
-    if (banner) banner.style.display = banner.dataset.showForFree === '1' ? 'flex' : 'none';
+  // Bonus banner : visible uniquement sur l'onglet bonus
+  const bonusBanner = document.getElementById('bonus-locked-banner');
+  if (bonusBanner) {
+    bonusBanner.style.display = (id === 'bonus' && bonusBanner.dataset.showForFree === '1') ? 'flex' : 'none';
   }
 }
 
