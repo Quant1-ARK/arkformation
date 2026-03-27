@@ -3,180 +3,651 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ARK — Module 09 · Management de Portfolio</title>
+<title>Module 09 — Management de Portfolio</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #f5f5f5;
-    --border: rgba(19,18,18,.41);
-    --border-active: rgba(255,255,255,.14);
-    --text-1: #000;
-    --text-2: #59595e;
-    --text-3: #48484c;
-    --accent: #0071e3;
-    --accent-glow: rgba(0,113,227,.18);
-    --accent-soft: rgba(0,113,227,.12);
-    --gold: #c9a84c;
-    --gold-soft: rgba(201,168,76,.1);
-  }
-
+  :root{--bg:#f5f5f5;--surface:#fff;--border:rgba(19,18,18,.1);--text-1:#0a0a0a;--text-2:#3d3d3a;--text-3:#6b6b67;--accent:#0071e3;--accent-soft:rgba(0,113,227,.07)}
   *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--bg);color:var(--text-1);font-family:'DM Sans',-apple-system,sans-serif;font-size:15px;-webkit-font-smoothing:antialiased;padding:48px clamp(24px,5vw,80px) 80px;overflow-y:auto;min-height:100vh}
-  @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-  .page{animation:fadeIn .3s ease}
-
-  /* VIDEO */
-  .mod-video{margin-bottom:36px;border-radius:16px;overflow:hidden;aspect-ratio:16/9;background:#1a1a1a;display:none}
-  .mod-video.has-video{display:block}
-  .mod-video iframe{width:100%;height:100%;border:none}
-
-  /* MODULE HEADER */
-  .mod-number{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;display:flex;align-items:center;gap:8px}
-  .mod-number::before{content:'';display:inline-block;width:20px;height:1px;background:var(--accent)}
-  .mod-title{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(28px,4vw,44px);font-weight:400;line-height:1.15;letter-spacing:-.01em;color:var(--text-1);margin-bottom:16px}
-  .mod-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:28px}
-  .mod-tag{font-size:11px;font-weight:500;color:var(--accent);background:var(--accent-soft);padding:3px 10px;border-radius:980px;border:1px solid rgba(0,113,227,.15)}
-  .mod-divider{height:1px;background:var(--border);margin:28px 0}
-  .mod-intro{font-size:17px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:36px;font-style:italic;border-left:2px solid var(--accent);padding-left:20px}
-  .mod-section-title{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:16px}
-
-  /* OBJECTIVES */
-  .mod-objectives{list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:36px}
-  .mod-objectives li{display:flex;align-items:flex-start;gap:12px;font-size:14px;color:var(--text-2);line-height:1.6}
-  .obj-check{width:18px;height:18px;border-radius:50%;border:1px solid var(--border-active);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--text-3)}
-
-  /* CONCEPTS */
-  .mod-concepts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:36px}
-  .concept-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px;transition:border-color .2s,background .2s}
-  .concept-card:hover{border-color:var(--border-active);background:var(--bg)}
-  .concept-icon{font-size:20px;margin-bottom:8px}
-  .concept-name{font-size:13px;font-weight:600;color:var(--text-1);margin-bottom:4px}
-  .concept-desc{font-size:12px;color:var(--text-2);line-height:1.5;font-weight:300}
-
-  /* QUOTE */
-  .mod-quote{background:var(--gold-soft);border:1px solid rgba(201,168,76,.15);border-radius:16px;padding:24px 28px;margin-bottom:36px}
-  .mod-quote-text{font-family:'DM Serif Display',Georgia,serif;font-size:18px;line-height:1.6;color:var(--gold);margin-bottom:8px;font-style:italic}
-  .mod-quote-source{font-size:11px;color:var(--text-3);letter-spacing:.05em;text-transform:uppercase}
-
-  /* FIGURES & TABLES */
-  .mod-figure{margin:28px 0;text-align:center}
-  .mod-figure img{max-width:100%;height:auto;border-radius:12px;border:1px solid var(--border);cursor:zoom-in;transition:opacity .2s,transform .2s}
-  .mod-figure img:hover{opacity:.9;transform:scale(1.01)}
-  .mod-figure figcaption{margin-top:10px;font-size:12px;color:var(--text-3);font-style:italic;line-height:1.5}
-
-  /* LIGHTBOX */
-  .lightbox{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:32px;opacity:0;pointer-events:none;transition:opacity .25s ease}
-  .lightbox.open{opacity:1;pointer-events:all}
-  .lightbox-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(4px)}
-  .lightbox-img-wrap{position:relative;z-index:1;max-width:90vw;max-height:88vh;display:flex;flex-direction:column;align-items:center;gap:14px;transform:scale(.94);transition:transform .25s ease}
-  .lightbox.open .lightbox-img-wrap{transform:scale(1)}
-  .lightbox-img-wrap img{max-width:100%;max-height:80vh;height:auto;border-radius:14px;box-shadow:0 32px 80px rgba(0,0,0,.5);display:block}
-  .lightbox-caption{font-size:13px;color:rgba(255,255,255,.65);font-style:italic;text-align:center;max-width:640px;line-height:1.5}
-  .lightbox-close{position:absolute;top:-14px;right:-14px;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s;line-height:1}
-  .lightbox-close:hover{background:rgba(255,255,255,.25)}
-
-  .mod-table-wrap{overflow-x:auto;margin:24px 0;border-radius:12px;border:1px solid var(--border)}
-  .mod-table{width:100%;border-collapse:collapse;font-size:13px}
-  .mod-table th{background:var(--accent-soft);color:var(--accent);font-weight:600;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:10px 14px;text-align:left;border-bottom:1px solid var(--border)}
-  .mod-table td{padding:10px 14px;color:var(--text-2);border-bottom:1px solid var(--border);vertical-align:top;line-height:1.6;font-weight:300}
-  .mod-table tr:last-child td{border-bottom:none}
-  .mod-table td strong{color:var(--text-1);font-weight:600}
-
-  /* MODULE BODY */
-  .mod-body{margin-top:40px}
-  .mod-body h2{font-family:'DM Serif Display',Georgia,serif;font-size:22px;font-weight:400;color:var(--text-1);margin:44px 0 14px;padding-top:12px;border-top:1px solid var(--border)}
-  .mod-body h3{font-size:15px;font-weight:600;color:var(--text-1);margin:28px 0 10px}
-  .mod-body p{font-size:15px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:16px}
-  .mod-body ul,.mod-body ol{margin:0 0 20px;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:10px}
-  .mod-body li{position:relative;padding-left:22px;font-size:14px;font-weight:300;color:var(--text-2);line-height:1.7;overflow-wrap:break-word}
-  .mod-body li::before{content:'—';color:var(--accent);font-size:13px;position:absolute;left:0;top:0;line-height:1.7}
-  .mod-body li strong,.mod-body strong{color:var(--text-1);font-weight:600}
-  .mod-body blockquote{border-left:2px solid var(--accent);padding:10px 0 10px 20px;margin:20px 0;font-style:italic;font-weight:300;color:var(--text-2);font-size:14px;line-height:1.7}
-  .formula-box,.warning-box,.summary-box{border-radius:12px;padding:16px 20px;margin:20px 0;font-size:14px;line-height:1.7}
-  .formula-box{background:var(--accent-soft);border:1px solid rgba(0,113,227,.15);font-weight:500;font-style:italic}
-  .warning-box{background:rgba(255,149,0,.08);border:1px solid rgba(255,149,0,.2);color:var(--text-2)}
-  .summary-box{background:var(--gold-soft);border:1px solid rgba(201,168,76,.15);font-style:italic;color:var(--text-2)}
-  .profile-block{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:20px;margin:16px 0}
-  .profile-block h3{margin-top:0}
-  .profile-meta{font-size:12px;color:var(--accent);font-style:italic;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
-
-  /* NAV */
-  .mod-nav{display:flex;justify-content:space-between;align-items:center;margin-top:52px;padding-top:24px;border-top:1px solid var(--border);gap:12px}
-  .mod-nav-btn{display:flex;align-items:center;gap:8px;padding:10px 16px;border:1px solid var(--border);border-radius:10px;background:var(--bg);color:var(--text-2);cursor:pointer;font-size:13px;font-weight:500;transition:all .15s;font-family:inherit}
-  .mod-nav-btn:hover:not(:disabled){border-color:var(--border-active);color:var(--text-1)}
-  .mod-nav-btn:disabled{opacity:.3;cursor:default}
-  .mod-nav-label{font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em}
-
-  @media(max-width:768px){
-    body{padding:32px 20px 60px}
-  }
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text-1);font-family:'DM Sans',-apple-system,sans-serif;font-size:15px;line-height:1.75;-webkit-font-smoothing:antialiased}
+  .page{max-width:780px;margin:0 auto;padding:48px 24px 120px}
+  .mod-header{margin-bottom:56px;padding-bottom:40px;border-bottom:1px solid var(--border)}
+  .mod-kicker{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+  .mod-title{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(30px,5vw,46px);line-height:1.1;margin-bottom:14px}
+  .mod-sub{font-size:15px;color:var(--text-2);font-style:italic;margin-bottom:20px}
+  .mod-objective{background:var(--accent-soft);border-left:3px solid var(--accent);border-radius:0 10px 10px 0;padding:16px 20px;font-size:14px;color:var(--text-2);line-height:1.65}
+  .toc{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px 28px;margin-bottom:56px}
+  .toc-title{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:16px}
+  .toc-list{list-style:none;display:flex;flex-direction:column;gap:6px}
+  .toc-list li a{display:flex;align-items:baseline;gap:10px;text-decoration:none;color:var(--text-2);font-size:13.5px;transition:color .15s}
+  .toc-list li a:hover{color:var(--accent)}
+  .toc-letter{font-size:10px;font-weight:700;color:var(--accent);background:var(--accent-soft);border-radius:4px;padding:1px 6px;flex-shrink:0}
+  .section{margin-bottom:64px}
+  .section-label{display:inline-flex;align-items:center;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);border-radius:6px;padding:4px 10px;margin-bottom:18px}
+  .section-title{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(22px,3.5vw,30px);line-height:1.2;margin-bottom:24px}
+  .section-intro{font-size:15px;color:var(--text-2);line-height:1.75;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid var(--border)}
+  .sub{margin-bottom:36px;border-left:3px solid var(--accent);padding-left:20px}
+  .sub-title{font-family:'DM Serif Display',Georgia,serif;font-size:19px;margin-bottom:14px;color:var(--text-1)}
+  .sub p{color:var(--text-2);margin-bottom:12px;font-size:14.5px;line-height:1.72}
+  .sub p:last-child{margin-bottom:0}
+  .sub strong{color:var(--text-1)}
+  .styled-list{list-style:none;margin:12px 0 16px;display:flex;flex-direction:column;gap:8px}
+  .styled-list li{color:var(--text-2);font-size:14px;line-height:1.65}
+  .styled-list li strong{color:var(--text-1)}
+  .callout{border-radius:0 10px 10px 0;border-left:3px solid;padding:14px 18px;margin:18px 0;font-size:13.5px;line-height:1.65}
+  .callout.yellow{background:#FAEEDA;border-color:#854F0B;color:#412402}
+  .callout.blue{background:#E6F1FB;border-color:#185FA5;color:#042C53}
+  .callout.green{background:#EAF3DE;border-color:#3B6D11;color:#173404}
+  .callout.red{background:#FCEBEB;border-color:#A32D2D;color:#501313}
+  .callout.purple{background:#EEEDFE;border-color:#534AB7;color:#26215C}
+  .callout strong{color:inherit}
+  .notion{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px 22px;margin:18px 0}
+  .notion-title{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px}
+  .notion p,.notion li{color:var(--text-1);font-size:13.5px;line-height:1.7;margin-bottom:6px}
+  .notion p:last-child,.notion li:last-child{margin-bottom:0}
+  .notion ul{list-style:none;display:flex;flex-direction:column;gap:4px}
+  .notion strong{color:var(--text-1)}
+  .table-wrap{overflow-x:auto;margin:18px 0 24px;border-radius:12px;border:1px solid var(--border)}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  thead tr{background:#f0efe8}
+  thead th{padding:10px 14px;text-align:left;font-size:11px;font-weight:700;letter-spacing:.05em;color:var(--text-1);white-space:nowrap}
+  tbody tr{border-top:1px solid var(--border)}
+  tbody tr:hover{background:rgba(0,0,0,.02)}
+  tbody td{padding:10px 14px;color:var(--text-2);vertical-align:top;line-height:1.55}
+  tbody td strong{color:var(--text-1)}
+  .module-figure{margin:24px 0 32px;background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;padding:16px}
+  .module-figure svg{width:100%;display:block}
+  .fig-caption{margin-top:10px;font-size:12px;color:var(--text-3);font-style:italic;text-align:center}
+  .summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0}
+  @media(max-width:560px){.summary-grid{grid-template-columns:1fr}}
+  .summary-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px}
+  .summary-section{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:4px}
+  .summary-concept{font-weight:600;font-size:13.5px;color:var(--text-1);margin-bottom:4px}
+  .summary-tool{font-size:12.5px;color:var(--text-2)}
+  .synthesis{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px;margin-top:48px}
+  .synthesis-title{font-family:'DM Serif Display',Georgia,serif;font-size:22px;margin-bottom:18px}
+  .synthesis p{color:var(--text-2);margin-bottom:12px;line-height:1.75;font-size:14.5px}
+  .next-module{margin-top:20px;padding-top:18px;border-top:1px solid var(--border);font-size:13px;color:var(--text-3);font-style:italic}
+  .next-module strong{color:var(--accent);font-style:normal}
+  .module-nav{display:flex;justify-content:space-between;align-items:center;margin-top:56px;padding-top:28px;border-top:1px solid var(--border);gap:12px}
+  .nav-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:10px;border:1px solid var(--border);font-size:13.5px;font-weight:500;font-family:inherit;cursor:pointer;transition:all .2s;background:var(--surface);color:var(--text-1)}
+  .nav-btn:hover{border-color:var(--accent);color:var(--accent)}
+  .nav-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .nav-btn.primary:hover{background:#0077ed}
+  svg text{font-family:'DM Sans',-apple-system,sans-serif;fill:var(--text-1)}
+  svg .t{font-size:14px;font-weight:400;fill:var(--text-1)}
+  svg .ts{font-size:12px;font-weight:400;fill:var(--text-2)}
+  svg .th{font-size:14px;font-weight:600;fill:var(--text-1)}
 </style>
 </head>
 <body>
 <div class="page">
 
-  <!-- VIDEO: remplacer la ligne ci-dessous par <div class="mod-video has-video"><iframe src="https://www.youtube.com/embed/VOTRE_ID" allowfullscreen></iframe></div> -->
-  <div class="mod-video"></div>
+  <header class="mod-header">
+    <div class="mod-kicker">Module 09 · ARK Investor Program</div>
+    <h1 class="mod-title">Management de Portfolio</h1>
+    <p class="mod-sub">La diversification est la seule chose gratuite en finance. Mais elle a une limite.</p>
+    <div class="mod-objective">Ce module monte d'un niveau au-dessus du trade individuel. Il couvre la façon dont les positions interagissent, se compensent et s'assemblent en un système cohérent — de la diversification à la frontière efficiente, de l'architecture Core/Satellite à la structure du capital et au suivi du portefeuille global.</div>
+  </header>
 
-  <div class="mod-number">Module 09</div>
-  <h1 class="mod-title">Management de Portfolio</h1>
-  <div class="mod-tags"><span class="mod-tag">Allocation</span><span class="mod-tag">Diversification</span><span class="mod-tag">Réévaluation</span></div>
-  <p class="mod-intro">Diversification sans dilution des convictions, allocation par thèse et horizon, suivi et réévaluation du portefeuille sans réagir au bruit.</p>
+  <nav class="toc">
+    <div class="toc-title">Sommaire</div>
+    <ul class="toc-list">
+      <li><a href="#ixa"><span class="toc-letter">a</span>La Diversification : ce qu'elle fait et ce qu'elle ne fait pas</a></li>
+      <li><a href="#ixb"><span class="toc-letter">b</span>La Frontière Efficiente</a></li>
+      <li><a href="#ixc"><span class="toc-letter">c</span>L'Alpha Justifie la Concentration</a></li>
+      <li><a href="#ixd"><span class="toc-letter">d</span>Architecture Core / Satellite</a></li>
+      <li><a href="#ixe"><span class="toc-letter">e</span>Structure du Capital</a></li>
+      <li><a href="#ixf"><span class="toc-letter">f</span>Suivre et Réévaluer</a></li>
+    </ul>
+  </nav>
 
-  <div class="mod-section-title">Ce que tu vas apprendre</div>
-  <ul class="mod-objectives"><li><div class="obj-check">○</div><span>Construire un portefeuille diversifié sans diluer ses convictions</span></li><li><div class="obj-check">○</div><span>Allouer le capital en fonction du niveau de conviction et de l'horizon</span></li><li><div class="obj-check">○</div><span>Suivre et réévaluer les positions de façon disciplinée</span></li><li><div class="obj-check">○</div><span>Distinguer le bruit de marché des changements structurels</span></li></ul>
+  <!-- INTRODUCTION -->
+  <section class="section">
+    <div class="sub">
+      <h3 class="sub-title">Introduction : Management de Portfolio</h3>
+      <p>Les modules précédents ont construit les outils de l'investisseur : comprendre le monde, lire la valeur, prendre position, gérer le risque de chaque trade. Ce module monte d'un niveau. Il ne s'agit plus d'une position mais de l'ensemble du portefeuille — la façon dont les positions interagissent, se compensent, et s'assemblent en un système cohérent.</p>
+      <p>La question centrale n'est pas « quel actif acheter ? » mais <strong>« comment construire un portefeuille dont la performance est supérieure à la somme de ses parties ? »</strong> La réponse tient en une tension permanente : assez de diversification pour protéger le capital, assez de concentration pour que les convictions aient un impact réel.</p>
+      <div class="notion">
+        <div class="notion-title">Le trading actif fait partie du portefeuille global</div>
+        <p>Le trading actif n'est pas une activité séparée du reste du patrimoine. C'est la composante active du portefeuille global d'investissement.</p>
+        <p><strong>Portefeuille global =</strong> investissement long terme (ETF, obligations, immobilier) + trading actif (Satellite) + réserve de liquidité.</p>
+        <p>Cette vision change tout : on ne 'joue pas en bourse' — on gère la poche active de son patrimoine avec la même rigueur que le reste.</p>
+      </div>
+    </div>
+  </section>
 
-  <div class="mod-divider"></div>
+  <!-- SECTION A -->
+  <section class="section" id="ixa">
+    <div class="section-label">Section A</div>
+    <h2 class="section-title">La Diversification : ce qu'elle fait et ce qu'elle ne fait pas</h2>
+    <div class="section-intro"><em>Ajouter un actif décorrélé est la seule façon de réduire le risque sans sacrifier le rendement. Mais l'effet s'épuise vite.</em></div>
 
-  <div class="mod-section-title">Concepts clés</div>
-  <div class="mod-concepts-grid"><div class="concept-card"><div class="concept-icon">🗺️</div><div class="concept-name">Allocation d'actifs</div><div class="concept-desc">La répartition stratégique du capital entre classes d'actifs</div></div><div class="concept-card"><div class="concept-icon">📊</div><div class="concept-name">Rebalancing</div><div class="concept-desc">Rééquilibrer le portefeuille selon les évolutions du marché</div></div><div class="concept-card"><div class="concept-icon">🎲</div><div class="concept-name">Concentration vs. diversification</div><div class="concept-desc">Trouver l'équilibre entre conviction et protection</div></div><div class="concept-card"><div class="concept-icon">📓</div><div class="concept-name">Suivi du portefeuille</div><div class="concept-desc">Journal de positions, performance et apprentissages</div></div></div>
+    <div class="sub">
+      <h3 class="sub-title">Le seul repas gratuit en finance</h3>
+      <p>La diversification repose sur un principe mathématique simple : si deux actifs ne sont pas parfaitement corrélés, combiner les deux dans un portefeuille réduit la volatilité totale sans réduire le rendement espéré proportionnellement. C'est ce que Harry Markowitz a formalisé en 1952 — et c'est la seule stratégie qui améliore le profil risque/rendement sans edge informationnel.</p>
+      <p>La condition est la corrélation imparfaite. Si deux actifs sont parfaitement corrélés (ρ = 1), les combiner n'apporte aucune réduction de risque — c'est comme doubler la même position. La diversification est efficace à mesure que la corrélation entre les actifs s'éloigne de 1.</p>
+    </div>
 
-  <div class="mod-quote">
-    <div class="mod-quote-text">"La diversification, c'est se protéger contre l'ignorance. Si tu sais ce que tu fais, concentre."</div>
-    <div class="mod-quote-source">— Warren Buffett</div>
+    <div class="sub">
+      <h3 class="sub-title">Risque idiosyncratique vs risque systématique</h3>
+      <p>Tout portefeuille supporte deux types de risques distincts avec des propriétés très différentes :</p>
+      <ul class="styled-list">
+        <li><strong>Risque idiosyncratique</strong> (ou spécifique) : le risque propre à chaque actif ou entreprise. Résultat trimestriel décevant, scandale de gouvernance, disruption sectorielle. Ce risque est <strong>diversifiable</strong> — en ajoutant des actifs décorrélés, il disparaît progressivement dans le portefeuille.</li>
+        <li><strong>Risque systématique</strong> (ou de marché) : le risque qui affecte tous les actifs simultanément. Récession globale, hausse brutale des taux, crise de liquidité. Ce risque est <strong>incompressible</strong> — aucune diversification ne peut l'éliminer.</li>
+      </ul>
+    </div>
+
+    <div class="module-figure">
+<svg width="100%" viewBox="0 0 680 280" style="display:block">
+<!-- Axes -->
+<line x1="60" y1="20" x2="60" y2="230" stroke="var(--text-2)" stroke-width="1" opacity=".2"/>
+<line x1="60" y1="230" x2="630" y2="230" stroke="var(--text-2)" stroke-width="1" opacity=".2"/>
+<text class="ts" x="350" y="258" text-anchor="middle" opacity=".5">Nombre de positions</text>
+<text class="ts" x="56" y="40" text-anchor="end" opacity=".5">Élevé</text>
+<text class="ts" x="56" y="230" text-anchor="end" opacity=".5">Faible</text>
+<!-- X labels -->
+<text class="ts" x="90" y="248" text-anchor="middle" opacity=".5">1</text>
+<text class="ts" x="160" y="248" text-anchor="middle" opacity=".5">5</text>
+<text class="ts" x="250" y="248" text-anchor="middle" opacity=".5">10</text>
+<text class="ts" x="360" y="248" text-anchor="middle" opacity=".5">15</text>
+<text class="ts" x="490" y="248" text-anchor="middle" opacity=".5">25</text>
+<text class="ts" x="600" y="248" text-anchor="middle" opacity=".5">40+</text>
+<!-- Systemic floor -->
+<line x1="60" y1="175" x2="630" y2="175" stroke="#E24B4A" stroke-width="1.5" stroke-dasharray="6 3" opacity=".6"/>
+<text class="ts" x="635" y="179" fill="#A32D2D" style="font-size:11px">Risque systématique</text>
+<!-- Total risk curve -->
+<path d="M 90,30 L 110,55 L 130,80 L 160,110 L 190,135 L 220,152 L 260,163 L 310,170 L 370,173 L 440,175 L 530,175 L 610,175" fill="none" stroke="#185FA5" stroke-width="2.5" stroke-linecap="round"/>
+<!-- Fill between curve and floor -->
+<path d="M 90,30 L 110,55 L 130,80 L 160,110 L 190,135 L 220,152 L 260,163 L 310,170 L 370,173 L 440,175 L 530,175 L 610,175 L 610,175 L 530,175 L 440,175 L 370,175 L 310,175 L 260,175 L 220,175 L 190,175 L 160,175 L 130,175 L 110,175 L 90,175 Z" fill="#E6F1FB" opacity=".4"/>
+<!-- Labels -->
+<text class="ts" x="200" y="100" fill="#0C447C" style="font-weight:600">Risque idiosyncratique</text>
+<text class="ts" x="200" y="115" fill="#185FA5">(diversifiable)</text>
+<!-- Optimal zone marker -->
+<rect x="148" y="15" width="220" height="22" rx="4" fill="#EAF3DE" stroke="#3B6D11" stroke-width="0.5"/>
+<text class="ts" x="258" y="30" text-anchor="middle" fill="#27500A" style="font-weight:600">Zone optimale : 5–15 positions</text>
+<line x1="160" y1="37" x2="160" y2="230" stroke="#3B6D11" stroke-width="1" stroke-dasharray="4 3" opacity=".4"/>
+<line x1="360" y1="37" x2="360" y2="230" stroke="#3B6D11" stroke-width="1" stroke-dasharray="4 3" opacity=".4"/>
+</svg>
+<p class="fig-caption">Fig. 1 — La courbe de diversification : le risque idiosyncratique (bleu) décroît rapidement avec le nombre de positions. Le plancher rouge est le risque systématique incompressible. La zone optimale se situe entre 5 et 15 positions.</p>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">La courbe de diversification : les gains s'épuisent</h3>
+      <p>La réduction de risque est très forte sur les premières positions ajoutées, puis devient négligeable. Passer d'une à cinq positions réduit le risque de façon spectaculaire. Passer de quinze à quarante positions n'apporte quasiment rien — on approche déjà du plancher systématique.</p>
+      <p>C'est ce que Peter Lynch appelait la <strong>diworsification</strong> : au-delà de 15–20 positions, un portefeuille d'actions commence à ressembler à un indice — avec les frais de gestion et le temps passé en plus. On paie le coût de la gestion active pour obtenir un résultat passif.</p>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Le problème des corrélations en crise</h3>
+      <p>La diversification repose sur des corrélations calculées en conditions normales de marché. Or ces corrélations sont instables — et elles convergent vers 1 précisément quand on en a le plus besoin.</p>
+      <div class="callout red"><strong>Les corrélations explosent en crise :</strong> En conditions normales, actions US et matières premières ont une corrélation de ~0.30. En crise (2008, mars 2020), cette corrélation monte à 0.78–0.85. Les actifs supposément décorrélés chutent ensemble. Seuls l'or et les obligations souveraines de qualité maintiennent une corrélation négative en crise — ce sont les vraies couvertures.</div>
+    </div>
+
+    <div class="module-figure">
+<svg width="100%" viewBox="0 0 680 220" style="display:block">
+<!-- Title -->
+<text class="ts" x="175" y="18" text-anchor="middle" style="font-weight:600">Conditions normales</text>
+<text class="ts" x="505" y="18" text-anchor="middle" style="font-weight:600;fill:#A32D2D">En crise</text>
+<!-- Separator -->
+<line x1="340" y1="10" x2="340" y2="210" stroke="var(--border)" stroke-width="1"/>
+
+<!-- LEFT matrix: Normal conditions -->
+<!-- Labels -->
+<text class="ts" x="100" y="40" text-anchor="middle" style="font-size:10px">Actions</text>
+<text class="ts" x="160" y="40" text-anchor="middle" style="font-size:10px">Mat. 1ères</text>
+<text class="ts" x="220" y="40" text-anchor="middle" style="font-size:10px">Devises EM</text>
+<text class="ts" x="280" y="40" text-anchor="middle" style="font-size:10px">Or</text>
+<text class="ts" x="72" y="70" text-anchor="end" style="font-size:10px">Actions</text>
+<text class="ts" x="72" y="110" text-anchor="end" style="font-size:10px">Mat. 1ères</text>
+<text class="ts" x="72" y="150" text-anchor="end" style="font-size:10px">Devises EM</text>
+<text class="ts" x="72" y="190" text-anchor="end" style="font-size:10px">Or</text>
+<!-- Normal matrix cells -->
+<rect x="80" y="50" width="40" height="30" rx="3" fill="#185FA5" opacity=".9"/><text class="ts" x="100" y="70" text-anchor="middle" fill="#fff">1.00</text>
+<rect x="140" y="50" width="40" height="30" rx="3" fill="#185FA5" opacity=".35"/><text class="ts" x="160" y="70" text-anchor="middle">0.30</text>
+<rect x="200" y="50" width="40" height="30" rx="3" fill="#185FA5" opacity=".25"/><text class="ts" x="220" y="70" text-anchor="middle">0.22</text>
+<rect x="260" y="50" width="40" height="30" rx="3" fill="#FCEBEB" opacity=".7"/><text class="ts" x="280" y="70" text-anchor="middle" fill="#791F1F">−0.15</text>
+
+<rect x="80" y="90" width="40" height="30" rx="3" fill="#185FA5" opacity=".35"/><text class="ts" x="100" y="110" text-anchor="middle">0.30</text>
+<rect x="140" y="90" width="40" height="30" rx="3" fill="#185FA5" opacity=".9"/><text class="ts" x="160" y="110" text-anchor="middle" fill="#fff">1.00</text>
+<rect x="200" y="90" width="40" height="30" rx="3" fill="#185FA5" opacity=".30"/><text class="ts" x="220" y="110" text-anchor="middle">0.28</text>
+<rect x="260" y="90" width="40" height="30" rx="3" fill="#185FA5" opacity=".15"/><text class="ts" x="280" y="110" text-anchor="middle">0.10</text>
+
+<rect x="80" y="130" width="40" height="30" rx="3" fill="#185FA5" opacity=".25"/><text class="ts" x="100" y="150" text-anchor="middle">0.22</text>
+<rect x="140" y="130" width="40" height="30" rx="3" fill="#185FA5" opacity=".30"/><text class="ts" x="160" y="150" text-anchor="middle">0.28</text>
+<rect x="200" y="130" width="40" height="30" rx="3" fill="#185FA5" opacity=".9"/><text class="ts" x="220" y="150" text-anchor="middle" fill="#fff">1.00</text>
+<rect x="260" y="130" width="40" height="30" rx="3" fill="#185FA5" opacity=".12"/><text class="ts" x="280" y="150" text-anchor="middle">0.08</text>
+
+<rect x="80" y="170" width="40" height="30" rx="3" fill="#FCEBEB" opacity=".7"/><text class="ts" x="100" y="190" text-anchor="middle" fill="#791F1F">−0.15</text>
+<rect x="140" y="170" width="40" height="30" rx="3" fill="#185FA5" opacity=".15"/><text class="ts" x="160" y="190" text-anchor="middle">0.10</text>
+<rect x="200" y="170" width="40" height="30" rx="3" fill="#185FA5" opacity=".12"/><text class="ts" x="220" y="190" text-anchor="middle">0.08</text>
+<rect x="260" y="170" width="40" height="30" rx="3" fill="#185FA5" opacity=".9"/><text class="ts" x="280" y="190" text-anchor="middle" fill="#fff">1.00</text>
+
+<!-- RIGHT matrix: Crisis -->
+<text class="ts" x="430" y="40" text-anchor="middle" style="font-size:10px">Actions</text>
+<text class="ts" x="490" y="40" text-anchor="middle" style="font-size:10px">Mat. 1ères</text>
+<text class="ts" x="550" y="40" text-anchor="middle" style="font-size:10px">Devises EM</text>
+<text class="ts" x="610" y="40" text-anchor="middle" style="font-size:10px">Or</text>
+
+<rect x="410" y="50" width="40" height="30" rx="3" fill="#A32D2D" opacity=".9"/><text class="ts" x="430" y="70" text-anchor="middle" fill="#fff">1.00</text>
+<rect x="470" y="50" width="40" height="30" rx="3" fill="#A32D2D" opacity=".8"/><text class="ts" x="490" y="70" text-anchor="middle" fill="#fff">0.82</text>
+<rect x="530" y="50" width="40" height="30" rx="3" fill="#A32D2D" opacity=".75"/><text class="ts" x="550" y="70" text-anchor="middle" fill="#fff">0.78</text>
+<rect x="590" y="50" width="40" height="30" rx="3" fill="#FCEBEB" opacity=".8"/><text class="ts" x="610" y="70" text-anchor="middle" fill="#791F1F">−0.42</text>
+
+<rect x="410" y="90" width="40" height="30" rx="3" fill="#A32D2D" opacity=".8"/><text class="ts" x="430" y="110" text-anchor="middle" fill="#fff">0.82</text>
+<rect x="470" y="90" width="40" height="30" rx="3" fill="#A32D2D" opacity=".9"/><text class="ts" x="490" y="110" text-anchor="middle" fill="#fff">1.00</text>
+<rect x="530" y="90" width="40" height="30" rx="3" fill="#A32D2D" opacity=".77"/><text class="ts" x="550" y="110" text-anchor="middle" fill="#fff">0.80</text>
+<rect x="590" y="90" width="40" height="30" rx="3" fill="#185FA5" opacity=".2"/><text class="ts" x="610" y="110" text-anchor="middle">0.12</text>
+
+<rect x="410" y="130" width="40" height="30" rx="3" fill="#A32D2D" opacity=".75"/><text class="ts" x="430" y="150" text-anchor="middle" fill="#fff">0.78</text>
+<rect x="470" y="130" width="40" height="30" rx="3" fill="#A32D2D" opacity=".77"/><text class="ts" x="490" y="150" text-anchor="middle" fill="#fff">0.80</text>
+<rect x="530" y="130" width="40" height="30" rx="3" fill="#A32D2D" opacity=".9"/><text class="ts" x="550" y="150" text-anchor="middle" fill="#fff">1.00</text>
+<rect x="590" y="130" width="40" height="30" rx="3" fill="#185FA5" opacity=".18"/><text class="ts" x="610" y="150" text-anchor="middle">0.15</text>
+
+<rect x="410" y="170" width="40" height="30" rx="3" fill="#FCEBEB" opacity=".8"/><text class="ts" x="430" y="190" text-anchor="middle" fill="#791F1F">−0.42</text>
+<rect x="470" y="170" width="40" height="30" rx="3" fill="#185FA5" opacity=".2"/><text class="ts" x="490" y="190" text-anchor="middle">0.12</text>
+<rect x="530" y="170" width="40" height="30" rx="3" fill="#185FA5" opacity=".18"/><text class="ts" x="550" y="190" text-anchor="middle">0.15</text>
+<rect x="590" y="170" width="40" height="30" rx="3" fill="#A32D2D" opacity=".9"/><text class="ts" x="610" y="190" text-anchor="middle" fill="#fff">1.00</text>
+</svg>
+<p class="fig-caption">Fig. 2 — Matrices de corrélation en conditions normales (gauche) vs en crise (droite). Les corrélations entre actions, matières premières et devises émergentes convergent vers 0.78–0.85. Seul l'or maintient ses propriétés de couverture.</p>
+    </div>
+  </section>
+
+  <!-- SECTION B -->
+  <section class="section" id="ixb">
+    <div class="section-label">Section B</div>
+    <h2 class="section-title">La Frontière Efficiente</h2>
+    <div class="section-intro"><em>On ne peut pas diversifier à l'infini et gagner tout le temps. Le risque de marché est incompressible.</em></div>
+
+    <div class="sub">
+      <h3 class="sub-title">Markowitz (1952) : la cartographie des portefeuilles</h3>
+      <p>Harry Markowitz a posé la question suivante : si l'on connaît le rendement espéré, la volatilité et les corrélations de tous les actifs disponibles, quelle est la combinaison optimale ? Sa réponse : chaque allocation possible produit un couple (rendement, risque) mesurable. En simulant des milliers d'allocations, on obtient un nuage de portefeuilles dans l'espace rendement/risque.</p>
+      <p>La <strong>frontière efficiente</strong> est le bord gauche supérieur de ce nuage : l'ensemble des portefeuilles qui, pour un niveau de risque donné, maximisent le rendement — ou qui, pour un rendement donné, minimisent le risque. Tout portefeuille situé sous la frontière est sous-optimal.</p>
+    </div>
+
+    <div class="module-figure">
+<svg width="100%" viewBox="0 0 680 300" style="display:block">
+<defs><marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<!-- Axes -->
+<line x1="60" y1="20" x2="60" y2="260" stroke="var(--text-2)" stroke-width="1" opacity=".25"/>
+<line x1="60" y1="260" x2="630" y2="260" stroke="var(--text-2)" stroke-width="1" opacity=".25"/>
+<text class="ts" x="350" y="282" text-anchor="middle" opacity=".5">Risque (volatilité)</text>
+<text class="ts" x="40" y="140" text-anchor="middle" opacity=".5" transform="rotate(-90,40,140)">Rendement espéré</text>
+<!-- Random portfolio cloud -->
+<circle cx="180" cy="200" r="3" fill="#185FA5" opacity=".15"/>
+<circle cx="220" cy="185" r="3" fill="#185FA5" opacity=".12"/>
+<circle cx="260" cy="175" r="3" fill="#185FA5" opacity=".13"/>
+<circle cx="290" cy="165" r="3" fill="#185FA5" opacity=".14"/>
+<circle cx="240" cy="195" r="3" fill="#185FA5" opacity=".11"/>
+<circle cx="310" cy="155" r="3" fill="#185FA5" opacity=".15"/>
+<circle cx="350" cy="148" r="3" fill="#185FA5" opacity=".13"/>
+<circle cx="380" cy="140" r="3" fill="#185FA5" opacity=".12"/>
+<circle cx="330" cy="162" r="3" fill="#185FA5" opacity=".14"/>
+<circle cx="200" cy="210" r="3" fill="#185FA5" opacity=".13"/>
+<circle cx="270" cy="182" r="3" fill="#185FA5" opacity=".12"/>
+<circle cx="400" cy="135" r="3" fill="#185FA5" opacity=".14"/>
+<circle cx="420" cy="128" r="3" fill="#185FA5" opacity=".13"/>
+<circle cx="360" cy="150" r="3" fill="#185FA5" opacity=".12"/>
+<circle cx="300" cy="170" r="3" fill="#185FA5" opacity=".11"/>
+<circle cx="450" cy="122" r="3" fill="#185FA5" opacity=".14"/>
+<circle cx="480" cy="118" r="3" fill="#185FA5" opacity=".12"/>
+<circle cx="500" cy="125" r="3" fill="#185FA5" opacity=".13"/>
+<circle cx="340" cy="158" r="3" fill="#185FA5" opacity=".12"/>
+<circle cx="410" cy="132" r="3" fill="#185FA5" opacity=".11"/>
+<circle cx="250" cy="190" r="3" fill="#185FA5" opacity=".13"/>
+<circle cx="440" cy="140" r="3" fill="#185FA5" opacity=".12"/>
+<circle cx="390" cy="142" r="3" fill="#185FA5" opacity=".11"/>
+<circle cx="320" cy="168" r="3" fill="#185FA5" opacity=".14"/>
+<circle cx="460" cy="130" r="3" fill="#185FA5" opacity=".12"/>
+<!-- Efficient frontier curve -->
+<path d="M 155,220 L 165,195 L 180,168 L 200,148 L 230,128 L 265,112 L 305,98 L 350,86 L 400,76 L 455,68 L 515,62 L 580,58" fill="none" stroke="#185FA5" stroke-width="2.5" stroke-linecap="round"/>
+<!-- Min variance point -->
+<circle cx="155" cy="220" r="6" fill="#3B6D11" stroke="#fff" stroke-width="1.5"/>
+<text class="ts" x="163" y="216" fill="#27500A">Variance min.</text>
+<!-- CML line -->
+<line x1="80" y1="255" x2="560" y2="55" stroke="#3B6D11" stroke-width="1.5" stroke-dasharray="6 3" opacity=".7"/>
+<!-- Tangency / max Sharpe point -->
+<circle cx="350" cy="86" r="6" fill="#EF9F27" stroke="#fff" stroke-width="1.5"/>
+<text class="ts" x="358" y="82" fill="#633806">Sharpe max</text>
+<!-- Alpha point -->
+<circle cx="310" cy="62" r="6" fill="#534AB7" stroke="#fff" stroke-width="1.5"/>
+<text class="ts" x="318" y="58" fill="#3C3489">Alpha ↑</text>
+<text class="ts" x="318" y="71" fill="#534AB7" style="font-size:10px">au-dessus de la CML</text>
+<!-- Risk free label -->
+<text class="ts" x="84" y="252" fill="#3B6D11" style="font-size:11px">Rf (sans risque)</text>
+<!-- CML label -->
+<text class="ts" x="518" y="52" fill="#3B6D11" style="font-size:11px">CML</text>
+</svg>
+<p class="fig-caption">Fig. 3 — Frontière efficiente de Markowitz. Le nuage représente des milliers de portefeuilles aléatoires. La courbe bleue est la frontière. Le point vert est la variance minimale. La droite verte (CML) est tangente au point de Sharpe maximum. Le point violet représente l'alpha — un portefeuille au-dessus de la CML grâce à un edge informationnel.</p>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Le CAPM et la ligne de marché des capitaux</h3>
+      <p>William Sharpe (1964) a étendu le modèle de Markowitz : si tous les investisseurs optimisent selon la même théorie, ils détiennent tous le même portefeuille risqué — le portefeuille de marché (l'indice). La <strong>Capital Market Line (CML)</strong> relie le taux sans risque au portefeuille de marché : sans edge, un investisseur ne peut se déplacer que sur cette droite.</p>
+      <div class="notion">
+        <div class="notion-title">L'implication directe pour l'investisseur particulier</div>
+        <p>Si vous n'avez pas d'edge informationnel, le portefeuille de marché (ETF monde) est le portefeuille rationnel.</p>
+        <p>La diversification passive (ETF) est la stratégie optimale pour quiconque ne peut pas battre le marché de façon répétable. Mais elle interdit par construction tout alpha.</p>
+        <p><strong>La gestion active n'est justifiée que si vous avez un edge réel (Modules V à VII) qui vous place au-dessus de la CML.</strong></p>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Les limites critiques du modèle</h3>
+      <div class="callout yellow"><strong>Ce que Markowitz ne peut pas modéliser :</strong> Les corrélations sont instables — le modèle est calibré sur des données passées. Les rendements ne suivent pas une loi normale : les queues de distribution sont plus épaisses que prévu. La frontière est calculée sur l'historique — elle n'est pas prédictive. L'optimisation sur données passées produit des portefeuilles surconcentrés sur ce qui a bien marché.</div>
+    </div>
+  </section>
+
+  <!-- SECTION C -->
+  <section class="section" id="ixc">
+    <div class="section-label">Section C</div>
+    <h2 class="section-title">L'Alpha Justifie la Concentration</h2>
+    <div class="section-intro"><em>Diluer un edge dans 40 positions revient à s'auto-indexer — avec des frais en plus.</em></div>
+
+    <div class="sub">
+      <h3 class="sub-title">Le paradoxe de la sur-diversification</h3>
+      <p>Si la diversification est un repas gratuit, pourquoi ne pas en profiter à l'infini ? Parce que la diversification réduit le risque idiosyncratique — mais elle réduit aussi l'alpha. Si vous avez identifié cinq thèses fondamentales solides avec un edge réel sur chacune, les diluer dans quarante positions équivaut à noyer votre signal dans du bruit.</p>
+      <p>La question n'est pas « combien de positions ? » mais <strong>« sur combien de positions ai-je un avantage informationnel réel ? »</strong> La réponse honnête pour un investisseur particulier rigoureux est rarement supérieure à dix à douze.</p>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Concentration optimale pour le position trader fondamental</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Nombre de positions</th><th>Profil</th><th>Risque dominant</th><th>Sharpe attendu</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>1–3</strong></td><td>Conviction extrême / portefeuille directionnel</td><td>Risque idiosyncratique élevé</td><td>Très volatile — dépend entièrement de l'edge</td></tr>
+            <tr><td><strong>5–8</strong></td><td>Position trader fondamental — <strong>zone optimale</strong></td><td>Équilibre idiosyncratique/systématique</td><td>Sharpe élevé si edge solide</td></tr>
+            <tr><td><strong>10–15</strong></td><td>Diversification large — début de diworsification</td><td>Risque systématique dominant</td><td>Tend vers l'indice ajusté des frais</td></tr>
+            <tr><td><strong>&gt;20</strong></td><td>Auto-indexation déguisée</td><td>Risque systématique pur</td><td>Sous-performe l'indice net de frais</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Le sizing relatif : pondérer selon la conviction</h3>
+      <p>Une erreur fréquente est le sizing à parts égales — chaque position représente 1/N du portefeuille. Cette approche ignore que toutes les thèses ne sont pas égales en qualité. Le sizing rationnel pondère chaque position selon deux paramètres : la conviction fondamentale (solidité de la thèse) et le R/R disponible (Module VIII).</p>
+      <div class="notion">
+        <div class="notion-title">Règle de sizing relatif</div>
+        <p><strong>Conviction forte + R/R &gt; 3:1</strong> → poids maximal (15–20% du portefeuille de trading)</p>
+        <p><strong>Conviction moyenne + R/R 2:1</strong> → poids standard (8–12%)</p>
+        <p><strong>Position opportuniste / satellite + R/R 2:1</strong> → poids réduit (4–6%)</p>
+        <p>Aucune position ne dépasse 20% du portefeuille — même sur la meilleure conviction.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION D -->
+  <section class="section" id="ixd">
+    <div class="section-label">Section D</div>
+    <h2 class="section-title">Architecture Core / Satellite</h2>
+    <div class="section-intro"><em>Trois couches, trois horizons, une cohérence d'ensemble.</em></div>
+
+    <div class="sub">
+      <h3 class="sub-title">Le principe des couches</h3>
+      <p>L'architecture Core/Satellite divise le portefeuille de trading en trois poches avec des objectifs, des horizons et des règles de gestion différents. Cette séparation empêche de traiter une position de conviction long terme avec la même réactivité qu'une opportunité tactique court terme — une erreur qui coûte cher.</p>
+    </div>
+
+    <div class="module-figure">
+<svg width="100%" viewBox="0 0 680 240" style="display:block">
+<!-- Core block -->
+<rect x="40" y="30" width="180" height="160" rx="10" fill="#E6F1FB" stroke="#185FA5" stroke-width="1"/>
+<text class="th" x="130" y="58" text-anchor="middle" fill="#0C447C">CORE</text>
+<text class="ts" x="130" y="76" text-anchor="middle" fill="#185FA5" style="font-weight:700;font-size:20px">65%</text>
+<text class="ts" x="130" y="100" text-anchor="middle" fill="#0C447C">Convictions fortes</text>
+<text class="ts" x="130" y="116" text-anchor="middle" fill="#185FA5">Horizon 6 mois–2 ans</text>
+<text class="ts" x="130" y="132" text-anchor="middle" fill="#185FA5">Stop trailing MM50</text>
+<text class="ts" x="130" y="148" text-anchor="middle" fill="#185FA5">R/R &gt; 2.5:1</text>
+<text class="ts" x="130" y="164" text-anchor="middle" fill="#0C447C">3 filtres convergents</text>
+<!-- Arrow -->
+<line x1="222" y1="110" x2="248" y2="110" stroke="var(--text-3)" stroke-width="1.5" opacity=".4"/>
+<!-- Satellite block -->
+<rect x="250" y="50" width="160" height="130" rx="10" fill="#EAF3DE" stroke="#3B6D11" stroke-width="1"/>
+<text class="th" x="330" y="76" text-anchor="middle" fill="#27500A">SATELLITE</text>
+<text class="ts" x="330" y="94" text-anchor="middle" fill="#3B6D11" style="font-weight:700;font-size:18px">25%</text>
+<text class="ts" x="330" y="114" text-anchor="middle" fill="#27500A">Tactique court terme</text>
+<text class="ts" x="330" y="130" text-anchor="middle" fill="#3B6D11">Horizon 1–3 mois</text>
+<text class="ts" x="330" y="146" text-anchor="middle" fill="#3B6D11">Stop ATR serré</text>
+<text class="ts" x="330" y="162" text-anchor="middle" fill="#27500A">Rotation fréquente</text>
+<!-- Arrow -->
+<line x1="412" y1="115" x2="438" y2="115" stroke="var(--text-3)" stroke-width="1.5" opacity=".4"/>
+<!-- Cash block -->
+<rect x="440" y="70" width="140" height="100" rx="10" fill="#f0efe8" stroke="var(--border)" stroke-width="1"/>
+<text class="th" x="510" y="96" text-anchor="middle" fill="var(--text-2)">CASH</text>
+<text class="ts" x="510" y="114" text-anchor="middle" fill="var(--text-3)" style="font-weight:700;font-size:18px">10%</text>
+<text class="ts" x="510" y="134" text-anchor="middle" fill="var(--text-2)">Réserve permanente</text>
+<text class="ts" x="510" y="150" text-anchor="middle" fill="var(--text-3)">Option sur opport.</text>
+<!-- Bottom note -->
+<rect x="40" y="205" width="540" height="25" rx="5" fill="var(--accent-soft)"/>
+<text class="ts" x="310" y="221" text-anchor="middle" fill="#0C447C">Jamais investi à 100% — le cash est une option, pas une position neutre</text>
+</svg>
+<p class="fig-caption">Fig. 4 — Architecture Core/Satellite. Le Core (bleu, 65%) regroupe les convictions fortes à horizon long. Le Satellite (vert, 25%) est la poche tactique. Le Cash (10%) est une réserve permanente d'opportunités.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Couche</th><th>Allocation</th><th>Horizon</th><th>Critères d'entrée</th><th>Gestion</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Core</strong></td><td>60–70%</td><td>6 mois → 2 ans</td>
+            <td>3 filtres convergents + R/R &gt; 2.5:1 + conviction fondamentale forte</td>
+            <td>Stop trailing MM50 hebdo — on laisse courir</td>
+          </tr>
+          <tr>
+            <td><strong>Satellite</strong></td><td>25–30%</td><td>1–3 mois</td>
+            <td>Opportunité tactique + R/R &gt; 2:1 + catalyseur court terme identifié</td>
+            <td>Stop ATR serré — rotation fréquente</td>
+          </tr>
+          <tr>
+            <td><strong>Cash</strong></td><td>10%</td><td>Permanent</td>
+            <td>Réserve structurelle — jamais investi à 100%</td>
+            <td>Option sur opportunités imprévues</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Éviter les thèses corrélées déguisées</h3>
+      <p>Deux positions qui semblent distinctes peuvent en réalité être la même thèse macro exprimée différemment. Long pétrole + long compagnies pétrolières = une seule position sur le prix du brut. Long USD/JPY + short obligations japonaises = une seule position sur la politique de la BoJ.</p>
+      <div class="callout blue"><strong>Test de corrélation interne — à faire avant chaque nouvelle entrée :</strong> Poser la question : si ma thèse principale est invalidée, combien de mes positions ouvertes en souffrent simultanément ? Si la réponse est 'plus de deux', le portefeuille est concentré sur un seul facteur de risque déguisé en diversification. Exemple classique : long cuivre, pétrole, minerai = une seule thèse sur la croissance chinoise.</div>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Le rôle du cash : une option, pas une position neutre</h3>
+      <p>Maintenir 10% de cash permanent n'est pas une décision passive. C'est une option sur les opportunités futures — un droit d'acheter au prix du marché futur sans contrainte de liquidation forcée d'une autre position. Lors des corrections brutales (mars 2020, août 2024), les investisseurs avec du cash disponible ont pu entrer sur des actifs de qualité avec des marges de sécurité exceptionnelles. Ceux investis à 100% n'avaient pas cette option.</p>
+    </div>
+  </section>
+
+  <!-- SECTION E -->
+  <section class="section" id="ixe">
+    <div class="section-label">Section E</div>
+    <h2 class="section-title">Structure du Capital</h2>
+    <div class="section-intro"><em>Il ne faut pas un gros compte pour bien trader. Il faut un compte calibré.</em></div>
+
+    <div class="sub">
+      <h3 class="sub-title">Le trading actif s'inscrit dans le portefeuille global</h3>
+      <p>Le trading actif est la couche Satellite du portefeuille global d'investissement. Il n'existe pas en isolation — il est une composante parmi d'autres d'une allocation patrimoniale cohérente. Déposer 100% de son capital disponible chez un broker CFD est l'erreur la plus fréquente : sur-exposition au risque de contrepartie, argent dormant ne générant aucun rendement, et tentation de surtrader pour « rentabiliser » le compte.</p>
+    </div>
+
+    <div class="module-figure">
+<svg width="100%" viewBox="0 0 680 260" style="display:block">
+<!-- Total capital bar -->
+<text class="ts" x="350" y="20" text-anchor="middle" style="font-weight:600">Structure du capital global — Exemple 50 000€</text>
+<!-- Allocation bar -->
+<rect x="60" y="35" width="560" height="40" rx="6" fill="#f0efe8" stroke="var(--border)" stroke-width="1"/>
+<!-- ETF 70% = 392px -->
+<rect x="60" y="35" width="392" height="40" rx="6" fill="#E6F1FB" stroke="#185FA5" stroke-width="0.5"/>
+<text class="ts" x="256" y="60" text-anchor="middle" fill="#0C447C" style="font-weight:600">ETF / Obligations — 70% — 35 000€</text>
+<!-- Trading 20% = 112px -->
+<rect x="452" y="35" width="112" height="40" rx="0" fill="#EAF3DE" stroke="#3B6D11" stroke-width="0.5"/>
+<text class="ts" x="508" y="60" text-anchor="middle" fill="#27500A" style="font-weight:600">Trading — 20%</text>
+<!-- Cash 10% = 56px -->
+<rect x="564" y="35" width="56" height="40" rx="0 6 6 0" fill="#f0efe8" stroke="var(--border)" stroke-width="0.5"/>
+<text class="ts" x="592" y="60" text-anchor="middle" fill="var(--text-3)">Rés. 10%</text>
+
+<!-- Breakdown trading 10,000€ -->
+<text class="ts" x="508" y="100" text-anchor="middle" fill="#27500A" style="font-weight:600">Détail poche trading : 10 000€</text>
+<line x1="452" y1="75" x2="452" y2="100" stroke="#3B6D11" stroke-width="1" opacity=".4"/>
+<line x1="564" y1="75" x2="564" y2="100" stroke="#3B6D11" stroke-width="1" opacity=".4"/>
+
+<!-- Calc steps -->
+<rect x="80" y="115" width="520" height="115" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="1"/>
+<text class="ts" x="100" y="138" fill="var(--text-3)" style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em">Calcul du capital minimum fonctionnel</text>
+<text class="ts" x="100" y="158">Étape 1 — Allocation trading : 20% × 50 000€ = <tspan font-weight="600" fill="var(--text-1)">10 000€ chez le courtier</tspan></text>
+<text class="ts" x="100" y="176">Étape 2 — Risque par trade : 1.5% × 10 000€ = <tspan font-weight="600" fill="var(--text-1)">150€ par position</tspan></text>
+<text class="ts" x="100" y="194">Étape 3 — 5 positions max, stop moyen 4% : 150 / 0.04 = <tspan font-weight="600" fill="var(--text-1)">3 750€ nominal</tspan></text>
+<text class="ts" x="100" y="212">Étape 4 — 5 × 3 750€ = 18 750€ nominal total → levier 2:1 = <tspan font-weight="600" fill="var(--text-1)">9 375€ de marge</tspan></text>
+<line x1="100" y1="220" x2="585" y2="220" stroke="var(--border)" stroke-width="1"/>
+<text class="ts" x="100" y="222"><tspan dy="10" font-weight="600" fill="#3B6D11">✓ 10 000€ chez le courtier couvrent exactement la stratégie. Les 40 000€ restants travaillent en ETF.</tspan></text>
+</svg>
+<p class="fig-caption">Fig. 5 — Structure du capital global sur 50 000€. La poche trading actif (20%) est calibrée au minimum fonctionnel. Les 70% restants génèrent un rendement structurel en investissement long terme.</p>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">La boucle vertueuse</h3>
+      <div class="notion">
+        <div class="notion-title">La boucle vertueuse — Comment faire croître le système</div>
+        <p>Les profits du trading actif sont prélevés régulièrement et transférés vers la poche investissement long terme.</p>
+        <p>La poche investissement (ETF, obligations) génère un rendement structurel de <strong>6–8%/an</strong> sans surveillance quotidienne.</p>
+        <p>Quand la poche investissement grossit, la tranche de trading peut être revalorisée proportionnellement.</p>
+        <p>Le capital total croît via deux moteurs complémentaires : <strong>l'alpha tactique du trading</strong> + <strong>la croissance composée de l'investissement passif.</strong></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION F -->
+  <section class="section" id="ixf">
+    <div class="section-label">Section F</div>
+    <h2 class="section-title">Suivre et Réévaluer</h2>
+    <div class="section-intro"><em>Un portefeuille n'est pas une décision prise une fois pour toutes — c'est un système vivant qui s'adapte.</em></div>
+
+    <div class="sub">
+      <h3 class="sub-title">Bruit vs signal : quand agir, quand ne pas agir</h3>
+      <p>La principale erreur de gestion de portefeuille est la réactivité excessive aux mouvements de court terme. Un actif qui baisse de 3% en une séance n'invalide pas une thèse fondamentale construite sur plusieurs mois d'analyse. Agir sur chaque mouvement génère des coûts de transaction, détériore le timing, et transforme un investisseur en trader réactif.</p>
+      <p>La règle : ne modifier une position que si l'un des trois déclencheurs légitimes est activé. Pas avant.</p>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Les 3 déclencheurs légitimes de sortie</h3>
+      <ul class="styled-list">
+        <li><strong>La thèse fondamentale est invalidée :</strong> le catalyseur identifié ne se matérialise pas dans le délai prévu, ou un événement contradictoire change structurellement l'équation. Exemple : on est long USD/JPY sur une thèse de différentiel de taux — la BoJ annonce une hausse surprise de 50bp. La thèse est invalidée, on sort indépendamment du prix.</li>
+        <li><strong>Une meilleure opportunité existe :</strong> un nouveau setup offre un R/R supérieur avec une thèse aussi solide. Alléger la position existante pour financer le nouveau trade est rationnel — c'est une réallocation de capital vers une meilleure espérance.</li>
+        <li><strong>Le stop-loss est atteint :</strong> le niveau technique ou fondamental d'invalidation défini avant l'entrée (Module VII.f) est touché. La sortie est automatique — sans discussion, sans espoir de rebond.</li>
+      </ul>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Pyramidage : renforcer sans surexposer</h3>
+      <p>Le pyramidage consiste à ajouter à une position gagnante par tranches successives, à mesure que la thèse se confirme. C'est l'inverse du averaging down — renforcer une position perdante dans l'espoir d'un rebond, l'une des erreurs les plus coûteuses.</p>
+      <div class="notion">
+        <div class="notion-title">Pyramidage — La règle des tranches</div>
+        <p><strong>Tranche 1 (50% de la taille cible) :</strong> à l'entrée initiale — breakout confirmé, 3 filtres alignés.</p>
+        <p><strong>Tranche 2 (30%) :</strong> après un premier pull-back sur le niveau de breakout — confirmation que le support tient.</p>
+        <p><strong>Tranche 3 (20%) :</strong> nouveau plus haut — la thèse progresse, on complète la position.</p>
+        <p><strong>Stop trailing sur l'ensemble :</strong> remonter le stop après chaque tranche ajoutée pour protéger le gain accumulé.</p>
+      </div>
+    </div>
+
+    <div class="module-figure">
+<svg width="100%" viewBox="0 0 680 240" style="display:block">
+<defs><marker id="arr2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<!-- Axes -->
+<line x1="60" y1="20" x2="60" y2="200" stroke="var(--text-2)" stroke-width="1" opacity=".2"/>
+<line x1="60" y1="200" x2="630" y2="200" stroke="var(--text-2)" stroke-width="1" opacity=".2"/>
+<text class="ts" x="350" y="225" text-anchor="middle" opacity=".5">Temps</text>
+<!-- Price path -->
+<path d="M 68,170 L 120,155 L 170,135 L 200,140 L 240,118 L 270,122 L 310,98 L 350,102 L 390,80 L 440,85 L 490,65 L 540,70 L 590,55 L 620,58" fill="none" stroke="#185FA5" stroke-width="2.5" stroke-linecap="round"/>
+<!-- Tranche 1 -->
+<circle cx="170" cy="135" r="7" fill="#3B6D11" stroke="#fff" stroke-width="1.5" opacity=".9"/>
+<text class="ts" x="178" y="128" fill="#27500A" style="font-weight:600">T1 — 50%</text>
+<text class="ts" x="178" y="142" fill="#3B6D11">Entrée initiale</text>
+<!-- Tranche 2 -->
+<circle cx="240" cy="118" r="7" fill="#3B6D11" stroke="#fff" stroke-width="1.5" opacity=".9"/>
+<text class="ts" x="248" y="111" fill="#27500A" style="font-weight:600">T2 — 30%</text>
+<text class="ts" x="248" y="125" fill="#3B6D11">Pull-back tenu</text>
+<!-- Tranche 3 -->
+<circle cx="390" cy="80" r="7" fill="#3B6D11" stroke="#fff" stroke-width="1.5" opacity=".9"/>
+<text class="ts" x="398" y="73" fill="#27500A" style="font-weight:600">T3 — 20%</text>
+<text class="ts" x="398" y="87" fill="#3B6D11">Nouveau plus haut</text>
+<!-- Trailing stop evolving -->
+<path d="M 68,195 L 120,185 L 170,168 L 200,168 L 240,148 L 270,148 L 310,128 L 350,128 L 390,108 L 440,108 L 490,90 L 540,90 L 590,75 L 620,75" fill="none" stroke="#E24B4A" stroke-width="1.5" stroke-dasharray="5 3" opacity=".7"/>
+<text class="ts" x="460" y="108" fill="#A32D2D" style="font-size:11px">Stop trailing</text>
+<!-- Fill profit zone -->
+<path d="M 170,135 L 200,140 L 240,118 L 270,122 L 310,98 L 350,102 L 390,80 L 440,85 L 490,65 L 540,70 L 590,55 L 620,58 L 620,75 L 590,75 L 540,90 L 490,90 L 440,108 L 390,108 L 350,128 L 310,128 L 270,148 L 240,148 L 200,168 L 170,168 Z" fill="#EAF3DE" opacity=".3"/>
+</svg>
+<p class="fig-caption">Fig. 6 — Pyramidage par tranches : 3 entrées successives (50/30/20%) à mesure que la thèse se confirme. Le stop trailing remonte après chaque tranche pour protéger le gain accumulé.</p>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">La revue mensuelle : métriques clés</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Métrique</th><th>Ce qu'elle mesure</th><th>Signal d'alerte</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Sharpe Ratio mensuel</strong></td><td>Rendement ajusté du risque sur le mois</td><td>&lt; 0.5 sur 3 mois consécutifs → recalibrer la stratégie</td></tr>
+            <tr><td><strong>Win rate vs attendu</strong></td><td>Cohérence avec les paramètres de la stratégie</td><td>Écart &gt; 15% → revoir les critères d'entrée</td></tr>
+            <tr><td><strong>R moyen par trade</strong></td><td>Qualité des trades gagnants vs perdants</td><td>R moyen &lt; 1.5 → R/R réel sous l'objectif</td></tr>
+            <tr><td><strong>Corrélation inter-positions</strong></td><td>Exposition réelle vs exposition diversifiée déclarée</td><td>&gt; 0.7 entre 2 positions → thèse corrélée déguisée</td></tr>
+            <tr><td><strong>Contribution au drawdown</strong></td><td>Quelle position a le plus pesé sur le portefeuille</td><td>1 position &gt; 60% du drawdown → concentration excessive</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- SYNTHESIS -->
+  <div class="synthesis">
+    <h2 class="synthesis-title">Résumé du Module IX</h2>
+    <p>Ce module a posé l'architecture du portefeuille comme un système — pas comme une somme de trades. La diversification est le seul outil qui améliore le profil risque/rendement sans edge, mais ses bénéfices s'épuisent rapidement et disparaissent en crise. La frontière efficiente de Markowitz démontre qu'il existe une limite physique à la réduction du risque : le risque systématique de marché est incompressible.</p>
+    <p>L'alpha — le rendement excédentaire par rapport au marché — est la seule justification rationnelle de la concentration et de la gestion active. Sans edge informationnel réel, l'indice reste le portefeuille optimal. Avec un edge, concentrer sur 5 à 12 positions de conviction forte est plus efficace que de diluer dans 40 positions.</p>
+    <div class="summary-grid">
+      <div class="summary-card">
+        <div class="summary-section">IX.a — Diversification</div>
+        <div class="summary-concept">Repas gratuit limité. Risque idiosyncratique diversifiable. Risque systématique incompressible. Corrélations instables en crise.</div>
+        <div class="summary-tool">Courbe de diversification, matrice de corrélation</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-section">IX.b — Frontière efficiente</div>
+        <div class="summary-concept">Markowitz : portefeuille optimal = frontière. CAPM : sans edge, l'indice est rationnel. Limites : corrélations instables, queues épaisses.</div>
+        <div class="summary-tool">Frontière efficiente, CML, Sharpe Ratio</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-section">IX.c — Alpha et concentration</div>
+        <div class="summary-concept">Edge = concentration justifiée. 5–12 positions optimales. Sizing relatif selon conviction + R/R.</div>
+        <div class="summary-tool">Sizing par conviction, règle des 20% max</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-section">IX.d — Core / Satellite</div>
+        <div class="summary-concept">Trois couches : Core (long terme), Satellite (tactique), Cash (option). Éviter les thèses corrélées déguisées.</div>
+        <div class="summary-tool">Architecture 65/25/10</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-section">IX.e — Structure du capital</div>
+        <div class="summary-concept">Trading actif = Satellite du portefeuille global. Capital minimum fonctionnel calculé depuis le sizing. Boucle vertueuse.</div>
+        <div class="summary-tool">Calcul capital minimum, allocation 70/20/10</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-section">IX.f — Suivi</div>
+        <div class="summary-concept">3 déclencheurs légitimes de sortie. Pyramidage par tranches. Revue mensuelle : Sharpe, corrélation, contribution au drawdown.</div>
+        <div class="summary-tool">Checklist revue mensuelle</div>
+      </div>
+    </div>
+    <div class="next-module">Module suivant — <strong>Module X : Psychologie &amp; Discipline.</strong> Les outils sont posés. Il reste à les appliquer sous pression — ce qui est une compétence distincte.</div>
   </div>
 
-  
-
-  <div class="mod-nav">
-    <button class="mod-nav-btn" onclick="navigate(7)" >← Précédent</button>
-    <span class="mod-nav-label">9 / 12</span>
-    <button class="mod-nav-btn" onclick="navigate(9, true)" >Suivant →</button>
+  <div class="module-nav">
+    <button class="nav-btn" onclick="window.parent.postMessage({type:'navigate',index:7,markDone:false},'*')">← Module 08</button>
+    <button class="nav-btn primary" onclick="window.parent.postMessage({type:'navigate',index:9,markDone:true},'*')">Module 10 →</button>
   </div>
 
 </div>
-
-<!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox">
-  <div class="lightbox-backdrop" id="lightboxBackdrop"></div>
-  <div class="lightbox-img-wrap">
-    <button class="lightbox-close" id="lightboxClose">✕</button>
-    <img id="lightboxImg" src="" alt=""/>
-    <div class="lightbox-caption" id="lightboxCaption"></div>
-  </div>
-</div>
-
-<script>
-function navigate(index, markDone) {
-  window.parent.postMessage({ type: 'navigate', index: index, markDone: !!markDone }, '*');
-}
-function openLightbox(src, caption) {
-  document.getElementById('lightboxImg').src = src;
-  document.getElementById('lightboxCaption').textContent = caption;
-  document.getElementById('lightbox').classList.add('open');
-}
-function closeLightbox() {
-  document.getElementById('lightbox').classList.remove('open');
-}
-document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
-document.getElementById('lightboxBackdrop').addEventListener('click', closeLightbox);
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
-document.addEventListener('click', e => {
-  const img = e.target.closest('.mod-figure img');
-  if (!img) return;
-  const caption = img.closest('.mod-figure')?.querySelector('figcaption')?.textContent || '';
-  openLightbox(img.src, caption);
-});
-</script>
 </body>
 </html>
