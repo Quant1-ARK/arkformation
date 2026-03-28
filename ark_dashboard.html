@@ -644,6 +644,655 @@ body {
 
       <div id="rev-quiz" style="flex:1;display:flex;flex-direction:column;gap:16px;">
         <div class="grid2-1">
+          <div class="card" style="display:flex;flex-direction:column;min-height:320px;">
+              <div id="quiz-container" style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:280px;gap:10px;color:var(--text-tertiary);font-size:14px;font-weight:300;">
+                <div style="font-size:32px;">&#128203;</div>
+                <div>Sélectionne un module pour commencer</div>
+              </div>
+            </div>
+          </div>meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARK — Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --white: #ffffff;
+  --off-white: #fbfbfd;
+  --light-gray: #f5f5f7;
+  --mid-gray: #e8e8ed;
+  --text-primary: #1d1d1f;
+  --text-secondary: #6e6e73;
+  --text-tertiary: #aeaeb2;
+  --accent: #0071e3;
+  --accent-hover: #0077ed;
+  --accent-light: rgba(0,113,227,0.09);
+  --border: rgba(0,0,0,0.08);
+  --radius: 16px;
+  --radius-lg: 22px;
+  --sidebar-w: 220px;
+  --green: #34c759;
+  --orange: #ff9500;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  background: var(--off-white);
+  color: var(--text-primary);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: var(--sidebar-w);
+  flex-shrink: 0;
+  background: var(--accent);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: fixed;
+  top: 0; left: 0;
+  z-index: 60;
+}
+.sidebar-logo {
+  padding: 22px 20px 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  flex-shrink: 0;
+  
+}
+.logo-mark {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 20px;
+  letter-spacing: 0.2em;
+  color: #fff;
+  font-weight: 400;
+}
+.logo-badge { font-size:9px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; padding:2px 8px; border-radius:980px; transition:all .4s; }
+.logo-badge.free { color:rgba(255,255,255,0.45); background:rgba(255,255,255,0.08); }
+.logo-badge.paid { color:#7a4f00; background:linear-gradient(90deg,#f5d06a,#fceea0,#c9a84c,#fceea0,#f5d06a); background-size:200% auto; animation:shine 2.5s linear infinite; box-shadow:0 0 8px rgba(201,168,76,0.5); }
+@keyframes shine { 0%{background-position:0% center} 100%{background-position:200% center} }
+.sidebar-nav {
+  flex: 1;
+  padding: 12px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  overflow-y: auto;
+}
+.sidebar-nav::-webkit-scrollbar { display: none; }
+.nav-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.25);
+  padding: 10px 10px 4px;
+  margin-top: 4px;
+}
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(255,255,255,0.6);
+  cursor: pointer;
+  transition: background .15s, color .15s;
+  user-select: none;
+}
+.nav-item:hover { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.9); }
+.nav-item.active { background: rgba(255,255,255,0.11); color: #fff; font-weight: 500; }
+.nav-icon { width: 18px; text-align: center; font-size: 14px; flex-shrink: 0; }
+.nav-pill {
+  margin-left: auto;
+  font-size: 10px; font-weight: 600;
+  padding: 1px 7px; border-radius: 980px;
+  background: rgba(255,255,255,0.11);
+  color: rgba(255,255,255,0.6);
+}
+.nav-pill.blue { background: rgba(0,113,227,0.3); color: #86c7f5; }
+.sidebar-user {
+  padding: 12px 12px;
+  border-top: 1px solid rgba(255,255,255,0.07);
+  flex-shrink: 0;
+}
+.user-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 10px; border-radius: 10px;
+  cursor: pointer; transition: background .15s;
+}
+.user-row:hover { background: rgba(255,255,255,0.06); }
+.user-av {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 600; color: #fff; flex-shrink: 0;
+}
+.user-name { font-size: 13px; font-weight: 500; color: #fff; }
+.user-plan { font-size: 11px; color: rgba(255,255,255,0.35); font-weight: 300; }
+
+/* MAIN */
+.main { margin-left: var(--sidebar-w); flex: 1; display: flex; flex-direction: column; height: 100vh; overflow: hidden; min-width: 0; }
+
+/* CONTENT */
+.content { flex: 1; overflow-y: auto; padding: 26px 30px 40px; display: none; flex-direction: column; gap: 20px; }
+.content.active { display: flex; animation: pageIn .28s ease; }
+.content::-webkit-scrollbar { width: 5px; }
+.content::-webkit-scrollbar-thumb { background: var(--mid-gray); border-radius: 3px; }
+@keyframes pageIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+/* PAGE HEADER */
+.page-header {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  padding: 22px 24px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+}
+.page-welcome { font-size: 21px; font-weight: 600; letter-spacing: -0.02em; }
+.page-welcome span { color: var(--accent); }
+.page-welcome-sub { font-size: 13px; color: var(--text-tertiary); font-weight: 300; margin-top: 2px; }
+.header-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+.header-tab {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 13px; font-weight: 500;
+  padding: 8px 16px; border-radius: 980px;
+  border: 1px solid var(--mid-gray);
+  cursor: pointer; background: var(--white); color: var(--text-secondary);
+  transition: all .15s; font-family: inherit;
+}
+.header-tab:hover { border-color: var(--accent); color: var(--accent); }
+.header-tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+/* CARDS */
+.card { background: var(--white); border-radius: var(--radius-lg); border: 1px solid var(--border); padding: 22px 24px; }
+.card-title { font-size: 16px; font-weight: 600; letter-spacing: -0.015em; display: flex; align-items: center; gap: 7px; }
+.card-sub { font-size: 12px; color: var(--text-tertiary); font-weight: 300; margin-top: 2px; }
+.card-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 4px; }
+.card-link { font-size: 13px; color: var(--accent); cursor: pointer; }
+.card-link:hover { opacity: .7; }
+.card-chev { color: var(--text-tertiary); font-size: 14px; cursor: pointer; padding: 2px 4px; }
+
+/* KPI TRIO */
+.kpi-trio { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--mid-gray); border-radius: var(--radius); overflow: hidden; margin-top: 18px; }
+.kpi-cell { background: var(--off-white); padding: 20px 18px; display: flex; align-items: center; gap: 14px; }
+.kpi-ico { width: 38px; height: 38px; border-radius: 10px; background: var(--accent-light); display: flex; align-items: center; justify-content: center; font-size: 17px; flex-shrink: 0; }
+.kpi-val { font-size: 24px; font-weight: 600; letter-spacing: -0.03em; line-height: 1; }
+.kpi-lbl { font-size: 12px; color: var(--text-tertiary); font-weight: 300; margin-top: 3px; }
+
+/* CTA BANNER */
+.cta-banner {
+  background: var(--text-primary);
+  border-radius: var(--radius-lg);
+  padding: 20px 24px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+}
+.cta-title { font-size: 16px; font-weight: 600; color: #fff; letter-spacing: -0.01em; display: flex; align-items: center; gap: 8px; }
+.cta-sub { font-size: 13px; color: rgba(255,255,255,0.42); font-weight: 300; margin-top: 3px; }
+.cta-btn {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 14px; font-weight: 500;
+  background: #fff; color: var(--text-primary);
+  padding: 10px 20px; border-radius: 980px;
+  border: none; cursor: pointer; white-space: nowrap;
+  transition: opacity .15s; flex-shrink: 0; font-family: inherit;
+}
+.cta-btn:hover { opacity: .88; }
+.cta-btn.blue { background: var(--accent); color: #fff; }
+.cta-btn.blue:hover { background: var(--accent-hover); opacity: 1; }
+
+/* RANK BAR */
+.rank-wrap { margin: 16px 0 22px; }
+.rank-lbl-row { display: flex; justify-content: center; margin-bottom: 8px; }
+.rank-lbl { font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 6px; background: var(--white); border: 1px solid var(--mid-gray); padding: 4px 14px; border-radius: 980px; }
+.rank-track { height: 8px; background: var(--mid-gray); border-radius: 980px; overflow: hidden; }
+.rank-fill { height: 100%; background: linear-gradient(90deg, var(--accent), #86c7f5); border-radius: 980px; width: 0; transition: width 1.2s cubic-bezier(.4,0,.2,1); }
+.rank-ends { display: flex; justify-content: space-between; margin-top: 5px; font-size: 11px; color: var(--text-tertiary); font-weight: 300; }
+
+/* RINGS */
+.rings-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+.ring-cell { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.ring-name { font-size: 13px; font-weight: 500; text-align: center; }
+.ring-note { font-size: 11px; color: var(--text-tertiary); font-weight: 300; text-align: center; margin-top: -4px; }
+
+/* PROGRESS */
+.prog-wrap { display: flex; flex-direction: column; gap: 5px; }
+.prog-row { display: flex; justify-content: space-between; font-size: 13px; }
+.prog-row span:last-child { color: var(--text-tertiary); font-weight: 300; }
+.prog-track { height: 6px; background: var(--light-gray); border-radius: 980px; overflow: hidden; }
+.prog-fill { height: 100%; border-radius: 980px; background: var(--accent); transition: width 1s cubic-bezier(.4,0,.2,1); }
+.prog-fill.g { background: var(--green); }
+.prog-fill.o { background: var(--orange); }
+
+/* MODULE LIST */
+.mod-item { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--mid-gray); cursor: pointer; transition: opacity .15s; }
+.mod-item:last-child { border-bottom: none; }
+.mod-item:hover { opacity: .7; }
+.mod-num { width: 28px; height: 28px; border-radius: 8px; background: var(--light-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--text-secondary); flex-shrink: 0; }
+.mod-num.done { background: rgba(52,199,89,0.12); color: var(--green); }
+.mod-num.cur  { background: var(--accent-light); color: var(--accent); }
+.mod-title { font-size: 14px; font-weight: 500; flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mod-meta  { font-size: 12px; color: var(--text-tertiary); font-weight: 300; }
+.mod-badge { font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 980px; white-space: nowrap; flex-shrink: 0; }
+.bd-done { background: rgba(52,199,89,0.1); color: var(--green); }
+.bd-wip  { background: var(--accent-light); color: var(--accent); }
+.bd-lock { background: var(--light-gray); color: var(--text-tertiary); }
+
+/* ACTIVITY */
+.act-item { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--mid-gray); align-items: flex-start; }
+.act-item:last-child { border-bottom: none; }
+.act-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); margin-top: 5px; flex-shrink: 0; }
+.act-dot.g { background: var(--green); }
+.act-dot.o { background: var(--orange); }
+.act-text { font-size: 13px; color: var(--text-secondary); font-weight: 300; }
+.act-text strong { color: var(--text-primary); font-weight: 500; }
+.act-time { font-size: 11px; color: var(--text-tertiary); margin-top: 1px; }
+
+/* QUIZ */
+.quiz-q { font-size: 17px; font-weight: 500; letter-spacing: -0.01em; line-height: 1.55; margin-bottom: 20px; }
+.quiz-opts { display: flex; flex-direction: column; gap: 9px; }
+.quiz-opt { padding: 13px 18px; border-radius: 12px; border: 1.5px solid var(--mid-gray); font-size: 14px; cursor: pointer; transition: all .15s; background: var(--white); text-align: left; font-family: inherit; }
+.quiz-opt:hover { border-color: var(--accent); background: var(--accent-light); color: var(--accent); }
+.quiz-opt.correct { border-color: var(--green); background: rgba(52,199,89,0.08); color: #2aa34a; font-weight: 500; }
+.quiz-opt.wrong   { border-color: #ff3b30; background: rgba(255,59,48,0.07); color: #d93025; }
+.quiz-actions { display: flex; gap: 10px; align-items: center; margin-top: 18px; flex-wrap: wrap; }
+.btn-p { font-size: 14px; font-weight: 500; background: var(--accent); color: #fff; padding: 10px 22px; border-radius: 980px; border: none; cursor: pointer; transition: background .15s; font-family: inherit; }
+.btn-p:hover { background: var(--accent-hover); }
+.btn-g { font-size: 14px; font-weight: 400; color: var(--text-secondary); padding: 10px 16px; border-radius: 980px; border: none; cursor: pointer; background: var(--light-gray); font-family: inherit; }
+.btn-g:hover { background: var(--mid-gray); }
+.quiz-score { font-size: 12px; color: var(--text-tertiary); margin-left: auto; font-weight: 300; }
+
+/* BONUS */
+.bonus-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+.bonus-card { background: var(--white); border-radius: var(--radius); border: 1px solid var(--border); padding: 20px; display: flex; flex-direction: column; gap: 10px; cursor: pointer; transition: all .2s; }
+.bonus-card:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(0,0,0,0.08); }
+.bonus-card.locked { opacity: .5; pointer-events: none; }
+.bonus-ico { font-size: 26px; }
+.bonus-title { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.35; }
+.bonus-desc { font-size: 12px; color: var(--text-secondary); font-weight: 300; line-height: 1.6; }
+.badge { font-size: 10px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; padding: 3px 9px; border-radius: 980px; align-self: flex-start; }
+.badge.new   { background: rgba(52,199,89,0.1); color: var(--green); }
+.badge.exclu { background: var(--accent-light); color: var(--accent); }
+.badge.lock  { background: var(--light-gray); color: var(--text-tertiary); }
+
+/* SETTINGS */
+.set-row { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; border-bottom: 1px solid var(--mid-gray); gap: 20px; }
+.set-row:last-child { border-bottom: none; }
+.set-name { font-size: 14px; font-weight: 500; }
+.set-desc { font-size: 12px; color: var(--text-tertiary); font-weight: 300; margin-top: 1px; }
+.toggle { width: 44px; height: 26px; background: var(--mid-gray); border-radius: 980px; position: relative; cursor: pointer; transition: background .2s; flex-shrink: 0; border: none; }
+.toggle.on { background: var(--accent); }
+.toggle::after { content: ''; position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; background: #fff; border-radius: 50%; transition: transform .2s; box-shadow: 0 1px 4px rgba(0,0,0,0.2); }
+.toggle.on::after { transform: translateX(18px); }
+.sel { font-size: 13px; color: var(--text-secondary); background: var(--light-gray); border: none; border-radius: 8px; padding: 7px 12px; cursor: pointer; font-family: inherit; outline: none; }
+.sml-btn { font-size: 13px; font-weight: 400; color: var(--text-secondary); padding: 7px 14px; border-radius: 980px; border: none; cursor: pointer; background: var(--light-gray); font-family: inherit; white-space: nowrap; }
+.sml-btn:hover { background: var(--mid-gray); }
+
+/* COURS PILLS */
+.cours-pill {
+  font-size: 13px; font-weight: 400; color: rgba(255,255,255,0.75);
+  padding: 8px 18px; border-radius: 980px;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.08);
+  cursor: pointer; transition: all .15s; font-family: inherit;
+}
+.cours-pill:hover { background: rgba(255,255,255,0.15); color: #fff; }
+.cours-pill.active-pill { background: rgba(255,255,255,0.18); color: #fff; border-color: rgba(255,255,255,0.45); }
+
+/* COURS CARDS */
+.cours-card {
+  background: var(--off-white);
+  border-radius: var(--radius);
+  border: 1px solid var(--mid-gray);
+  overflow: hidden;
+  display: flex; flex-direction: column;
+  transition: transform .2s, box-shadow .2s;
+  cursor: pointer;
+}
+.cours-card:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(0,0,0,0.08); }
+.cours-card.cours-lock { pointer-events: none; opacity: .7; }
+.cours-card-top {
+  position: relative;
+  background: linear-gradient(140deg, #dce9ff, #eef3ff);
+  height: 110px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 40px;
+}
+.cours-card.cours-done .cours-card-top { background: linear-gradient(140deg, #d4f0de, #e8f8ee); }
+.cours-card.cours-wip .cours-card-top  { background: linear-gradient(140deg, #dce9ff, #eef3ff); }
+.cours-card.cours-lock .cours-card-top { background: linear-gradient(140deg, #ebebeb, #f5f5f5); }
+.cours-price-badge {
+  position: absolute; top: 10px; right: 10px;
+  font-size: 11px; font-weight: 600;
+  background: rgba(255,255,255,0.82); color: var(--text-secondary);
+  padding: 3px 10px; border-radius: 980px;
+}
+.cours-price-badge.wip-badge  { background: var(--accent); color: #fff; }
+.cours-price-badge.lock-badge { background: var(--light-gray); color: var(--text-tertiary); }
+.cours-card-meta {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 9px 14px 0;
+  font-size: 12px; color: var(--text-tertiary); font-weight: 300;
+}
+.cours-access { font-size: 11px; font-weight: 600; color: var(--text-tertiary); }
+.done-access { color: var(--green); }
+.wip-access  { color: var(--accent); }
+.lock-access { color: var(--text-tertiary); }
+.cours-card-title {
+  font-size: 14px; font-weight: 600; letter-spacing: -0.01em;
+  color: var(--text-primary); padding: 8px 14px 0; line-height: 1.3;
+}
+.cours-card-desc {
+  font-size: 12px; color: var(--text-secondary); font-weight: 300;
+  padding: 6px 14px 16px; line-height: 1.6;
+}
+
+/* TAGS */
+.tag { font-size: 11px; font-weight: 500; color: var(--accent); background: var(--accent-light); padding: 3px 9px; border-radius: 980px; display: inline-block; }
+.tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+.divider { height: 1px; background: var(--mid-gray); margin: 14px 0; }
+
+/* GRIDS */
+.grid2   { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.grid2-1 { display: grid; grid-template-columns: 2fr 1fr; gap: 18px; }
+.col { display: flex; flex-direction: column; gap: 18px; }
+
+/* RESPONSIVE */
+@media (max-width: 860px) {
+  .sidebar { transform: translateX(-100%); transition: transform .25s; }
+  .sidebar.open { transform: translateX(0); box-shadow: 4px 0 24px rgba(0,0,0,0.18); }
+  .main { margin-left: 0; }
+  .kpi-trio, .rings-row { grid-template-columns: repeat(2,1fr); }
+  .grid2-1 { grid-template-columns: 1fr; }
+  .grid2 { grid-template-columns: 1fr; }
+  .bonus-grid { grid-template-columns: 1fr 1fr; }
+  .content { padding: 18px 16px 32px; }
+}
+@media (max-width: 540px) {
+  .kpi-trio, .rings-row, .bonus-grid { grid-template-columns: 1fr; }
+  .header-tabs { display: none; }
+}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <span class="logo-mark">ARK</span>
+    <span class="logo-badge free" id="plan-badge">Gratuit</span>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-label">Principal</div>
+    <div class="nav-item active" onclick="nav('dashboard',this)"><span class="nav-icon">⊞</span> Dashboard</div>
+    <div class="nav-item" onclick="nav('cours',this)"><span class="nav-icon">▶</span> Cours <span class="nav-pill blue">3</span></div>
+    <div class="nav-item" onclick="nav('revision',this)"><span class="nav-icon">◈</span> Révision</div>
+    <div class="nav-label">Contenu</div>
+    <div class="nav-item" onclick="nav('bonus',this)"><span class="nav-icon">✦</span> Bonus <span class="nav-pill">2</span></div>
+    <div class="nav-item" id="nav-membre" onclick="nav('membre',this)"><span class="nav-icon">★</span> Deviens membre</div>
+    <div class="nav-label">Compte</div>
+    <div class="nav-item" id="nav-reglages" onclick="nav('reglages',this)"><span class="nav-icon">◎</span> Réglages</div>
+    <div class="nav-item" onclick="window.location.href='index.html'"><span class="nav-icon">⤶</span> Sortir</div>
+  </nav>
+  <div class="sidebar-user">
+    <div class="user-row">
+      <div class="user-av" id="user-av">?</div>
+      <div><div class="user-name" id="user-name">…</div><div class="user-plan">Accès à vie · Fondateur</div></div>
+    </div>
+  </div>
+</aside>
+
+<div class="main">
+
+  <!-- ════ DASHBOARD ════ -->
+  <div class="content active" id="page-dashboard">
+
+    <!-- Page header with tabs -->
+    <div class="page-header">
+      <div>
+        <div class="page-welcome">Bienvenue, <span id="welcome-name">…</span> 👋</div>
+        <div class="page-welcome-sub">Suis ta progression et continue ton parcours de formation</div>
+      </div>
+      <div class="header-tabs">
+        <button class="header-tab active" onclick="tabSwitch(this)"><span>📊</span> Dashboard</button>
+        <button class="header-tab" onclick="tabSwitch(this)"><span>🕐</span> Historique</button>
+        <button class="header-tab" onclick="tabSwitch(this)"><span>🔖</span> Favoris</button>
+        <button class="header-tab" onclick="tabSwitch(this)"><span>🗺</span> Roadmap</button>
+      </div>
+    </div>
+
+    <!-- Performance overview -->
+    <div class="card">
+      <div class="card-top">
+        <div>
+          <div class="card-title">📈 Aperçu des performances</div>
+          <div class="card-sub">Ton activité récente et ta progression</div>
+        </div>
+        <span class="card-chev" id="perf-chev" onclick="toggleCard('perf-body','perf-chev')">∨</span>
+      </div>
+      <div id="perf-body">
+        <div class="kpi-trio">
+          <div class="kpi-cell"><div class="kpi-ico">🎯</div><div><div class="kpi-val" id="kpi-progression">0%</div><div class="kpi-lbl">Progression</div></div></div>
+          <div class="kpi-cell"><div class="kpi-ico">📝</div><div><div class="kpi-val" id="kpi-questions">0</div><div class="kpi-lbl">Questions tentées</div></div></div>
+          <div class="kpi-cell"><div class="kpi-ico">🔖</div><div><div class="kpi-val" id="kpi-modules">0/12</div><div class="kpi-lbl">Modules terminés</div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA Banner -->
+    <div class="cta-banner">
+      <div>
+        <div class="cta-title" id="cta-title">🚀 Chargement…</div>
+        <div class="cta-sub" id="cta-sub"></div>
+      </div>
+      <button class="cta-btn" onclick="goToFormation()">▶ Continuer</button>
+    </div>
+
+    <!-- Rang ARK -->
+    <div class="card">
+      <div class="card-top" style="margin-bottom:0;">
+        <div>
+          <div class="card-title">🏆 Rang ARK & Métriques</div>
+          <div class="card-sub">Progression dans le programme et indicateurs clés</div>
+        </div>
+      </div>
+      <div class="rank-wrap">
+        <div class="rank-lbl-row"><div class="rank-lbl" id="rank-label">🎓 Chargement…</div></div>
+        <div class="rank-track"><div class="rank-fill" id="rank-fill"></div></div>
+        <div class="rank-ends"><span>Novice</span><span id="rank-pct">0%</span><span>Stratège Macro</span></div>
+      </div>
+      <div class="rings-row">
+        <div class="ring-cell">
+          <svg width="80" height="80" viewBox="0 0 80 80">
+            <circle cx="40" cy="40" r="32" fill="none" stroke="#e8e8ed" stroke-width="8"/>
+            <circle id="ring-circle-prog" cx="40" cy="40" r="32" fill="none" stroke="#0071e3" stroke-width="8" stroke-dasharray="201" stroke-dashoffset="201" stroke-linecap="round" transform="rotate(-90 40 40)"/>
+            <text id="ring-pct-prog" x="40" y="45" text-anchor="middle" font-family="Inter,sans-serif" font-size="15" font-weight="600" fill="#1d1d1f">0%</text>
+          </svg>
+          <div class="ring-name">Progression</div>
+          <div id="ring-note-prog" class="ring-note">0 / 12 modules</div>
+        </div>
+        <div class="ring-cell">
+          <svg width="80" height="80" viewBox="0 0 80 80">
+            <circle cx="40" cy="40" r="32" fill="none" stroke="#e8e8ed" stroke-width="8"/>
+            <circle id="ring-circle-score" cx="40" cy="40" r="32" fill="none" stroke="#34c759" stroke-width="8" stroke-dasharray="201" stroke-dashoffset="52" stroke-linecap="round" transform="rotate(-90 40 40)"/>
+            <text id="ring-pct-score" x="40" y="45" text-anchor="middle" font-family="Inter,sans-serif" font-size="15" font-weight="600" fill="#1d1d1f">74%</text>
+          </svg>
+          <div class="ring-name">Score moyen</div>
+          <div class="ring-note">Quiz & révisions</div>
+        </div>
+        <div class="ring-cell">
+          <svg width="80" height="80" viewBox="0 0 80 80">
+            <circle cx="40" cy="40" r="32" fill="none" stroke="#e8e8ed" stroke-width="8"/>
+            <circle id="ring-circle-assid" cx="40" cy="40" r="32" fill="none" stroke="#ff9500" stroke-width="8" stroke-dasharray="201" stroke-dashoffset="90" stroke-linecap="round" transform="rotate(-90 40 40)"/>
+            <text id="ring-pct-assid" x="40" y="45" text-anchor="middle" font-family="Inter,sans-serif" font-size="15" font-weight="600" fill="#1d1d1f">55%</text>
+          </svg>
+          <div class="ring-name">Assiduité</div>
+          <div class="ring-note">Sessions cette semaine</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modules + activité -->
+    <div class="grid2-1">
+      <div class="card">
+        <div class="card-top">
+          <div><div class="card-title">Avancement modules</div><div class="card-sub">Progression par module</div></div>
+          <span class="card-link" onclick="nav('cours', document.querySelectorAll('.nav-item')[1])">Voir tout →</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;margin-top:16px;">
+          <div id="prog-list"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-top" style="margin-bottom:8px;">
+          <div class="card-title">Activité récente</div>
+        </div>
+        <div id="activity-list"><div class="act-item"><div class="act-dot g"></div><div><div class="act-text"><strong>Module 04 terminé</strong></div><div class="act-time">Il y a 2 jours</div></div></div>
+        <div class="act-item"><div class="act-dot"></div><div><div class="act-text"><strong>Module 05 débuté</strong></div><div class="act-time">Il y a 2 jours</div></div></div>
+        <div class="act-item"><div class="act-dot o"></div><div><div class="act-text"><strong>Quiz Macro</strong> · 74%</div><div class="act-time">Il y a 5 jours</div></div></div>
+        <div class="act-item"><div class="act-dot g"></div><div><div class="act-text"><strong>Module 03 terminé</strong></div><div class="act-time">Il y a 1 sem.</div></div></div>
+        <div class="act-item"><div class="act-dot"></div><div><div class="act-text"><strong>Bonus Journal</strong> téléchargé</div><div class="act-time">Il y a 1 sem.</div></div></div></div>
+      </div>
+    </div>
+
+  </div><!-- /dashboard -->
+
+
+  <!-- ════ COURS ════ -->
+  <div class="content" id="page-cours">
+
+    <!-- HERO BANNER -->
+    <div style="background:var(--accent);border-radius:var(--radius-lg);padding:34px 28px 28px;text-align:center;">
+      <div style="font-size:28px;font-weight:700;color:#fff;letter-spacing:-0.02em;margin-bottom:8px;">🎓 ARK — Formation Macro Trading</div>
+      <div style="font-size:14px;color:rgba(255,255,255,0.65);font-weight:300;max-width:520px;margin:0 auto 22px;">Maîtrise l'analyse macro de zéro jusqu'au niveau institutionnel avec un programme complet et structuré</div>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+        <button class="cours-pill active-pill">🗺 Roadmap</button>
+        <button class="cours-pill">▶ Vidéos</button>
+        <button class="cours-pill">📋 Révision</button>
+        <button class="cours-pill">📝 Exercices</button>
+        <button class="cours-pill">✦ Bonus</button>
+        <button class="cours-pill">🏆 Certificat</button>
+      </div>
+    </div>
+
+    <!-- BANNIÈRE EN COURS (dynamique) -->
+    <div id="cours-banner" style="background:#0a1f44;border-radius:var(--radius-lg);padding:20px 26px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+      <div>
+        <div id="cours-banner-title" style="font-size:16px;font-weight:600;color:#fff;">🚀 Chargement…</div>
+        <div id="cours-banner-sub" style="font-size:13px;color:rgba(255,255,255,0.42);font-weight:300;margin-top:3px;"></div>
+      </div>
+      <button class="cta-btn" style="background:#fff;color:#0a1f44;font-weight:600;" onclick="goToFormation()">▶ Continuer</button>
+    </div>
+
+    <!-- FORMATIONS DISPONIBLES -->
+    <div style="background:var(--white);border-radius:var(--radius-lg);border:1px solid var(--border);padding:26px 24px;">
+      <div style="font-size:20px;font-weight:700;letter-spacing:-0.02em;margin-bottom:4px;display:flex;align-items:center;gap:8px;">🎓 Formations disponibles</div>
+      <div style="font-size:13px;color:var(--text-tertiary);font-weight:300;margin-bottom:24px;">Accède à ta formation et reprends là où tu t'es arrêté</div>
+
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+
+        <!-- CARD ARK MACRO PROGRAM -->
+        <div style="border:1px solid var(--mid-gray);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s;cursor:pointer;" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 10px 28px rgba(0,0,0,0.08)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+          <!-- Image placeholder -->
+          <div style="background:linear-gradient(140deg,#c8daff,#ddeaff);height:160px;display:flex;align-items:center;justify-content:center;position:relative;">
+            <span style="font-size:48px;">📈</span>
+            <span style="position:absolute;top:12px;right:12px;background:rgba(255,255,255,0.85);font-size:11px;font-weight:600;color:var(--text-secondary);padding:3px 10px;border-radius:980px;">Fondateur</span>
+            <span style="position:absolute;bottom:10px;left:12px;font-size:11px;color:var(--accent);font-weight:500;display:flex;align-items:center;gap:5px;">⏱ 40+ heures</span>
+            <span style="position:absolute;bottom:10px;right:12px;font-size:11px;color:var(--accent);font-weight:500;display:flex;align-items:center;gap:4px;">🏆 Accès à vie</span>
+          </div>
+          <!-- Contenu -->
+          <div style="padding:16px 18px 18px;display:flex;flex-direction:column;gap:10px;flex:1;">
+            <div style="font-size:16px;font-weight:700;color:var(--accent);letter-spacing:-0.01em;">ARK Macro Program</div>
+            <div style="font-size:13px;color:var(--text-secondary);font-weight:300;line-height:1.6;">Maîtrise l'analyse macroéconomique, construis des thèses solides et prends des positions avec conviction — du contexte global jusqu'à l'exécution.</div>
+            <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;margin-top:2px;">
+              <span style="font-weight:600;color:var(--accent);">Fondateur</span>
+              <span style="color:var(--text-tertiary);font-weight:300;">12 modules</span>
+            </div>
+            <button onclick="goToFormation()" style="display:flex;align-items:center;justify-content:center;gap:7px;background:var(--accent);color:#fff;font-size:13px;font-weight:600;padding:11px 18px;border-radius:10px;border:none;cursor:pointer;margin-top:4px;width:100%;font-family:inherit;transition:background .15s" onmouseover="this.style.background='#0077ed'" onmouseout="this.style.background='var(--accent)'">▶ Accéder à la formation</button>
+          </div>
+        </div>
+
+        <!-- CARD PLACEHOLDER 2 — À venir -->
+        <div style="border:1px solid var(--mid-gray);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;opacity:.55;">
+          <div style="background:linear-gradient(140deg,#e8e8ed,#f5f5f7);height:160px;display:flex;align-items:center;justify-content:center;position:relative;">
+            <span style="font-size:48px;opacity:.4;">🔒</span>
+            <span style="position:absolute;bottom:10px;right:12px;font-size:11px;color:var(--text-tertiary);font-weight:500;">Bientôt</span>
+          </div>
+          <div style="padding:16px 18px 18px;display:flex;flex-direction:column;gap:10px;flex:1;">
+            <div style="font-size:16px;font-weight:700;color:var(--text-tertiary);letter-spacing:-0.01em;">Prochaine formation</div>
+            <div style="font-size:13px;color:var(--text-tertiary);font-weight:300;line-height:1.6;">Une nouvelle formation ARK arrive prochainement. Réservé aux membres Fondateurs en priorité.</div>
+            <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;margin-top:2px;">
+              <span style="font-weight:600;color:var(--text-tertiary);">À confirmer</span>
+              <span style="color:var(--text-tertiary);font-weight:300;">— modules</span>
+            </div>
+            <button disabled style="display:flex;align-items:center;justify-content:center;gap:7px;background:var(--mid-gray);color:var(--text-tertiary);font-size:13px;font-weight:500;padding:11px 18px;border-radius:10px;border:none;margin-top:4px;cursor:not-allowed;font-family:inherit;">⏳ Bientôt disponible</button>
+          </div>
+        </div>
+
+        <!-- CARD PLACEHOLDER 3 — À venir -->
+        <div style="border:1px solid var(--mid-gray);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;opacity:.55;">
+          <div style="background:linear-gradient(140deg,#e8e8ed,#f5f5f7);height:160px;display:flex;align-items:center;justify-content:center;position:relative;">
+            <span style="font-size:48px;opacity:.4;">🔒</span>
+            <span style="position:absolute;bottom:10px;right:12px;font-size:11px;color:var(--text-tertiary);font-weight:500;">Bientôt</span>
+          </div>
+          <div style="padding:16px 18px 18px;display:flex;flex-direction:column;gap:10px;flex:1;">
+            <div style="font-size:16px;font-weight:700;color:var(--text-tertiary);letter-spacing:-0.01em;">Prochaine formation</div>
+            <div style="font-size:13px;color:var(--text-tertiary);font-weight:300;line-height:1.6;">Une nouvelle formation ARK arrive prochainement. Réservé aux membres Fondateurs en priorité.</div>
+            <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;margin-top:2px;">
+              <span style="font-weight:600;color:var(--text-tertiary);">À confirmer</span>
+              <span style="color:var(--text-tertiary);font-weight:300;">— modules</span>
+            </div>
+            <button disabled style="display:flex;align-items:center;justify-content:center;gap:7px;background:var(--mid-gray);color:var(--text-tertiary);font-size:13px;font-weight:500;padding:11px 18px;border-radius:10px;border:none;margin-top:4px;cursor:not-allowed;font-family:inherit;">⏳ Bientôt disponible</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div><!-- /cours -->
+
+
+  <!-- ════ R!-- RÉVISION -->
+  <div class="content" id="page-revision">
+    <div class="page-header">
+      <div><div class="page-welcome">Révision</div><div class="page-welcome-sub">Quiz · Flashcards · Résumés</div></div>
+    </div>
+
+    <!-- 3 cartes de sélection -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;">
+      <div id="rev-card-quiz" onclick="selectRevision('quiz')" style="background:var(--accent-light);border:2px solid var(--accent);border-radius:var(--radius-lg);padding:22px 20px;cursor:pointer;transition:all .2s;text-align:center;">
+        <div style="font-size:28px;margin-bottom:10px;">📋</div>
+        <div style="font-size:15px;font-weight:600;letter-spacing:-.01em;margin-bottom:4px;">Quiz</div>
+        <div style="font-size:12px;color:var(--text-secondary);font-weight:300;">Teste tes connaissances module par module</div>
+      </div>
+      <div id="rev-card-flash" onclick="selectRevision('flash')" style="background:var(--white);border:1.5px solid var(--mid-gray);border-radius:var(--radius-lg);padding:22px 20px;cursor:pointer;transition:all .2s;text-align:center;">
+        <div style="font-size:28px;margin-bottom:10px;">🃏</div>
+        <div style="font-size:15px;font-weight:600;letter-spacing:-.01em;margin-bottom:4px;">Flashcards</div>
+        <div style="font-size:12px;color:var(--text-secondary);font-weight:300;">Mémorise les concepts clés en mode répétition</div>
+      </div>
+      <div id="rev-card-resume" onclick="selectRevision('resume')" style="background:var(--white);border:1.5px solid var(--mid-gray);border-radius:var(--radius-lg);padding:22px 20px;cursor:pointer;transition:all .2s;text-align:center;">
+        <div style="font-size:28px;margin-bottom:10px;">📝</div>
+        <div style="font-size:15px;font-weight:600;letter-spacing:-.01em;margin-bottom:4px;">Résumés</div>
+        <div style="font-size:12px;color:var(--text-secondary);font-weight:300;">Relis les synthèses de chaque module</div>
+      </div>
+    </div>
+
+    <!-- Panneau actif -->
+    <div style="flex:1;display:flex;flex-direction:column;min-height:0;">
+
+      <div id="rev-quiz" style="flex:1;display:flex;flex-direction:column;gap:16px;">
+        <div class="grid2-1">
           <div class="card">
             <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">
               <span class="tag">Module 01 · Macro Trading</span>
@@ -665,10 +1314,11 @@ body {
           <div class="col">
             <div class="card">
               <div class="card-title" style="margin-bottom:12px;">Modules disponibles</div>
-              <div class="mod-item"><div class="mod-num cur">01</div><div style="flex:1;"><div class="mod-title">Macro Trading</div><div class="mod-meta">8 questions</div></div><span class="mod-badge bd-done">74%</span></div>
-              <div class="mod-item"><div class="mod-num">02</div><div style="flex:1;"><div class="mod-title">Marchés Financiers</div><div class="mod-meta">10 questions</div></div><span class="mod-badge bd-done">88%</span></div>
-              <div class="mod-item"><div class="mod-num">03</div><div style="flex:1;"><div class="mod-title">Analyse Macro</div><div class="mod-meta">12 questions</div></div><span class="mod-badge bd-done">92%</span></div>
-              <div class="mod-item"><div class="mod-num">04</div><div style="flex:1;"><div class="mod-title">Analyse des Actifs</div><div class="mod-meta">9 questions</div></div><span class="mod-badge bd-wip">Nouveau</span></div>
+              <div class="mod-item" onclick="loadQuiz('quiz/quiz01.html',this)" style="cursor:pointer;background:var(--accent-light);"><div class="mod-num cur">01</div><div style="flex:1;"><div class="mod-title">Macro Trading</div><div class="mod-meta">4 questions</div></div><span class="mod-badge bd-done">74%</span></div>
+              <div class="mod-item" onclick="loadQuiz('quiz/quiz02.html',this)" style="cursor:pointer;"><div class="mod-num">02</div><div style="flex:1;"><div class="mod-title">Marchés Financiers</div><div class="mod-meta">4 questions</div></div><span class="mod-badge bd-done">88%</span></div>
+              <div class="mod-item" onclick="loadQuiz('quiz/quiz03.html',this)" style="cursor:pointer;"><div class="mod-num">03</div><div style="flex:1;"><div class="mod-title">Analyse Macro</div><div class="mod-meta">4 questions</div></div><span class="mod-badge bd-done">92%</span></div>
+              <div class="mod-item" onclick="loadQuiz('quiz/quiz04.html',this)" style="cursor:pointer;"><div class="mod-num">04</div><div style="flex:1;"><div class="mod-title">Analyse des Actifs</div><div class="mod-meta">4 questions</div></div><span class="mod-badge bd-wip">Nouveau</span></div>
+              <div class="mod-item" onclick="loadQuiz('quiz/quiz_ultime.html',this)" style="cursor:pointer;border-top:2px solid var(--mid-gray);margin-top:4px;padding-top:14px;"><div class="mod-num" style="background:linear-gradient(135deg,#0071e3,#34c759);color:#fff;">&#9889;</div><div style="flex:1;"><div class="mod-title" style="color:var(--accent);font-weight:600;">Quiz Ultime</div><div class="mod-meta">16 questions &middot; Tous les modules</div></div><span class="mod-badge" style="background:rgba(0,113,227,0.08);color:var(--accent);">All-in</span></div>
             </div>
             <div class="card">
               <div class="card-title" style="margin-bottom:12px;">Tes scores</div>
@@ -866,57 +1516,36 @@ async function logout() {
 }
 
 // ── Quiz ──
-let answered = false, score = 2, total = 2, qIdx = 0;
-const QS = [
-  { q: "Qu'est-ce que le 'carry trade' dans le contexte du Forex ?", opts: [
-    {t:"Acheter une devise qui se déprécie rapidement",ok:false},
-    {t:"Emprunter dans une devise à faible taux pour investir dans une devise à taux élevé",ok:true},
-    {t:"Vendre à découvert une paire de devises corrélées",ok:false},
-    {t:"Arbitrer deux marchés obligataires de zones différentes",ok:false}
-  ]},
-  { q: "Quel indicateur mesure le rapport entre rendement excédentaire et volatilité ?", opts: [
-    {t:"Le ratio de Calmar",ok:false},
-    {t:"Le win rate",ok:false},
-    {t:"Le ratio de Sharpe",ok:true},
-    {t:"Le maximum drawdown",ok:false}
-  ]},
-  { q: "Qu'est-ce qu'un régime de marché 'risk-off' ?", opts: [
-    {t:"Un marché où les actifs risqués surperforment",ok:false},
-    {t:"Une phase où les investisseurs fuient vers les actifs refuges",ok:true},
-    {t:"Volatilité inférieure à 10%",ok:false},
-    {t:"Période de taux d'intérêt négatifs",ok:false}
-  ]},
-];
-
-function answer(btn, ok) {
-  if (answered) return;
-  answered = true;
-  if (ok) { btn.classList.add('correct'); score++; }
-  else {
-    btn.classList.add('wrong');
-    document.querySelectorAll('#quiz-opts .quiz-opt').forEach((b,i) => {
-      if (QS[qIdx].opts[i] && QS[qIdx].opts[i].ok) b.classList.add('correct');
-    });
+async function loadQuiz(url, clickedItem) {
+  document.querySelectorAll('.mod-item').forEach(el => el.style.background = '');
+  if (clickedItem) clickedItem.style.background = 'var(--accent-light)';
+  const container = document.getElementById('quiz-container');
+  if (!container) return;
+  container.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;min-height:280px;color:var(--text-tertiary);font-size:14px;">Chargement...</div>';
+  try {
+    const resp = await fetch(url);
+    const text = await resp.text();
+    const bodyMatch = text.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
+    if (bodyMatch) {
+      container.innerHTML = bodyMatch[1];
+      if (!document.getElementById('quiz-css')) {
+        const styleMatch = text.match(/<style>([\s\S]*?)<\/style>/i);
+        if (styleMatch) {
+          const style = document.createElement('style');
+          style.id = 'quiz-css';
+          style.textContent = styleMatch[1];
+          document.head.appendChild(style);
+        }
+      }
+      container.querySelectorAll('script').forEach(old => {
+        const s = document.createElement('script');
+        s.textContent = old.textContent;
+        old.replaceWith(s);
+      });
+    }
+  } catch(e) {
+    container.innerHTML = '<div style="padding:20px;color:#d93025;font-size:13px;">Erreur de chargement.</div>';
   }
-  total++;
-  document.getElementById('quiz-score').textContent = "Score : " + score + "/" + total;
-}
-
-function nextQ() {
-  qIdx = (qIdx + 1) % QS.length;
-  answered = false;
-  const q = QS[qIdx];
-  document.getElementById('quiz-q').textContent = q.q;
-  document.getElementById('q-num').textContent = qIdx + 3;
-  const wrap = document.getElementById('quiz-opts');
-  wrap.innerHTML = '';
-  q.opts.forEach(o => {
-    const b = document.createElement('button');
-    b.className = 'quiz-opt';
-    b.textContent = o.t;
-    b.onclick = () => answer(b, o.ok);
-    wrap.appendChild(b);
-  });
 }
 
 // ── Progression ──
