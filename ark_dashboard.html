@@ -1525,24 +1525,27 @@ async function loadQuiz(url, clickedItem) {
   try {
     const resp = await fetch(url);
     const text = await resp.text();
-    const bodyMatch = text.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
-    if (bodyMatch) {
-      container.innerHTML = bodyMatch[1];
-      if (!document.getElementById('quiz-css')) {
-        const styleMatch = text.match(/<style>([\s\S]*?)<\/style>/i);
-        if (styleMatch) {
-          const style = document.createElement('style');
-          style.id = 'quiz-css';
-          style.textContent = styleMatch[1];
-          document.head.appendChild(style);
-        }
+    // Parser le HTML avec DOMParser pour éviter les problèmes de regex
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(text, 'text/html');
+    // Injecter le CSS une seule fois
+    if (!document.getElementById('quiz-css')) {
+      const styleEl = doc.querySelector('style');
+      if (styleEl) {
+        const style = document.createElement('style');
+        style.id = 'quiz-css';
+        style.textContent = styleEl.textContent;
+        document.head.appendChild(style);
       }
-      container.querySelectorAll('script').forEach(old => {
-        const s = document.createElement('script');
-        s.textContent = old.textContent;
-        old.replaceWith(s);
-      });
     }
+    // Vider et remplir le container avec le body parsé
+    container.innerHTML = doc.body.innerHTML;
+    // Réexécuter les scripts
+    container.querySelectorAll('script').forEach(old => {
+      const s = document.createElement('script');
+      s.textContent = old.textContent;
+      old.replaceWith(s);
+    });
   } catch(e) {
     container.innerHTML = '<div style="padding:20px;color:#d93025;font-size:13px;">Erreur de chargement.</div>';
   }
