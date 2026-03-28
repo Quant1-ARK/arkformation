@@ -14,7 +14,6 @@
     --text-2: #59595e;
     --text-3: #48484c;
     --accent: #0071e3;
-    --accent-glow: rgba(0,113,227,.18);
     --accent-soft: rgba(0,113,227,.12);
     --gold: #c9a84c;
     --gold-soft: rgba(201,168,76,.1);
@@ -23,12 +22,7 @@
   *{box-sizing:border-box;margin:0;padding:0}
   body{background:var(--bg);color:var(--text-1);font-family:'DM Sans',-apple-system,sans-serif;font-size:15px;-webkit-font-smoothing:antialiased;padding:48px clamp(24px,5vw,80px) 80px;overflow-y:auto;min-height:100vh}
   @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-  .page{animation:fadeIn .3s ease}
-
-  /* VIDEO */
-  .mod-video{margin-bottom:36px;border-radius:16px;overflow:hidden;aspect-ratio:16/9;background:#1a1a1a;display:none}
-  .mod-video.has-video{display:block}
-  .mod-video iframe{width:100%;height:100%;border:none}
+  .page{animation:fadeIn .3s ease;max-width:100%}
 
   /* MODULE HEADER */
   .mod-number{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;display:flex;align-items:center;gap:8px}
@@ -43,12 +37,12 @@
   /* OBJECTIVES */
   .mod-objectives{list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:36px}
   .mod-objectives li{display:flex;align-items:flex-start;gap:12px;font-size:14px;color:var(--text-2);line-height:1.6}
-  .obj-check{width:18px;height:18px;border-radius:50%;border:1px solid var(--border-active);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--text-3)}
+  .obj-check{width:18px;height:18px;border-radius:50%;border:1px solid rgba(19,18,18,.3);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--text-3)}
 
   /* CONCEPTS */
   .mod-concepts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:36px}
-  .concept-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px;transition:border-color .2s,background .2s}
-  .concept-card:hover{border-color:var(--border-active);background:var(--bg)}
+  .concept-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px;transition:border-color .2s}
+  .concept-card:hover{border-color:rgba(0,113,227,.3)}
   .concept-icon{font-size:20px;margin-bottom:8px}
   .concept-name{font-size:13px;font-weight:600;color:var(--text-1);margin-bottom:4px}
   .concept-desc{font-size:12px;color:var(--text-2);line-height:1.5;font-weight:300}
@@ -57,30 +51,6 @@
   .mod-quote{background:var(--gold-soft);border:1px solid rgba(201,168,76,.15);border-radius:16px;padding:24px 28px;margin-bottom:36px}
   .mod-quote-text{font-family:'DM Serif Display',Georgia,serif;font-size:18px;line-height:1.6;color:var(--gold);margin-bottom:8px;font-style:italic}
   .mod-quote-source{font-size:11px;color:var(--text-3);letter-spacing:.05em;text-transform:uppercase}
-
-  /* FIGURES & TABLES */
-  .mod-figure{margin:28px 0;text-align:center}
-  .mod-figure img{max-width:100%;height:auto;border-radius:12px;border:1px solid var(--border);cursor:zoom-in;transition:opacity .2s,transform .2s}
-  .mod-figure img:hover{opacity:.9;transform:scale(1.01)}
-  .mod-figure figcaption{margin-top:10px;font-size:12px;color:var(--text-3);font-style:italic;line-height:1.5}
-
-  /* LIGHTBOX */
-  .lightbox{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:32px;opacity:0;pointer-events:none;transition:opacity .25s ease}
-  .lightbox.open{opacity:1;pointer-events:all}
-  .lightbox-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(4px)}
-  .lightbox-img-wrap{position:relative;z-index:1;max-width:90vw;max-height:88vh;display:flex;flex-direction:column;align-items:center;gap:14px;transform:scale(.94);transition:transform .25s ease}
-  .lightbox.open .lightbox-img-wrap{transform:scale(1)}
-  .lightbox-img-wrap img{max-width:100%;max-height:80vh;height:auto;border-radius:14px;box-shadow:0 32px 80px rgba(0,0,0,.5);display:block}
-  .lightbox-caption{font-size:13px;color:rgba(255,255,255,.65);font-style:italic;text-align:center;max-width:640px;line-height:1.5}
-  .lightbox-close{position:absolute;top:-14px;right:-14px;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s;line-height:1}
-  .lightbox-close:hover{background:rgba(255,255,255,.25)}
-
-  .mod-table-wrap{overflow-x:auto;margin:24px 0;border-radius:12px;border:1px solid var(--border)}
-  .mod-table{width:100%;border-collapse:collapse;font-size:13px}
-  .mod-table th{background:var(--accent-soft);color:var(--accent);font-weight:600;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:10px 14px;text-align:left;border-bottom:1px solid var(--border)}
-  .mod-table td{padding:10px 14px;color:var(--text-2);border-bottom:1px solid var(--border);vertical-align:top;line-height:1.6;font-weight:300}
-  .mod-table tr:last-child td{border-bottom:none}
-  .mod-table td strong{color:var(--text-1);font-weight:600}
 
   /* MODULE BODY */
   .mod-body{margin-top:40px}
@@ -103,62 +73,77 @@
   /* NAV */
   .mod-nav{display:flex;justify-content:space-between;align-items:center;margin-top:52px;padding-top:24px;border-top:1px solid var(--border);gap:12px}
   .mod-nav-btn{display:flex;align-items:center;gap:8px;padding:10px 16px;border:1px solid var(--border);border-radius:10px;background:var(--bg);color:var(--text-2);cursor:pointer;font-size:13px;font-weight:500;transition:all .15s;font-family:inherit}
-  .mod-nav-btn:hover:not(:disabled){border-color:var(--border-active);color:var(--text-1)}
+  .mod-nav-btn:hover:not(:disabled){border-color:rgba(0,113,227,.4);color:var(--text-1)}
   .mod-nav-btn:disabled{opacity:.3;cursor:default}
   .mod-nav-label{font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em}
 
-  @media(max-width:768px){
-    body{padding:32px 20px 60px}
-  }
+  @media(max-width:768px){body{padding:32px 20px 60px}}
 </style>
 </head>
 <body>
 <div class="page">
 
-  <!-- VIDEO: remplacer la ligne ci-dessous par <div class="mod-video has-video"><iframe src="https://www.youtube.com/embed/VOTRE_ID" allowfullscreen></iframe></div> -->
-  <div class="mod-video"></div>
-
   <div class="mod-number">Module 01</div>
   <h1 class="mod-title">Introduction : Le Cadre de Pensée</h1>
-  <div class="mod-tags"><span class="mod-tag">Profils d'investisseurs</span><span class="mod-tag">Retail vs Institutionnel</span><span class="mod-tag">Gestion du risque</span><span class="mod-tag">Intérêts composés</span></div>
+  <div class="mod-tags">
+    <span class="mod-tag">Profils d'investisseurs</span>
+    <span class="mod-tag">Retail vs Institutionnel</span>
+    <span class="mod-tag">Taux horaire réel</span>
+    <span class="mod-tag">Intérêts composés</span>
+    <span class="mod-tag">Classes d'actifs</span>
+  </div>
   <p class="mod-intro">Investisseur, Trader, Spéculateur : qui êtes-vous vraiment, et que cherchez-vous à construire ? Avant d'apprendre à lire un bilan ou anticiper un mouvement macro, il faut répondre à cette question fondamentale — elle conditionne tout : votre méthode, votre horizon de temps, votre gestion du risque, et votre état d'esprit face à l'incertitude.</p>
 
   <div class="mod-section-title">Ce que tu vas apprendre</div>
-  <ul class="mod-objectives"><li><div class="obj-check">○</div><span>Distinguer les trois profils d'intervenants : investisseur, trader et spéculateur</span></li><li><div class="obj-check">○</div><span>Comprendre les différences structurelles entre trader retail et institutionnel</span></li><li><div class="obj-check">○</div><span>Identifier les causes systématiques d'échec des particuliers sur les marchés</span></li><li><div class="obj-check">○</div><span>Calibrer ses objectifs de rendement et comprendre la puissance des intérêts composés</span></li><li><div class="obj-check">○</div><span>Découvrir les grandes classes d'actifs sur lesquelles s'applique la méthode</span></li></ul>
+  <ul class="mod-objectives">
+    <li><div class="obj-check">○</div><span>Distinguer les trois profils d'intervenants : investisseur, trader et spéculateur — et identifier lequel vous êtes</span></li>
+    <li><div class="obj-check">○</div><span>Comprendre les différences structurelles entre trader retail et institutionnel, et exploiter vos vrais avantages</span></li>
+    <li><div class="obj-check">○</div><span>Calculer votre taux horaire réel et comprendre pourquoi moins trader peut rapporter plus</span></li>
+    <li><div class="obj-check">○</div><span>Identifier les causes systématiques d'échec des particuliers sur les marchés</span></li>
+    <li><div class="obj-check">○</div><span>Calibrer ses objectifs de rendement et comprendre la puissance des intérêts composés</span></li>
+    <li><div class="obj-check">○</div><span>Découvrir les grandes classes d'actifs sur lesquelles s'applique la méthode</span></li>
+  </ul>
 
   <div class="mod-divider"></div>
 
   <div class="mod-section-title">Concepts clés</div>
-  <div class="mod-concepts-grid"><div class="concept-card"><div class="concept-icon">🧭</div><div class="concept-name">Les 3 profils</div><div class="concept-desc">Investisseur (valeur long terme), Trader (thèse macro), Spéculateur (flux court terme)</div></div><div class="concept-card"><div class="concept-icon">⚖️</div><div class="concept-name">Retail vs Institutionnel</div><div class="concept-desc">Agilité et liberté du retail face à l'infrastructure et aux contraintes des fonds</div></div><div class="concept-card"><div class="concept-icon">📈</div><div class="concept-name">Intérêts composés</div><div class="concept-desc">Capital final = Capital initial × (1 + r)ⁿ — le temps est l'actif le plus précieux</div></div><div class="concept-card"><div class="concept-icon">🛡️</div><div class="concept-name">Gestion du risque</div><div class="concept-desc">Sans garde-fou externe, le retail trader doit s'imposer ses propres règles de discipline</div></div></div>
+  <div class="mod-concepts-grid">
+    <div class="concept-card"><div class="concept-icon">🧭</div><div class="concept-name">Les 3 profils</div><div class="concept-desc">Investisseur (valeur long terme), Trader (thèse macro), Spéculateur (flux court terme) — trois logiques incompatibles si mélangées</div></div>
+    <div class="concept-card"><div class="concept-icon">⚖️</div><div class="concept-name">Retail vs Institutionnel</div><div class="concept-desc">Agilité et liberté du retail face à l'infrastructure et aux contraintes des fonds. Votre edge : l'analyse, la patience, la discipline</div></div>
+    <div class="concept-card"><div class="concept-icon">⏱️</div><div class="concept-name">Taux horaire réel</div><div class="concept-desc">Revenus ÷ (heures × 4,33) — un indicateur brutal qui révèle si votre temps sur les marchés est réellement rentable</div></div>
+    <div class="concept-card"><div class="concept-icon">📈</div><div class="concept-name">Intérêts composés</div><div class="concept-desc">Capital final = Capital initial × (1 + r)ⁿ — le temps est votre actif le plus précieux, pas le capital de départ</div></div>
+  </div>
 
   <div class="mod-quote">
     <div class="mod-quote-text">"Votre edge n'est pas la vitesse, ni le volume : c'est l'analyse, la patience et la discipline."</div>
     <div class="mod-quote-source">— ARK — Module 01</div>
   </div>
 
-  <div class='mod-body'><h2 id="section-profils">1. Les trois profils : état des lieux</h2>
+  <div class="mod-body">
+
+    <h2>1. Les trois profils : état des lieux</h2>
     <p>Il existe trois grands profils d'intervenants sur les marchés financiers. Cette formation se concentre sur le profil du trader — c'est celui que vous allez construire. Les deux autres profils sont présentés ici pour que vous sachiez exactement où vous vous situez, et pourquoi le trading représente une voie distincte avec ses propres exigences.</p>
 
     <div class="profile-block">
       <h3>L'investisseur</h3>
       <p>L'investisseur achète de la valeur. Il s'intéresse à ce qu'un actif vaut fondamentalement — ses flux futurs, sa position compétitive, les dynamiques macro qui l'entourent — et parie sur la convergence entre prix et valeur sur un horizon long (plusieurs mois à plusieurs années). Il bouge peu, paie peu de frais, et laisse le temps travailler pour lui. La stratégie Buy and Hold, dont la rentabilité historique est solidement documentée, est l'expression la plus pure de cette approche. Exemples : Warren Buffett et Charlie Munger (Berkshire Hathaway), Peter Lynch avec le Fonds Magellan.</p>
-      <div class="profile-meta">Horizon : mois à années — Outil central : modélisation de valeur — Rapport au prix : secondaire</div>
+      <div class="profile-meta">Horizon : mois à années · Outil central : modélisation de valeur · Rapport au prix : secondaire</div>
     </div>
 
     <div class="profile-block">
       <h3>Le trader — le profil que ce cours vous forme à développer</h3>
       <p>Le trader construit des thèses fondamentales — macro, géopolitique, cycle sectoriel — et les exprime via des positions tenues de quelques jours à quelques mois. Il ne cherche pas à capter chaque mouvement, mais à se positionner sur des tendances de fond avant qu'elles ne soient pleinement intégrées par le marché. Son travail est de développer et d'exécuter des stratégies capables de battre le marché de façon répétable et documentée. C'est une activité hybride : mi-analyste, mi-gestionnaire de risque, et toujours ancrée dans une vision macro du monde. Exemples : George Soros (pari contre la livre sterling en 1992), Stanley Druckenmiller, Ray Dalio.</p>
-      <div class="profile-meta">Horizon : jours à mois — Outil central : thèse macro + timing d'entrée — Rapport au prix : point d'entrée et de sortie</div>
+      <div class="profile-meta">Horizon : jours à mois · Outil central : thèse macro + timing d'entrée · Rapport au prix : point d'entrée et de sortie</div>
     </div>
 
     <div class="profile-block">
       <h3>Le spéculateur</h3>
       <p>Le spéculateur trade le prix, pas la valeur. Il cherche à profiter des déséquilibres à court terme : réactions à des annonces, flux de liquidité, microstructure de marché. C'est une activité légitime, mais qui requiert une infrastructure, une discipline d'exécution et une gestion du risque que la plupart des particuliers ne possèdent pas. Exemple : Paul Tudor Jones sur certaines stratégies court terme, ou les desks propriétaires des grandes banques d'investissement.</p>
-      <div class="profile-meta">Horizon : secondes à jours — Outil central : lecture du flux et du prix — Rapport à la valeur : inexistant ou marginal</div>
+      <div class="profile-meta">Horizon : secondes à jours · Outil central : lecture du flux et du prix · Rapport à la valeur : inexistant ou marginal</div>
     </div>
 
-    <h2 id="section-retail-instit">2. Trader Retail vs Trader Institutionnel</h2>
-    <p>Avant d'apprendre à trader, il faut comprendre dans quel environnement vous évoluez — et en quoi il diffère radicalement de celui des acteurs institutionnels. Cette distinction n'est pas anodine : elle conditionne votre stratégie, vos outils, vos horizons de temps, et surtout vos avantages et limitations réels.</p>
+    <h2>2. Trader Retail vs Trader Institutionnel</h2>
+    <p>Avant d'apprendre à trader, il faut comprendre dans quel environnement vous évoluez — et en quoi il diffère radicalement de celui des acteurs institutionnels. Cette distinction n'est pas anodine : elle conditionne votre stratégie, vos outils, vos horizons de temps, et surtout vos avantages et limitations réels. Confondre les deux, c'est s'imposer des standards inaccessibles, ou à l'inverse, ignorer des avantages que vous seul possédez.</p>
 
     <h3>L'infrastructure : un monde radicalement différent</h3>
     <p>Un trader institutionnel opère depuis une salle des marchés dotée d'une infrastructure technologique de pointe : connexions co-localisées aux bourses (latence inférieure à la milliseconde), flux de données Bloomberg et Reuters en temps réel, accès direct au marché (DMA), outils de risk management automatisés, et parfois des algorithmes d'exécution propriétaires. Le coût annuel d'une telle infrastructure se chiffre en centaines de milliers, voire en millions d'euros.</p>
@@ -166,55 +151,40 @@
 
     <h3>Le capital et les attentes de performance</h3>
     <p>Un fonds institutionnel gère des volumes qui rendent impossible toute agilité tactique. Un hedge fund gérant 5 milliards de dollars ne peut pas prendre une position sur une small cap sans déplacer le marché lui-même. Ses attentes de performance sont également contraintes : un fonds doit justifier ses frais de gestion (typiquement 2 % de l'actif géré + 20 % de la performance), respecter ses mandats, et rendre des comptes trimestriels à ses investisseurs.</p>
-    <p>Vous, en tant que retail trader, pouvez entrer et sortir d'une position en quelques secondes, sur n'importe quel actif liquide, sans impact sur le cours. C'est un avantage structurel considérable. Vous n'avez de comptes à rendre à personne, pas de mandat restrictif, pas de drawdown maximum contractuel qui vous force à liquider au pire moment.</p>
+    <p>Vous, en tant que retail trader, pouvez entrer et sortir d'une position en quelques secondes, sur n'importe quel actif liquide, sans impact sur le cours. C'est un avantage structurel considérable. Vous n'avez de comptes à rendre à personne, pas de mandat restrictif, pas de drawdown maximum contractuel qui vous force à liquider au pire moment. Votre seul critère de performance : la vérité de votre compte.</p>
 
     <h3>Les limitations du trader retail</h3>
     <ul>
       <li><strong>Le coût du capital :</strong> vous tradez votre propre argent, ce qui crée une pression psychologique absente chez un employé de banque qui risque le capital de son établissement.</li>
       <li><strong>L'absence de flux propriétaire :</strong> les institutionnels voient les ordres avant leur exécution (order flow), ce qui leur confère une lecture de la microstructure du marché inaccessible au retail.</li>
       <li><strong>La fiscalité :</strong> en France, les plus-values de cession sont imposées à la flat tax de 30 % (ou au barème progressif), ce qui nécessite une gestion rigoureuse de votre enveloppe fiscale.</li>
-      <li><strong>Le levier limité :</strong> la réglementation ESMA plafonne le levier disponible pour les retail traders européens sur CFD (5:1 sur les indices, 2:1 sur les cryptos).</li>
+      <li><strong>Le levier limité :</strong> la réglementation ESMA plafonne le levier disponible pour les retail traders européens sur CFD (5:1 sur les indices, 2:1 sur les cryptos), là où un institutionnel peut accéder à des leviers bien supérieurs via des produits dérivés.</li>
     </ul>
 
     <h3>Les avantages structurels du trader retail</h3>
     <ul>
       <li><strong>L'agilité :</strong> vous pouvez vous positionner sur des opportunités que les gros fonds ne peuvent physiquement pas toucher — les actifs à faible capitalisation, les marchés de niche, les situations spéciales.</li>
       <li><strong>L'absence de contrainte de mandat :</strong> vous pouvez vendre à découvert un actif survalorisé, investir dans les cryptos, les matières premières, les devises émergentes, sans restriction.</li>
-      <li><strong>L'absence de pression de reporting :</strong> vous n'avez pas à montrer une performance positive chaque trimestre, ce qui vous permet de tenir des positions plus longtemps et d'éviter le forced selling.</li>
+      <li><strong>L'absence de pression de reporting :</strong> vous n'avez pas à montrer une performance positive chaque trimestre — ce qui vous permet de tenir des positions plus longtemps et d'éviter le forced selling.</li>
       <li><strong>Un objectif personnel de rendement différent :</strong> 15 % annualisé sur 50 000 € peut transformer votre vie — ce même rendement serait insuffisant pour un fonds qui doit couvrir ses frais structurels.</li>
     </ul>
 
     <h3>La psychologie et la gestion du risque : des logiques opposées</h3>
-    <p>La gestion du risque institutionnelle est systématique et codée : Value at Risk (VaR), limites de concentration par actif, stress tests réglementaires, risk officers indépendants du trading desk. Le trader retail n'a rien de tout ça — il est juge et partie. C'est à la fois sa force (flexibilité totale) et son premier risque (aucun garde-fou extérieur). D'où l'importance capitale de se doter de règles de gestion du risque explicites, documentées, et d'une discipline d'exécution aussi rigoureuse que celle d'un professionnel.</p>
-
+    <p>La gestion du risque institutionnelle est systématique et codée : Value at Risk (VaR), limites de concentration par actif, stress tests réglementaires, risk officers indépendants du trading desk. Le trader retail n'a rien de tout ça — il est juge et partie. C'est à la fois sa force (flexibilité totale) et son premier risque (aucun garde-fou extérieur).</p>
     <blockquote>En résumé : vous n'êtes pas un institutionnel en miniature. Vous êtes un acteur différent, avec des contraintes différentes, des avantages différents — et une stratégie qui doit en tenir compte. Votre edge n'est pas la vitesse, ni le volume : c'est l'analyse, la patience et la discipline.</blockquote>
 
-    <h2 id="section-formation">3. Ce que ce cours vous forme à faire</h2>
-    <p>Cette formation vous prépare à devenir un trader à dominante fondamentale. Concrètement, cela signifie :</p>
-    <ul>
-      <li>Comprendre les dynamiques macro et géopolitiques qui créent des opportunités</li>
-      <li>Modéliser la valeur d'un actif pour distinguer une opportunité d'un piège</li>
-      <li>Construire une thèse d'investissement complète et chiffrée</li>
-      <li>Dimensionner correctement vos positions et gérer votre risque</li>
-      <li>Tenir vos convictions sous pression, et les abandonner quand les faits changent</li>
-    </ul>
-    <p>Notre travail en tant que particuliers s'assimile davantage à celui d'un chercheur et d'un quant qu'à celui d'un trader en salle des marchés. Nous ne sommes pas là pour prendre des positions en rafale — nous sommes là pour trouver un edge, un avantage compétitif sur les autres participants du marché.</p>
-    <p>Vous êtes à la fois trader, risk manager, analyste macro et gérant de portefeuille. C'est exigeant, mais c'est aussi ce qui rend cette activité intellectuellement stimulante. <strong>Vous êtes un fond d'investissement indépendant.</strong></p>
-
-    <h2 id="section-taux-horaire">4. Réfléchir en taux horaire</h2>
-    <p>Il n'existe aucune relation entre le nombre d'heures passées à ouvrir des positions et l'argent généré. Au contraire, plus vous tradez, plus vous payez de frais et plus vous vous exposez au bruit du marché. La formule du taux horaire réel est simple :</p>
-
+    <h2>3. Réfléchir en taux horaire</h2>
+    <p>Voici une vérité que les formateurs de trading ne vous diront pas : il n'existe aucune relation entre le nombre d'heures passées à ouvrir des positions et l'argent généré. Au contraire, plus vous tradez, plus vous payez de frais et plus vous vous exposez au bruit du marché.</p>
     <div class="formula-box">
-      Taux horaire réel = Revenus mensuels ÷ (Heures travaillées / semaine × 4,33)<br>
-      <small style="font-size:12px;opacity:0.7">Le 4,33 correspond au nombre moyen de semaines par mois : 52 semaines ÷ 12 mois. C'est le même coefficient utilisé en droit du travail français (35h × 4,33 = 151,67h).</small>
+      Taux horaire réel = Revenus mensuels ÷ (Heures travaillées/semaine × 4,33)<br>
+      <small style="font-size:12px;opacity:.7;font-weight:300">Le 4,33 correspond au nombre moyen de semaines par mois : 52 ÷ 12 = 4,33</small>
     </div>
-
-    <p>Exemple concret : vous gagnez 5 000 € par mois grâce au trading actif, en travaillant 40 heures par semaine :</p>
-    <div class="formula-box">5 000 € ÷ (40h × 4,33) = 5 000 € ÷ 173h ≈ <strong>28,9 € / heure</strong> — soit environ le salaire médian français.</div>
+    <p>Prenons un exemple concret. Supposons que vous gagnez 5 000 € par mois grâce au trading actif, en travaillant 40 heures par semaine :</p>
+    <blockquote>5 000 € ÷ (40h × 4,33) = 5 000 € ÷ 173h ≈ <strong>28,9 €/heure</strong> — soit environ le salaire médian français.</blockquote>
     <p>À l'inverse, un investisseur passif qui génère les mêmes 5 000 € par mois en consacrant 1 heure par semaine à son portefeuille a un taux horaire démentiel — et dort mieux la nuit. L'objectif n'est pas de passer le plus de temps possible sur les marchés. C'est de construire un processus de décision robuste qui vous permette de dégager du temps, pas d'en consommer.</p>
 
-    <h2 id="section-echecs">5. Pourquoi la majorité des particuliers échouent</h2>
-    <p>Les causes d'échec sont systématiques et prévisibles :</p>
+    <h2>4. Pourquoi la majorité des particuliers échouent</h2>
+    <p>Avant d'apprendre comment bien faire, comprendre pourquoi la plupart échouent vous donnera un avantage immédiat. Les causes d'échec sont systématiques et prévisibles :</p>
     <ul>
       <li><strong>Absence de profil clair :</strong> confondre trading et investissement</li>
       <li><strong>Frais et fiscalité ignorés :</strong> sous-estimer les frais de transaction qui rongent silencieusement la performance</li>
@@ -226,11 +196,14 @@
       <li><strong>Méthodes miracles :</strong> croire à des approches comme le SMC (Smart Money Concept) ou l'ICT, présentées comme des systèmes universels. Ces approches reposent souvent sur des concepts non falsifiables et une esthétique de la complexité qui donne l'illusion de maîtrise. Ce cours ne vous vend pas un système — il vous construit une méthode robuste d'analyse fondamentale et macro, applicable à n'importe quel actif et n'importe quel cycle de marché.</li>
     </ul>
 
-    <h2 id="section-capital">6. Capital, objectifs et attentes réalistes</h2>
+    <h2>5. Capital, objectifs et attentes réalistes</h2>
     <p>Toute stratégie d'investissement sérieuse commence par une question honnête : avec quel capital je travaille, et quel rendement est réaliste ? La vraie variable, ce n'est pas le capital de départ — c'est le temps et la discipline.</p>
 
     <h3>La puissance des intérêts composés</h3>
-    <div class="formula-box">Capital final = Capital initial × (1 + r)ⁿ<br><small style="font-size:12px;opacity:0.7">où r = rendement annuel, n = nombre d'années</small></div>
+    <div class="formula-box">
+      Capital final = Capital initial × (1 + r)ⁿ<br>
+      <small style="font-size:12px;opacity:.7;font-weight:300">où r = rendement annuel, n = nombre d'années</small>
+    </div>
     <ul>
       <li>10 000 € investis à 12 % / an pendant 20 ans = <strong>96 462 €</strong> — soit presque 10× sans jamais rajouter un euro</li>
       <li>Le même capital à 15 % / an pendant 20 ans = <strong>163 665 €</strong> — 3 points de rendement supplémentaires font plus que doubler le résultat final</li>
@@ -239,8 +212,8 @@
     <p>La conclusion est simple : le temps est votre actif le plus précieux, et un rendement régulier et documenté bat presque toujours une performance spectaculaire mais erratique.</p>
 
     <h3>Le levier financier</h3>
-    <p>Si le temps long vous semble insuffisant, il existe des mécanismes pour accélérer le processus. Le principal est le levier financier : emprunter du capital pour amplifier l'exposition à un actif. Un exemple simplifié : avec 10 000 € et un levier de 3×, vous contrôlez une position de 30 000 €. Un mouvement de +10 % sur l'actif vous rapporte 3 000 € — soit 30 % de votre capital initial.</p>
-    <div class="warning-box">⚠️ Le levier amplifie les pertes exactement de la même façon qu'il amplifie les gains. Le même mouvement de -10 % efface 30 % de votre capital. C'est un outil puissant, pas une solution miracle. Nous lui consacrerons un module entier.</div>
+    <p>Si le temps long vous semble insuffisant, il existe des mécanismes pour accélérer le processus. Le principal est le levier financier : emprunter du capital pour amplifier l'exposition à un actif, et donc les rendements potentiels. Un exemple simplifié : avec 10 000 € et un levier de 3×, vous contrôlez une position de 30 000 €. Un mouvement de +10 % sur l'actif vous rapporte 3 000 € — soit 30 % de votre capital initial.</p>
+    <div class="warning-box">⚠️ Le levier amplifie les pertes exactement de la même façon qu'il amplifie les gains. Le même mouvement de −10 % efface 30 % de votre capital. C'est un outil puissant, pas une solution miracle. Nous lui consacrerons un module entier.</div>
 
     <h3>Repères de capital pour calibrer vos objectifs</h3>
     <ul>
@@ -250,7 +223,7 @@
     </ul>
     <p>Le point de départ importe moins que la régularité et la rigueur du processus. Un investisseur avec 5 000 € et une méthode solide surpassera presque toujours un investisseur avec 100 000 € qui improvise.</p>
 
-    <h2 id="section-actifs">7. Les classes d'actifs : un panorama rapide</h2>
+    <h2>6. Les classes d'actifs : un panorama rapide</h2>
     <p>La méthode que vous allez apprendre dans ce cours s'applique à l'ensemble des marchés financiers. Voici les grandes familles d'actifs que vous rencontrerez :</p>
     <ul>
       <li><strong>Actions :</strong> les entreprises cotées en bourse. L'actif le plus connu, et celui sur lequel la modélisation fondamentale est la plus directement applicable.</li>
@@ -261,7 +234,7 @@
       <li><strong>Cryptomonnaies :</strong> Bitcoin, Ethereum et autres. Un marché jeune, volatil, mais de plus en plus intégré aux flux macro institutionnels.</li>
     </ul>
 
-    <h2 id="section-conclusion">8. Ce que vous allez construire dans ce cours</h2>
+    <h2>Ce que vous allez construire dans ce cours</h2>
     <p>À l'issue de cette formation, vous aurez un cadre de pensée complet et personnel :</p>
     <ul>
       <li>Une compréhension des mécanismes économiques et géopolitiques qui meuvent les marchés</li>
@@ -269,47 +242,16 @@
       <li>Un processus de prise de position, de dimensionnement et de gestion du risque</li>
       <li>Une discipline psychologique pour tenir vos convictions et accepter vos erreurs</li>
     </ul>
-    <div class="summary-box">Chaque module de ce cours est un outil supplémentaire dans ce cadre. Gardez toujours en tête le fil conducteur : <strong>comprendre le monde → lire la valeur → prendre position → protéger le capital.</strong></div></div>
+    <div class="summary-box">Chaque module de ce cours est un outil supplémentaire dans ce cadre. Gardez toujours en tête le fil conducteur : <strong>comprendre le monde → lire la valeur → prendre position → protéger le capital.</strong></div>
+
+  </div>
 
   <div class="mod-nav">
-    <button class="mod-nav-btn" onclick="navigate(-1)" disabled>← Précédent</button>
+    <button class="mod-nav-btn" disabled>← Précédent</button>
     <span class="mod-nav-label">1 / 12</span>
-    <button class="mod-nav-btn" onclick="navigate(1, true)" >Suivant →</button>
+    <button class="mod-nav-btn" onclick="window.parent.postMessage({type:'navigate',index:1,markDone:true},'*')">Module 02 →</button>
   </div>
 
 </div>
-
-<!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox">
-  <div class="lightbox-backdrop" id="lightboxBackdrop"></div>
-  <div class="lightbox-img-wrap">
-    <button class="lightbox-close" id="lightboxClose">✕</button>
-    <img id="lightboxImg" src="" alt=""/>
-    <div class="lightbox-caption" id="lightboxCaption"></div>
-  </div>
-</div>
-
-<script>
-function navigate(index, markDone) {
-  window.parent.postMessage({ type: 'navigate', index: index, markDone: !!markDone }, '*');
-}
-function openLightbox(src, caption) {
-  document.getElementById('lightboxImg').src = src;
-  document.getElementById('lightboxCaption').textContent = caption;
-  document.getElementById('lightbox').classList.add('open');
-}
-function closeLightbox() {
-  document.getElementById('lightbox').classList.remove('open');
-}
-document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
-document.getElementById('lightboxBackdrop').addEventListener('click', closeLightbox);
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
-document.addEventListener('click', e => {
-  const img = e.target.closest('.mod-figure img');
-  if (!img) return;
-  const caption = img.closest('.mod-figure')?.querySelector('figcaption')?.textContent || '';
-  openLightbox(img.src, caption);
-});
-</script>
 </body>
 </html>
