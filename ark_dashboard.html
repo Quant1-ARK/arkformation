@@ -877,10 +877,10 @@ async function loadQuiz(url, clickedItem) {
       }
     }
     container.innerHTML = doc.body.innerHTML;
-    container.querySelectorAll('script').forEach(old => {
+    container.querySelectorAll('script').forEach(oldScript => {
       const s = document.createElement('script');
-      s.textContent = old.textContent;
-      old.replaceWith(s);
+      s.textContent = oldScript.textContent;
+      oldScript.replaceWith(s);
     });
   } catch(e) {
     container.innerHTML = '<div style="padding:20px;color:#d93025;font-size:13px;">Erreur de chargement.</div>';
