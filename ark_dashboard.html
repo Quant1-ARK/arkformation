@@ -888,6 +888,11 @@ async function loadQuiz(url, clickedItem) {
       }
     }
     container.innerHTML = doc.body.innerHTML;
+    // Forcer le contenu à occuper toute la hauteur du container
+    container.style.alignItems = 'stretch';
+    container.style.justifyContent = 'flex-start';
+    var qwrap = container.querySelector('#quiz-wrap');
+    if (qwrap) { qwrap.style.height = '100%'; qwrap.style.display = 'flex'; qwrap.style.flexDirection = 'column'; }
     container.querySelectorAll('script').forEach(oldScript => {
       const s = document.createElement('script');
       s.textContent = oldScript.textContent;
