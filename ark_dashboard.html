@@ -643,23 +643,24 @@ body {
     <div style="flex:1;display:flex;flex-direction:column;min-height:0;">
 
       <div id="rev-quiz" style="flex:1;display:flex;flex-direction:column;gap:16px;">
-        <div class="grid2-1">
-          <div class="card" style="display:flex;flex-direction:column;min-height:320px;">
-              <div id="quiz-container" style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:280px;gap:10px;color:var(--text-tertiary);font-size:14px;font-weight:300;">
-                <div style="font-size:32px;">&#128203;</div>
-                <div>Sélectionne un module pour commencer</div>
-              </div>
-            </div>
+        <!-- Modules en ligne horizontale -->
+        <div class="card" style="padding:16px 20px;">
+          <div class="card-title" style="margin-bottom:12px;">Modules disponibles</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <div onclick="loadQuiz('quiz/quiz01.html',this)" class="mod-pill active-pill-quiz" style="cursor:pointer;display:flex;align-items:center;gap:7px;padding:7px 14px;border-radius:980px;border:1.5px solid var(--accent);background:var(--accent-light);font-size:13px;font-weight:500;color:var(--accent);transition:all .2s;"><span>01</span><span>Macro Trading</span></div>
+            <div onclick="loadQuiz('quiz/quiz02.html',this)" class="mod-pill" style="cursor:pointer;display:flex;align-items:center;gap:7px;padding:7px 14px;border-radius:980px;border:1.5px solid var(--mid-gray);background:var(--white);font-size:13px;font-weight:500;color:var(--text-secondary);transition:all .2s;"><span>02</span><span>Marchés Financiers</span></div>
+            <div onclick="loadQuiz('quiz/quiz03.html',this)" class="mod-pill" style="cursor:pointer;display:flex;align-items:center;gap:7px;padding:7px 14px;border-radius:980px;border:1.5px solid var(--mid-gray);background:var(--white);font-size:13px;font-weight:500;color:var(--text-secondary);transition:all .2s;"><span>03</span><span>Analyse Macro</span></div>
+            <div onclick="loadQuiz('quiz/quiz04.html',this)" class="mod-pill" style="cursor:pointer;display:flex;align-items:center;gap:7px;padding:7px 14px;border-radius:980px;border:1.5px solid var(--mid-gray);background:var(--white);font-size:13px;font-weight:500;color:var(--text-secondary);transition:all .2s;"><span>04</span><span>Analyse des Actifs</span></div>
+            <div onclick="loadQuiz('quiz/quiz_ultime.html',this)" class="mod-pill" style="cursor:pointer;display:flex;align-items:center;gap:7px;padding:7px 14px;border-radius:980px;border:1.5px solid var(--accent);background:linear-gradient(135deg,rgba(0,113,227,0.08),rgba(52,199,89,0.08));font-size:13px;font-weight:600;color:var(--accent);transition:all .2s;">&#9889;<span>Quiz Ultime</span></div>
           </div>
-          <div class="col">
-            <div class="card">
-              <div class="card-title" style="margin-bottom:12px;">Modules disponibles</div>
-              <div class="mod-item" onclick="loadQuiz('quiz/quiz01.html',this)" style="cursor:pointer;background:var(--accent-light);"><div class="mod-num cur">01</div><div style="flex:1;"><div class="mod-title">Macro Trading</div><div class="mod-meta">4 questions</div></div><span class="mod-badge bd-done">74%</span></div>
-              <div class="mod-item" onclick="loadQuiz('quiz/quiz02.html',this)" style="cursor:pointer;"><div class="mod-num">02</div><div style="flex:1;"><div class="mod-title">Marchés Financiers</div><div class="mod-meta">4 questions</div></div><span class="mod-badge bd-done">88%</span></div>
-              <div class="mod-item" onclick="loadQuiz('quiz/quiz03.html',this)" style="cursor:pointer;"><div class="mod-num">03</div><div style="flex:1;"><div class="mod-title">Analyse Macro</div><div class="mod-meta">4 questions</div></div><span class="mod-badge bd-done">92%</span></div>
-              <div class="mod-item" onclick="loadQuiz('quiz/quiz04.html',this)" style="cursor:pointer;"><div class="mod-num">04</div><div style="flex:1;"><div class="mod-title">Analyse des Actifs</div><div class="mod-meta">4 questions</div></div><span class="mod-badge bd-wip">Nouveau</span></div>
-              <div class="mod-item" onclick="loadQuiz('quiz/quiz_ultime.html',this)" style="cursor:pointer;border-top:2px solid var(--mid-gray);margin-top:4px;padding-top:14px;"><div class="mod-num" style="background:linear-gradient(135deg,#0071e3,#34c759);color:#fff;">&#9889;</div><div style="flex:1;"><div class="mod-title" style="color:var(--accent);font-weight:600;">Quiz Ultime</div><div class="mod-meta">16 questions &middot; Tous les modules</div></div><span class="mod-badge" style="background:rgba(0,113,227,0.08);color:var(--accent);">All-in</span></div>
-            </div>
+        </div>
+        <!-- Quiz pleine largeur -->
+        <div class="card" style="flex:1;display:flex;flex-direction:column;min-height:360px;">
+          <div id="quiz-container" style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:320px;gap:10px;color:var(--text-tertiary);font-size:14px;font-weight:300;">
+            <div style="font-size:32px;">&#128203;</div>
+            <div>Sélectionne un module pour commencer</div>
+          </div>
+        </div>
             <div class="card">
               <div class="card-title" style="margin-bottom:12px;">Tes scores</div>
               <div id="revision-scores" style="display:flex;flex-direction:column;gap:12px;">
@@ -857,8 +858,18 @@ async function logout() {
 
 // ── Quiz ──
 async function loadQuiz(url, clickedItem) {
-  document.querySelectorAll('.mod-item').forEach(el => el.style.background = '');
-  if (clickedItem) clickedItem.style.background = 'var(--accent-light)';
+  document.querySelectorAll('.mod-pill').forEach(function(el) {
+    el.style.border = '1.5px solid var(--mid-gray)';
+    el.style.background = 'var(--white)';
+    el.style.color = 'var(--text-secondary)';
+    el.style.fontWeight = '500';
+  });
+  if (clickedItem) {
+    clickedItem.style.border = '1.5px solid var(--accent)';
+    clickedItem.style.background = 'var(--accent-light)';
+    clickedItem.style.color = 'var(--accent)';
+    clickedItem.style.fontWeight = '600';
+  }
   const container = document.getElementById('quiz-container');
   if (!container) return;
   container.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;min-height:280px;color:var(--text-tertiary);font-size:14px;">Chargement...</div>';
