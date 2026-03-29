@@ -7,21 +7,26 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Inter', -apple-system, sans-serif; font-size: 15px; line-height: 1.5; color: #1d1d1f; background: transparent; height: 100%; }
 #quiz-wrap { display: flex; flex-direction: column; height: 100%; }
-.quiz-opts { flex: 1; display: flex; flex-direction: column; gap: 9px; margin-bottom: 20px; justify-content: center; }
-.quiz-tag { font-size: 11px; font-weight: 600; color: #0071e3; background: rgba(0,113,227,0.09); padding: 3px 10px; border-radius: 980px; display:inline-block; margin-bottom:16px; }
+.quiz-tag { font-size: 11px; font-weight: 600; color: #0071e3; background: rgba(0,113,227,0.09); padding: 3px 10px; border-radius: 980px; display:inline-block; flex-shrink:0; }
 .progress-bar-wrap { flex:1; margin-left:14px; }
 .progress-bar-track { height:6px; background:#e8e8ed; border-radius:980px; overflow:hidden; margin-bottom:4px; }
 .progress-bar-fill { height:100%; background:#0071e3; border-radius:980px; transition:width .3s; }
 .progress-label { font-size:11px; color:#aeaeb2; text-align:right; }
-.quiz-q { font-size: 17px; font-weight: 500; line-height: 1.55; margin-bottom: 20px; }
-.quiz-opts { display: flex; flex-direction: column; gap: 9px; margin-bottom: 20px; }
-.quiz-opt { padding: 13px 18px; border-radius: 12px; border: 1.5px solid #e8e8ed; font-size: 14px; cursor: pointer; background: #fff; text-align: left; font-family: inherit; width: 100%; transition: all .15s; }
+.quiz-q { font-size: 16px; font-weight: 500; line-height: 1.55; margin-bottom: 16px; }
+.quiz-opts { display: flex; flex-direction: column; gap: 9px; margin-bottom: 14px; }
+.quiz-opt { padding: 12px 16px; border-radius: 12px; border: 1.5px solid #e8e8ed; font-size: 14px; cursor: pointer; background: #fff; text-align: left; font-family: inherit; width: 100%; transition: all .15s; }
 .quiz-opt:hover:not(:disabled):not(.selected) { border-color: #0071e3; background: rgba(0,113,227,0.06); color: #0071e3; }
 .quiz-opt.selected { border-color: #0071e3; background: rgba(0,113,227,0.09); color: #0071e3; font-weight: 500; }
 .quiz-opt.correct { border-color: #34c759; background: rgba(52,199,89,0.08); color: #2aa34a; font-weight: 500; }
 .quiz-opt.wrong { border-color: #ff3b30; background: rgba(255,59,48,0.07); color: #d93025; }
 .quiz-opt:disabled { cursor: default; }
-.quiz-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.explanation-box { display: none; margin-bottom: 14px; border-radius: 12px; border: 1.5px solid #e8e8ed; overflow: hidden; }
+.explanation-box.show { display: block; }
+.expl-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: #f5f5f7; border-bottom: 1px solid #e8e8ed; }
+.expl-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; color: #6e6e73; }
+.expl-source { font-size: 11px; font-weight: 500; color: #0071e3; background: rgba(0,113,227,0.08); padding: 2px 8px; border-radius: 980px; }
+.expl-text { padding: 12px 14px; font-size: 13px; color: #3a3a3c; line-height: 1.65; font-weight: 300; }
+.quiz-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; flex-shrink: 0; padding-top: 4px; }
 .btn-validate { font-size: 14px; font-weight: 600; background: #0071e3; color: #fff; padding: 10px 22px; border-radius: 980px; border: none; cursor: pointer; font-family: inherit; opacity: 0.4; transition: opacity .2s; }
 .btn-validate.active { opacity: 1; }
 .btn-next { font-size: 14px; font-weight: 500; background: #1d1d1f; color: #fff; padding: 10px 22px; border-radius: 980px; border: none; cursor: pointer; font-family: inherit; display: none; }
@@ -38,6 +43,13 @@ body { font-family: 'Inter', -apple-system, sans-serif; font-size: 15px; line-he
   <div style="display:flex;align-items:center;margin-bottom:16px;"><span class="quiz-tag" style="margin-bottom:0;flex-shrink:0;">Module 03 - Analyse Macro</span><div class="progress-bar-wrap"><div class="progress-bar-track"><div class="progress-bar-fill" id="prog-fill" style="width:0%"></div></div><div class="progress-label"><span id="qnum">1</span>/4</div></div></div>
   <div class="quiz-q" id="qtext"></div>
   <div class="quiz-opts" id="qopts"></div>
+  <div class="explanation-box" id="explanation-box">
+    <div class="expl-header">
+      <span class="expl-label">Explication</span>
+      <span class="expl-source" id="expl-source"></span>
+    </div>
+    <div class="expl-text" id="expl-text"></div>
+  </div>
   <div class="quiz-actions">
     <button class="btn-validate" id="btn-validate" onclick="validateAnswer()">Valider</button>
     <button class="btn-next" id="btn-next" onclick="nextQuestion()">Question suivante &rarr;</button>
@@ -47,8 +59,24 @@ body { font-family: 'Inter', -apple-system, sans-serif; font-size: 15px; line-he
 </div>
 <div id="result-wrap" class="result-wrap" style="display:none;"></div>
 <script>
-var QS = [{"q": "Lequel de ces indicateurs est considere comme avance (leading indicator) ?", "opts": [{"t": "Le taux de chomage", "ok": false}, {"t": "Le PIB trimestriel", "ok": false}, {"t": "Le PMI manufacturier", "ok": true}, {"t": "Les ventes au detail", "ok": false}]}, {"q": "Qu'est-ce que le QE (Quantitative Easing) ?", "opts": [{"t": "Une hausse des taux directeurs pour freiner l'inflation", "ok": false}, {"t": "Un achat d'actifs par la banque centrale pour injecter des liquidites", "ok": true}, {"t": "Une reduction de la masse monetaire", "ok": false}, {"t": "Un accord commercial entre pays developpes", "ok": false}]}, {"q": "Qu'est-ce que l'inflation par les couts ?", "opts": [{"t": "Une hausse des prix causee par une demande excessive", "ok": false}, {"t": "Une hausse des prix liee a une creation monetaire excessive", "ok": false}, {"t": "Une hausse des prix causee par un choc sur l'offre", "ok": true}, {"t": "Une baisse generale des prix liee a la deflation", "ok": false}]}, {"q": "Selon Ricardo, chaque pays se specialise dans ce qu'il produit...", "opts": [{"t": "Le mieux en valeur absolue", "ok": false}, {"t": "Relativement mieux que les autres", "ok": true}, {"t": "A moindre cout en main d'oeuvre", "ok": false}, {"t": "Avec les technologies les plus avancees", "ok": false}]}];
+var QS_BASE = [{"q": "Lequel de ces indicateurs est considere comme avance (leading indicator) ?", "expl": "Le PMI est un indicateur avance car il mesure les intentions d'achat avant que l'activite soit realisee. Le chomage et le PIB sont des indicateurs retardes.", "src": "Module III.b - Indicateurs economiques", "opts": [{"t": "Le taux de chomage", "ok": false}, {"t": "Le PIB trimestriel", "ok": false}, {"t": "Le PMI manufacturier", "ok": true}, {"t": "Les ventes au detail", "ok": false}]}, {"q": "Qu'est-ce que le QE (Quantitative Easing) ?", "expl": "Le QE est un outil non conventionnel : la banque centrale achete des actifs pour injecter des liquidites et abaisser les taux longs quand les taux directeurs sont proches de zero.", "src": "Module III.c - Politique monetaire", "opts": [{"t": "Une hausse des taux directeurs pour freiner l'inflation", "ok": false}, {"t": "Un achat d'actifs par la banque centrale pour injecter des liquidites", "ok": true}, {"t": "Une reduction de la masse monetaire", "ok": false}, {"t": "Un accord commercial entre pays developpes", "ok": false}]}, {"q": "Qu'est-ce que l'inflation par les couts ?", "expl": "L'inflation cost-push est causee par un choc d'offre (hausse du petrole, penurie) qui augmente les couts de production. Elle differe de l'inflation par la demande (demand-pull).", "src": "Module III.a - Theorie de l'inflation", "opts": [{"t": "Une hausse des prix causee par une demande excessive", "ok": false}, {"t": "Une hausse des prix liee a une creation monetaire excessive", "ok": false}, {"t": "Une hausse des prix causee par un choc sur l'offre", "ok": true}, {"t": "Une baisse generale des prix liee a la deflation", "ok": false}]}, {"q": "Selon Ricardo, chaque pays se specialise dans ce qu'il produit...", "expl": "L'avantage comparatif dit qu'un pays doit se specialiser dans ce qu'il produit relativement mieux, meme s'il est moins efficace en absolu. C'est le fondement du libre-echange.", "src": "Module III.d - Commerce international", "opts": [{"t": "Le mieux en valeur absolue", "ok": false}, {"t": "Relativement mieux que les autres", "ok": true}, {"t": "A moindre cout en main d'oeuvre", "ok": false}, {"t": "Avec les technologies les plus avancees", "ok": false}]}];
+var QS = [];
 var qIdx = 0, qScore = 0, qAnswered = false, qSelected = -1;
+
+function shuffle(arr) {
+  var a = arr.slice();
+  for (var i = a.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+  }
+  return a;
+}
+
+function startQuiz() {
+  QS = shuffle(QS_BASE);
+  qIdx = 0; qScore = 0; qAnswered = false; qSelected = -1;
+  renderQ();
+}
 
 function renderQ() {
   if (qIdx >= QS.length) { showResult(); return; }
@@ -63,15 +91,14 @@ function renderQ() {
   document.getElementById('btn-next').style.display = 'none';
   document.getElementById('btn-validate').style.display = '';
   document.getElementById('btn-skip').style.display = '';
+  document.getElementById('explanation-box').className = 'explanation-box';
   var wrap = document.getElementById('qopts');
   wrap.innerHTML = '';
   for (var i = 0; i < q.opts.length; i++) {
     var b = document.createElement('button');
     b.className = 'quiz-opt';
     b.textContent = q.opts[i].t;
-    (function(btn, idx) {
-      btn.onclick = function() { selectOpt(btn, idx); };
-    })(b, i);
+    (function(btn, idx) { btn.onclick = function() { selectOpt(btn, idx); }; })(b, i);
     wrap.appendChild(b);
   }
 }
@@ -88,15 +115,22 @@ function selectOpt(btn, idx) {
 function validateAnswer() {
   if (qAnswered || qSelected < 0) return;
   qAnswered = true;
-  var ok = QS[qIdx].opts[qSelected].ok;
+  var q = QS[qIdx];
+  var ok = q.opts[qSelected].ok;
   var opts = document.querySelectorAll('.quiz-opt');
   for (var i = 0; i < opts.length; i++) {
     opts[i].disabled = true;
     opts[i].classList.remove('selected');
-    if (QS[qIdx].opts[i].ok) opts[i].classList.add('correct');
+    if (q.opts[i].ok) opts[i].classList.add('correct');
   }
   if (!ok) { opts[qSelected].classList.add('wrong'); }
   else { qScore++; }
+  if (q.expl) {
+    document.getElementById('expl-text').textContent = q.expl;
+    document.getElementById('expl-source').textContent = q.src || '';
+    document.getElementById('expl-source').style.display = q.src ? '' : 'none';
+    document.getElementById('explanation-box').className = 'explanation-box show';
+  }
   document.getElementById('btn-validate').style.display = 'none';
   document.getElementById('btn-skip').style.display = 'none';
   document.getElementById('btn-next').style.display = 'inline-block';
@@ -117,16 +151,18 @@ function showResult() {
     + '<div class="result-title">' + qScore + ' / ' + QS.length + ' - ' + pct + '%</div>'
     + '<div class="result-sub">' + msg + '</div>'
     + '<button class="btn-retry" onclick="restartQuiz()">Recommencer</button>';
+  if (typeof window.saveQuizScore === 'function') {
+    window.saveQuizScore('Analyse Macro', qScore, QS.length, pct);
+  }
 }
 
 function restartQuiz() {
-  qIdx = 0; qScore = 0; qAnswered = false; qSelected = -1;
-  document.getElementById('quiz-wrap').style.display = 'block';
+  document.getElementById('quiz-wrap').style.display = 'flex';
   document.getElementById('result-wrap').style.display = 'none';
-  renderQ();
+  startQuiz();
 }
 
-renderQ();
+startQuiz();
 </script>
 </body>
 </html>
