@@ -662,11 +662,9 @@ body {
           </div>
         </div>
             <div class="card">
-              <div class="card-title" style="margin-bottom:12px;">Tes scores</div>
-              <div id="revision-scores" style="display:flex;flex-direction:column;gap:12px;">
-                <div class="prog-wrap"><div class="prog-row"><span>Module 01</span><span>74%</span></div><div class="prog-track"><div class="prog-fill o" style="width:74%"></div></div></div>
-                <div class="prog-wrap"><div class="prog-row"><span>Module 02</span><span>88%</span></div><div class="prog-track"><div class="prog-fill g" style="width:88%"></div></div></div>
-                <div class="prog-wrap"><div class="prog-row"><span>Module 03</span><span>92%</span></div><div class="prog-track"><div class="prog-fill g" style="width:92%"></div></div></div>
+              <div class="card-title" style="margin-bottom:12px;">Derniers scores</div>
+              <div id="revision-scores" style="display:flex;flex-direction:column;gap:10px;">
+                <div style="font-size:13px;color:var(--text-tertiary);font-weight:300;">Aucun quiz complété.</div>
               </div>
             </div>
           </div>
@@ -855,6 +853,47 @@ async function logout() {
   await db.auth.signOut();
   window.location.href = 'login.html';
 }
+
+// ── Quiz scores ──
+async function saveQuizScore(module, score, total, pct) {
+  if (!currentUser) return;
+  await db.from('quiz_scores').insert({
+    user_id: currentUser.id,
+    module: module,
+    score: score,
+    total: total,
+    pct: pct
+  });
+  loadQuizScores();
+}
+
+async function loadQuizScores() {
+  if (!currentUser) return;
+  const container = document.getElementById('revision-scores');
+  if (!container) return;
+  const { data, error } = await db.from('quiz_scores')
+    .select('module, score, total, pct, created_at')
+    .eq('user_id', currentUser.id)
+    .order('created_at', { ascending: false })
+    .limit(5);
+  if (error || !data || data.length === 0) {
+    container.innerHTML = '<div style="font-size:13px;color:var(--text-tertiary);font-weight:300;">Aucun quiz complété.</div>';
+    return;
+  }
+  container.innerHTML = '';
+  data.forEach(function(row) {
+    var color = row.pct >= 80 ? 'g' : row.pct >= 50 ? 'o' : '';
+    var date = new Date(row.created_at).toLocaleDateString('fr-FR', { day:'numeric', month:'short' });
+    var div = document.createElement('div');
+    div.className = 'prog-wrap';
+    div.innerHTML = '<div class="prog-row"><span style="font-size:13px;">' + row.module + '</span><span>' + row.pct + '%</span></div>'
+      + '<div class="prog-track"><div class="prog-fill ' + color + '" style="width:' + row.pct + '%"></div></div>'
+      + '<div style="font-size:11px;color:var(--text-tertiary);margin-top:2px;">' + row.score + '/' + row.total + ' · ' + date + '</div>';
+    container.appendChild(div);
+  });
+}
+
+window.saveQuizScore = saveQuizScore;
 
 // ── Quiz ──
 async function loadQuiz(url, clickedItem) {
@@ -1372,6 +1411,7 @@ window.addEventListener('load', async () => {
   if (elSettings) elSettings.textContent = name;
 
   await loadAccessStatus();
+  loadQuizScores();
   if (hasFormationAccess) {
     const progress = await loadProgressFromDB();
     // Vérifier cohérence : si Supabase est vide mais localStorage a des données → reset
