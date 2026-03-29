@@ -5,25 +5,27 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Inter', -apple-system, sans-serif; font-size: 15px; line-height: 1.5; color: #1d1d1f; background: transparent; padding: 0; }
-.quiz-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
-.quiz-tag { font-size: 11px; font-weight: 600; color: #0071e3; background: rgba(0,113,227,0.09); padding: 3px 10px; border-radius: 980px; }
-.quiz-counter { font-size: 12px; color: #aeaeb2; }
-.quiz-q { font-size: 17px; font-weight: 500; letter-spacing: -.01em; line-height: 1.55; margin-bottom: 20px; }
+body { font-family: 'Inter', -apple-system, sans-serif; font-size: 15px; line-height: 1.5; color: #1d1d1f; background: transparent; }
+.quiz-tag { font-size: 11px; font-weight: 600; color: #0071e3; background: rgba(0,113,227,0.09); padding: 3px 10px; border-radius: 980px; display:inline-block; margin-bottom:16px; }
+.progress-bar-wrap { flex:1; margin-left:14px; }
+.progress-bar-track { height:6px; background:#e8e8ed; border-radius:980px; overflow:hidden; margin-bottom:4px; }
+.progress-bar-fill { height:100%; background:#0071e3; border-radius:980px; transition:width .3s; }
+.progress-label { font-size:11px; color:#aeaeb2; text-align:right; }
+.quiz-q { font-size: 17px; font-weight: 500; line-height: 1.55; margin-bottom: 20px; }
 .quiz-opts { display: flex; flex-direction: column; gap: 9px; margin-bottom: 20px; }
-.quiz-opt { padding: 13px 18px; border-radius: 12px; border: 1.5px solid #e8e8ed; font-size: 14px; cursor: pointer; transition: all .15s; background: #fff; text-align: left; font-family: inherit; width: 100%; }
-.quiz-opt:hover:not(:disabled) { border-color: #0071e3; background: rgba(0,113,227,0.06); color: #0071e3; }
+.quiz-opt { padding: 13px 18px; border-radius: 12px; border: 1.5px solid #e8e8ed; font-size: 14px; cursor: pointer; background: #fff; text-align: left; font-family: inherit; width: 100%; transition: all .15s; }
+.quiz-opt:hover:not(:disabled):not(.selected) { border-color: #0071e3; background: rgba(0,113,227,0.06); color: #0071e3; }
+.quiz-opt.selected { border-color: #0071e3; background: rgba(0,113,227,0.09); color: #0071e3; font-weight: 500; }
 .quiz-opt.correct { border-color: #34c759; background: rgba(52,199,89,0.08); color: #2aa34a; font-weight: 500; }
 .quiz-opt.wrong { border-color: #ff3b30; background: rgba(255,59,48,0.07); color: #d93025; }
 .quiz-opt:disabled { cursor: default; }
 .quiz-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-.btn-next { font-size: 14px; font-weight: 500; background: #0071e3; color: #fff; padding: 10px 22px; border-radius: 980px; border: none; cursor: pointer; font-family: inherit; transition: background .15s; }
-.btn-next:hover { background: #0077ed; }
-.btn-skip { font-size: 14px; font-weight: 400; color: #6e6e73; padding: 10px 16px; border-radius: 980px; border: none; cursor: pointer; background: #f5f5f7; font-family: inherit; }
-.btn-skip:hover { background: #e8e8ed; }
-.quiz-score { font-size: 12px; color: #aeaeb2; margin-left: auto; }
-.result-panel { text-align: center; padding: 24px 0; }
-.result-ico { font-size: 48px; margin-bottom: 12px; }
+.btn-validate { font-size: 14px; font-weight: 600; background: #0071e3; color: #fff; padding: 10px 22px; border-radius: 980px; border: none; cursor: pointer; font-family: inherit; opacity: 0.4; transition: opacity .2s; }
+.btn-validate.active { opacity: 1; }
+.btn-next { font-size: 14px; font-weight: 500; background: #1d1d1f; color: #fff; padding: 10px 22px; border-radius: 980px; border: none; cursor: pointer; font-family: inherit; display: none; }
+.btn-skip { font-size: 14px; color: #6e6e73; padding: 10px 16px; border-radius: 980px; border: none; cursor: pointer; background: #f5f5f7; font-family: inherit; }
+.qscore { font-size: 12px; color: #aeaeb2; margin-left: auto; }
+.result-wrap { text-align: center; padding: 24px 0; }
 .result-title { font-size: 20px; font-weight: 600; margin-bottom: 8px; }
 .result-sub { font-size: 14px; color: #6e6e73; font-weight: 300; margin-bottom: 20px; }
 .btn-retry { font-size: 14px; font-weight: 500; background: #0071e3; color: #fff; padding: 10px 24px; border-radius: 980px; border: none; cursor: pointer; font-family: inherit; }
@@ -31,77 +33,98 @@ body { font-family: 'Inter', -apple-system, sans-serif; font-size: 15px; line-he
 </head>
 <body>
 <div id="quiz-wrap">
-  <div class="quiz-header">
-    <span class="quiz-tag">Module 04 · Analyse des Actifs</span>
-    <span class="quiz-counter">Q <span id="qnum">1</span>/4</span>
-  </div>
+  <div style="display:flex;align-items:center;margin-bottom:16px;"><span class="quiz-tag" style="margin-bottom:0;flex-shrink:0;">Module 04 - Analyse des Actifs</span><div class="progress-bar-wrap"><div class="progress-bar-track"><div class="progress-bar-fill" id="prog-fill" style="width:0%"></div></div><div class="progress-label"><span id="qnum">1</span>/4</div></div></div>
   <div class="quiz-q" id="qtext"></div>
   <div class="quiz-opts" id="qopts"></div>
   <div class="quiz-actions">
-    <button class="btn-next" id="btn-next" onclick="next()">Question suivante</button>
-    <button class="btn-skip" onclick="skip()">Passer</button>
-    <span class="quiz-score" id="qscore"></span>
+    <button class="btn-validate" id="btn-validate" onclick="validateAnswer()">Valider</button>
+    <button class="btn-next" id="btn-next" onclick="nextQuestion()">Question suivante &rarr;</button>
+    <button class="btn-skip" id="btn-skip" onclick="skipQuestion()">Passer</button>
+    <span class="qscore" id="qscore"></span>
   </div>
 </div>
-<div id="result-panel" class="result-panel" style="display:none;"></div>
-
+<div id="result-wrap" class="result-wrap" style="display:none;"></div>
 <script>
-const QS = [{"q": "En phase de récession économique, quels actifs surperforment généralement ?", "opts": [{"t": "Les actions de croissance et les matières premières industrielles", "ok": false}, {"t": "Les obligations souveraines, l"or et les secteurs défensifs", "ok": true}, {"t": "L"immobilier commercial et les SPAC", "ok": false}, {"t": "Les cryptomonnaies et les actifs à haut rendement", "ok": false}]}, {"q": "Qu"est-ce qu"un spread de crédit ?", "opts": [{"t": "L"écart entre le taux directeur et le taux d"inflation", "ok": false}, {"t": "La différence de rendement entre une obligation d"entreprise et une obligation souveraine", "ok": true}, {"t": "La commission prélevée par un courtier sur une transaction", "ok": false}, {"t": "L"écart entre le prix d"achat et de vente d"un actif", "ok": false}]}, {"q": "Quel est l"effet d"une hausse des taux d"intérêt sur les obligations existantes ?", "opts": [{"t": "Leur valeur augmente car elles deviennent plus attractives", "ok": false}, {"t": "Leur valeur reste stable, seul le coupon change", "ok": false}, {"t": "Leur valeur baisse car leur coupon devient inférieur aux nouvelles émissions", "ok": true}, {"t": "Leur valeur double car les investisseurs fuient les actions", "ok": false}]}, {"q": "Qu"est-ce que la destruction créatrice selon Schumpeter ?", "opts": [{"t": "La destruction physique d"usines lors de crises économiques", "ok": false}, {"t": "Le processus par lequel les innovations détruisent les structures économiques existantes pour en créer de nouvelles", "ok": true}, {"t": "La faillite des entreprises non rentables en période de récession", "ok": false}, {"t": "La dévaluation monétaire qui détruit l"épargne des ménages", "ok": false}]}];
-let idx = 0, score = 0, answered = false;
+var QS = [{"q": "En phase de recession, quels actifs surperforment generalement ?", "opts": [{"t": "Actions de croissance et matieres premieres industrielles", "ok": false}, {"t": "Obligations souveraines, or et secteurs defensifs", "ok": true}, {"t": "Immobilier commercial et SPAC", "ok": false}, {"t": "Cryptomonnaies et actifs a haut rendement", "ok": false}]}, {"q": "Qu'est-ce qu'un spread de credit ?", "opts": [{"t": "L'ecart entre taux directeur et taux d'inflation", "ok": false}, {"t": "La difference de rendement entre une obligation d'entreprise et une obligation souveraine", "ok": true}, {"t": "La commission prelevee par un courtier", "ok": false}, {"t": "L'ecart entre prix d'achat et de vente d'un actif", "ok": false}]}, {"q": "Quel est l'effet d'une hausse des taux sur les obligations existantes ?", "opts": [{"t": "Leur valeur augmente", "ok": false}, {"t": "Leur valeur reste stable", "ok": false}, {"t": "Leur valeur baisse car leur coupon devient inferieur aux nouvelles emissions", "ok": true}, {"t": "Leur valeur double", "ok": false}]}, {"q": "Que decrit la destruction creatrice de Schumpeter ?", "opts": [{"t": "La destruction physique d'usines lors de crises", "ok": false}, {"t": "Les innovations detruisent les structures existantes pour en creer de nouvelles", "ok": true}, {"t": "La faillite des entreprises non rentables", "ok": false}, {"t": "La devaluation monetaire qui detruit l'epargne", "ok": false}]}];
+var qIdx = 0, qScore = 0, qAnswered = false, qSelected = -1;
 
-function render() {
-  if (idx >= QS.length) { showResult(); return; }
-  const q = QS[idx];
-  answered = false;
-  document.getElementById('qnum').textContent = idx + 1;
+function renderQ() {
+  if (qIdx >= QS.length) { showResult(); return; }
+  var q = QS[qIdx];
+  qAnswered = false;
+  qSelected = -1;
+  document.getElementById('qnum').textContent = qIdx + 1;
+  document.getElementById('prog-fill').style.width = Math.round((qIdx / QS.length) * 100) + '%';
   document.getElementById('qtext').textContent = q.q;
-  document.getElementById('qscore').textContent = idx > 0 ? 'Score : ' + score + '/' + idx : '';
-  const wrap = document.getElementById('qopts');
+  document.getElementById('qscore').textContent = qIdx > 0 ? 'Score : ' + qScore + '/' + qIdx : '';
+  document.getElementById('btn-validate').className = 'btn-validate';
+  document.getElementById('btn-next').style.display = 'none';
+  document.getElementById('btn-validate').style.display = '';
+  document.getElementById('btn-skip').style.display = '';
+  var wrap = document.getElementById('qopts');
   wrap.innerHTML = '';
-  q.opts.forEach(o => {
-    const b = document.createElement('button');
+  for (var i = 0; i < q.opts.length; i++) {
+    var b = document.createElement('button');
     b.className = 'quiz-opt';
-    b.textContent = o.t;
-    b.onclick = () => answer(b, o.ok);
+    b.textContent = q.opts[i].t;
+    (function(btn, idx) {
+      btn.onclick = function() { selectOpt(btn, idx); };
+    })(b, i);
     wrap.appendChild(b);
-  });
-}
-
-function answer(btn, ok) {
-  if (answered) return;
-  answered = true;
-  if (ok) { btn.classList.add('correct'); score++; }
-  else {
-    btn.classList.add('wrong');
-    document.querySelectorAll('.quiz-opt').forEach((b, i) => { if (QS[idx].opts[i].ok) b.classList.add('correct'); });
   }
-  document.querySelectorAll('.quiz-opt').forEach(b => b.disabled = true);
 }
 
-function next() { idx++; render(); }
-function skip() { idx++; render(); }
+function selectOpt(btn, idx) {
+  if (qAnswered) return;
+  qSelected = idx;
+  var opts = document.querySelectorAll('.quiz-opt');
+  for (var i = 0; i < opts.length; i++) { opts[i].classList.remove('selected'); }
+  btn.classList.add('selected');
+  document.getElementById('btn-validate').className = 'btn-validate active';
+}
+
+function validateAnswer() {
+  if (qAnswered || qSelected < 0) return;
+  qAnswered = true;
+  var ok = QS[qIdx].opts[qSelected].ok;
+  var opts = document.querySelectorAll('.quiz-opt');
+  for (var i = 0; i < opts.length; i++) {
+    opts[i].disabled = true;
+    opts[i].classList.remove('selected');
+    if (QS[qIdx].opts[i].ok) opts[i].classList.add('correct');
+  }
+  if (!ok) { opts[qSelected].classList.add('wrong'); }
+  else { qScore++; }
+  document.getElementById('btn-validate').style.display = 'none';
+  document.getElementById('btn-skip').style.display = 'none';
+  document.getElementById('btn-next').style.display = 'inline-block';
+  document.getElementById('qscore').textContent = 'Score : ' + qScore + '/' + (qIdx + 1);
+}
+
+function nextQuestion() { qIdx++; renderQ(); }
+function skipQuestion() { qIdx++; renderQ(); }
 
 function showResult() {
   document.getElementById('quiz-wrap').style.display = 'none';
-  const pct = Math.round(score / QS.length * 100);
-  const ico = pct >= 80 ? '🏆' : pct >= 50 ? '👍' : '📚';
-  const msg = pct >= 80 ? 'Excellent travail !' : pct >= 50 ? 'Bon résultat !' : 'Continue à réviser !';
-  document.getElementById('result-panel').style.display = 'block';
-  document.getElementById('result-panel').innerHTML =
-    '<div class="result-ico">' + ico + '</div>' +
-    '<div class="result-title">' + score + ' / ' + QS.length + ' — ' + pct + '%</div>' +
-    '<div class="result-sub">' + msg + '</div>' +
-    '<button class="btn-retry" onclick="restart()">Recommencer</button>';
+  var pct = Math.round(qScore / QS.length * 100);
+  var ico = pct >= 80 ? '&#127942;' : pct >= 50 ? '&#128077;' : '&#128218;';
+  var msg = pct >= 80 ? 'Excellent travail !' : pct >= 50 ? 'Bon resultat !' : 'Continue a reviser !';
+  var panel = document.getElementById('result-wrap');
+  panel.style.display = 'block';
+  panel.innerHTML = '<div style="font-size:48px;margin-bottom:12px;">' + ico + '</div>'
+    + '<div class="result-title">' + qScore + ' / ' + QS.length + ' - ' + pct + '%</div>'
+    + '<div class="result-sub">' + msg + '</div>'
+    + '<button class="btn-retry" onclick="restartQuiz()">Recommencer</button>';
 }
 
-function restart() {
-  idx = 0; score = 0; answered = false;
+function restartQuiz() {
+  qIdx = 0; qScore = 0; qAnswered = false; qSelected = -1;
   document.getElementById('quiz-wrap').style.display = 'block';
-  document.getElementById('result-panel').style.display = 'none';
-  render();
+  document.getElementById('result-wrap').style.display = 'none';
+  renderQ();
 }
 
-render();
+renderQ();
 </script>
 </body>
 </html>
