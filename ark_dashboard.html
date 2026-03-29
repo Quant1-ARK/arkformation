@@ -891,6 +891,14 @@ async function loadQuizScores() {
       + '<div style="font-size:11px;color:var(--text-tertiary);margin-top:2px;">' + row.score + '/' + row.total + ' · ' + date + '</div>';
     container.appendChild(div);
   });
+  // Mettre à jour l'anneau score moyen
+  var total_pct = 0;
+  data.forEach(function(row) { total_pct += row.pct; });
+  var avg = Math.round(total_pct / data.length);
+  var ringScore = document.getElementById('ring-circle-score');
+  if (ringScore) ringScore.setAttribute('stroke-dashoffset', Math.round(201 - (avg / 100) * 201));
+  var ringPctScore = document.getElementById('ring-pct-score');
+  if (ringPctScore) ringPctScore.textContent = avg + '%';
 }
 
 window.saveQuizScore = saveQuizScore;
