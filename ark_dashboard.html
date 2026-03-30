@@ -226,9 +226,9 @@ body {
 .prog-fill.o { background: var(--orange); }
 
 /* MODULE LIST */
-.mod-item { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--mid-gray); cursor: pointer; transition: opacity .15s; }
-.mod-item:last-child { border-bottom: none; }
-.mod-item:hover { opacity: .7; }
+.mod-item { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 10px; border-bottom: none; cursor: pointer; transition: background .15s; }
+
+.mod-item:hover { background: var(--light-gray); }
 .mod-num { width: 28px; height: 28px; border-radius: 8px; background: var(--light-gray); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--text-secondary); flex-shrink: 0; }
 .mod-num.done { background: rgba(52,199,89,0.12); color: var(--green); }
 .mod-num.cur  { background: var(--accent-light); color: var(--accent); }
