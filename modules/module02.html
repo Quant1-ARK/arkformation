@@ -6,330 +6,175 @@
 <title>Module 02 — Économie & Histoire Financière</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #f5f5f5;
-    --surface: #ffffff;
-    --border: rgba(19,18,18,.12);
-    --text-1: #0a0a0a;
-    --text-2: #59595e;
-    --text-3: #8a8a8e;
-    --accent: #0071e3;
-    --accent-soft: rgba(0,113,227,.08);
-    --accent-mid: rgba(0,113,227,.15);
-    --green: #30d158;
-    --yellow: #ffd60a;
-    --red: #ff453a;
-  }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body {
-    background: var(--bg);
-    color: var(--text-1);
-    font-family: 'DM Sans', -apple-system, sans-serif;
-    font-size: 15px;
-    line-height: 1.75;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  /* ── LAYOUT ── */
+  :root{--bg:#f5f5f5;--surface:#fff;--border:rgba(19,18,18,.1);--text-1:#0a0a0a;--text-2:#3d3d3a;--text-3:#6b6b67;--accent:#0071e3;--accent-soft:rgba(0,113,227,.07)}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text-1);font-family:'DM Sans',-apple-system,sans-serif;font-size:15px;line-height:1.75;-webkit-font-smoothing:antialiased}
   .page{max-width:100%;margin:0 auto;padding:48px 48px 120px}
-
-  /* ── HEADER ── */
-  .mod-header {
-    margin-bottom: 56px;
-    padding-bottom: 40px;
-    border-bottom: 1px solid var(--border);
-  }
-  .mod-kicker {
-    font-size: 11px; font-weight: 600; letter-spacing: .12em;
-    text-transform: uppercase; color: var(--accent); margin-bottom: 12px;
-  }
-  .mod-title {
-    font-family: 'DM Serif Display', Georgia, serif;
-    font-size: clamp(30px, 5vw, 46px);
-    line-height: 1.1; margin-bottom: 20px;
-  }
-  .mod-objective {
-    background: var(--accent-soft);
-    border-left: 3px solid var(--accent);
-    border-radius: 0 10px 10px 0;
-    padding: 16px 20px;
-    font-size: 14px; color: var(--text-2); line-height: 1.65;
-    font-style: italic;
-  }
-
-  /* ── TOC ── */
-  .toc {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 24px 28px;
-    margin-bottom: 56px;
-  }
-  .toc-title {
-    font-size: 11px; font-weight: 600; letter-spacing: .1em;
-    text-transform: uppercase; color: var(--text-3); margin-bottom: 16px;
-  }
-  .toc-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
-  .toc-list li a {
-    display: flex; align-items: baseline; gap: 10px;
-    text-decoration: none; color: var(--text-2);
-    font-size: 13.5px; transition: color .15s;
-  }
-  .toc-list li a:hover { color: var(--accent); }
-  .toc-list li a .toc-letter {
-    font-size: 10px; font-weight: 700; color: var(--accent);
-    background: var(--accent-soft); border-radius: 4px;
-    padding: 1px 6px; flex-shrink: 0;
-  }
-
-  /* ── SECTIONS ── */
-  .section { margin-bottom: 72px; }
-  .section-label {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-size: 10px; font-weight: 700; letter-spacing: .12em;
-    text-transform: uppercase; color: var(--accent);
-    background: var(--accent-soft); border-radius: 6px;
-    padding: 4px 10px; margin-bottom: 20px;
-  }
-  .section-title {
-    font-family: 'DM Serif Display', Georgia, serif;
-    font-size: clamp(22px, 3.5vw, 30px);
-    line-height: 1.2; margin-bottom: 28px;
-  }
-  .section-intro {
-    font-size: 15px; color: var(--text-2); line-height: 1.75;
-    margin-bottom: 32px; padding-bottom: 28px;
-    border-bottom: 1px solid var(--border);
-  }
-
-  /* ── SUBSECTIONS ── */
-  .sub { margin-bottom: 48px; }
-  .sub-title {
-    font-family: 'DM Serif Display', Georgia, serif;
-    font-size: 20px; margin-bottom: 16px;
-    display: flex; align-items: center; gap: 10px;
-  }
-  .sub-title::before {
-    content: ''; display: block; width: 3px; height: 22px;
-    background: var(--accent); border-radius: 2px; flex-shrink: 0;
-  }
-  .sub p { color: var(--text-2); margin-bottom: 14px; }
-  .sub p:last-child { margin-bottom: 0; }
-  .sub strong { color: var(--text-1); }
-
-  /* ── CALLOUT ── */
-  .callout {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-left: 3px solid var(--yellow);
-    border-radius: 0 10px 10px 0;
-    padding: 14px 18px;
-    margin: 24px 0;
-    font-size: 13.5px; color: var(--text-2); font-style: italic;
-  }
-  .callout.blue { border-left-color: var(--accent); }
-  .callout.green { border-left-color: var(--green); }
-
-  /* ── TABLE ── */
-  .table-wrap { overflow-x: auto; margin: 24px 0 32px; border-radius: 12px; border: 1px solid var(--border); }
-  table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  thead tr { background: var(--accent-soft); }
-  thead th {
-    padding: 12px 14px; text-align: left;
-    font-size: 11px; font-weight: 700; letter-spacing: .05em;
-    color: var(--accent); white-space: nowrap;
-  }
-  tbody tr { border-top: 1px solid var(--border); }
-  tbody tr:hover { background: rgba(0,0,0,.02); }
-  tbody td { padding: 11px 14px; color: var(--text-2); vertical-align: top; line-height: 1.55; }
-  tbody td strong { color: var(--text-1); }
-
-  /* ── FIGURE ── */
-  .module-figure {
-    margin: 28px 0 36px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    overflow: hidden;
-    padding: 16px;
-  }
-  .module-figure svg {
-    width: 100%; display: block;
-  }
-  .fig-caption {
-    margin-top: 10px;
-    font-size: 12px; color: var(--text-3); font-style: italic;
-    text-align: center;
-  }
-
-  /* ── CRISIS CARDS ── */
-  .crisis-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 28px 0; }
-  @media(max-width:600px) { .crisis-grid { grid-template-columns: 1fr; } }
-  .crisis-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 18px;
-  }
-  .crisis-year {
-    font-size: 28px; font-weight: 700;
-    font-family: 'DM Serif Display', Georgia, serif;
-    color: var(--accent); margin-bottom: 4px;
-  }
-  .crisis-name { font-size: 13px; font-weight: 600; margin-bottom: 8px; }
-  .crisis-desc { font-size: 13px; color: var(--text-2); line-height: 1.6; }
-
-  /* ── REGIME CARDS ── */
-  .regime-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 24px 0; }
-  @media(max-width:620px) { .regime-grid { grid-template-columns: 1fr; } }
-  .regime-card {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 12px; padding: 18px;
-  }
-  .regime-dot {
-    width: 10px; height: 10px; border-radius: 50%;
-    margin-bottom: 10px;
-  }
-  .regime-dot.bull { background: var(--green); }
-  .regime-dot.bear { background: var(--red); }
-  .regime-dot.lateral { background: var(--yellow); }
-  .regime-name { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
-  .regime-desc { font-size: 12.5px; color: var(--text-2); line-height: 1.6; }
-
-  /* ── ECONOMIST CARDS ── */
-  .econ-grid { display: flex; flex-direction: column; gap: 0; }
-  .econ-item {
-    display: flex; gap: 0;
-    border-bottom: 1px solid var(--border);
-    padding: 20px 0;
-  }
-  .econ-item:last-child { border-bottom: none; }
-  .econ-years {
-    font-size: 11px; color: var(--text-3); font-weight: 500;
-    width: 90px; flex-shrink: 0; padding-top: 2px;
-  }
-  .econ-content { flex: 1; }
-  .econ-name { font-weight: 600; font-size: 14px; margin-bottom: 3px; }
-  .econ-tagline { font-size: 13px; color: var(--accent); font-style: italic; margin-bottom: 6px; }
-  .econ-lesson { font-size: 13px; color: var(--text-2); line-height: 1.6; }
-
-  /* ── CYCLE PHASES ── */
-  .phases { display: grid; grid-template-columns: repeat(2,1fr); gap: 14px; margin: 24px 0 32px; }
-  @media(max-width:560px) { .phases { grid-template-columns: 1fr; } }
-  .phase-card {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 12px; padding: 18px;
-  }
-  .phase-num {
-    font-size: 10px; font-weight: 700; letter-spacing: .1em;
-    text-transform: uppercase; color: var(--text-3); margin-bottom: 6px;
-  }
-  .phase-name { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
-  .phase-desc { font-size: 13px; color: var(--text-2); line-height: 1.6; }
-  .phase-assets {
-    margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border);
-    font-size: 11.5px; color: var(--accent); font-weight: 500;
-  }
-
-  /* ── SYNTHESIS ── */
-  .synthesis {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 16px; padding: 32px;
-    margin-top: 64px;
-  }
-  .synthesis-title {
-    font-family: 'DM Serif Display', Georgia, serif;
-    font-size: 22px; margin-bottom: 20px;
-  }
-  .synthesis p { color: var(--text-2); margin-bottom: 14px; line-height: 1.75; }
-  .synthesis p:last-child { margin-bottom: 0; }
-  .synthesis .next-module {
-    margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border);
-    font-size: 13px; color: var(--text-3); font-style: italic;
-  }
-  .synthesis .next-module strong { color: var(--accent); font-style: normal; }
-
-  /* ── NAV ── */
-  .module-nav {
-    display: flex; justify-content: space-between; align-items: center;
-    margin-top: 64px; padding-top: 32px;
-    border-top: 1px solid var(--border);
-    gap: 12px;
-  }
-  .nav-btn {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 12px 20px; border-radius: 10px; border: 1px solid var(--border);
-    font-size: 13.5px; font-weight: 500; font-family: inherit;
-    cursor: pointer; transition: all .2s; text-decoration: none;
-    background: var(--surface); color: var(--text-1);
-  }
-  .nav-btn:hover { border-color: var(--accent); color: var(--accent); }
-  .nav-btn.primary {
-    background: var(--accent); color: #fff; border-color: var(--accent);
-  }
-  .nav-btn.primary:hover { background: #0077ed; }
-  .nav-btn:disabled { opacity: .4; cursor: not-allowed; }
-</style>
-<style>
-  /* SVG widget classes */
-  .node { cursor: pointer; }
-  .node:hover { opacity: .85; }
-  .arr { stroke: var(--text-3); stroke-width: 1.5; fill: none; }
-  .leader { stroke: var(--text-3); stroke-width: 0.5; stroke-dasharray: 3 3; fill: none; }
-  .box rect { fill: var(--surface); stroke: var(--border); }
-  svg text { font-family: 'DM Sans', -apple-system, sans-serif; fill: var(--text-1); }
-  svg .t  { font-size: 14px; font-weight: 400; fill: var(--text-1); }
-  svg .ts { font-size: 12px; font-weight: 400; fill: var(--text-2); }
-  svg .th { font-size: 14px; font-weight: 600; fill: var(--text-1); }
-  svg var(--t) { color: var(--text-3); }
-  svg var(--bg2) { color: var(--surface); }
-  svg var(--b) { color: var(--border); }
-
-  /* Color ramps */
-  .c-blue rect, .c-blue circle, .c-blue ellipse { fill: #E6F1FB; stroke: #185FA5; }
-  .c-blue .th, .c-blue .t { fill: #0C447C; }
-  .c-blue .ts { fill: #185FA5; }
-
-  .c-teal rect, .c-teal circle, .c-teal ellipse { fill: #E1F5EE; stroke: #0F6E56; }
-  .c-teal .th, .c-teal .t { fill: #085041; }
-  .c-teal .ts { fill: #0F6E56; }
-
-  .c-purple rect, .c-purple circle, .c-purple ellipse { fill: #EEEDFE; stroke: #534AB7; }
-  .c-purple .th, .c-purple .t { fill: #3C3489; }
-  .c-purple .ts { fill: #534AB7; }
-
-  .c-amber rect, .c-amber circle, .c-amber ellipse { fill: #FAEEDA; stroke: #854F0B; }
-  .c-amber .th, .c-amber .t { fill: #633806; }
-  .c-amber .ts { fill: #854F0B; }
-
-  .c-coral rect, .c-coral circle, .c-coral ellipse { fill: #FAECE7; stroke: #993C1D; }
-  .c-coral .th, .c-coral .t { fill: #712B13; }
-  .c-coral .ts { fill: #993C1D; }
-
-  .c-green rect, .c-green circle, .c-green ellipse { fill: #EAF3DE; stroke: #3B6D11; }
-  .c-green .th, .c-green .t { fill: #27500A; }
-  .c-green .ts { fill: #3B6D11; }
-
-  .c-gray rect, .c-gray circle, .c-gray ellipse { fill: #F1EFE8; stroke: #5F5E5A; }
-  .c-gray .th, .c-gray .t { fill: #444441; }
-  .c-gray .ts { fill: #5F5E5A; }
+  .mod-header{margin-bottom:40px;padding-bottom:32px;border-bottom:1px solid var(--border)}
+  .mod-kicker{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+  .mod-title{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(30px,5vw,46px);line-height:1.1;margin-bottom:14px}
+  .mod-sub{font-size:15px;color:var(--text-2);font-style:italic;margin-bottom:20px}
+  .mod-objective{background:var(--accent-soft);border-left:3px solid var(--accent);border-radius:0 10px 10px 0;padding:16px 20px;font-size:14px;color:var(--text-2);line-height:1.65}
+  .mod-section-label{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:16px;margin-top:32px}
+  .mod-objectives{list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:32px}
+  .mod-objectives li{display:flex;align-items:flex-start;gap:12px;font-size:14px;color:var(--text-2);line-height:1.6}
+  .obj-check{width:18px;height:18px;border-radius:50%;border:1px solid var(--border);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--text-3)}
+  .mod-concepts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:32px}
+  .concept-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;transition:border-color .2s}
+  .concept-card:hover{border-color:rgba(0,113,227,.3)}
+  .concept-icon{font-size:20px;margin-bottom:8px}
+  .concept-name{font-size:13px;font-weight:600;color:var(--text-1);margin-bottom:4px}
+  .concept-desc{font-size:12px;color:var(--text-2);line-height:1.5}
+  .mod-quote-block{background:rgba(201,168,76,.07);border:1px solid rgba(201,168,76,.18);border-radius:14px;padding:20px 24px;margin-bottom:40px}
+  .mod-quote-text{font-family:'DM Serif Display',Georgia,serif;font-size:17px;line-height:1.6;color:#b8922e;font-style:italic;margin-bottom:6px}
+  .mod-quote-source{font-size:11px;color:var(--text-3);letter-spacing:.05em;text-transform:uppercase}
+  /* TOC */
+  .toc{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px 28px;margin-bottom:56px}
+  .toc-title{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:16px}
+  .toc-list{list-style:none;display:flex;flex-direction:column;gap:6px}
+  .toc-list li a{display:flex;align-items:baseline;gap:10px;text-decoration:none;color:var(--text-2);font-size:13.5px;transition:color .15s}
+  .toc-list li a:hover{color:var(--accent)}
+  .toc-letter{font-size:10px;font-weight:700;color:var(--accent);background:var(--accent-soft);border-radius:4px;padding:1px 6px;flex-shrink:0}
+  /* Sections */
+  .section{margin-bottom:64px}
+  .section-label{display:inline-flex;align-items:center;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);border-radius:6px;padding:4px 10px;margin-bottom:18px}
+  .section-title{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(22px,3.5vw,30px);line-height:1.2;margin-bottom:24px}
+  .section-intro{font-size:15px;color:var(--text-2);line-height:1.75;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid var(--border)}
+  .sub{margin-bottom:36px;border-left:3px solid var(--accent);padding-left:20px}
+  .sub-title{font-family:'DM Serif Display',Georgia,serif;font-size:19px;margin-bottom:14px;color:var(--text-1)}
+  .sub p{color:var(--text-2);margin-bottom:12px;font-size:14.5px;line-height:1.72}
+  .sub p:last-child{margin-bottom:0}
+  .sub strong{color:var(--text-1)}
+  .styled-list{list-style:none;margin:12px 0 16px;display:flex;flex-direction:column;gap:8px}
+  .styled-list li{color:var(--text-2);font-size:14px;line-height:1.65}
+  /* Callouts */
+  .callout{border-radius:0 10px 10px 0;border-left:3px solid;padding:14px 18px;margin:18px 0;font-size:13.5px;line-height:1.65}
+  .callout.yellow{background:#FAEEDA;border-color:#854F0B;color:#412402}
+  .callout.blue{background:#E6F1FB;border-color:#185FA5;color:#042C53}
+  .callout.green{background:#EAF3DE;border-color:#3B6D11;color:#173404}
+  .callout.red{background:#FCEBEB;border-color:#A32D2D;color:#501313}
+  .callout.purple{background:#EEEDFE;border-color:#534AB7;color:#26215C}
+  /* Default callout (no modifier) */
+  .callout:not(.blue):not(.green):not(.red):not(.yellow):not(.purple){background:#FAEEDA;border-color:#854F0B;color:#412402}
+  .callout strong{color:inherit}
+  /* Notion boxes */
+  .notion{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px 22px;margin:18px 0}
+  .notion-title{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px}
+  .notion p,.notion li{color:var(--text-1);font-size:13.5px;line-height:1.7;margin-bottom:6px}
+  .notion strong{color:var(--text-1)}
+  /* Tables */
+  .table-wrap{overflow-x:auto;margin:18px 0 24px;border-radius:12px;border:1px solid var(--border)}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  thead tr{background:#f0efe8}
+  thead th{padding:10px 14px;text-align:left;font-size:11px;font-weight:700;letter-spacing:.05em;color:var(--text-1);white-space:nowrap}
+  tbody tr{border-top:1px solid var(--border)}
+  tbody tr:hover{background:rgba(0,0,0,.02)}
+  tbody td{padding:10px 14px;color:var(--text-2);vertical-align:top;line-height:1.55}
+  tbody td strong{color:var(--text-1)}
+  /* Figures */
+  .module-figure{margin:20px 0 28px;background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;padding:14px;max-width:560px}
+  .module-figure svg{width:100%;display:block}
+  .fig-caption{margin-top:8px;font-size:12px;color:var(--text-3);font-style:italic;text-align:center}
+  /* Crisis cards */
+  .crisis-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:18px 0}
+  @media(max-width:600px){.crisis-grid{grid-template-columns:1fr}}
+  .crisis-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px}
+  .crisis-year{font-size:28px;font-weight:700;font-family:'DM Serif Display',Georgia,serif;color:var(--accent);margin-bottom:4px}
+  .crisis-name{font-size:13px;font-weight:600;margin-bottom:8px}
+  .crisis-desc{font-size:13px;color:var(--text-2);line-height:1.6}
+  /* Regime cards */
+  .regime-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:18px 0}
+  @media(max-width:620px){.regime-grid{grid-template-columns:1fr}}
+  .regime-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px}
+  .regime-dot{width:10px;height:10px;border-radius:50%;margin-bottom:10px}
+  .regime-dot.bull{background:#30d158}
+  .regime-dot.bear{background:#ff453a}
+  .regime-dot.lateral{background:#ffd60a}
+  .regime-name{font-size:14px;font-weight:600;margin-bottom:6px}
+  .regime-desc{font-size:12.5px;color:var(--text-2);line-height:1.6}
+  /* Cycle phases */
+  .phases{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:18px 0 28px}
+  @media(max-width:560px){.phases{grid-template-columns:1fr}}
+  .phase-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px}
+  .phase-num{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:6px}
+  .phase-name{font-size:15px;font-weight:600;margin-bottom:8px}
+  .phase-desc{font-size:13px;color:var(--text-2);line-height:1.6}
+  .phase-assets{margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-size:11.5px;color:var(--accent);font-weight:500}
+  /* Synthesis */
+  .synthesis{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px;margin-top:48px}
+  .synthesis-title{font-family:'DM Serif Display',Georgia,serif;font-size:22px;margin-bottom:18px}
+  .synthesis p{color:var(--text-2);margin-bottom:12px;line-height:1.75;font-size:14.5px}
+  .next-module{margin-top:20px;padding-top:18px;border-top:1px solid var(--border);font-size:13px;color:var(--text-3);font-style:italic}
+  .next-module strong{color:var(--accent);font-style:normal}
+  /* Nav */
+  .module-nav{display:flex;justify-content:space-between;align-items:center;margin-top:56px;padding-top:28px;border-top:1px solid var(--border);gap:12px}
+  .nav-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:10px;border:1px solid var(--border);font-size:13.5px;font-weight:500;font-family:inherit;cursor:pointer;transition:all .2s;background:var(--surface);color:var(--text-1)}
+  .nav-btn:hover{border-color:var(--accent);color:var(--accent)}
+  .nav-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .nav-btn.primary:hover{background:#0077ed}
+  /* SVG */
+  svg text{font-family:'DM Sans',-apple-system,sans-serif;fill:var(--text-1)}
+  svg .t{font-size:14px;font-weight:400;fill:var(--text-1)}
+  svg .ts{font-size:12px;font-weight:400;fill:var(--text-2)}
+  svg .th{font-size:14px;font-weight:600;fill:var(--text-1)}
+  .node{cursor:pointer}
+  .node:hover{opacity:.85}
+  .c-blue rect,.c-blue circle,.c-blue ellipse{fill:#E6F1FB;stroke:#185FA5}
+  .c-blue .th,.c-blue .t{fill:#0C447C}
+  .c-blue .ts{fill:#185FA5}
+  .c-teal rect,.c-teal circle,.c-teal ellipse{fill:#E1F5EE;stroke:#0F6E56}
+  .c-teal .th,.c-teal .t{fill:#085041}
+  .c-teal .ts{fill:#0F6E56}
+  .c-purple rect,.c-purple circle,.c-purple ellipse{fill:#EEEDFE;stroke:#534AB7}
+  .c-purple .th,.c-purple .t{fill:#3C3489}
+  .c-purple .ts{fill:#534AB7}
+  .c-amber rect,.c-amber circle,.c-amber ellipse{fill:#FAEEDA;stroke:#854F0B}
+  .c-amber .th,.c-amber .t{fill:#633806}
+  .c-amber .ts{fill:#854F0B}
+  .c-coral rect,.c-coral circle,.c-coral ellipse{fill:#FAECE7;stroke:#993C1D}
+  .c-coral .th,.c-coral .t{fill:#712B13}
+  .c-coral .ts{fill:#993C1D}
+  .c-green rect,.c-green circle,.c-green ellipse{fill:#EAF3DE;stroke:#3B6D11}
+  .c-green .th,.c-green .t{fill:#27500A}
+  .c-green .ts{fill:#3B6D11}
+  .c-gray rect,.c-gray circle,.c-gray ellipse{fill:#F1EFE8;stroke:#5F5E5A}
+  .c-gray .th,.c-gray .t{fill:#444441}
+  .c-gray .ts{fill:#5F5E5A}
 </style>
 </head>
 <body>
 <div class="page">
 
-  <!-- HEADER -->
   <header class="mod-header">
     <div class="mod-kicker">Module 02 · ARK Investor Program</div>
     <h1 class="mod-title">Économie &amp; Histoire Financière</h1>
-    <div class="mod-objective">
-      Objectif du module : comprendre les mécanismes économiques fondamentaux et les grandes crises financières pour reconnaître les cycles qui se répètent, identifier les économistes qui ont modelé notre monde, et adapter sa stratégie d'investissement en conséquence.
-    </div>
+    <p class="mod-sub">Les marchés n'existent pas dans le vide — ils sont le reflet de forces économiques profondes qui se répètent.</p>
+    <div class="mod-objective">Objectif du module : comprendre les mécanismes économiques fondamentaux et les grandes crises financières pour reconnaître les cycles qui se répètent, identifier les économistes qui ont modelé notre monde, et adapter sa stratégie d'investissement en conséquence.</div>
   </header>
 
-  <!-- TOC -->
+  <div class="mod-section-label">Ce que tu vas apprendre</div>
+  <ul class="mod-objectives">
+    <li><div class="obj-check">○</div><span>Utiliser les grandes théories économiques comme lentilles d'analyse selon le régime de marché</span></li>
+    <li><div class="obj-check">○</div><span>Maîtriser les mécanismes fondamentaux : offre/demande, inflation, taux d'intérêt, création monétaire</span></li>
+    <li><div class="obj-check">○</div><span>Reconnaître le schéma récurrent des grandes crises financières (1929, 2000, 2008, 2020)</span></li>
+    <li><div class="obj-check">○</div><span>Comprendre la distinction marché primaire / secondaire et ses implications pour l'investisseur</span></li>
+    <li><div class="obj-check">○</div><span>Identifier le régime de marché en cours et adapter sa stratégie d'allocation en conséquence</span></li>
+  </ul>
+
+  <div class="mod-section-label">Concepts clés</div>
+  <div class="mod-concepts-grid">
+    <div class="concept-card"><div class="concept-icon">🔭</div><div class="concept-name">Les 7 lentilles</div><div class="concept-desc">Smith, Ricardo, Keynes, Friedman, Schumpeter, Minsky, Hayek — chaque théorie utile à son moment</div></div>
+    <div class="concept-card"><div class="concept-icon">🌊</div><div class="concept-name">Cycle de Minsky</div><div class="concept-desc">La stabilité engendre l'instabilité — le chemin de hedge à Ponzi est structurel, pas accidentel</div></div>
+    <div class="concept-card"><div class="concept-icon">📈</div><div class="concept-name">Destruction créatrice</div><div class="concept-desc">Chaque vague technologique détruit pour recréer — identifier la vague entrante est un avantage structurel</div></div>
+    <div class="concept-card"><div class="concept-icon">🔄</div><div class="concept-name">Cycle économique</div><div class="concept-desc">4 phases, 4 régimes d'actifs — le bon actif au mauvais moment dans le cycle peut coûter cher</div></div>
+  </div>
+
+  <div class="mod-quote-block">
+    <div class="mod-quote-text">"Le calendrier change. Le schéma — excès, euphorie, déni, retournement, intervention — non."</div>
+    <div class="mod-quote-source">— ARK — Module 02</div>
+  </div>
+
   <nav class="toc">
     <div class="toc-title">Sommaire</div>
     <ul class="toc-list">
@@ -345,35 +190,32 @@
   <section class="section" id="section-a">
     <div class="section-label">Section A</div>
     <h2 class="section-title">Les grands économistes — ce qu'ils nous apprennent encore aujourd'hui</h2>
-    <div class="section-intro">
-      La plupart des formations en trading parlent de chandeliers, de supports et de résistances. Ici, on commence ailleurs : par les idées. Les grands économistes ne sont pas des figures historiques sans liens avec les marchés d'aujourd'hui — ils sont les architectes invisibles du monde dans lequel vous allez investir.<br><br>
-      Comprendre Smith, c'est comprendre pourquoi les marchés s'autorégulent — et pourquoi ils ne le font pas toujours. Comprendre Minsky, c'est comprendre 2008 avant qu'il arrive. Comprendre Schumpeter, c'est voir les grandes transitions sectorielles avant qu'elles soient évidentes. Chaque théorie est une lentille. Un trader fondamental ne choisit pas une école — il sait quelle lentille utiliser selon le régime en place.
-    </div>
+    <div class="section-intro">La plupart des formations en trading parlent de chandeliers, de supports et de résistances. Ici, on commence ailleurs : par les idées. Les grands économistes ne sont pas des figures historiques sans liens avec les marchés d'aujourd'hui — ils sont les architectes invisibles du monde dans lequel vous allez investir.<br><br>Comprendre Smith, c'est comprendre pourquoi les marchés s'autorégulent — et pourquoi ils ne le font pas toujours. Comprendre Minsky, c'est comprendre 2008 avant qu'il arrive. Comprendre Schumpeter, c'est voir les grandes transitions sectorielles avant qu'elles soient évidentes. Chaque théorie est une lentille. Un trader fondamental ne choisit pas une école — il sait quelle lentille utiliser selon le régime en place.</div>
     <div class="callout blue">Fil conducteur : aucune école n'a raison tout le temps. Le bon investisseur sait quelle lentille utiliser selon le régime en place.</div>
+
 <div class="module-figure">
-<svg width="100%" viewBox="0 0 680 480" style="display:block">
+<svg width="100%" viewBox="0 0 680 380" style="display:block">
 <defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
-<g class="node c-blue" onclick="sendPrompt('Comment un investisseur choisit la bonne lentille selon le régime de marché ?')"><circle cx="340" cy="240" r="52" stroke-width="1"/><text class="th" x="340" y="234" text-anchor="middle" dominant-baseline="central">Investisseur</text><text class="ts" x="340" y="252" text-anchor="middle">fondamental</text></g>
-<line x1="340" y1="188" x2="340" y2="130" stroke="var(--t)" stroke-width="1" opacity=".25" marker-end="url(#arrow)"/>
-<line x1="295" y1="207" x2="222" y2="148" stroke="var(--t)" stroke-width="1" opacity=".25" marker-end="url(#arrow)"/>
-<line x1="288" y1="240" x2="192" y2="240" stroke="var(--t)" stroke-width="1" opacity=".25" marker-end="url(#arrow)"/>
-<line x1="295" y1="273" x2="222" y2="332" stroke="var(--t)" stroke-width="1" opacity=".25" marker-end="url(#arrow)"/>
-<line x1="340" y1="292" x2="340" y2="352" stroke="var(--t)" stroke-width="1" opacity=".25" marker-end="url(#arrow)"/>
-<line x1="385" y1="273" x2="458" y2="332" stroke="var(--t)" stroke-width="1" opacity=".25" marker-end="url(#arrow)"/>
-<line x1="392" y1="240" x2="488" y2="240" stroke="var(--t)" stroke-width="1" opacity=".25" marker-end="url(#arrow)"/>
-<g class="node c-teal"><rect x="264" y="56" width="152" height="52" rx="8" stroke-width="0.5"/><text class="th" x="340" y="79" text-anchor="middle" dominant-baseline="central">Adam Smith</text><text class="ts" x="340" y="97" text-anchor="middle">Lire les prix comme signal</text></g>
-<g class="node c-teal"><rect x="64" y="108" width="150" height="52" rx="8" stroke-width="0.5"/><text class="th" x="139" y="131" text-anchor="middle" dominant-baseline="central">Ricardo</text><text class="ts" x="139" y="149" text-anchor="middle">Avantage comparatif</text></g>
-<g class="node c-purple"><rect x="52" y="214" width="132" height="52" rx="8" stroke-width="0.5"/><text class="th" x="118" y="237" text-anchor="middle" dominant-baseline="central">Keynes</text><text class="ts" x="118" y="255" text-anchor="middle">Crises et relances</text></g>
-<g class="node c-coral"><rect x="64" y="318" width="150" height="52" rx="8" stroke-width="0.5"/><text class="th" x="139" y="341" text-anchor="middle" dominant-baseline="central">Minsky</text><text class="ts" x="139" y="359" text-anchor="middle">Instabilité endogène</text></g>
-<g class="node c-purple"><rect x="252" y="360" width="176" height="52" rx="8" stroke-width="0.5"/><text class="th" x="340" y="383" text-anchor="middle" dominant-baseline="central">Schumpeter</text><text class="ts" x="340" y="401" text-anchor="middle">Destruction créatrice</text></g>
-<g class="node c-amber"><rect x="464" y="318" width="148" height="52" rx="8" stroke-width="0.5"/><text class="th" x="538" y="341" text-anchor="middle" dominant-baseline="central">Hayek</text><text class="ts" x="538" y="359" text-anchor="middle">Effets pervers BC</text></g>
-<g class="node c-amber"><rect x="496" y="214" width="148" height="52" rx="8" stroke-width="0.5"/><text class="th" x="570" y="237" text-anchor="middle" dominant-baseline="central">Friedman</text><text class="ts" x="570" y="255" text-anchor="middle">Monétarisme / M2</text></g>
-<text class="ts" x="340" y="455" text-anchor="middle" opacity=".5">Aucune école n'a raison tout le temps — choisir la bonne lentille selon le régime</text>
+<g class="node c-blue" onclick="sendPrompt('Comment un investisseur choisit la bonne lentille selon le régime de marché ?')"><circle cx="340" cy="190" r="52" stroke-width="1"/><text class="th" x="340" y="184" text-anchor="middle" dominant-baseline="central">Investisseur</text><text class="ts" x="340" y="202" text-anchor="middle">fondamental</text></g>
+<line x1="340" y1="138" x2="340" y2="88" stroke="var(--text-3)" stroke-width="1" opacity=".25" marker-end="url(#arrow)"/>
+<line x1="295" y1="157" x2="222" y2="108" stroke="var(--text-3)" stroke-width="1" opacity=".25" marker-end="url(#arrow)"/>
+<line x1="288" y1="190" x2="192" y2="190" stroke="var(--text-3)" stroke-width="1" opacity=".25" marker-end="url(#arrow)"/>
+<line x1="295" y1="223" x2="222" y2="272" stroke="var(--text-3)" stroke-width="1" opacity=".25" marker-end="url(#arrow)"/>
+<line x1="340" y1="242" x2="340" y2="292" stroke="var(--text-3)" stroke-width="1" opacity=".25" marker-end="url(#arrow)"/>
+<line x1="385" y1="223" x2="458" y2="272" stroke="var(--text-3)" stroke-width="1" opacity=".25" marker-end="url(#arrow)"/>
+<line x1="392" y1="190" x2="488" y2="190" stroke="var(--text-3)" stroke-width="1" opacity=".25" marker-end="url(#arrow)"/>
+<g class="node c-teal"><rect x="264" y="24" width="152" height="44" rx="8" stroke-width="0.5"/><text class="th" x="340" y="44" text-anchor="middle" dominant-baseline="central">Adam Smith</text><text class="ts" x="340" y="60" text-anchor="middle">Lire les prix comme signal</text></g>
+<g class="node c-teal"><rect x="64" y="78" width="150" height="44" rx="8" stroke-width="0.5"/><text class="th" x="139" y="97" text-anchor="middle" dominant-baseline="central">Ricardo</text><text class="ts" x="139" y="113" text-anchor="middle">Avantage comparatif</text></g>
+<g class="node c-purple"><rect x="52" y="166" width="132" height="44" rx="8" stroke-width="0.5"/><text class="th" x="118" y="185" text-anchor="middle" dominant-baseline="central">Keynes</text><text class="ts" x="118" y="201" text-anchor="middle">Crises et relances</text></g>
+<g class="node c-coral"><rect x="64" y="254" width="150" height="44" rx="8" stroke-width="0.5"/><text class="th" x="139" y="273" text-anchor="middle" dominant-baseline="central">Minsky</text><text class="ts" x="139" y="289" text-anchor="middle">Instabilité endogène</text></g>
+<g class="node c-purple"><rect x="252" y="300" width="176" height="44" rx="8" stroke-width="0.5"/><text class="th" x="340" y="319" text-anchor="middle" dominant-baseline="central">Schumpeter</text><text class="ts" x="340" y="335" text-anchor="middle">Destruction créatrice</text></g>
+<g class="node c-amber"><rect x="464" y="254" width="148" height="44" rx="8" stroke-width="0.5"/><text class="th" x="538" y="273" text-anchor="middle" dominant-baseline="central">Hayek</text><text class="ts" x="538" y="289" text-anchor="middle">Effets pervers BC</text></g>
+<g class="node c-amber"><rect x="496" y="166" width="148" height="44" rx="8" stroke-width="0.5"/><text class="th" x="570" y="185" text-anchor="middle" dominant-baseline="central">Friedman</text><text class="ts" x="570" y="201" text-anchor="middle">Monétarisme / M2</text></g>
+<text class="ts" x="340" y="365" text-anchor="middle" opacity=".5">Aucune école n'a raison tout le temps — choisir la bonne lentille selon le régime</text>
 </svg>
 <p class="fig-caption">Les 7 lentilles de l'investisseur fondamental — chaque économiste, un contexte d'application</p>
 </div>
 
-    <!-- Adam Smith -->
     <div class="sub">
       <h3 class="sub-title">Adam Smith (1723–1790) — La main invisible</h3>
       <p>Adam Smith est le fondateur de l'économie politique moderne. Dans <em>La Richesse des Nations</em> (1776), il formule une idée qui semble simple mais reste révolutionnaire : les individus, en poursuivant leur intérêt personnel, contribuent involontairement à la prospérité collective. Ce mécanisme, qu'il appelle la « main invisible », est la justification théorique du marché libre.</p>
@@ -392,7 +234,6 @@
       </div>
     </div>
 
-    <!-- David Ricardo -->
     <div class="sub">
       <h3 class="sub-title">David Ricardo (1772–1823) — L'avantage comparatif</h3>
       <p>Ricardo est l'économiste de la mondialisation — avant la mondialisation. Sa théorie de l'avantage comparatif démontre qu'il est toujours mutuellement profitable pour deux pays d'échanger, même si l'un est plus efficace dans tous les domaines de production. L'important n'est pas l'avantage absolu, mais l'avantage relatif.</p>
@@ -411,202 +252,179 @@
       </div>
     </div>
 
-    <!-- Keynes -->
     <div class="sub">
       <h3 class="sub-title">John Maynard Keynes (1883–1946) — La demande comme moteur</h3>
       <p>Keynes est l'économiste des crises. Là où Smith et Ricardo croyaient que les marchés tendent naturellement vers l'équilibre, Keynes observe en 1929 que l'économie peut rester coincée dans une dépression indéfiniment. Sa conclusion : ce n'est pas l'offre qui crée la demande, c'est la demande qui crée l'activité économique.</p>
       <p>Pour l'investisseur, comprendre Keynes, c'est anticiper les réponses des gouvernements aux crises — et leurs effets sur les marchés. Quand une récession s'amorce, le réflexe keynésien est de creuser les déficits et d'injecter de la demande. Cela crée des opportunités dans certains secteurs (construction, infrastructures, défense) et alerte sur d'autres (hausses de taux futures pour financer la dette).</p>
     </div>
 <div class="module-figure">
-<svg width="100%" viewBox="0 0 680 400" style="display:block">
-<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
-<g class="node c-blue"><rect x="28" y="155" width="108" height="60" rx="8" stroke-width="0.5"/><text class="th" x="82" y="178" text-anchor="middle" dominant-baseline="central">Injection</text><text class="ts" x="82" y="196" text-anchor="middle">publique</text></g>
-<line x1="136" y1="185" x2="164" y2="185" stroke="var(--t)" opacity=".4" marker-end="url(#arrow)"/>
-<text class="ts" x="150" y="174" text-anchor="middle" opacity=".6">+100</text>
-<g class="node c-teal"><rect x="164" y="148" width="116" height="74" rx="8" stroke-width="0.5"/><text class="th" x="222" y="171" text-anchor="middle" dominant-baseline="central">Demande</text><text class="ts" x="222" y="189" text-anchor="middle">↑ consommation</text><text class="ts" x="222" y="205" text-anchor="middle">↑ investissement</text></g>
-<line x1="280" y1="185" x2="308" y2="185" stroke="var(--t)" opacity=".4" marker-end="url(#arrow)"/>
-<g class="node c-teal"><rect x="308" y="148" width="116" height="74" rx="8" stroke-width="0.5"/><text class="th" x="366" y="171" text-anchor="middle" dominant-baseline="central">Activité</text><text class="ts" x="366" y="189" text-anchor="middle">↑ emploi</text><text class="ts" x="366" y="205" text-anchor="middle">↑ revenus</text></g>
-<line x1="424" y1="185" x2="452" y2="185" stroke="var(--t)" opacity=".4" marker-end="url(#arrow)"/>
-<g class="node c-purple"><rect x="452" y="148" width="120" height="74" rx="8" stroke-width="0.5"/><text class="th" x="512" y="171" text-anchor="middle" dominant-baseline="central">Re-dépense</text><text class="ts" x="512" y="189" text-anchor="middle">propension</text><text class="ts" x="512" y="205" text-anchor="middle">marginale (c)</text></g>
-<line x1="572" y1="185" x2="600" y2="185" stroke="var(--t)" opacity=".4" marker-end="url(#arrow)"/>
-<text class="ts" x="586" y="174" text-anchor="middle" opacity=".6">×c</text>
-<g class="node c-green"><rect x="600" y="155" width="56" height="60" rx="8" stroke-width="0.5"/><text class="th" x="628" y="178" text-anchor="middle" dominant-baseline="central">PIB</text><text class="ts" x="628" y="196" text-anchor="middle">×k</text></g>
-<path d="M 628 215 L 628 280 L 82 280 L 82 215" fill="none" stroke="var(--t)" stroke-width="1" stroke-dasharray="5 3" opacity=".25" marker-end="url(#arrow)"/>
-<text class="ts" x="340" y="298" text-anchor="middle" opacity=".5">Cycle de re-dépense → amplifie l'effet initial</text>
-<rect x="200" y="320" width="280" height="44" rx="8" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5" opacity=".7"/>
-<text class="th" x="340" y="338" text-anchor="middle" dominant-baseline="central">k = 1 / (1 − c)</text>
-<text class="ts" x="340" y="355" text-anchor="middle" opacity=".6">si c = 0.8 → multiplicateur = 5</text>
-<text class="ts" x="82" y="136" text-anchor="middle" opacity=".5">État / BC</text>
-<text class="ts" x="628" y="136" text-anchor="middle" opacity=".5">Résultat</text>
+<svg width="100%" viewBox="0 0 680 300" style="display:block">
+<defs><marker id="arrow2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<g class="node c-blue"><rect x="28" y="105" width="108" height="56" rx="8" stroke-width="0.5"/><text class="th" x="82" y="127" text-anchor="middle" dominant-baseline="central">Injection</text><text class="ts" x="82" y="145" text-anchor="middle">publique</text></g>
+<line x1="136" y1="133" x2="164" y2="133" stroke="var(--text-3)" opacity=".4" marker-end="url(#arrow2)"/>
+<text class="ts" x="150" y="122" text-anchor="middle" opacity=".6">+100</text>
+<g class="node c-teal"><rect x="164" y="96" width="116" height="74" rx="8" stroke-width="0.5"/><text class="th" x="222" y="119" text-anchor="middle" dominant-baseline="central">Demande</text><text class="ts" x="222" y="137" text-anchor="middle">↑ consommation</text><text class="ts" x="222" y="153" text-anchor="middle">↑ investissement</text></g>
+<line x1="280" y1="133" x2="308" y2="133" stroke="var(--text-3)" opacity=".4" marker-end="url(#arrow2)"/>
+<g class="node c-teal"><rect x="308" y="96" width="116" height="74" rx="8" stroke-width="0.5"/><text class="th" x="366" y="119" text-anchor="middle" dominant-baseline="central">Activité</text><text class="ts" x="366" y="137" text-anchor="middle">↑ emploi</text><text class="ts" x="366" y="153" text-anchor="middle">↑ revenus</text></g>
+<line x1="424" y1="133" x2="452" y2="133" stroke="var(--text-3)" opacity=".4" marker-end="url(#arrow2)"/>
+<g class="node c-purple"><rect x="452" y="96" width="120" height="74" rx="8" stroke-width="0.5"/><text class="th" x="512" y="119" text-anchor="middle" dominant-baseline="central">Re-dépense</text><text class="ts" x="512" y="137" text-anchor="middle">propension</text><text class="ts" x="512" y="153" text-anchor="middle">marginale (c)</text></g>
+<line x1="572" y1="133" x2="600" y2="133" stroke="var(--text-3)" opacity=".4" marker-end="url(#arrow2)"/>
+<text class="ts" x="586" y="122" text-anchor="middle" opacity=".6">×c</text>
+<g class="node c-green"><rect x="600" y="105" width="56" height="56" rx="8" stroke-width="0.5"/><text class="th" x="628" y="127" text-anchor="middle" dominant-baseline="central">PIB</text><text class="ts" x="628" y="145" text-anchor="middle">×k</text></g>
+<path d="M 628 161 L 628 220 L 82 220 L 82 161" fill="none" stroke="var(--text-3)" stroke-width="1" stroke-dasharray="5 3" opacity=".25" marker-end="url(#arrow2)"/>
+<text class="ts" x="340" y="240" text-anchor="middle" opacity=".5">Cycle de re-dépense → amplifie l'effet initial</text>
+<rect x="220" y="256" width="240" height="36" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="0.5" opacity=".7"/>
+<text class="th" x="340" y="271" text-anchor="middle" dominant-baseline="central">k = 1 / (1 − c)</text>
+<text class="ts" x="340" y="285" text-anchor="middle" opacity=".6">si c = 0.8 → multiplicateur = 5</text>
 </svg>
 <p class="fig-caption">Le multiplicateur keynésien — l'injection publique amplifie l'activité économique</p>
 </div>
 
-    <!-- Friedman -->
     <div class="sub">
       <h3 class="sub-title">Milton Friedman (1912–2006) — Le monétarisme</h3>
       <p>Friedman est la réponse à Keynes. Sa conviction est exprimée dans une formule devenue célèbre : <em>« L'inflation est toujours et partout un phénomène monétaire. »</em> Autrement dit, si les prix montent, c'est parce que trop de monnaie circule par rapport aux biens produits.</p>
       <p>Pour l'investisseur, Friedman enseigne à surveiller les agrégats monétaires. M2, le bilan de la Fed, les taux directeurs : ces variables annoncent l'inflation avant qu'elle ne soit visible dans les prix à la consommation. Quiconque a suivi l'explosion du bilan de la Fed en 2020 et tiré la conclusion logique — inflation à venir, actifs réels à privilégier — a eu plusieurs trimestres d'avance sur le consensus.</p>
     </div>
 <div class="module-figure">
-<svg width="100%" viewBox="0 0 680 420" style="display:block">
-<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
-<g class="node c-blue"><rect x="240" y="24" width="200" height="52" rx="8" stroke-width="0.5"/><text class="th" x="340" y="46" text-anchor="middle" dominant-baseline="central">Expansion M2 / QE</text><text class="ts" x="340" y="64" text-anchor="middle">bilan banque centrale ↑</text></g>
-<line x1="310" y1="76" x2="176" y2="132" stroke="var(--t)" opacity=".3" marker-end="url(#arrow)"/>
-<line x1="340" y1="76" x2="340" y2="132" stroke="var(--t)" opacity=".3" marker-end="url(#arrow)"/>
-<line x1="370" y1="76" x2="504" y2="132" stroke="var(--t)" opacity=".3" marker-end="url(#arrow)"/>
-<g class="node c-teal"><rect x="60" y="132" width="152" height="52" rx="8" stroke-width="0.5"/><text class="th" x="136" y="155" text-anchor="middle" dominant-baseline="central">Déflation / faible</text><text class="ts" x="136" y="173" text-anchor="middle">inflation &lt; 1%</text></g>
-<g class="node c-amber"><rect x="264" y="132" width="152" height="52" rx="8" stroke-width="0.5"/><text class="th" x="340" y="155" text-anchor="middle" dominant-baseline="central">Inflation modérée</text><text class="ts" x="340" y="173" text-anchor="middle">1% – 4%</text></g>
-<g class="node c-coral"><rect x="468" y="132" width="152" height="52" rx="8" stroke-width="0.5"/><text class="th" x="544" y="155" text-anchor="middle" dominant-baseline="central">Forte inflation</text><text class="ts" x="544" y="173" text-anchor="middle">&gt; 4% / stagflation</text></g>
-<line x1="136" y1="184" x2="136" y2="224" stroke="var(--t)" opacity=".25" marker-end="url(#arrow)"/>
-<line x1="340" y1="184" x2="340" y2="224" stroke="var(--t)" opacity=".25" marker-end="url(#arrow)"/>
-<line x1="544" y1="184" x2="544" y2="224" stroke="var(--t)" opacity=".25" marker-end="url(#arrow)"/>
-<rect x="60" y="224" width="152" height="88" rx="8" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5"/>
-<text class="th" x="136" y="246" text-anchor="middle" dominant-baseline="central">✦ Favorisé</text>
-<text class="ts" x="136" y="264" text-anchor="middle">Obligations souveraines</text>
-<text class="ts" x="136" y="280" text-anchor="middle">Cash, gold</text>
-<text class="ts" x="136" y="296" text-anchor="middle">Valeurs défensives</text>
-<rect x="264" y="224" width="152" height="88" rx="8" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5"/>
-<text class="th" x="340" y="246" text-anchor="middle" dominant-baseline="central">✦ Favorisé</text>
-<text class="ts" x="340" y="264" text-anchor="middle">Actions (croissance)</text>
-<text class="ts" x="340" y="280" text-anchor="middle">Immobilier</text>
-<text class="ts" x="340" y="296" text-anchor="middle">Crédit corporate</text>
-<rect x="468" y="224" width="152" height="88" rx="8" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5"/>
-<text class="th" x="544" y="246" text-anchor="middle" dominant-baseline="central">✦ Favorisé</text>
-<text class="ts" x="544" y="264" text-anchor="middle">Matières premières</text>
-<text class="ts" x="544" y="280" text-anchor="middle">Or, énergie</text>
-<text class="ts" x="544" y="296" text-anchor="middle">TIPS, actifs réels</text>
-<rect x="60" y="322" width="152" height="36" rx="8" fill="#FCEBEB" stroke="#E24B4A" stroke-width="0.5" opacity=".7"/>
-<text class="ts" x="136" y="337" text-anchor="middle" fill="#A32D2D">✗ Éviter</text>
-<text class="ts" x="136" y="351" text-anchor="middle" fill="#A32D2D">Actions risquées</text>
-<rect x="264" y="322" width="152" height="36" rx="8" fill="#FCEBEB" stroke="#E24B4A" stroke-width="0.5" opacity=".7"/>
-<text class="ts" x="340" y="337" text-anchor="middle" fill="#A32D2D">✗ Éviter</text>
-<text class="ts" x="340" y="351" text-anchor="middle" fill="#A32D2D">Duration longue</text>
-<rect x="468" y="322" width="152" height="36" rx="8" fill="#FCEBEB" stroke="#E24B4A" stroke-width="0.5" opacity=".7"/>
-<text class="ts" x="544" y="337" text-anchor="middle" fill="#A32D2D">✗ Éviter</text>
-<text class="ts" x="544" y="351" text-anchor="middle" fill="#A32D2D">Obligations fix, tech</text>
-<text class="ts" x="340" y="396" text-anchor="middle" opacity=".45">« L'inflation est toujours et partout un phénomène monétaire » — Friedman</text>
+<svg width="100%" viewBox="0 0 680 340" style="display:block">
+<defs><marker id="arrow3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<g class="node c-blue"><rect x="240" y="16" width="200" height="48" rx="8" stroke-width="0.5"/><text class="th" x="340" y="36" text-anchor="middle" dominant-baseline="central">Expansion M2 / QE</text><text class="ts" x="340" y="54" text-anchor="middle">bilan banque centrale ↑</text></g>
+<line x1="310" y1="64" x2="176" y2="108" stroke="var(--text-3)" opacity=".3" marker-end="url(#arrow3)"/>
+<line x1="340" y1="64" x2="340" y2="108" stroke="var(--text-3)" opacity=".3" marker-end="url(#arrow3)"/>
+<line x1="370" y1="64" x2="504" y2="108" stroke="var(--text-3)" opacity=".3" marker-end="url(#arrow3)"/>
+<g class="node c-teal"><rect x="60" y="108" width="152" height="48" rx="8" stroke-width="0.5"/><text class="th" x="136" y="128" text-anchor="middle" dominant-baseline="central">Déflation / faible</text><text class="ts" x="136" y="146" text-anchor="middle">inflation &lt; 1%</text></g>
+<g class="node c-amber"><rect x="264" y="108" width="152" height="48" rx="8" stroke-width="0.5"/><text class="th" x="340" y="128" text-anchor="middle" dominant-baseline="central">Inflation modérée</text><text class="ts" x="340" y="146" text-anchor="middle">1% – 4%</text></g>
+<g class="node c-coral"><rect x="468" y="108" width="152" height="48" rx="8" stroke-width="0.5"/><text class="th" x="544" y="128" text-anchor="middle" dominant-baseline="central">Forte inflation</text><text class="ts" x="544" y="146" text-anchor="middle">&gt; 4% / stagflation</text></g>
+<line x1="136" y1="156" x2="136" y2="188" stroke="var(--text-3)" opacity=".25" marker-end="url(#arrow3)"/>
+<line x1="340" y1="156" x2="340" y2="188" stroke="var(--text-3)" opacity=".25" marker-end="url(#arrow3)"/>
+<line x1="544" y1="156" x2="544" y2="188" stroke="var(--text-3)" opacity=".25" marker-end="url(#arrow3)"/>
+<rect x="60" y="188" width="152" height="80" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="0.5"/>
+<text class="th" x="136" y="205" text-anchor="middle" dominant-baseline="central">✦ Favorisé</text>
+<text class="ts" x="136" y="222" text-anchor="middle">Obligations souveraines</text>
+<text class="ts" x="136" y="237" text-anchor="middle">Cash, gold</text>
+<text class="ts" x="136" y="252" text-anchor="middle">Valeurs défensives</text>
+<rect x="264" y="188" width="152" height="80" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="0.5"/>
+<text class="th" x="340" y="205" text-anchor="middle" dominant-baseline="central">✦ Favorisé</text>
+<text class="ts" x="340" y="222" text-anchor="middle">Actions (croissance)</text>
+<text class="ts" x="340" y="237" text-anchor="middle">Immobilier</text>
+<text class="ts" x="340" y="252" text-anchor="middle">Crédit corporate</text>
+<rect x="468" y="188" width="152" height="80" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="0.5"/>
+<text class="th" x="544" y="205" text-anchor="middle" dominant-baseline="central">✦ Favorisé</text>
+<text class="ts" x="544" y="222" text-anchor="middle">Matières premières</text>
+<text class="ts" x="544" y="237" text-anchor="middle">Or, énergie</text>
+<text class="ts" x="544" y="252" text-anchor="middle">TIPS, actifs réels</text>
+<rect x="60" y="276" width="152" height="32" rx="8" fill="#FCEBEB" stroke="#E24B4A" stroke-width="0.5" opacity=".7"/>
+<text class="ts" x="136" y="290" text-anchor="middle" fill="#A32D2D">✗ Actions risquées</text>
+<rect x="264" y="276" width="152" height="32" rx="8" fill="#FCEBEB" stroke="#E24B4A" stroke-width="0.5" opacity=".7"/>
+<text class="ts" x="340" y="290" text-anchor="middle" fill="#A32D2D">✗ Duration longue</text>
+<rect x="468" y="276" width="152" height="32" rx="8" fill="#FCEBEB" stroke="#E24B4A" stroke-width="0.5" opacity=".7"/>
+<text class="ts" x="544" y="290" text-anchor="middle" fill="#A32D2D">✗ Obligations fix, tech</text>
+<text class="ts" x="340" y="326" text-anchor="middle" opacity=".45">« L'inflation est toujours et partout un phénomène monétaire » — Friedman</text>
 </svg>
 <p class="fig-caption">Friedman — M2, inflation et allocation d'actifs selon le régime inflationniste</p>
 </div>
 
-    <!-- Schumpeter -->
     <div class="sub">
       <h3 class="sub-title">Joseph Schumpeter (1883–1950) — La destruction créatrice</h3>
       <p>Schumpeter est l'économiste des révolutions technologiques. Sa grande contribution est le concept de <strong>destruction créatrice</strong> : le capitalisme ne progresse pas de façon linéaire, il avance par vagues. Chaque grande innovation détruit les structures économiques existantes pour en créer de nouvelles.</p>
       <p>Aujourd'hui, plusieurs destructions créatrices sont en cours simultanément : la transition énergétique menace les majors pétrolières tout en créant les géants de l'éolien et du solaire. L'intelligence artificielle recompose les industries de la connaissance. Dans chacun de ces cas, Schumpeter offre une grille de lecture : qui sont les entrants qui détruisent, qui sont les sortants qui résistent inutilement, et où se trouvent les opportunités ?</p>
     </div>
 <div class="module-figure">
-<svg width="100%" viewBox="0 0 680 400" style="display:block">
-<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
-<line x1="52" y1="32" x2="52" y2="300" stroke="var(--t)" stroke-width="1" opacity=".3"/>
-<line x1="52" y1="300" x2="648" y2="300" stroke="var(--t)" stroke-width="1" opacity=".3"/>
-<text class="ts" x="36" y="36" text-anchor="middle" opacity=".4">Activité</text>
-<path d="M52,290 C80,290 100,200 148,130 C196,60 210,55 230,60 C250,65 264,130 296,290" fill="#1D9E75" fill-opacity=".15" stroke="#1D9E75" stroke-width="1.5" stroke-linecap="round"/>
-<text class="ts" x="174" y="118" text-anchor="middle" fill="#085041">Machine à vapeur</text>
-<text class="ts" x="174" y="133" text-anchor="middle" fill="#085041">1780–1840</text>
-<path d="M206,290 C230,290 250,210 290,140 C330,70 345,62 365,67 C385,72 400,140 436,290" fill="#3B8BD4" fill-opacity=".15" stroke="#3B8BD4" stroke-width="1.5" stroke-linecap="round"/>
-<text class="ts" x="318" y="118" text-anchor="middle" fill="#0C447C">Chemin de fer</text>
-<text class="ts" x="318" y="133" text-anchor="middle" fill="#0C447C">1840–1890</text>
-<path d="M360,290 C382,290 398,215 432,148 C466,80 480,70 498,74 C516,78 530,145 562,290" fill="#EF9F27" fill-opacity=".15" stroke="#EF9F27" stroke-width="1.5" stroke-linecap="round"/>
-<text class="ts" x="463" y="118" text-anchor="middle" fill="#633806">Électricité / Auto</text>
-<text class="ts" x="463" y="133" text-anchor="middle" fill="#633806">1890–1940</text>
-<path d="M518,290 C536,290 548,230 568,175 C590,118 606,105 622,108 C636,111 644,155 648,290" fill="#534AB7" fill-opacity=".15" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="6 3" stroke-linecap="round"/>
-<text class="ts" x="590" y="160" text-anchor="middle" fill="#3C3489">Tech / IA</text>
-<text class="ts" x="590" y="175" text-anchor="middle" fill="#3C3489">1990–20??</text>
-<text class="ts" x="86"  y="318" text-anchor="middle" opacity=".5">1780</text>
-<text class="ts" x="230" y="318" text-anchor="middle" opacity=".5">1840</text>
-<text class="ts" x="368" y="318" text-anchor="middle" opacity=".5">1890</text>
-<text class="ts" x="518" y="318" text-anchor="middle" opacity=".5">1940</text>
-<text class="ts" x="634" y="318" text-anchor="middle" opacity=".5">2024</text>
-<line x1="230" y1="298" x2="230" y2="304" stroke="var(--t)" opacity=".3"/>
-<line x1="368" y1="298" x2="368" y2="304" stroke="var(--t)" opacity=".3"/>
-<line x1="518" y1="298" x2="518" y2="304" stroke="var(--t)" opacity=".3"/>
-<line x1="634" y1="48" x2="634" y2="300" stroke="var(--t)" stroke-width="1" stroke-dasharray="4 3" opacity=".2"/>
-<text class="ts" x="634" y="42" text-anchor="middle" opacity=".4">Aujourd'hui</text>
-<rect x="52" y="334" width="576" height="42" rx="8" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5" opacity=".6"/>
-<text class="ts" x="340" y="352" text-anchor="middle">Chaque vague dure ~40–60 ans : investissement → maturité → déclin → nouvelle vague</text>
-<text class="ts" x="340" y="368" text-anchor="middle" opacity=".6">Schumpeter : identifier la vague entrante avant qu'elle soit évidente = avantage structurel</text>
+<svg width="100%" viewBox="0 0 680 310" style="display:block">
+<line x1="52" y1="24" x2="52" y2="240" stroke="var(--text-3)" stroke-width="1" opacity=".3"/>
+<line x1="52" y1="240" x2="648" y2="240" stroke="var(--text-3)" stroke-width="1" opacity=".3"/>
+<text class="ts" x="36" y="28" text-anchor="middle" opacity=".4">Activité</text>
+<path d="M52,230 C80,230 100,155 148,95 C196,35 210,30 230,35 C250,40 264,95 296,230" fill="#1D9E75" fill-opacity=".15" stroke="#1D9E75" stroke-width="1.5" stroke-linecap="round"/>
+<text class="ts" x="174" y="72" text-anchor="middle" fill="#085041">Machine à vapeur</text>
+<text class="ts" x="174" y="86" text-anchor="middle" fill="#085041">1780–1840</text>
+<path d="M206,230 C230,230 250,155 290,92 C330,30 345,24 365,28 C385,32 400,92 436,230" fill="#3B8BD4" fill-opacity=".15" stroke="#3B8BD4" stroke-width="1.5" stroke-linecap="round"/>
+<text class="ts" x="318" y="72" text-anchor="middle" fill="#0C447C">Chemin de fer</text>
+<text class="ts" x="318" y="86" text-anchor="middle" fill="#0C447C">1840–1890</text>
+<path d="M360,230 C382,230 398,158 432,100 C466,40 480,30 498,34 C516,38 530,100 562,230" fill="#EF9F27" fill-opacity=".15" stroke="#EF9F27" stroke-width="1.5" stroke-linecap="round"/>
+<text class="ts" x="463" y="72" text-anchor="middle" fill="#633806">Électricité / Auto</text>
+<text class="ts" x="463" y="86" text-anchor="middle" fill="#633806">1890–1940</text>
+<path d="M518,230 C536,230 548,174 568,124 C590,70 606,56 622,59 C636,62 644,106 648,230" fill="#534AB7" fill-opacity=".15" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="6 3" stroke-linecap="round"/>
+<text class="ts" x="590" y="110" text-anchor="middle" fill="#3C3489">Tech / IA</text>
+<text class="ts" x="590" y="124" text-anchor="middle" fill="#3C3489">1990–20??</text>
+<text class="ts" x="86"  y="256" text-anchor="middle" opacity=".5">1780</text>
+<text class="ts" x="230" y="256" text-anchor="middle" opacity=".5">1840</text>
+<text class="ts" x="368" y="256" text-anchor="middle" opacity=".5">1890</text>
+<text class="ts" x="518" y="256" text-anchor="middle" opacity=".5">1940</text>
+<text class="ts" x="634" y="256" text-anchor="middle" opacity=".5">2024</text>
+<line x1="634" y1="32" x2="634" y2="240" stroke="var(--text-3)" stroke-width="1" stroke-dasharray="4 3" opacity=".2"/>
+<text class="ts" x="634" y="26" text-anchor="middle" opacity=".4">Aujourd'hui</text>
+<rect x="52" y="272" width="576" height="32" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="0.5" opacity=".6"/>
+<text class="ts" x="340" y="286" text-anchor="middle">Chaque vague dure ~40–60 ans : investissement → maturité → déclin → nouvelle vague</text>
+<text class="ts" x="340" y="300" text-anchor="middle" opacity=".6">Schumpeter : identifier la vague entrante avant qu'elle soit évidente = avantage structurel</text>
 </svg>
 <p class="fig-caption">Schumpeter — Les vagues de destruction créatrice (Cycles de Kondratiev)</p>
 </div>
 
-    <!-- Minsky -->
     <div class="sub">
       <h3 class="sub-title">Hyman Minsky (1919–1996) — L'instabilité endogène</h3>
       <p>Minsky est le grand ignoré de l'économie mainstream — jusqu'à 2008, où son nom est soudainement sur toutes les lèvres. Sa thèse centrale est contre-intuitive : <strong>la stabilité engendre l'instabilité.</strong> Plus les marchés restent calmes longtemps, plus les acteurs économiques prennent des risques — et plus le prochain choc sera violent.</p>
       <p>Minsky décrit un cycle financier en trois phases : <strong>hedge</strong> (remboursement sain), <strong>spéculative</strong> (comptent sur le refinancement) et <strong>Ponzi</strong> (comptent sur la hausse des prix). Le « Minsky moment », c'est le point de bascule où les acteurs réalisent que les prix ne peuvent plus monter, et où la liquidation en cascade commence.</p>
       <p>Pour l'investisseur, Minsky enseigne à se méfier des périodes de calme prolongé. Un VIX bas depuis plusieurs années, des spreads de crédit qui se compriment, des valorisations qui s'étendent au-delà des fondamentaux : autant de signaux que le système accumule des déséquilibres.</p>
-      <div class="callout">À retenir pour la section suivante : Minsky explique structurellement POURQUOI les crises arrivent — pas seulement comment elles se déroulent. C'est le lien entre cette section et la section c.</div>
+      <div class="callout yellow">À retenir pour la section suivante : Minsky explique structurellement POURQUOI les crises arrivent — pas seulement comment elles se déroulent. C'est le lien entre cette section et la section c.</div>
     </div>
 <div class="module-figure">
-<svg width="100%" viewBox="0 0 680 460" style="display:block">
-<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
-<line x1="52" y1="48" x2="52" y2="340" stroke="var(--t)" stroke-width="1" opacity=".35"/>
-<line x1="52" y1="340" x2="620" y2="340" stroke="var(--t)" stroke-width="1" opacity=".35"/>
-<text class="ts" x="36" y="52" text-anchor="middle" opacity=".5">Prix</text>
-<text class="ts" x="336" y="360" text-anchor="middle" opacity=".5">Temps</text>
-<rect x="52"  y="48" width="172" height="292" fill="#1D9E75" opacity=".06" rx="0"/>
-<rect x="224" y="48" width="172" height="292" fill="#EF9F27" opacity=".07" rx="0"/>
-<rect x="396" y="48" width="224" height="292" fill="#E24B4A" opacity=".07" rx="0"/>
-<text class="th" x="138" y="72" text-anchor="middle" fill="#0F6E56">Hedge</text>
-<text class="ts" x="138" y="88" text-anchor="middle" fill="#0F6E56">remboursement sain</text>
-<text class="th" x="310" y="72" text-anchor="middle" fill="#854F0B">Spéculative</text>
-<text class="ts" x="310" y="88" text-anchor="middle" fill="#854F0B">refinancement requis</text>
-<text class="th" x="510" y="72" text-anchor="middle" fill="#A32D2D">Ponzi</text>
-<text class="ts" x="510" y="88" text-anchor="middle" fill="#A32D2D">hausse des prix requise</text>
-<line x1="224" y1="48" x2="224" y2="340" stroke="var(--t)" stroke-width="1" stroke-dasharray="4 3" opacity=".2"/>
-<line x1="396" y1="48" x2="396" y2="340" stroke="var(--t)" stroke-width="1" stroke-dasharray="4 3" opacity=".2"/>
-<path d="M 68 290 C 90 280, 120 260, 160 240 C 200 220, 210 200, 224 185 C 250 160, 280 140, 310 120 C 340 102, 370 96, 396 100 C 420 104, 440 118, 460 130 C 480 142, 490 152, 510 168 C 530 185, 540 195, 560 225 C 580 255, 598 290, 612 320" fill="none" stroke="#378ADD" stroke-width="2.5" stroke-linecap="round"/>
-<line x1="396" y1="100" x2="396" y2="340" stroke="#E24B4A" stroke-width="1.5" stroke-dasharray="5 3" opacity=".6"/>
-<circle cx="396" cy="100" r="6" fill="#E24B4A" opacity=".9"/>
-<text class="ts" x="410" y="97" fill="#A32D2D">Minsky moment</text>
-<rect x="60" y="295" width="120" height="28" rx="6" fill="#1D9E75" opacity=".12"/>
-<text class="ts" x="120" y="313" text-anchor="middle" fill="#0F6E56">VIX bas / spreads serrés</text>
-<rect x="236" y="180" width="110" height="28" rx="6" fill="#BA7517" opacity=".12"/>
-<text class="ts" x="291" y="198" text-anchor="middle" fill="#854F0B">spreads qui s'écartent</text>
-<rect x="440" y="230" width="130" height="28" rx="6" fill="#A32D2D" opacity=".12"/>
-<text class="ts" x="505" y="248" text-anchor="middle" fill="#A32D2D">liquidation en cascade</text>
-<line x1="120" y1="295" x2="150" y2="244" stroke="#1D9E75" opacity=".5" marker-end="url(#arrow)"/>
-<line x1="270" y1="180" x2="295" y2="152" stroke="#BA7517" opacity=".5" marker-end="url(#arrow)"/>
-<line x1="480" y1="230" x2="520" y2="208" stroke="#A32D2D" opacity=".5" marker-end="url(#arrow)"/>
-<circle cx="224" cy="185" r="4" fill="#EF9F27" opacity=".8"/>
-<circle cx="310" cy="120" r="4" fill="#EF9F27" opacity=".6"/>
-<line x1="68" y1="410" x2="100" y2="410" stroke="#378ADD" stroke-width="2.5" stroke-linecap="round"/>
-<text class="ts" x="108" y="414">Prix des actifs</text>
-<circle cx="240" cy="410" r="6" fill="#E24B4A" opacity=".9"/>
-<text class="ts" x="252" y="414">Point de bascule</text>
-<rect x="370" y="403" width="18" height="14" rx="3" fill="#1D9E75" opacity=".2"/>
-<rect x="370" y="403" width="18" height="14" rx="3" fill="none" stroke="#0F6E56" stroke-width="0.5" opacity=".4"/>
-<text class="ts" x="394" y="414">Régime de marché</text>
+<svg width="100%" viewBox="0 0 680 350" style="display:block">
+<defs><marker id="arrow4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<line x1="52" y1="40" x2="52" y2="280" stroke="var(--text-3)" stroke-width="1" opacity=".35"/>
+<line x1="52" y1="280" x2="620" y2="280" stroke="var(--text-3)" stroke-width="1" opacity=".35"/>
+<text class="ts" x="36" y="44" text-anchor="middle" opacity=".5">Prix</text>
+<text class="ts" x="336" y="298" text-anchor="middle" opacity=".5">Temps</text>
+<rect x="52" y="40" width="172" height="240" fill="#1D9E75" opacity=".06" rx="0"/>
+<rect x="224" y="40" width="172" height="240" fill="#EF9F27" opacity=".07" rx="0"/>
+<rect x="396" y="40" width="224" height="240" fill="#E24B4A" opacity=".07" rx="0"/>
+<text class="th" x="138" y="60" text-anchor="middle" fill="#0F6E56">Hedge</text>
+<text class="ts" x="138" y="76" text-anchor="middle" fill="#0F6E56">remboursement sain</text>
+<text class="th" x="310" y="60" text-anchor="middle" fill="#854F0B">Spéculative</text>
+<text class="ts" x="310" y="76" text-anchor="middle" fill="#854F0B">refinancement requis</text>
+<text class="th" x="510" y="60" text-anchor="middle" fill="#A32D2D">Ponzi</text>
+<text class="ts" x="510" y="76" text-anchor="middle" fill="#A32D2D">hausse des prix requise</text>
+<line x1="224" y1="40" x2="224" y2="280" stroke="var(--text-3)" stroke-width="1" stroke-dasharray="4 3" opacity=".2"/>
+<line x1="396" y1="40" x2="396" y2="280" stroke="var(--text-3)" stroke-width="1" stroke-dasharray="4 3" opacity=".2"/>
+<path d="M 68 234 C 90 224, 120 207, 160 186 C 200 165, 210 148, 224 136 C 250 112, 280 92, 310 74 C 340 56, 370 50, 396 54 C 420 58, 440 70, 460 84 C 480 98, 490 110, 510 126 C 530 143, 540 154, 560 176 C 580 198, 598 228, 612 256" fill="none" stroke="#378ADD" stroke-width="2.5" stroke-linecap="round"/>
+<line x1="396" y1="54" x2="396" y2="280" stroke="#E24B4A" stroke-width="1.5" stroke-dasharray="5 3" opacity=".6"/>
+<circle cx="396" cy="54" r="6" fill="#E24B4A" opacity=".9"/>
+<text class="ts" x="410" y="51" fill="#A32D2D">Minsky moment</text>
+<rect x="60" y="236" width="120" height="26" rx="6" fill="#1D9E75" opacity=".12"/>
+<text class="ts" x="120" y="253" text-anchor="middle" fill="#0F6E56">VIX bas / spreads serrés</text>
+<rect x="236" y="132" width="110" height="26" rx="6" fill="#BA7517" opacity=".12"/>
+<text class="ts" x="291" y="148" text-anchor="middle" fill="#854F0B">spreads qui s'écartent</text>
+<rect x="440" y="178" width="130" height="26" rx="6" fill="#A32D2D" opacity=".12"/>
+<text class="ts" x="505" y="194" text-anchor="middle" fill="#A32D2D">liquidation en cascade</text>
+<line x1="120" y1="236" x2="150" y2="195" stroke="#1D9E75" opacity=".5" marker-end="url(#arrow4)"/>
+<line x1="270" y1="132" x2="295" y2="105" stroke="#BA7517" opacity=".5" marker-end="url(#arrow4)"/>
+<line x1="480" y1="178" x2="520" y2="155" stroke="#A32D2D" opacity=".5" marker-end="url(#arrow4)"/>
+<text class="ts" x="340" y="326" text-anchor="middle" opacity=".5">La stabilité engendre l'instabilité — Minsky</text>
 </svg>
 <p class="fig-caption">Le cycle de Minsky — de la phase hedge à l'instabilité Ponzi</p>
 </div>
 
-    <!-- Hayek -->
     <div class="sub">
       <h3 class="sub-title">Friedrich Hayek (1899–1992) — Les limites de la planification</h3>
       <p>Hayek est le grand contradicteur de Keynes. Son argument central : la connaissance économique est dispersée dans des millions d'acteurs individuels. Aucun planificateur central ne peut l'agréger entièrement. Quand une banque centrale fixe les taux « trop bas trop longtemps », elle envoie un signal erroné : le capital est bon marché, il faut investir. Des investissements non rentables à des taux normaux deviennent apparemment attractifs — ce que Hayek appelle le « mal investissement ».</p>
       <p>Les taux zéro de 2009 à 2022 ont créé exactement ce que Hayek prédisait : une explosion des valorisations boursières, une bulle immobilière mondiale, un afflux de capitaux vers des actifs spéculatifs. Quand la Fed a relevé ses taux à partir de 2022, les corrections dans ces secteurs ont été brutales et prévisibles — pour qui avait lu Hayek.</p>
     </div>
 <div class="module-figure">
-<svg width="100%" viewBox="0 0 680 440" style="display:block">
-<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
-<g class="node c-blue"><rect x="228" y="24" width="224" height="56" rx="8" stroke-width="0.5"/><text class="th" x="340" y="46" text-anchor="middle" dominant-baseline="central">Banque centrale</text><text class="ts" x="340" y="64" text-anchor="middle">taux directeurs bas (trop longtemps)</text></g>
-<line x1="270" y1="80" x2="156" y2="144" stroke="var(--t)" opacity=".3" marker-end="url(#arrow)"/>
-<line x1="340" y1="80" x2="340" y2="144" stroke="var(--t)" opacity=".3" marker-end="url(#arrow)"/>
-<line x1="410" y1="80" x2="524" y2="144" stroke="var(--t)" opacity=".3" marker-end="url(#arrow)"/>
-<g class="node c-amber"><rect x="52" y="144" width="196" height="60" rx="8" stroke-width="0.5"/><text class="th" x="150" y="166" text-anchor="middle" dominant-baseline="central">Mal-investissement</text><text class="ts" x="150" y="184" text-anchor="middle">projets non rentables</text></g>
-<g class="node c-amber"><rect x="242" y="144" width="196" height="60" rx="8" stroke-width="0.5"/><text class="th" x="340" y="166" text-anchor="middle" dominant-baseline="central">Bulle d'actifs</text><text class="ts" x="340" y="184" text-anchor="middle">valorisations déconnectées</text></g>
-<g class="node c-amber"><rect x="432" y="144" width="196" height="60" rx="8" stroke-width="0.5"/><text class="th" x="530" y="166" text-anchor="middle" dominant-baseline="central">Dette excessive</text><text class="ts" x="530" y="184" text-anchor="middle">levier amplifié</text></g>
-<rect x="52" y="232" width="576" height="44" rx="8" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5" opacity=".5"/>
-<text class="ts" x="340" y="250" text-anchor="middle" opacity=".7">Exemple 2009–2022 : taux zéro → crypto, SPAC, tech non-profitable, bulle immobilière mondiale</text>
-<text class="ts" x="340" y="266" text-anchor="middle" opacity=".5">Hayek l'avait prédit : le capital bon marché finance l'illusion, pas la valeur réelle</text>
-<line x1="340" y1="276" x2="340" y2="312" stroke="#E24B4A" opacity=".4" marker-end="url(#arrow)"/>
-<g class="node c-coral"><rect x="184" y="312" width="312" height="60" rx="8" stroke-width="0.5"/><text class="th" x="340" y="334" text-anchor="middle" dominant-baseline="central">Correction inévitable</text><text class="ts" x="340" y="352" text-anchor="middle">liquidation des mal-investissements</text></g>
-<rect x="52" y="392" width="576" height="34" rx="8" fill="#FCEBEB" stroke="#E24B4A" stroke-width="0.5" opacity=".6"/>
-<text class="ts" x="340" y="406" text-anchor="middle" fill="#A32D2D">2022 : Fed +525bp → –78% Nasdaq tech, –50% crypto, corrections immobilières mondiales</text>
-<text class="ts" x="340" y="420" text-anchor="middle" fill="#A32D2D" opacity=".7">Prévisible pour qui avait lu Hayek</text>
+<svg width="100%" viewBox="0 0 680 340" style="display:block">
+<defs><marker id="arrow5" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<g class="node c-blue"><rect x="228" y="16" width="224" height="52" rx="8" stroke-width="0.5"/><text class="th" x="340" y="36" text-anchor="middle" dominant-baseline="central">Banque centrale</text><text class="ts" x="340" y="54" text-anchor="middle">taux directeurs bas (trop longtemps)</text></g>
+<line x1="270" y1="68" x2="156" y2="120" stroke="var(--text-3)" opacity=".3" marker-end="url(#arrow5)"/>
+<line x1="340" y1="68" x2="340" y2="120" stroke="var(--text-3)" opacity=".3" marker-end="url(#arrow5)"/>
+<line x1="410" y1="68" x2="524" y2="120" stroke="var(--text-3)" opacity=".3" marker-end="url(#arrow5)"/>
+<g class="node c-amber"><rect x="52" y="120" width="196" height="52" rx="8" stroke-width="0.5"/><text class="th" x="150" y="139" text-anchor="middle" dominant-baseline="central">Mal-investissement</text><text class="ts" x="150" y="157" text-anchor="middle">projets non rentables</text></g>
+<g class="node c-amber"><rect x="242" y="120" width="196" height="52" rx="8" stroke-width="0.5"/><text class="th" x="340" y="139" text-anchor="middle" dominant-baseline="central">Bulle d'actifs</text><text class="ts" x="340" y="157" text-anchor="middle">valorisations déconnectées</text></g>
+<g class="node c-amber"><rect x="432" y="120" width="196" height="52" rx="8" stroke-width="0.5"/><text class="th" x="530" y="139" text-anchor="middle" dominant-baseline="central">Dette excessive</text><text class="ts" x="530" y="157" text-anchor="middle">levier amplifié</text></g>
+<rect x="52" y="188" width="576" height="40" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="0.5" opacity=".5"/>
+<text class="ts" x="340" y="204" text-anchor="middle" opacity=".7">Exemple 2009–2022 : taux zéro → crypto, SPAC, tech non-profitable, bulle immobilière mondiale</text>
+<text class="ts" x="340" y="220" text-anchor="middle" opacity=".5">Hayek l'avait prédit : le capital bon marché finance l'illusion, pas la valeur réelle</text>
+<line x1="340" y1="228" x2="340" y2="252" stroke="#E24B4A" opacity=".4" marker-end="url(#arrow5)"/>
+<g class="node c-coral"><rect x="184" y="252" width="312" height="52" rx="8" stroke-width="0.5"/><text class="th" x="340" y="271" text-anchor="middle" dominant-baseline="central">Correction inévitable</text><text class="ts" x="340" y="289" text-anchor="middle">liquidation des mal-investissements</text></g>
+<rect x="52" y="316" width="576" height="22" rx="8" fill="#FCEBEB" stroke="#E24B4A" stroke-width="0.5" opacity=".6"/>
+<text class="ts" x="340" y="330" text-anchor="middle" fill="#A32D2D">2022 : Fed +525bp → –78% Nasdaq tech, –50% crypto — Prévisible pour qui avait lu Hayek</text>
 </svg>
 <p class="fig-caption">Hayek — Décisions des banques centrales et leurs effets pervers non voulus</p>
 </div>
@@ -616,9 +434,7 @@
   <section class="section" id="section-b">
     <div class="section-label">Section B</div>
     <h2 class="section-title">Économie classique — les fondamentaux</h2>
-    <div class="section-intro">
-      Les économistes nous ont donné des lentilles. Maintenant, les outils. Les mécanismes économiques fondamentaux sont les variables que surveillent les institutionnels — et que la majorité des traders retail ignorent. Ce sont eux qui, en fin de compte, déterminent les niveaux de valorisation, les flux de capitaux entre classes d'actifs, et les décisions des banques centrales.
-    </div>
+    <div class="section-intro">Les économistes nous ont donné des lentilles. Maintenant, les outils. Les mécanismes économiques fondamentaux sont les variables que surveillent les institutionnels — et que la majorité des traders retail ignorent. Ce sont eux qui, en fin de compte, déterminent les niveaux de valorisation, les flux de capitaux entre classes d'actifs, et les décisions des banques centrales.</div>
 
     <div class="sub">
       <h3 class="sub-title">Offre et demande</h3>
@@ -666,9 +482,7 @@
   <section class="section" id="section-c">
     <div class="section-label">Section C</div>
     <h2 class="section-title">Les grandes crises — les cycles se répètent</h2>
-    <div class="section-intro">
-      L'histoire financière n'est pas une liste d'accidents malheureux. C'est un pattern récurrent : excès de crédit, euphorie, déni, retournement, contagion, puis intervention. Les circonstances changent — la technologie, les instruments financiers, les acteurs impliqués. Mais la structure profonde reste remarquablement stable.
-    </div>
+    <div class="section-intro">L'histoire financière n'est pas une liste d'accidents malheureux. C'est un pattern récurrent : excès de crédit, euphorie, déni, retournement, contagion, puis intervention. Les circonstances changent — la technologie, les instruments financiers, les acteurs impliqués. Mais la structure profonde reste remarquablement stable.</div>
 
     <div class="sub">
       <h3 class="sub-title">1929 — La Grande Dépression</h3>
@@ -694,54 +508,54 @@
       <p>Le COVID est un choc exogène, pas un déséquilibre endogène accumulé. En quelques semaines, l'économie mondiale a été mise à l'arrêt administratif. La réponse a été historique par son ampleur et sa rapidité : la Fed a baissé ses taux à zéro et relancé le QE à grande échelle. En quelques mois, la quantité de monnaie en circulation avait explosé.</p>
       <p><strong>Leçon fondamentale :</strong> l'injection monétaire et budgétaire massive, dans un contexte de perturbations des chaînes d'approvisionnement mondiales, a créé exactement le scénario que Friedman aurait prédit : une inflation structurelle, qui a culminé à des niveaux inédits depuis 40 ans en 2022.</p>
     </div>
-
     <div class="callout blue">Fil conducteur entre les crises : excès → euphorie → déni → retournement → contagion → intervention. Le calendrier change. Le schéma non.</div>
+
 <div class="module-figure">
-<svg width="100%" viewBox="0 0 680 430" style="display:block">
-<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
-<rect x="52"  y="24" width="92" height="36" rx="6" fill="#534AB7" fill-opacity=".12" stroke="#534AB7" stroke-width="0.5" opacity=".6"/>
-<text class="ts" x="98"  y="46" text-anchor="middle" fill="#3C3489">Excès / levier</text>
-<line x1="144" y1="42" x2="160" y2="42" stroke="var(--t)" opacity=".3" marker-end="url(#arrow)"/>
-<rect x="160" y="24" width="80" height="36" rx="6" fill="#EF9F27" fill-opacity=".12" stroke="#EF9F27" stroke-width="0.5" opacity=".6"/>
-<text class="ts" x="200" y="46" text-anchor="middle" fill="#633806">Euphorie</text>
-<line x1="240" y1="42" x2="256" y2="42" stroke="var(--t)" opacity=".3" marker-end="url(#arrow)"/>
-<rect x="256" y="24" width="68" height="36" rx="6" fill="#B4B2A9" fill-opacity=".2" stroke="#888780" stroke-width="0.5" opacity=".6"/>
-<text class="ts" x="290" y="46" text-anchor="middle" fill="#444441">Déni</text>
-<line x1="324" y1="42" x2="340" y2="42" stroke="var(--t)" opacity=".3" marker-end="url(#arrow)"/>
-<rect x="340" y="24" width="104" height="36" rx="6" fill="#E24B4A" fill-opacity=".12" stroke="#E24B4A" stroke-width="0.5" opacity=".6"/>
-<text class="ts" x="392" y="46" text-anchor="middle" fill="#A32D2D">Retournement</text>
-<line x1="444" y1="42" x2="460" y2="42" stroke="var(--t)" opacity=".3" marker-end="url(#arrow)"/>
-<rect x="460" y="24" width="88" height="36" rx="6" fill="#1D9E75" fill-opacity=".12" stroke="#1D9E75" stroke-width="0.5" opacity=".6"/>
-<text class="ts" x="504" y="46" text-anchor="middle" fill="#085041">Intervention</text>
-<g class="node"><rect x="36" y="96" width="294" height="130" rx="10" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5"/>
-<text class="th" x="56" y="122" fill="#A32D2D" dominant-baseline="central" style="font-size:22px">1929</text>
-<text class="ts" x="56" y="140" fill="#793535">Grande Dépression</text>
-<line x1="36" y1="152" x2="330" y2="152" stroke="var(--b)" stroke-width="0.5"/>
-<text class="ts" x="56" y="168">Déclencheur : levier massif (margin lending ×10)</text>
-<text class="ts" x="56" y="184">Mécanisme : spirale déflationniste, appels de marge</text>
-<text class="ts" x="56" y="200">Leçon : surveiller le levier dans le système</text></g>
-<g class="node"><rect x="350" y="96" width="294" height="130" rx="10" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5"/>
-<text class="th" x="370" y="122" fill="#A32D2D" dominant-baseline="central" style="font-size:22px">2000</text>
-<text class="ts" x="370" y="140" fill="#793535">Bulle dot-com</text>
-<line x1="350" y1="152" x2="644" y2="152" stroke="var(--b)" stroke-width="0.5"/>
-<text class="ts" x="370" y="168">Déclencheur : narration &gt; fondamentaux</text>
-<text class="ts" x="370" y="184">Mécanisme : valorisations sans revenus</text>
-<text class="ts" x="370" y="200">Leçon : le prix payé reste déterminant</text></g>
-<g class="node"><rect x="36" y="244" width="294" height="130" rx="10" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5"/>
-<text class="th" x="56" y="270" fill="#A32D2D" dominant-baseline="central" style="font-size:22px">2008</text>
-<text class="ts" x="56" y="288" fill="#793535">Subprimes</text>
-<line x1="36" y1="300" x2="330" y2="300" stroke="var(--b)" stroke-width="0.5"/>
-<text class="ts" x="56" y="316">Déclencheur : Minsky + titrisation opaque</text>
-<text class="ts" x="56" y="332">Mécanisme : risque invisible, contagion bancaire</text>
-<text class="ts" x="56" y="348">Leçon : lire les spreads et les bilans bancaires</text></g>
-<g class="node"><rect x="350" y="244" width="294" height="130" rx="10" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5"/>
-<text class="th" x="370" y="270" fill="#A32D2D" dominant-baseline="central" style="font-size:22px">2020</text>
-<text class="ts" x="370" y="288" fill="#793535">Choc COVID</text>
-<line x1="350" y1="300" x2="644" y2="300" stroke="var(--b)" stroke-width="0.5"/>
-<text class="ts" x="370" y="316">Déclencheur : choc exogène (arrêt administratif)</text>
-<text class="ts" x="370" y="332">Mécanisme : QE illimité + ruptures chaînes</text>
-<text class="ts" x="370" y="348">Leçon : inflation différée prévisible (Friedman)</text></g>
-<text class="ts" x="340" y="400" text-anchor="middle" opacity=".45">Le calendrier change. Le schéma — excès → euphorie → déni → retournement → intervention — non.</text>
+<svg width="100%" viewBox="0 0 680 340" style="display:block">
+<defs><marker id="arrow6" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<rect x="52"  y="16" width="92" height="32" rx="6" fill="#534AB7" fill-opacity=".12" stroke="#534AB7" stroke-width="0.5" opacity=".6"/>
+<text class="ts" x="98"  y="36" text-anchor="middle" fill="#3C3489">Excès / levier</text>
+<line x1="144" y1="32" x2="160" y2="32" stroke="var(--text-3)" opacity=".3" marker-end="url(#arrow6)"/>
+<rect x="160" y="16" width="80" height="32" rx="6" fill="#EF9F27" fill-opacity=".12" stroke="#EF9F27" stroke-width="0.5" opacity=".6"/>
+<text class="ts" x="200" y="36" text-anchor="middle" fill="#633806">Euphorie</text>
+<line x1="240" y1="32" x2="256" y2="32" stroke="var(--text-3)" opacity=".3" marker-end="url(#arrow6)"/>
+<rect x="256" y="16" width="68" height="32" rx="6" fill="#B4B2A9" fill-opacity=".2" stroke="#888780" stroke-width="0.5" opacity=".6"/>
+<text class="ts" x="290" y="36" text-anchor="middle" fill="#444441">Déni</text>
+<line x1="324" y1="32" x2="340" y2="32" stroke="var(--text-3)" opacity=".3" marker-end="url(#arrow6)"/>
+<rect x="340" y="16" width="104" height="32" rx="6" fill="#E24B4A" fill-opacity=".12" stroke="#E24B4A" stroke-width="0.5" opacity=".6"/>
+<text class="ts" x="392" y="36" text-anchor="middle" fill="#A32D2D">Retournement</text>
+<line x1="444" y1="32" x2="460" y2="32" stroke="var(--text-3)" opacity=".3" marker-end="url(#arrow6)"/>
+<rect x="460" y="16" width="88" height="32" rx="6" fill="#1D9E75" fill-opacity=".12" stroke="#1D9E75" stroke-width="0.5" opacity=".6"/>
+<text class="ts" x="504" y="36" text-anchor="middle" fill="#085041">Intervention</text>
+<g><rect x="36" y="72" width="294" height="120" rx="10" fill="var(--surface)" stroke="var(--border)" stroke-width="0.5"/>
+<text class="th" x="56" y="96" fill="#A32D2D" dominant-baseline="central" style="font-size:22px">1929</text>
+<text class="ts" x="56" y="112" fill="#793535">Grande Dépression</text>
+<line x1="36" y1="122" x2="330" y2="122" stroke="var(--border)" stroke-width="0.5"/>
+<text class="ts" x="56" y="136">Déclencheur : levier massif (margin lending ×10)</text>
+<text class="ts" x="56" y="150">Mécanisme : spirale déflationniste, appels de marge</text>
+<text class="ts" x="56" y="164">Leçon : surveiller le levier dans le système</text></g>
+<g><rect x="350" y="72" width="294" height="120" rx="10" fill="var(--surface)" stroke="var(--border)" stroke-width="0.5"/>
+<text class="th" x="370" y="96" fill="#A32D2D" dominant-baseline="central" style="font-size:22px">2000</text>
+<text class="ts" x="370" y="112" fill="#793535">Bulle dot-com</text>
+<line x1="350" y1="122" x2="644" y2="122" stroke="var(--border)" stroke-width="0.5"/>
+<text class="ts" x="370" y="136">Déclencheur : narration &gt; fondamentaux</text>
+<text class="ts" x="370" y="150">Mécanisme : valorisations sans revenus</text>
+<text class="ts" x="370" y="164">Leçon : le prix payé reste déterminant</text></g>
+<g><rect x="36" y="204" width="294" height="120" rx="10" fill="var(--surface)" stroke="var(--border)" stroke-width="0.5"/>
+<text class="th" x="56" y="228" fill="#A32D2D" dominant-baseline="central" style="font-size:22px">2008</text>
+<text class="ts" x="56" y="244" fill="#793535">Subprimes</text>
+<line x1="36" y1="254" x2="330" y2="254" stroke="var(--border)" stroke-width="0.5"/>
+<text class="ts" x="56" y="268">Déclencheur : Minsky + titrisation opaque</text>
+<text class="ts" x="56" y="282">Mécanisme : risque invisible, contagion bancaire</text>
+<text class="ts" x="56" y="296">Leçon : lire les spreads et les bilans bancaires</text></g>
+<g><rect x="350" y="204" width="294" height="120" rx="10" fill="var(--surface)" stroke="var(--border)" stroke-width="0.5"/>
+<text class="th" x="370" y="228" fill="#A32D2D" dominant-baseline="central" style="font-size:22px">2020</text>
+<text class="ts" x="370" y="244" fill="#793535">Choc COVID</text>
+<line x1="350" y1="254" x2="644" y2="254" stroke="var(--border)" stroke-width="0.5"/>
+<text class="ts" x="370" y="268">Déclencheur : choc exogène (arrêt administratif)</text>
+<text class="ts" x="370" y="282">Mécanisme : QE illimité + ruptures chaînes</text>
+<text class="ts" x="370" y="296">Leçon : inflation différée prévisible (Friedman)</text></g>
+<text class="ts" x="340" y="330" text-anchor="middle" opacity=".45">Le calendrier change. Le schéma — excès → euphorie → déni → retournement → intervention — non.</text>
 </svg>
 <p class="fig-caption">Les quatre grandes crises — un schéma récurrent</p>
 </div>
@@ -751,9 +565,7 @@
   <section class="section" id="section-d">
     <div class="section-label">Section D</div>
     <h2 class="section-title">Naissance et évolution des marchés financiers modernes</h2>
-    <div class="section-intro">
-      Comprendre d'où viennent les marchés, c'est comprendre leur logique profonde — et éviter les malentendus fréquents sur ce qu'on achète réellement quand on passe un ordre.
-    </div>
+    <div class="section-intro">Comprendre d'où viennent les marchés, c'est comprendre leur logique profonde — et éviter les malentendus fréquents sur ce qu'on achète réellement quand on passe un ordre.</div>
 
     <div class="sub">
       <h3 class="sub-title">Des origines aux marchés électroniques</h3>
@@ -779,9 +591,7 @@
   <section class="section" id="section-e">
     <div class="section-label">Section E</div>
     <h2 class="section-title">Cycles et régimes de marché</h2>
-    <div class="section-intro">
-      Le marché n'est pas dans le même état en permanence. Identifier le régime en cours n'est pas une activité de market timing au sens spéculatif — c'est un prérequis pour choisir la bonne stratégie et allouer son capital de façon cohérente avec l'environnement macro.
-    </div>
+    <div class="section-intro">Le marché n'est pas dans le même état en permanence. Identifier le régime en cours n'est pas une activité de market timing au sens spéculatif — c'est un prérequis pour choisir la bonne stratégie et allouer son capital de façon cohérente avec l'environnement macro.</div>
 
     <div class="sub">
       <h3 class="sub-title">Les trois grands régimes</h3>
@@ -839,87 +649,94 @@
       <p>L'enjeu n'est pas de savoir qu'une récession a eu lieu — c'est de l'anticiper. Les indicateurs avancés signalent un changement de régime probable dans les 6 à 18 mois qui suivent, mais la transition peut être retardée, avortée, ou plus rapide que prévu.</p>
       <p>La <strong>courbe des taux</strong> est l'indicateur avancé le plus documenté. Quand les taux à 2 ans dépassent les taux à 10 ans (courbe inversée), cela traduit une anticipation de récession par le marché obligataire. Cela s'est produit avant chaque récession américaine depuis 50 ans, avec un délai de 6 à 18 mois.</p>
       <p>Les <strong>PMI manufacturiers</strong> donnent une lecture mensuelle de l'activité industrielle. Un PMI qui croise la barre des 50 à la baisse est un signal d'alerte. Les <strong>spreads de crédit</strong> mesurent le stress du système financier : quand ils s'écartent brutalement, c'est que les investisseurs institutionnels perçoivent une augmentation du risque de défaut.</p>
-      <div class="callout">À retenir : le bon actif au mauvais moment dans le cycle peut coûter cher. La lecture du régime macro est une compétence à part entière — elle sera approfondie dans les modules suivants.</div>
+      <div class="callout yellow">À retenir : le bon actif au mauvais moment dans le cycle peut coûter cher. La lecture du régime macro est une compétence à part entière — elle sera approfondie dans les modules suivants.</div>
     </div>
+
 <div class="module-figure">
-<svg width="100%" viewBox="0 0 680 430" style="display:block">
-<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
-<path d="M 60 270 C 100 260, 140 180, 180 130 C 220 80, 250 68, 280 72 C 310 76, 330 110, 360 170 C 390 230, 410 290, 440 310 C 470 330, 510 320, 540 290 C 570 260, 600 210, 620 175" fill="none" stroke="var(--t)" stroke-width="2" stroke-linecap="round" opacity=".2"/>
-<line x1="48" y1="40" x2="48" y2="340" stroke="var(--t)" stroke-width="1" opacity=".25"/>
-<line x1="48" y1="340" x2="644" y2="340" stroke="var(--t)" stroke-width="1" opacity=".25"/>
-<text class="ts" x="32" y="44" text-anchor="middle" opacity=".4">Activ.</text>
-<rect x="52"  y="48" width="150" height="292" fill="#1D9E75" fill-opacity=".06"/>
-<text class="th" x="127" y="68" text-anchor="middle" fill="#0F6E56">1. Expansion</text>
-<text class="ts" x="127" y="85" text-anchor="middle" fill="#0F6E56">croissance forte</text>
-<rect x="202" y="48" width="150" height="292" fill="#EF9F27" fill-opacity=".07"/>
-<text class="th" x="277" y="68" text-anchor="middle" fill="#854F0B">2. Pic</text>
-<text class="ts" x="277" y="85" text-anchor="middle" fill="#854F0B">surchauffe</text>
-<rect x="352" y="48" width="150" height="292" fill="#E24B4A" fill-opacity=".06"/>
-<text class="th" x="427" y="68" text-anchor="middle" fill="#A32D2D">3. Récession</text>
-<text class="ts" x="427" y="85" text-anchor="middle" fill="#A32D2D">contraction</text>
-<rect x="502" y="48" width="140" height="292" fill="#378ADD" fill-opacity=".06"/>
-<text class="th" x="572" y="68" text-anchor="middle" fill="#185FA5">4. Reprise</text>
-<text class="ts" x="572" y="85" text-anchor="middle" fill="#185FA5">retournement</text>
-<line x1="202" y1="48" x2="202" y2="340" stroke="var(--t)" stroke-width="1" stroke-dasharray="4 3" opacity=".15"/>
-<line x1="352" y1="48" x2="352" y2="340" stroke="var(--t)" stroke-width="1" stroke-dasharray="4 3" opacity=".15"/>
-<line x1="502" y1="48" x2="502" y2="340" stroke="var(--t)" stroke-width="1" stroke-dasharray="4 3" opacity=".15"/>
-<g class="node"><rect x="56" y="300" width="142" height="32" rx="6" fill="#1D9E75" fill-opacity=".12" stroke="#1D9E75" stroke-width="0.5"/><text class="ts" x="127" y="320" text-anchor="middle" fill="#085041">Actions cycl. · Immo · MP</text></g>
-<g class="node"><rect x="206" y="300" width="142" height="32" rx="6" fill="#EF9F27" fill-opacity=".12" stroke="#EF9F27" stroke-width="0.5"/><text class="ts" x="277" y="320" text-anchor="middle" fill="#633806">Énergie · Réduire risque</text></g>
-<g class="node"><rect x="356" y="300" width="142" height="32" rx="6" fill="#E24B4A" fill-opacity=".12" stroke="#E24B4A" stroke-width="0.5"/><text class="ts" x="427" y="320" text-anchor="middle" fill="#791F1F">OAT · Or · Défensifs</text></g>
-<g class="node"><rect x="506" y="300" width="132" height="32" rx="6" fill="#378ADD" fill-opacity=".12" stroke="#378ADD" stroke-width="0.5"/><text class="ts" x="572" y="320" text-anchor="middle" fill="#0C447C">Cycliques · Crédit</text></g>
-<text class="ts" x="127" y="160" text-anchor="middle" fill="#0F6E56" opacity=".7">PMI ↑</text>
-<text class="ts" x="127" y="176" text-anchor="middle" fill="#0F6E56" opacity=".7">Emploi ↑</text>
-<text class="ts" x="127" y="192" text-anchor="middle" fill="#0F6E56" opacity=".7">Bénéfices ↑</text>
-<text class="ts" x="277" y="160" text-anchor="middle" fill="#854F0B" opacity=".7">Inflation ↑</text>
-<text class="ts" x="277" y="176" text-anchor="middle" fill="#854F0B" opacity=".7">Taux ↑</text>
-<text class="ts" x="277" y="192" text-anchor="middle" fill="#854F0B" opacity=".7">Courbe plate</text>
-<text class="ts" x="427" y="160" text-anchor="middle" fill="#A32D2D" opacity=".7">PMI &lt; 50</text>
-<text class="ts" x="427" y="176" text-anchor="middle" fill="#A32D2D" opacity=".7">Chômage ↑</text>
-<text class="ts" x="427" y="192" text-anchor="middle" fill="#A32D2D" opacity=".7">Spreads ↑</text>
-<text class="ts" x="572" y="160" text-anchor="middle" fill="#185FA5" opacity=".7">Commandes ↑</text>
-<text class="ts" x="572" y="176" text-anchor="middle" fill="#185FA5" opacity=".7">PMI ↗</text>
-<text class="ts" x="572" y="192" text-anchor="middle" fill="#185FA5" opacity=".7">Crédit ↗</text>
-<text class="ts" x="340" y="400" text-anchor="middle" opacity=".45">Le bon actif au mauvais moment dans le cycle peut coûter cher</text>
+<svg width="100%" viewBox="0 0 680 340" style="display:block">
+<defs><marker id="arrow7" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<path d="M 60 210 C 100 200, 140 130, 180 88 C 220 46, 250 36, 280 40 C 310 44, 330 74, 360 126 C 390 178, 410 226, 440 244 C 470 262, 510 252, 540 226 C 570 200, 600 158, 620 130" fill="none" stroke="var(--text-3)" stroke-width="2" stroke-linecap="round" opacity=".2"/>
+<line x1="48" y1="28" x2="48" y2="278" stroke="var(--text-3)" stroke-width="1" opacity=".25"/>
+<line x1="48" y1="278" x2="644" y2="278" stroke="var(--text-3)" stroke-width="1" opacity=".25"/>
+<text class="ts" x="32" y="32" text-anchor="middle" opacity=".4">Activ.</text>
+<rect x="52"  y="32" width="150" height="246" fill="#1D9E75" fill-opacity=".06"/>
+<text class="th" x="127" y="52" text-anchor="middle" fill="#0F6E56">1. Expansion</text>
+<text class="ts" x="127" y="68" text-anchor="middle" fill="#0F6E56">croissance forte</text>
+<rect x="202" y="32" width="150" height="246" fill="#EF9F27" fill-opacity=".07"/>
+<text class="th" x="277" y="52" text-anchor="middle" fill="#854F0B">2. Pic</text>
+<text class="ts" x="277" y="68" text-anchor="middle" fill="#854F0B">surchauffe</text>
+<rect x="352" y="32" width="150" height="246" fill="#E24B4A" fill-opacity=".06"/>
+<text class="th" x="427" y="52" text-anchor="middle" fill="#A32D2D">3. Récession</text>
+<text class="ts" x="427" y="68" text-anchor="middle" fill="#A32D2D">contraction</text>
+<rect x="502" y="32" width="140" height="246" fill="#378ADD" fill-opacity=".06"/>
+<text class="th" x="572" y="52" text-anchor="middle" fill="#185FA5">4. Reprise</text>
+<text class="ts" x="572" y="68" text-anchor="middle" fill="#185FA5">retournement</text>
+<line x1="202" y1="32" x2="202" y2="278" stroke="var(--text-3)" stroke-width="1" stroke-dasharray="4 3" opacity=".15"/>
+<line x1="352" y1="32" x2="352" y2="278" stroke="var(--text-3)" stroke-width="1" stroke-dasharray="4 3" opacity=".15"/>
+<line x1="502" y1="32" x2="502" y2="278" stroke="var(--text-3)" stroke-width="1" stroke-dasharray="4 3" opacity=".15"/>
+<rect x="56" y="244" width="142" height="28" rx="6" fill="#1D9E75" fill-opacity=".12" stroke="#1D9E75" stroke-width="0.5"/>
+<text class="ts" x="127" y="262" text-anchor="middle" fill="#085041">Actions cycl. · Immo · MP</text>
+<rect x="206" y="244" width="142" height="28" rx="6" fill="#EF9F27" fill-opacity=".12" stroke="#EF9F27" stroke-width="0.5"/>
+<text class="ts" x="277" y="262" text-anchor="middle" fill="#633806">Énergie · Réduire risque</text>
+<rect x="356" y="244" width="142" height="28" rx="6" fill="#E24B4A" fill-opacity=".12" stroke="#E24B4A" stroke-width="0.5"/>
+<text class="ts" x="427" y="262" text-anchor="middle" fill="#791F1F">OAT · Or · Défensifs</text>
+<rect x="506" y="244" width="132" height="28" rx="6" fill="#378ADD" fill-opacity=".12" stroke="#378ADD" stroke-width="0.5"/>
+<text class="ts" x="572" y="262" text-anchor="middle" fill="#0C447C">Cycliques · Crédit</text>
+<text class="ts" x="127" y="140" text-anchor="middle" fill="#0F6E56" opacity=".7">PMI ↑</text>
+<text class="ts" x="127" y="155" text-anchor="middle" fill="#0F6E56" opacity=".7">Emploi ↑</text>
+<text class="ts" x="127" y="170" text-anchor="middle" fill="#0F6E56" opacity=".7">Bénéfices ↑</text>
+<text class="ts" x="277" y="140" text-anchor="middle" fill="#854F0B" opacity=".7">Inflation ↑</text>
+<text class="ts" x="277" y="155" text-anchor="middle" fill="#854F0B" opacity=".7">Taux ↑</text>
+<text class="ts" x="277" y="170" text-anchor="middle" fill="#854F0B" opacity=".7">Courbe plate</text>
+<text class="ts" x="427" y="140" text-anchor="middle" fill="#A32D2D" opacity=".7">PMI &lt; 50</text>
+<text class="ts" x="427" y="155" text-anchor="middle" fill="#A32D2D" opacity=".7">Chômage ↑</text>
+<text class="ts" x="427" y="170" text-anchor="middle" fill="#A32D2D" opacity=".7">Spreads ↑</text>
+<text class="ts" x="572" y="140" text-anchor="middle" fill="#185FA5" opacity=".7">Commandes ↑</text>
+<text class="ts" x="572" y="155" text-anchor="middle" fill="#185FA5" opacity=".7">PMI ↗</text>
+<text class="ts" x="572" y="170" text-anchor="middle" fill="#185FA5" opacity=".7">Crédit ↗</text>
+<text class="ts" x="340" y="318" text-anchor="middle" opacity=".45">Le bon actif au mauvais moment dans le cycle peut coûter cher</text>
 </svg>
 <p class="fig-caption">Les 4 phases du cycle économique et les classes d'actifs associées</p>
-</div><div class="module-figure">
-<svg width="100%" viewBox="0 0 680 420" style="display:block">
-<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
-<line x1="72" y1="32" x2="72" y2="300" stroke="var(--t)" stroke-width="1" opacity=".3"/>
-<line x1="72" y1="300" x2="620" y2="300" stroke="var(--t)" stroke-width="1" opacity=".3"/>
-<text class="ts" x="40" y="36" text-anchor="middle" opacity=".45">Rendement</text>
-<text class="ts" x="346" y="322" text-anchor="middle" opacity=".45">Maturité</text>
-<text class="ts" x="72"  y="316" text-anchor="middle" opacity=".45">3M</text>
-<text class="ts" x="182" y="316" text-anchor="middle" opacity=".45">2A</text>
-<text class="ts" x="346" y="316" text-anchor="middle" opacity=".45">5A</text>
-<text class="ts" x="510" y="316" text-anchor="middle" opacity=".45">10A</text>
-<text class="ts" x="620" y="316" text-anchor="middle" opacity=".45">30A</text>
-<line x1="182" y1="298" x2="182" y2="303" stroke="var(--t)" opacity=".3"/>
-<line x1="346" y1="298" x2="346" y2="303" stroke="var(--t)" opacity=".3"/>
-<line x1="510" y1="298" x2="510" y2="303" stroke="var(--t)" opacity=".3"/>
-<text class="ts" x="60" y="300" text-anchor="end" opacity=".45">0%</text>
-<text class="ts" x="60" y="224" text-anchor="end" opacity=".45">2%</text>
-<text class="ts" x="60" y="148" text-anchor="end" opacity=".45">4%</text>
-<text class="ts" x="60" y="72"  text-anchor="end" opacity=".45">6%</text>
-<line x1="68" y1="224" x2="620" y2="224" stroke="var(--t)" stroke-width="0.5" stroke-dasharray="3 4" opacity=".12"/>
-<line x1="68" y1="148" x2="620" y2="148" stroke="var(--t)" stroke-width="0.5" stroke-dasharray="3 4" opacity=".12"/>
-<path d="M 72 248 C 130 240, 160 210, 182 196 C 220 172, 280 148, 346 136 C 420 124, 480 118, 620 112" fill="none" stroke="#1D9E75" stroke-width="2.5" stroke-linecap="round"/>
-<path d="M 72 148 C 120 152, 150 168, 182 180 C 230 198, 290 218, 346 230 C 420 244, 480 252, 620 258" fill="none" stroke="#E24B4A" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="8 4"/>
-<path d="M 72 196 C 160 196, 260 200, 346 200 C 430 200, 530 202, 620 202" fill="none" stroke="#EF9F27" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="4 4" opacity=".7"/>
-<circle cx="182" cy="180" r="5" fill="#E24B4A" opacity=".8"/>
-<line x1="182" y1="175" x2="182" y2="152" stroke="#E24B4A" opacity=".5" marker-end="url(#arrow)"/>
-<text class="ts" x="188" y="148" fill="#A32D2D">2A &gt; 10A</text>
-<text class="ts" x="188" y="163" fill="#A32D2D" opacity=".7">signal d'alarme</text>
-<line x1="72"  y1="346" x2="112" y2="346" stroke="#1D9E75" stroke-width="2.5" stroke-linecap="round"/>
-<text class="ts" x="120" y="350" fill="#085041">Courbe normale (prime de risque temporel)</text>
-<line x1="72"  y1="368" x2="112" y2="368" stroke="#E24B4A" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="7 3"/>
-<text class="ts" x="120" y="372" fill="#A32D2D">Courbe inversée → signal de récession (délai 6–18M)</text>
-<line x1="72"  y1="390" x2="112" y2="390" stroke="#EF9F27" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="4 3" opacity=".8"/>
-<text class="ts" x="120" y="394" fill="#633806" opacity=".9">Courbe plate → pic du cycle, vigilance</text>
-<rect x="390" y="336" width="222" height="52" rx="8" fill="var(--bg2)" stroke="var(--b)" stroke-width="0.5"/>
-<text class="ts" x="501" y="354" text-anchor="middle" opacity=".7">Fiabilité historique</text>
-<text class="ts" x="501" y="370" text-anchor="middle">100% des récessions US</text>
-<text class="ts" x="501" y="386" text-anchor="middle" opacity=".6">précédées d'une inversion (50 ans)</text>
+</div>
+
+<div class="module-figure">
+<svg width="100%" viewBox="0 0 680 330" style="display:block">
+<defs><marker id="arrow8" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<line x1="72" y1="24" x2="72" y2="240" stroke="var(--text-3)" stroke-width="1" opacity=".3"/>
+<line x1="72" y1="240" x2="620" y2="240" stroke="var(--text-3)" stroke-width="1" opacity=".3"/>
+<text class="ts" x="40" y="28" text-anchor="middle" opacity=".45">Rendement</text>
+<text class="ts" x="346" y="258" text-anchor="middle" opacity=".45">Maturité</text>
+<text class="ts" x="72"  y="253" text-anchor="middle" opacity=".45">3M</text>
+<text class="ts" x="182" y="253" text-anchor="middle" opacity=".45">2A</text>
+<text class="ts" x="346" y="253" text-anchor="middle" opacity=".45">5A</text>
+<text class="ts" x="510" y="253" text-anchor="middle" opacity=".45">10A</text>
+<text class="ts" x="620" y="253" text-anchor="middle" opacity=".45">30A</text>
+<line x1="182" y1="238" x2="182" y2="243" stroke="var(--text-3)" opacity=".3"/>
+<line x1="346" y1="238" x2="346" y2="243" stroke="var(--text-3)" opacity=".3"/>
+<line x1="510" y1="238" x2="510" y2="243" stroke="var(--text-3)" opacity=".3"/>
+<text class="ts" x="60" y="240" text-anchor="end" opacity=".45">0%</text>
+<text class="ts" x="60" y="178" text-anchor="end" opacity=".45">2%</text>
+<text class="ts" x="60" y="116" text-anchor="end" opacity=".45">4%</text>
+<text class="ts" x="60" y="54"  text-anchor="end" opacity=".45">6%</text>
+<line x1="68" y1="178" x2="620" y2="178" stroke="var(--text-3)" stroke-width="0.5" stroke-dasharray="3 4" opacity=".12"/>
+<line x1="68" y1="116" x2="620" y2="116" stroke="var(--text-3)" stroke-width="0.5" stroke-dasharray="3 4" opacity=".12"/>
+<path d="M 72 196 C 130 188, 160 162, 182 148 C 220 126, 280 106, 346 96 C 420 86, 480 80, 620 76" fill="none" stroke="#1D9E75" stroke-width="2.5" stroke-linecap="round"/>
+<path d="M 72 116 C 120 120, 150 132, 182 142 C 230 158, 290 172, 346 180 C 420 190, 480 196, 620 200" fill="none" stroke="#E24B4A" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="8 4"/>
+<path d="M 72 156 C 160 156, 260 158, 346 158 C 430 158, 530 160, 620 160" fill="none" stroke="#EF9F27" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="4 4" opacity=".7"/>
+<circle cx="182" cy="142" r="5" fill="#E24B4A" opacity=".8"/>
+<line x1="182" y1="137" x2="182" y2="114" stroke="#E24B4A" opacity=".5" marker-end="url(#arrow8)"/>
+<text class="ts" x="188" y="110" fill="#A32D2D">2A &gt; 10A</text>
+<text class="ts" x="188" y="125" fill="#A32D2D" opacity=".7">signal d'alarme</text>
+<line x1="72"  y1="272" x2="112" y2="272" stroke="#1D9E75" stroke-width="2.5" stroke-linecap="round"/>
+<text class="ts" x="120" y="276" fill="#085041">Courbe normale (prime de risque temporel)</text>
+<line x1="72"  y1="290" x2="112" y2="290" stroke="#E24B4A" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="7 3"/>
+<text class="ts" x="120" y="294" fill="#A32D2D">Courbe inversée → signal de récession (délai 6–18M)</text>
+<line x1="72"  y1="308" x2="112" y2="308" stroke="#EF9F27" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="4 3" opacity=".8"/>
+<text class="ts" x="120" y="312" fill="#633806" opacity=".9">Courbe plate → pic du cycle, vigilance</text>
+<rect x="390" y="268" width="222" height="50" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="0.5"/>
+<text class="ts" x="501" y="285" text-anchor="middle" opacity=".7">Fiabilité historique</text>
+<text class="ts" x="501" y="300" text-anchor="middle">100% des récessions US</text>
+<text class="ts" x="501" y="315" text-anchor="middle" opacity=".6">précédées d'une inversion (50 ans)</text>
 </svg>
 <p class="fig-caption">La courbe des taux — signal avancé de récession</p>
 </div>
