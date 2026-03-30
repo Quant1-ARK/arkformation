@@ -623,85 +623,68 @@ body {
     <!-- 3 cartes de sélection -->
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;">
       <div id="rev-card-quiz" onclick="selectRevision('quiz')" style="background:var(--accent-light);border:2px solid var(--accent);border-radius:var(--radius-lg);padding:22px 20px;cursor:pointer;transition:all .2s;text-align:center;">
-        <div style="font-size:28px;margin-bottom:10px;">📋</div>
+        <div style="font-size:28px;margin-bottom:10px;">&#128203;</div>
         <div style="font-size:15px;font-weight:600;letter-spacing:-.01em;margin-bottom:4px;">Quiz</div>
         <div style="font-size:12px;color:var(--text-secondary);font-weight:300;">Teste tes connaissances module par module</div>
       </div>
       <div id="rev-card-flash" onclick="selectRevision('flash')" style="background:var(--white);border:1.5px solid var(--mid-gray);border-radius:var(--radius-lg);padding:22px 20px;cursor:pointer;transition:all .2s;text-align:center;">
-        <div style="font-size:28px;margin-bottom:10px;">🃏</div>
+        <div style="font-size:28px;margin-bottom:10px;">&#127183;</div>
         <div style="font-size:15px;font-weight:600;letter-spacing:-.01em;margin-bottom:4px;">Flashcards</div>
-        <div style="font-size:12px;color:var(--text-secondary);font-weight:300;">Mémorise les concepts clés en mode répétition</div>
+        <div style="font-size:12px;color:var(--text-secondary);font-weight:300;">M&#233;morise les concepts cl&#233;s en mode r&#233;p&#233;tition</div>
       </div>
       <div id="rev-card-resume" onclick="selectRevision('resume')" style="background:var(--white);border:1.5px solid var(--mid-gray);border-radius:var(--radius-lg);padding:22px 20px;cursor:pointer;transition:all .2s;text-align:center;">
-        <div style="font-size:28px;margin-bottom:10px;">📝</div>
-        <div style="font-size:15px;font-weight:600;letter-spacing:-.01em;margin-bottom:4px;">Résumés</div>
-        <div style="font-size:12px;color:var(--text-secondary);font-weight:300;">Relis les synthèses de chaque module</div>
+        <div style="font-size:28px;margin-bottom:10px;">&#128221;</div>
+        <div style="font-size:15px;font-weight:600;letter-spacing:-.01em;margin-bottom:4px;">R&#233;sum&#233;s</div>
+        <div style="font-size:12px;color:var(--text-secondary);font-weight:300;">Relis les synth&#232;ses de chaque module</div>
       </div>
     </div>
 
-    <!-- Panneau actif -->
-    <div style="flex:1;display:flex;flex-direction:column;min-height:0;">
-
-      <div id="rev-quiz" style="flex:1;display:flex;flex-direction:column;gap:16px;">
-        <div class="grid2-1">
+    <!-- Panneaux -->
+    <div id="rev-quiz">
+      <div class="grid2-1">
+        <div class="card" id="quiz-container-card">
+          <div id="quiz-container" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:280px;gap:10px;color:var(--text-tertiary);font-size:14px;font-weight:300;">
+            <div style="font-size:32px;">&#128203;</div>
+            <div>S&#233;lectionne un module pour commencer</div>
+          </div>
+        </div>
+        <div class="col">
           <div class="card">
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">
-              <span class="tag">Module 01 · Macro Trading</span>
-              <span style="font-size:12px;color:var(--text-tertiary);">Q <span id="q-num">3</span>/8</span>
-            </div>
-            <div class="quiz-q" id="quiz-q">Qu&#39;est-ce que le &quot;carry trade&quot; dans le contexte du Forex ?</div>
-            <div class="quiz-opts" id="quiz-opts">
-              <button class="quiz-opt" onclick="answer(this,false)">Acheter une devise qui se déprécie rapidement</button>
-              <button class="quiz-opt" onclick="answer(this,true)">Emprunter dans une devise à faible taux pour investir dans une devise à taux élevé</button>
-              <button class="quiz-opt" onclick="answer(this,false)">Vendre à découvert une paire de devises corrélées</button>
-              <button class="quiz-opt" onclick="answer(this,false)">Arbitrer deux marchés obligataires de zones différentes</button>
-            </div>
-            <div class="quiz-actions">
-              <button class="btn-p" onclick="nextQ()">Question suivante</button>
-              <button class="btn-g">Passer</button>
-              <span class="quiz-score" id="quiz-score">Score : 2/2</span>
-            </div>
+            <div class="card-title" style="margin-bottom:12px;">Modules disponibles</div>
+            <div class="mod-item" onclick="loadQuiz('quiz/quiz01.html',this)" style="cursor:pointer;background:var(--accent-light);"><div class="mod-num cur">01</div><div style="flex:1;"><div class="mod-title">Macro Trading</div><div class="mod-meta">4 questions</div></div><span class="mod-badge bd-done">74%</span></div>
+            <div class="mod-item" onclick="loadQuiz('quiz/quiz02.html',this)" style="cursor:pointer;"><div class="mod-num">02</div><div style="flex:1;"><div class="mod-title">March&#233;s Financiers</div><div class="mod-meta">4 questions</div></div><span class="mod-badge bd-done">88%</span></div>
+            <div class="mod-item" onclick="loadQuiz('quiz/quiz03.html',this)" style="cursor:pointer;"><div class="mod-num">03</div><div style="flex:1;"><div class="mod-title">Analyse Macro</div><div class="mod-meta">4 questions</div></div><span class="mod-badge bd-done">92%</span></div>
+            <div class="mod-item" onclick="loadQuiz('quiz/quiz04.html',this)" style="cursor:pointer;"><div class="mod-num">04</div><div style="flex:1;"><div class="mod-title">Analyse des Actifs</div><div class="mod-meta">4 questions</div></div><span class="mod-badge bd-wip">Nouveau</span></div>
+            <div class="mod-item" onclick="loadQuiz('quiz/quiz_ultime.html',this)" style="cursor:pointer;border-top:2px solid var(--mid-gray);margin-top:4px;padding-top:14px;"><div class="mod-num" style="background:linear-gradient(135deg,#0071e3,#34c759);color:#fff;">&#9889;</div><div style="flex:1;"><div class="mod-title" style="color:var(--accent);font-weight:600;">Quiz Ultime</div><div class="mod-meta">16 questions &middot; Tous les modules</div></div><span class="mod-badge" style="background:rgba(0,113,227,0.08);color:var(--accent);">All-in</span></div>
           </div>
-          <div class="col">
-            <div class="card">
-              <div class="card-title" style="margin-bottom:12px;">Modules disponibles</div>
-              <div class="mod-item"><div class="mod-num cur">01</div><div style="flex:1;"><div class="mod-title">Macro Trading</div><div class="mod-meta">8 questions</div></div><span class="mod-badge bd-done">74%</span></div>
-              <div class="mod-item"><div class="mod-num">02</div><div style="flex:1;"><div class="mod-title">Marchés Financiers</div><div class="mod-meta">10 questions</div></div><span class="mod-badge bd-done">88%</span></div>
-              <div class="mod-item"><div class="mod-num">03</div><div style="flex:1;"><div class="mod-title">Analyse Macro</div><div class="mod-meta">12 questions</div></div><span class="mod-badge bd-done">92%</span></div>
-              <div class="mod-item"><div class="mod-num">04</div><div style="flex:1;"><div class="mod-title">Analyse des Actifs</div><div class="mod-meta">9 questions</div></div><span class="mod-badge bd-wip">Nouveau</span></div>
-            </div>
-            <div class="card">
-              <div class="card-title" style="margin-bottom:12px;">Tes scores</div>
-              <div id="revision-scores" style="display:flex;flex-direction:column;gap:12px;">
-                <div class="prog-wrap"><div class="prog-row"><span>Module 01</span><span>74%</span></div><div class="prog-track"><div class="prog-fill o" style="width:74%"></div></div></div>
-                <div class="prog-wrap"><div class="prog-row"><span>Module 02</span><span>88%</span></div><div class="prog-track"><div class="prog-fill g" style="width:88%"></div></div></div>
-                <div class="prog-wrap"><div class="prog-row"><span>Module 03</span><span>92%</span></div><div class="prog-track"><div class="prog-fill g" style="width:92%"></div></div></div>
-              </div>
+          <div class="card">
+            <div class="card-title" style="margin-bottom:12px;">Derniers scores</div>
+            <div id="revision-scores" style="display:flex;flex-direction:column;gap:12px;">
+              <div style="font-size:13px;color:var(--text-tertiary);font-weight:300;">Aucun quiz compl&#233;t&#233;.</div>
             </div>
           </div>
         </div>
       </div>
-
-      <div id="rev-flash" style="display:none;flex:1;flex-direction:column;">
-        <div class="card" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-height:300px;">
-          <div style="font-size:48px;margin-bottom:16px;">🃏</div>
-          <div style="font-size:18px;font-weight:600;margin-bottom:8px;">Flashcards</div>
-          <div style="font-size:14px;color:var(--text-secondary);font-weight:300;max-width:380px;line-height:1.6;">Cette section sera disponible prochainement. Les flashcards couvriront tous les concepts clés des 12 modules.</div>
-          <span style="margin-top:20px;font-size:11px;font-weight:600;color:var(--text-tertiary);background:var(--light-gray);padding:4px 12px;border-radius:980px;text-transform:uppercase;letter-spacing:.04em;">Bientôt disponible</span>
-        </div>
-      </div>
-
-      <div id="rev-resume" style="display:none;flex:1;flex-direction:column;">
-        <div class="card" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-height:300px;">
-          <div style="font-size:48px;margin-bottom:16px;">📝</div>
-          <div style="font-size:18px;font-weight:600;margin-bottom:8px;">Résumés</div>
-          <div style="font-size:14px;color:var(--text-secondary);font-weight:300;max-width:380px;line-height:1.6;">Les synthèses de chaque module seront disponibles prochainement pour une révision rapide et efficace.</div>
-          <span style="margin-top:20px;font-size:11px;font-weight:600;color:var(--text-tertiary);background:var(--light-gray);padding:4px 12px;border-radius:980px;text-transform:uppercase;letter-spacing:.04em;">Bientôt disponible</span>
-        </div>
-      </div>
-
     </div>
-    
+
+    <div id="rev-flash" style="display:none;">
+      <div class="card" style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-height:300px;">
+        <div style="font-size:48px;margin-bottom:16px;">&#127183;</div>
+        <div style="font-size:18px;font-weight:600;margin-bottom:8px;">Flashcards</div>
+        <div style="font-size:14px;color:var(--text-secondary);font-weight:300;max-width:380px;line-height:1.6;">Bient&#244;t disponible. Les flashcards couvriront tous les concepts cl&#233;s des 12 modules.</div>
+        <span style="margin-top:20px;font-size:11px;font-weight:600;color:var(--text-tertiary);background:var(--light-gray);padding:4px 12px;border-radius:980px;text-transform:uppercase;letter-spacing:.04em;">Bient&#244;t disponible</span>
+      </div>
+    </div>
+
+    <div id="rev-resume" style="display:none;">
+      <div class="card" style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-height:300px;">
+        <div style="font-size:48px;margin-bottom:16px;">&#128221;</div>
+        <div style="font-size:18px;font-weight:600;margin-bottom:8px;">R&#233;sum&#233;s</div>
+        <div style="font-size:14px;color:var(--text-secondary);font-weight:300;max-width:380px;line-height:1.6;">Les synth&#232;ses de chaque module seront disponibles prochainement.</div>
+        <span style="margin-top:20px;font-size:11px;font-weight:600;color:var(--text-tertiary);background:var(--light-gray);padding:4px 12px;border-radius:980px;text-transform:uppercase;letter-spacing:.04em;">Bient&#244;t disponible</span>
+      </div>
+    </div>
+
   </div><!-- /revision -->
 
 
@@ -1409,6 +1392,7 @@ async function activateCode() {
   // Vider la progression du localStorage pour repartir de zéro
   localStorage.removeItem('ark_progress');
   await loadAccessStatus();
+  loadQuizScores();
   updateDashboard({ current: 0, done: [] });
 }
 
@@ -1430,6 +1414,7 @@ window.addEventListener('load', async () => {
   if (elSettings) elSettings.textContent = name;
 
   await loadAccessStatus();
+  loadQuizScores();
   loadQuizScores();
   if (hasFormationAccess) {
     const progress = await loadProgressFromDB();
