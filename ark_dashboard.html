@@ -644,7 +644,7 @@ body {
     <div id="rev-quiz">
       <div class="grid2-1">
         <div class="card" id="quiz-container-card" style="overflow:hidden;">
-          <div id="quiz-container" style="display:flex;flex-direction:column;min-height:280px;">
+          <div id="quiz-container" style="display:flex;flex-direction:column;min-height:280px;width:100%;">
             <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;gap:10px;color:var(--text-tertiary);font-size:14px;font-weight:300;">
               <div style="font-size:32px;">&#128203;</div>
               <div>S&#233;lectionne un module pour commencer</div>
@@ -824,12 +824,25 @@ function selectRevision(type) {
     const panel = document.getElementById('rev-' + p);
     const card = document.getElementById(cards[i]);
     const isActive = p === type;
-    if (panel) panel.style.display = isActive ? 'flex' : 'none';
+    if (panel) panel.style.display = isActive ? 'block' : 'none';
     if (card) {
       card.style.border = isActive ? '2px solid var(--accent)' : '1.5px solid var(--mid-gray)';
       card.style.background = isActive ? 'var(--accent-light)' : 'var(--white)';
     }
   });
+  // Recalculer quiz-wrap après réaffichage (requestAnimationFrame pour attendre le rendu)
+  if (type === 'quiz') {
+    requestAnimationFrame(function() {
+      const container = document.getElementById('quiz-container');
+      if (container) {
+        const qwrap = container.querySelector('#quiz-wrap');
+        if (qwrap) {
+          qwrap.style.width = '100%';
+          qwrap.style.boxSizing = 'border-box';
+        }
+      }
+    });
+  }
 }
 
 function tabSwitch(btn) {
