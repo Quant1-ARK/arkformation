@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Module 11 — Métriques de Performance & Lettres Grecques</title>
+<title>Module 02 — Économie & Histoire Financière</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{--bg:#f5f5f5;--surface:#fff;--border:rgba(19,18,18,.1);--text-1:#0a0a0a;--text-2:#3d3d3a;--text-3:#6b6b67;--accent:#0071e3;--accent-soft:rgba(0,113,227,.07)}
@@ -16,7 +16,6 @@
   .mod-title{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(30px,5vw,46px);line-height:1.1;margin-bottom:14px}
   .mod-sub{font-size:15px;color:var(--text-2);font-style:italic;margin-bottom:20px}
   .mod-objective{background:var(--accent-soft);border-left:3px solid var(--accent);border-radius:0 10px 10px 0;padding:16px 20px;font-size:14px;color:var(--text-2);line-height:1.65}
-  /* Objectives & concepts */
   .mod-section-label{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:16px;margin-top:32px}
   .mod-objectives{list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:32px}
   .mod-objectives li{display:flex;align-items:flex-start;gap:12px;font-size:14px;color:var(--text-2);line-height:1.6}
@@ -49,7 +48,6 @@
   .sub strong{color:var(--text-1)}
   .styled-list{list-style:none;margin:12px 0 16px;display:flex;flex-direction:column;gap:8px}
   .styled-list li{color:var(--text-2);font-size:14px;line-height:1.65}
-  .styled-list li strong{color:var(--text-1)}
   /* Callouts */
   .callout{border-radius:0 10px 10px 0;border-left:3px solid;padding:14px 18px;margin:18px 0;font-size:13.5px;line-height:1.65}
   .callout.yellow{background:#FAEEDA;border-color:#854F0B;color:#412402}
@@ -57,18 +55,14 @@
   .callout.green{background:#EAF3DE;border-color:#3B6D11;color:#173404}
   .callout.red{background:#FCEBEB;border-color:#A32D2D;color:#501313}
   .callout.purple{background:#EEEDFE;border-color:#534AB7;color:#26215C}
+  /* Default callout (no modifier) */
+  .callout:not(.blue):not(.green):not(.red):not(.yellow):not(.purple){background:#FAEEDA;border-color:#854F0B;color:#412402}
   .callout strong{color:inherit}
   /* Notion boxes */
   .notion{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px 22px;margin:18px 0}
   .notion-title{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px}
   .notion p,.notion li{color:var(--text-1);font-size:13.5px;line-height:1.7;margin-bottom:6px}
-  .notion p:last-child,.notion li:last-child{margin-bottom:0}
-  .notion ul{list-style:none;display:flex;flex-direction:column;gap:4px}
   .notion strong{color:var(--text-1)}
-  /* Formula */
-  .formula{background:var(--accent-soft);border:1px solid rgba(0,113,227,.15);border-radius:10px;padding:16px 24px;margin:16px 0;text-align:center}
-  .formula .MJX-TEX{font-size:1.1em}
-  .formula-vars{font-size:12.5px;color:var(--text-2);margin-top:10px;line-height:1.8;text-align:left}
   /* Tables */
   .table-wrap{overflow-x:auto;margin:18px 0 24px;border-radius:12px;border:1px solid var(--border)}
   table{width:100%;border-collapse:collapse;font-size:13px}
@@ -79,538 +73,689 @@
   tbody td{padding:10px 14px;color:var(--text-2);vertical-align:top;line-height:1.55}
   tbody td strong{color:var(--text-1)}
   /* Figures */
-  .module-figure{margin:24px 0 32px;background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;padding:16px}
+  .module-figure{margin:20px 0 28px;background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;padding:14px;max-width:560px}
   .module-figure svg{width:100%;display:block}
-  .fig-caption{margin-top:10px;font-size:12px;color:var(--text-3);font-style:italic;text-align:center}
-  /* Greek badge */
-  .greek-badge{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:8px;background:var(--accent-soft);color:var(--accent);font-size:18px;font-weight:600;margin-right:10px;flex-shrink:0;font-family:'DM Serif Display',Georgia,serif}
-  .greek-row{display:flex;align-items:flex-start;gap:0;margin-bottom:28px;border-left:3px solid var(--accent);padding-left:20px}
-  .greek-content{flex:1}
-  .greek-content .sub-title{display:flex;align-items:center}
-  /* Summary */
-  .summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0}
-  @media(max-width:560px){.summary-grid{grid-template-columns:1fr}}
-  .summary-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px}
-  .summary-section{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:4px}
-  .summary-concept{font-weight:600;font-size:13.5px;color:var(--text-1);margin-bottom:4px}
-  .summary-tool{font-size:12.5px;color:var(--text-2)}
+  .fig-caption{margin-top:8px;font-size:12px;color:var(--text-3);font-style:italic;text-align:center}
+  /* Crisis cards */
+  .crisis-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:18px 0}
+  @media(max-width:600px){.crisis-grid{grid-template-columns:1fr}}
+  .crisis-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px}
+  .crisis-year{font-size:28px;font-weight:700;font-family:'DM Serif Display',Georgia,serif;color:var(--accent);margin-bottom:4px}
+  .crisis-name{font-size:13px;font-weight:600;margin-bottom:8px}
+  .crisis-desc{font-size:13px;color:var(--text-2);line-height:1.6}
+  /* Regime cards */
+  .regime-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:18px 0}
+  @media(max-width:620px){.regime-grid{grid-template-columns:1fr}}
+  .regime-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px}
+  .regime-dot{width:10px;height:10px;border-radius:50%;margin-bottom:10px}
+  .regime-dot.bull{background:#30d158}
+  .regime-dot.bear{background:#ff453a}
+  .regime-dot.lateral{background:#ffd60a}
+  .regime-name{font-size:14px;font-weight:600;margin-bottom:6px}
+  .regime-desc{font-size:12.5px;color:var(--text-2);line-height:1.6}
+  /* Cycle phases */
+  .phases{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:18px 0 28px}
+  @media(max-width:560px){.phases{grid-template-columns:1fr}}
+  .phase-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px}
+  .phase-num{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:6px}
+  .phase-name{font-size:15px;font-weight:600;margin-bottom:8px}
+  .phase-desc{font-size:13px;color:var(--text-2);line-height:1.6}
+  .phase-assets{margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-size:11.5px;color:var(--accent);font-weight:500}
+  /* Synthesis */
   .synthesis{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px;margin-top:48px}
   .synthesis-title{font-family:'DM Serif Display',Georgia,serif;font-size:22px;margin-bottom:18px}
   .synthesis p{color:var(--text-2);margin-bottom:12px;line-height:1.75;font-size:14.5px}
-  .prev-module{margin-top:20px;padding-top:18px;border-top:1px solid var(--border);font-size:13px;color:var(--text-3);font-style:italic}
-  .prev-module strong{color:var(--accent);font-style:normal}
+  .next-module{margin-top:20px;padding-top:18px;border-top:1px solid var(--border);font-size:13px;color:var(--text-3);font-style:italic}
+  .next-module strong{color:var(--accent);font-style:normal}
   /* Nav */
   .module-nav{display:flex;justify-content:space-between;align-items:center;margin-top:56px;padding-top:28px;border-top:1px solid var(--border);gap:12px}
   .nav-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:10px;border:1px solid var(--border);font-size:13.5px;font-weight:500;font-family:inherit;cursor:pointer;transition:all .2s;background:var(--surface);color:var(--text-1)}
   .nav-btn:hover{border-color:var(--accent);color:var(--accent)}
   .nav-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
   .nav-btn.primary:hover{background:#0077ed}
+  /* SVG */
   svg text{font-family:'DM Sans',-apple-system,sans-serif;fill:var(--text-1)}
   svg .t{font-size:14px;font-weight:400;fill:var(--text-1)}
   svg .ts{font-size:12px;font-weight:400;fill:var(--text-2)}
   svg .th{font-size:14px;font-weight:600;fill:var(--text-1)}
+  .node{cursor:pointer}
+  .node:hover{opacity:.85}
+  .c-blue rect,.c-blue circle,.c-blue ellipse{fill:#E6F1FB;stroke:#185FA5}
+  .c-blue .th,.c-blue .t{fill:#0C447C}
+  .c-blue .ts{fill:#185FA5}
+  .c-teal rect,.c-teal circle,.c-teal ellipse{fill:#E1F5EE;stroke:#0F6E56}
+  .c-teal .th,.c-teal .t{fill:#085041}
+  .c-teal .ts{fill:#0F6E56}
+  .c-purple rect,.c-purple circle,.c-purple ellipse{fill:#EEEDFE;stroke:#534AB7}
+  .c-purple .th,.c-purple .t{fill:#3C3489}
+  .c-purple .ts{fill:#534AB7}
+  .c-amber rect,.c-amber circle,.c-amber ellipse{fill:#FAEEDA;stroke:#854F0B}
+  .c-amber .th,.c-amber .t{fill:#633806}
+  .c-amber .ts{fill:#854F0B}
+  .c-coral rect,.c-coral circle,.c-coral ellipse{fill:#FAECE7;stroke:#993C1D}
+  .c-coral .th,.c-coral .t{fill:#712B13}
+  .c-coral .ts{fill:#993C1D}
+  .c-green rect,.c-green circle,.c-green ellipse{fill:#EAF3DE;stroke:#3B6D11}
+  .c-green .th,.c-green .t{fill:#27500A}
+  .c-green .ts{fill:#3B6D11}
+  .c-gray rect,.c-gray circle,.c-gray ellipse{fill:#F1EFE8;stroke:#5F5E5A}
+  .c-gray .th,.c-gray .t{fill:#444441}
+  .c-gray .ts{fill:#5F5E5A}
 </style>
-<script>
-MathJax = {
-  tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$']] },
-  options: { skipHtmlTags: ['script','noscript','style','textarea'] }
-};
-</script>
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 </head>
 <body>
 <div class="page">
 
   <header class="mod-header">
-    <div class="mod-kicker">Module 11 · ARK Investor Program</div>
-    <h1 class="mod-title">Métriques de Performance & Lettres Grecques</h1>
-    <p class="mod-sub">Ce qui ne se mesure pas ne s'améliore pas. Mais ce qui se mesure mal induit en erreur.</p>
-    <div class="mod-objective">Ce module répond à la question que les dix premiers ne permettent pas de trancher : est-ce que ça fonctionne vraiment ? Il couvre les métriques de rendement et de risque, les ratios combinés (Sharpe, Sortino, Calmar), la significativité statistique, et les lettres grecques — les outils qui permettent de comprendre précisément à quoi un portefeuille est réellement exposé.</div>
+    <div class="mod-kicker">Module 02 · ARK Investor Program</div>
+    <h1 class="mod-title">Économie &amp; Histoire Financière</h1>
+    <p class="mod-sub">Les marchés n'existent pas dans le vide — ils sont le reflet de forces économiques profondes qui se répètent.</p>
+    <div class="mod-objective">Objectif du module : comprendre les mécanismes économiques fondamentaux et les grandes crises financières pour reconnaître les cycles qui se répètent, identifier les économistes qui ont modelé notre monde, et adapter sa stratégie d'investissement en conséquence.</div>
   </header>
 
-  <!-- OBJECTIFS -->
   <div class="mod-section-label">Ce que tu vas apprendre</div>
   <ul class="mod-objectives">
-    <li><div class="obj-check">○</div><span>Calculer et interpréter le CAGR, le TWR et le MWR — et comprendre pourquoi le rendement arithmétique ment</span></li>
-    <li><div class="obj-check">○</div><span>Lire un drawdown maximum et une underwater curve pour mesurer le risque vécu dans sa dimension temporelle</span></li>
-    <li><div class="obj-check">○</div><span>Distinguer Sharpe, Sortino et Calmar — et savoir lequel utiliser selon la question posée</span></li>
-    <li><div class="obj-check">○</div><span>Comprendre pourquoi un historique de 20 trades ne prouve rien statistiquement, et combien il en faut</span></li>
-    <li><div class="obj-check">○</div><span>Utiliser le MAE et le MFE pour détecter des sorties trop précoces et des stops trop serrés</span></li>
-    <li><div class="obj-check">○</div><span>Maîtriser alpha, beta, gamma, vega et theta pour piloter l'exposition réelle du portefeuille</span></li>
+    <li><div class="obj-check">○</div><span>Utiliser les grandes théories économiques comme lentilles d'analyse selon le régime de marché</span></li>
+    <li><div class="obj-check">○</div><span>Maîtriser les mécanismes fondamentaux : offre/demande, inflation, taux d'intérêt, création monétaire</span></li>
+    <li><div class="obj-check">○</div><span>Reconnaître le schéma récurrent des grandes crises financières (1929, 2000, 2008, 2020)</span></li>
+    <li><div class="obj-check">○</div><span>Comprendre la distinction marché primaire / secondaire et ses implications pour l'investisseur</span></li>
+    <li><div class="obj-check">○</div><span>Identifier le régime de marché en cours et adapter sa stratégie d'allocation en conséquence</span></li>
   </ul>
 
   <div class="mod-section-label">Concepts clés</div>
   <div class="mod-concepts-grid">
-    <div class="concept-card"><div class="concept-icon">📊</div><div class="concept-name">CAGR vs arithmétique</div><div class="concept-desc">Le rendement géométrique est la seule mesure honnête — la moyenne arithmétique surestime toujours la réalité</div></div>
-    <div class="concept-card"><div class="concept-icon">📉</div><div class="concept-name">Sharpe vs Sortino</div><div class="concept-desc">Le Sharpe pénalise toute volatilité. Le Sortino ne pénalise que les baisses — bien plus pertinent pour un investisseur</div></div>
-    <div class="concept-card"><div class="concept-icon">⚗️</div><div class="concept-name">Alpha & Beta</div><div class="concept-desc">L'alpha mesure la valeur ajoutée réelle. Le beta mesure l'exposition au marché. Piloter les deux ensemble est l'aboutissement de la formation</div></div>
-    <div class="concept-card"><div class="concept-icon">🎯</div><div class="concept-name">MAE / MFE</div><div class="concept-desc">Les métriques les plus sous-utilisées — elles révèlent si on sort trop tôt et si les stops sont trop serrés, trade par trade</div></div>
+    <div class="concept-card"><div class="concept-icon">🔭</div><div class="concept-name">Les 7 lentilles</div><div class="concept-desc">Smith, Ricardo, Keynes, Friedman, Schumpeter, Minsky, Hayek — chaque théorie utile à son moment</div></div>
+    <div class="concept-card"><div class="concept-icon">🌊</div><div class="concept-name">Cycle de Minsky</div><div class="concept-desc">La stabilité engendre l'instabilité — le chemin de hedge à Ponzi est structurel, pas accidentel</div></div>
+    <div class="concept-card"><div class="concept-icon">📈</div><div class="concept-name">Destruction créatrice</div><div class="concept-desc">Chaque vague technologique détruit pour recréer — identifier la vague entrante est un avantage structurel</div></div>
+    <div class="concept-card"><div class="concept-icon">🔄</div><div class="concept-name">Cycle économique</div><div class="concept-desc">4 phases, 4 régimes d'actifs — le bon actif au mauvais moment dans le cycle peut coûter cher</div></div>
   </div>
 
   <div class="mod-quote-block">
-    <div class="mod-quote-text">"Connaître son alpha et son beta transforme 'j'ai fait +18% cette année' en 'j'ai fait +18% dont +12% venaient du marché et +6% de mon edge réel.'"</div>
-    <div class="mod-quote-source">— ARK — Module 11</div>
+    <div class="mod-quote-text">"Le calendrier change. Le schéma — excès, euphorie, déni, retournement, intervention — non."</div>
+    <div class="mod-quote-source">— ARK — Module 02</div>
   </div>
 
   <nav class="toc">
     <div class="toc-title">Sommaire</div>
     <ul class="toc-list">
-      <li><a href="#xia"><span class="toc-letter">a</span>Métriques de Rendement Pur</a></li>
-      <li><a href="#xib"><span class="toc-letter">b</span>Métriques de Risque</a></li>
-      <li><a href="#xic"><span class="toc-letter">c</span>Métriques Combinées Rendement / Risque</a></li>
-      <li><a href="#xid"><span class="toc-letter">d</span>Benchmarks et Comparaison</a></li>
-      <li><a href="#xie"><span class="toc-letter">e</span>Significativité Statistique et Taille d'Échantillon</a></li>
-      <li><a href="#xif"><span class="toc-letter">f</span>Implémentation Pratique</a></li>
-      <li><a href="#xig"><span class="toc-letter">g</span>Les Lettres Grecques</a></li>
+      <li><a href="#section-a"><span class="toc-letter">a</span>Les grands économistes — ce qu'ils nous apprennent encore aujourd'hui</a></li>
+      <li><a href="#section-b"><span class="toc-letter">b</span>Économie classique — les fondamentaux</a></li>
+      <li><a href="#section-c"><span class="toc-letter">c</span>Les grandes crises — les cycles se répètent</a></li>
+      <li><a href="#section-d"><span class="toc-letter">d</span>Naissance et évolution des marchés financiers modernes</a></li>
+      <li><a href="#section-e"><span class="toc-letter">e</span>Cycles et régimes de marché</a></li>
     </ul>
   </nav>
 
   <!-- SECTION A -->
-  <section class="section" id="xia">
+  <section class="section" id="section-a">
     <div class="section-label">Section A</div>
-    <h2 class="section-title">Métriques de Rendement Pur</h2>
-    <div class="section-intro"><em>Un rendement de +20% sans contexte ne signifie rien. Tout dépend de sur combien de temps, avec quelle volatilité, et par rapport à quoi.</em></div>
+    <h2 class="section-title">Les grands économistes — ce qu'ils nous apprennent encore aujourd'hui</h2>
+    <div class="section-intro">La plupart des formations en trading parlent de chandeliers, de supports et de résistances. Ici, on commence ailleurs : par les idées. Les grands économistes ne sont pas des figures historiques sans liens avec les marchés d'aujourd'hui — ils sont les architectes invisibles du monde dans lequel vous allez investir.<br><br>Comprendre Smith, c'est comprendre pourquoi les marchés s'autorégulent — et pourquoi ils ne le font pas toujours. Comprendre Minsky, c'est comprendre 2008 avant qu'il arrive. Comprendre Schumpeter, c'est voir les grandes transitions sectorielles avant qu'elles soient évidentes. Chaque théorie est une lentille. Un trader fondamental ne choisit pas une école — il sait quelle lentille utiliser selon le régime en place.</div>
+    <div class="callout blue">Fil conducteur : aucune école n'a raison tout le temps. Le bon investisseur sait quelle lentille utiliser selon le régime en place.</div>
+
+<div class="module-figure">
+<svg width="100%" viewBox="0 0 680 380" style="display:block">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<g class="node c-blue" onclick="sendPrompt('Comment un investisseur choisit la bonne lentille selon le régime de marché ?')"><circle cx="340" cy="190" r="52" stroke-width="1"/><text class="th" x="340" y="184" text-anchor="middle" dominant-baseline="central">Investisseur</text><text class="ts" x="340" y="202" text-anchor="middle">fondamental</text></g>
+<line x1="340" y1="138" x2="340" y2="88" stroke="var(--text-3)" stroke-width="1" opacity=".25" marker-end="url(#arrow)"/>
+<line x1="295" y1="157" x2="222" y2="108" stroke="var(--text-3)" stroke-width="1" opacity=".25" marker-end="url(#arrow)"/>
+<line x1="288" y1="190" x2="192" y2="190" stroke="var(--text-3)" stroke-width="1" opacity=".25" marker-end="url(#arrow)"/>
+<line x1="295" y1="223" x2="222" y2="272" stroke="var(--text-3)" stroke-width="1" opacity=".25" marker-end="url(#arrow)"/>
+<line x1="340" y1="242" x2="340" y2="292" stroke="var(--text-3)" stroke-width="1" opacity=".25" marker-end="url(#arrow)"/>
+<line x1="385" y1="223" x2="458" y2="272" stroke="var(--text-3)" stroke-width="1" opacity=".25" marker-end="url(#arrow)"/>
+<line x1="392" y1="190" x2="488" y2="190" stroke="var(--text-3)" stroke-width="1" opacity=".25" marker-end="url(#arrow)"/>
+<g class="node c-teal"><rect x="264" y="24" width="152" height="44" rx="8" stroke-width="0.5"/><text class="th" x="340" y="44" text-anchor="middle" dominant-baseline="central">Adam Smith</text><text class="ts" x="340" y="60" text-anchor="middle">Lire les prix comme signal</text></g>
+<g class="node c-teal"><rect x="64" y="78" width="150" height="44" rx="8" stroke-width="0.5"/><text class="th" x="139" y="97" text-anchor="middle" dominant-baseline="central">Ricardo</text><text class="ts" x="139" y="113" text-anchor="middle">Avantage comparatif</text></g>
+<g class="node c-purple"><rect x="52" y="166" width="132" height="44" rx="8" stroke-width="0.5"/><text class="th" x="118" y="185" text-anchor="middle" dominant-baseline="central">Keynes</text><text class="ts" x="118" y="201" text-anchor="middle">Crises et relances</text></g>
+<g class="node c-coral"><rect x="64" y="254" width="150" height="44" rx="8" stroke-width="0.5"/><text class="th" x="139" y="273" text-anchor="middle" dominant-baseline="central">Minsky</text><text class="ts" x="139" y="289" text-anchor="middle">Instabilité endogène</text></g>
+<g class="node c-purple"><rect x="252" y="300" width="176" height="44" rx="8" stroke-width="0.5"/><text class="th" x="340" y="319" text-anchor="middle" dominant-baseline="central">Schumpeter</text><text class="ts" x="340" y="335" text-anchor="middle">Destruction créatrice</text></g>
+<g class="node c-amber"><rect x="464" y="254" width="148" height="44" rx="8" stroke-width="0.5"/><text class="th" x="538" y="273" text-anchor="middle" dominant-baseline="central">Hayek</text><text class="ts" x="538" y="289" text-anchor="middle">Effets pervers BC</text></g>
+<g class="node c-amber"><rect x="496" y="166" width="148" height="44" rx="8" stroke-width="0.5"/><text class="th" x="570" y="185" text-anchor="middle" dominant-baseline="central">Friedman</text><text class="ts" x="570" y="201" text-anchor="middle">Monétarisme / M2</text></g>
+<text class="ts" x="340" y="365" text-anchor="middle" opacity=".5">Aucune école n'a raison tout le temps — choisir la bonne lentille selon le régime</text>
+</svg>
+<p class="fig-caption">Les 7 lentilles de l'investisseur fondamental — chaque économiste, un contexte d'application</p>
+</div>
 
     <div class="sub">
-      <h3 class="sub-title">Rendement absolu : la métrique la plus simple et la plus trompeuse</h3>
-      <p>Le rendement absolu est le point de départ — mais il ne peut pas être utilisé seul. +20% sur un an avec une volatilité de 40% est une performance médiocre. +15% sur un an avec une volatilité de 8% est une performance excellente. Le rendement brut doit toujours être contextualisé par le risque pris pour l'obtenir.</p>
-    </div>
-
-    <div class="sub">
-      <h3 class="sub-title">CAGR — Compound Annual Growth Rate</h3>
-      <p>Le CAGR est la seule façon honnête de comparer des performances sur des horizons différents. Il mesure le taux de croissance annuel composé qui, appliqué à chaque année, produirait exactement la performance totale observée.</p>
-      <div class="formula">
-        $$\text{CAGR} = \left(\frac{V_f}{V_i}\right)^{\!1/n} - 1$$
-        <div class="formula-vars">
-          <strong>V_f</strong> = valeur finale &nbsp;·&nbsp; <strong>V_i</strong> = valeur initiale &nbsp;·&nbsp; <strong>n</strong> = nombre d'années<br>
-          Exemple : 50 000€ → 82 000€ en 4 ans → CAGR = (82 000/50 000)<sup>0.25</sup> − 1 = <strong>13.1%/an</strong>
-        </div>
-      </div>
-    </div>
-
-    <div class="sub">
-      <h3 class="sub-title">Le piège du rendement arithmétique vs géométrique</h3>
-      <p>Le rendement arithmétique est la moyenne simple des rendements annuels. Le CAGR (géométrique) tient compte de l'effet des intérêts composés. Les deux divergent significativement en présence de volatilité — et c'est toujours le géométrique qui reflète la réalité.</p>
+      <h3 class="sub-title">Adam Smith (1723–1790) — La main invisible</h3>
+      <p>Adam Smith est le fondateur de l'économie politique moderne. Dans <em>La Richesse des Nations</em> (1776), il formule une idée qui semble simple mais reste révolutionnaire : les individus, en poursuivant leur intérêt personnel, contribuent involontairement à la prospérité collective. Ce mécanisme, qu'il appelle la « main invisible », est la justification théorique du marché libre.</p>
+      <p>Pour l'investisseur, Smith enseigne d'abord que <strong>les prix sont des signaux</strong>. Quand le prix du cuivre monte, ce n'est pas un hasard — c'est de l'information compressée sur l'offre et la demande mondiale. Apprendre à lire les prix comme de l'information, c'est une compétence fondamentale.</p>
+      <p>Mais Smith enseigne aussi la limite de son propre modèle : les marchés s'autorégulent dans des conditions idéales — concurrence libre, information parfaite, absence d'externalités. Dans la réalité, aucune de ces conditions n'est pleinement satisfaite. Connaître la théorie, c'est aussi savoir quand elle ne s'applique pas.</p>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Année</th><th>Rendement annuel</th><th>Capital cumulé</th></tr></thead>
+          <thead><tr><th>Concept clé</th><th>Mécanisme</th><th>Application investisseur</th></tr></thead>
           <tbody>
-            <tr><td><strong>Année 1</strong></td><td>+50%</td><td>150 000€</td></tr>
-            <tr><td><strong>Année 2</strong></td><td>−33%</td><td>100 500€</td></tr>
-            <tr><td><strong>Moyenne arithmétique</strong></td><td>+8.5%/an</td><td>Suggère une croissance positive</td></tr>
-            <tr><td><strong>CAGR réel</strong></td><td>+0.25%/an</td><td>La réalité : quasi-stagnation</td></tr>
+            <tr><td><strong>Main invisible</strong></td><td>Les individus poursuivent leur intérêt → l'économie s'équilibre via les prix</td><td>Lire les prix comme signal : hausse = tension sur l'offre, baisse = excès d'offre</td></tr>
+            <tr><td><strong>Division du travail</strong></td><td>La spécialisation augmente la productivité globale</td><td>Comprendre la géographie productive mondiale et les avantages sectoriels par région</td></tr>
+            <tr><td><strong>Limites du modèle</strong></td><td>Fonctionne si : info parfaite, concurrence libre, sans externalités</td><td>Quand ces conditions manquent, les marchés échouent → opportunité d'arbitrage</td></tr>
+            <tr><td><strong>Signal de prix</strong></td><td>Un prix anormal (pétrole, immobilier, cuivre) compresse une information macro</td><td>Surveiller les prix des matières premières comme baromètre de l'activité mondiale</td></tr>
           </tbody>
         </table>
       </div>
-      <p>Cet exemple illustre pourquoi communiquer des rendements arithmétiques est trompeur : la moyenne de +50% et −33% suggère une belle performance, alors que le capital a à peine bougé.</p>
     </div>
 
     <div class="sub">
-      <h3 class="sub-title">TWR vs MWR : deux questions différentes</h3>
-      <p><strong>TWR (Time-Weighted Return) :</strong> mesure la performance de la stratégie indépendamment des apports et retraits de capital. C'est la métrique des gérants de fonds — elle isole la compétence du gérant du timing des flux clients.</p>
-      <p><strong>MWR (Money-Weighted Return / IRR) :</strong> mesure la performance réelle de l'investisseur en tenant compte de ses flux. Si l'investisseur a apporté du capital juste avant une mauvaise période, son MWR sera inférieur au TWR — même si la stratégie est bonne.</p>
-      <div class="notion">
-        <div class="notion-title">Quand TWR et MWR divergent</div>
-        <p><strong>TWR &gt; MWR :</strong> l'investisseur a apporté des fonds au mauvais moment (juste avant une baisse).</p>
-        <p><strong>MWR &gt; TWR :</strong> l'investisseur a apporté des fonds au bon moment (juste avant une hausse).</p>
-        <p>Pour évaluer une stratégie objectivement → utiliser le <strong>TWR</strong>. Pour évaluer sa propre performance réelle → utiliser le <strong>MWR</strong>.</p>
+      <h3 class="sub-title">David Ricardo (1772–1823) — L'avantage comparatif</h3>
+      <p>Ricardo est l'économiste de la mondialisation — avant la mondialisation. Sa théorie de l'avantage comparatif démontre qu'il est toujours mutuellement profitable pour deux pays d'échanger, même si l'un est plus efficace dans tous les domaines de production. L'important n'est pas l'avantage absolu, mais l'avantage relatif.</p>
+      <p>Les tensions entre les États-Unis et la Chine depuis 2018, le mouvement de relocalisation industrielle post-COVID, les sanctions contre la Russie en 2022 : autant d'événements qui redessinent les avantages comparatifs en temps réel. Savoir lire Ricardo, c'est avoir un cadre pour anticiper où les flux de capitaux vont se rediriger.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Pays / Région</th><th>Avantage comparatif</th><th>Secteurs dominants</th><th>Signal pour l'investisseur</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Chine</strong></td><td>Main d'œuvre + échelle industrielle</td><td>Électronique, textile, acier</td><td>Reshoring = risque de choc d'offre sur certains secteurs</td></tr>
+            <tr><td><strong>Allemagne</strong></td><td>Ingénierie de précision + R&D</td><td>Auto, machines, chimie</td><td>Dépendance énergie russe = vulnérabilité structurelle à surveiller</td></tr>
+            <tr><td><strong>Pays du Golfe</strong></td><td>Énergie fossile + capital abondant</td><td>Pétrole, gaz, finance</td><td>Transition énergétique = destruction créatrice à anticiper</td></tr>
+            <tr><td><strong>USA</strong></td><td>Innovation + dollar de réserve</td><td>Tech, finance, défense</td><td>Reshoring industriel = opportunité sur l'industrie manufacturière US</td></tr>
+            <tr><td><strong>Inde</strong></td><td>Services + démographie</td><td>IT, pharma, services</td><td>Bénéficiaire du découplage USA-Chine</td></tr>
+          </tbody>
+        </table>
       </div>
     </div>
+
+    <div class="sub">
+      <h3 class="sub-title">John Maynard Keynes (1883–1946) — La demande comme moteur</h3>
+      <p>Keynes est l'économiste des crises. Là où Smith et Ricardo croyaient que les marchés tendent naturellement vers l'équilibre, Keynes observe en 1929 que l'économie peut rester coincée dans une dépression indéfiniment. Sa conclusion : ce n'est pas l'offre qui crée la demande, c'est la demande qui crée l'activité économique.</p>
+      <p>Pour l'investisseur, comprendre Keynes, c'est anticiper les réponses des gouvernements aux crises — et leurs effets sur les marchés. Quand une récession s'amorce, le réflexe keynésien est de creuser les déficits et d'injecter de la demande. Cela crée des opportunités dans certains secteurs (construction, infrastructures, défense) et alerte sur d'autres (hausses de taux futures pour financer la dette).</p>
+    </div>
+<div class="module-figure">
+<svg width="100%" viewBox="0 0 680 300" style="display:block">
+<defs><marker id="arrow2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<g class="node c-blue"><rect x="28" y="105" width="108" height="56" rx="8" stroke-width="0.5"/><text class="th" x="82" y="127" text-anchor="middle" dominant-baseline="central">Injection</text><text class="ts" x="82" y="145" text-anchor="middle">publique</text></g>
+<line x1="136" y1="133" x2="164" y2="133" stroke="var(--text-3)" opacity=".4" marker-end="url(#arrow2)"/>
+<text class="ts" x="150" y="122" text-anchor="middle" opacity=".6">+100</text>
+<g class="node c-teal"><rect x="164" y="96" width="116" height="74" rx="8" stroke-width="0.5"/><text class="th" x="222" y="119" text-anchor="middle" dominant-baseline="central">Demande</text><text class="ts" x="222" y="137" text-anchor="middle">↑ consommation</text><text class="ts" x="222" y="153" text-anchor="middle">↑ investissement</text></g>
+<line x1="280" y1="133" x2="308" y2="133" stroke="var(--text-3)" opacity=".4" marker-end="url(#arrow2)"/>
+<g class="node c-teal"><rect x="308" y="96" width="116" height="74" rx="8" stroke-width="0.5"/><text class="th" x="366" y="119" text-anchor="middle" dominant-baseline="central">Activité</text><text class="ts" x="366" y="137" text-anchor="middle">↑ emploi</text><text class="ts" x="366" y="153" text-anchor="middle">↑ revenus</text></g>
+<line x1="424" y1="133" x2="452" y2="133" stroke="var(--text-3)" opacity=".4" marker-end="url(#arrow2)"/>
+<g class="node c-purple"><rect x="452" y="96" width="120" height="74" rx="8" stroke-width="0.5"/><text class="th" x="512" y="119" text-anchor="middle" dominant-baseline="central">Re-dépense</text><text class="ts" x="512" y="137" text-anchor="middle">propension</text><text class="ts" x="512" y="153" text-anchor="middle">marginale (c)</text></g>
+<line x1="572" y1="133" x2="600" y2="133" stroke="var(--text-3)" opacity=".4" marker-end="url(#arrow2)"/>
+<text class="ts" x="586" y="122" text-anchor="middle" opacity=".6">×c</text>
+<g class="node c-green"><rect x="600" y="105" width="56" height="56" rx="8" stroke-width="0.5"/><text class="th" x="628" y="127" text-anchor="middle" dominant-baseline="central">PIB</text><text class="ts" x="628" y="145" text-anchor="middle">×k</text></g>
+<path d="M 628 161 L 628 220 L 82 220 L 82 161" fill="none" stroke="var(--text-3)" stroke-width="1" stroke-dasharray="5 3" opacity=".25" marker-end="url(#arrow2)"/>
+<text class="ts" x="340" y="240" text-anchor="middle" opacity=".5">Cycle de re-dépense → amplifie l'effet initial</text>
+<rect x="220" y="256" width="240" height="36" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="0.5" opacity=".7"/>
+<text class="th" x="340" y="271" text-anchor="middle" dominant-baseline="central">k = 1 / (1 − c)</text>
+<text class="ts" x="340" y="285" text-anchor="middle" opacity=".6">si c = 0.8 → multiplicateur = 5</text>
+</svg>
+<p class="fig-caption">Le multiplicateur keynésien — l'injection publique amplifie l'activité économique</p>
+</div>
+
+    <div class="sub">
+      <h3 class="sub-title">Milton Friedman (1912–2006) — Le monétarisme</h3>
+      <p>Friedman est la réponse à Keynes. Sa conviction est exprimée dans une formule devenue célèbre : <em>« L'inflation est toujours et partout un phénomène monétaire. »</em> Autrement dit, si les prix montent, c'est parce que trop de monnaie circule par rapport aux biens produits.</p>
+      <p>Pour l'investisseur, Friedman enseigne à surveiller les agrégats monétaires. M2, le bilan de la Fed, les taux directeurs : ces variables annoncent l'inflation avant qu'elle ne soit visible dans les prix à la consommation. Quiconque a suivi l'explosion du bilan de la Fed en 2020 et tiré la conclusion logique — inflation à venir, actifs réels à privilégier — a eu plusieurs trimestres d'avance sur le consensus.</p>
+    </div>
+<div class="module-figure">
+<svg width="100%" viewBox="0 0 680 340" style="display:block">
+<defs><marker id="arrow3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<g class="node c-blue"><rect x="240" y="16" width="200" height="48" rx="8" stroke-width="0.5"/><text class="th" x="340" y="36" text-anchor="middle" dominant-baseline="central">Expansion M2 / QE</text><text class="ts" x="340" y="54" text-anchor="middle">bilan banque centrale ↑</text></g>
+<line x1="310" y1="64" x2="176" y2="108" stroke="var(--text-3)" opacity=".3" marker-end="url(#arrow3)"/>
+<line x1="340" y1="64" x2="340" y2="108" stroke="var(--text-3)" opacity=".3" marker-end="url(#arrow3)"/>
+<line x1="370" y1="64" x2="504" y2="108" stroke="var(--text-3)" opacity=".3" marker-end="url(#arrow3)"/>
+<g class="node c-teal"><rect x="60" y="108" width="152" height="48" rx="8" stroke-width="0.5"/><text class="th" x="136" y="128" text-anchor="middle" dominant-baseline="central">Déflation / faible</text><text class="ts" x="136" y="146" text-anchor="middle">inflation &lt; 1%</text></g>
+<g class="node c-amber"><rect x="264" y="108" width="152" height="48" rx="8" stroke-width="0.5"/><text class="th" x="340" y="128" text-anchor="middle" dominant-baseline="central">Inflation modérée</text><text class="ts" x="340" y="146" text-anchor="middle">1% – 4%</text></g>
+<g class="node c-coral"><rect x="468" y="108" width="152" height="48" rx="8" stroke-width="0.5"/><text class="th" x="544" y="128" text-anchor="middle" dominant-baseline="central">Forte inflation</text><text class="ts" x="544" y="146" text-anchor="middle">&gt; 4% / stagflation</text></g>
+<line x1="136" y1="156" x2="136" y2="188" stroke="var(--text-3)" opacity=".25" marker-end="url(#arrow3)"/>
+<line x1="340" y1="156" x2="340" y2="188" stroke="var(--text-3)" opacity=".25" marker-end="url(#arrow3)"/>
+<line x1="544" y1="156" x2="544" y2="188" stroke="var(--text-3)" opacity=".25" marker-end="url(#arrow3)"/>
+<rect x="60" y="188" width="152" height="80" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="0.5"/>
+<text class="th" x="136" y="205" text-anchor="middle" dominant-baseline="central">✦ Favorisé</text>
+<text class="ts" x="136" y="222" text-anchor="middle">Obligations souveraines</text>
+<text class="ts" x="136" y="237" text-anchor="middle">Cash, gold</text>
+<text class="ts" x="136" y="252" text-anchor="middle">Valeurs défensives</text>
+<rect x="264" y="188" width="152" height="80" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="0.5"/>
+<text class="th" x="340" y="205" text-anchor="middle" dominant-baseline="central">✦ Favorisé</text>
+<text class="ts" x="340" y="222" text-anchor="middle">Actions (croissance)</text>
+<text class="ts" x="340" y="237" text-anchor="middle">Immobilier</text>
+<text class="ts" x="340" y="252" text-anchor="middle">Crédit corporate</text>
+<rect x="468" y="188" width="152" height="80" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="0.5"/>
+<text class="th" x="544" y="205" text-anchor="middle" dominant-baseline="central">✦ Favorisé</text>
+<text class="ts" x="544" y="222" text-anchor="middle">Matières premières</text>
+<text class="ts" x="544" y="237" text-anchor="middle">Or, énergie</text>
+<text class="ts" x="544" y="252" text-anchor="middle">TIPS, actifs réels</text>
+<rect x="60" y="276" width="152" height="32" rx="8" fill="#FCEBEB" stroke="#E24B4A" stroke-width="0.5" opacity=".7"/>
+<text class="ts" x="136" y="290" text-anchor="middle" fill="#A32D2D">✗ Actions risquées</text>
+<rect x="264" y="276" width="152" height="32" rx="8" fill="#FCEBEB" stroke="#E24B4A" stroke-width="0.5" opacity=".7"/>
+<text class="ts" x="340" y="290" text-anchor="middle" fill="#A32D2D">✗ Duration longue</text>
+<rect x="468" y="276" width="152" height="32" rx="8" fill="#FCEBEB" stroke="#E24B4A" stroke-width="0.5" opacity=".7"/>
+<text class="ts" x="544" y="290" text-anchor="middle" fill="#A32D2D">✗ Obligations fix, tech</text>
+<text class="ts" x="340" y="326" text-anchor="middle" opacity=".45">« L'inflation est toujours et partout un phénomène monétaire » — Friedman</text>
+</svg>
+<p class="fig-caption">Friedman — M2, inflation et allocation d'actifs selon le régime inflationniste</p>
+</div>
+
+    <div class="sub">
+      <h3 class="sub-title">Joseph Schumpeter (1883–1950) — La destruction créatrice</h3>
+      <p>Schumpeter est l'économiste des révolutions technologiques. Sa grande contribution est le concept de <strong>destruction créatrice</strong> : le capitalisme ne progresse pas de façon linéaire, il avance par vagues. Chaque grande innovation détruit les structures économiques existantes pour en créer de nouvelles.</p>
+      <p>Aujourd'hui, plusieurs destructions créatrices sont en cours simultanément : la transition énergétique menace les majors pétrolières tout en créant les géants de l'éolien et du solaire. L'intelligence artificielle recompose les industries de la connaissance. Dans chacun de ces cas, Schumpeter offre une grille de lecture : qui sont les entrants qui détruisent, qui sont les sortants qui résistent inutilement, et où se trouvent les opportunités ?</p>
+    </div>
+<div class="module-figure">
+<svg width="100%" viewBox="0 0 680 310" style="display:block">
+<line x1="52" y1="24" x2="52" y2="240" stroke="var(--text-3)" stroke-width="1" opacity=".3"/>
+<line x1="52" y1="240" x2="648" y2="240" stroke="var(--text-3)" stroke-width="1" opacity=".3"/>
+<text class="ts" x="36" y="28" text-anchor="middle" opacity=".4">Activité</text>
+<path d="M52,230 C80,230 100,155 148,95 C196,35 210,30 230,35 C250,40 264,95 296,230" fill="#1D9E75" fill-opacity=".15" stroke="#1D9E75" stroke-width="1.5" stroke-linecap="round"/>
+<text class="ts" x="174" y="72" text-anchor="middle" fill="#085041">Machine à vapeur</text>
+<text class="ts" x="174" y="86" text-anchor="middle" fill="#085041">1780–1840</text>
+<path d="M206,230 C230,230 250,155 290,92 C330,30 345,24 365,28 C385,32 400,92 436,230" fill="#3B8BD4" fill-opacity=".15" stroke="#3B8BD4" stroke-width="1.5" stroke-linecap="round"/>
+<text class="ts" x="318" y="72" text-anchor="middle" fill="#0C447C">Chemin de fer</text>
+<text class="ts" x="318" y="86" text-anchor="middle" fill="#0C447C">1840–1890</text>
+<path d="M360,230 C382,230 398,158 432,100 C466,40 480,30 498,34 C516,38 530,100 562,230" fill="#EF9F27" fill-opacity=".15" stroke="#EF9F27" stroke-width="1.5" stroke-linecap="round"/>
+<text class="ts" x="463" y="72" text-anchor="middle" fill="#633806">Électricité / Auto</text>
+<text class="ts" x="463" y="86" text-anchor="middle" fill="#633806">1890–1940</text>
+<path d="M518,230 C536,230 548,174 568,124 C590,70 606,56 622,59 C636,62 644,106 648,230" fill="#534AB7" fill-opacity=".15" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="6 3" stroke-linecap="round"/>
+<text class="ts" x="590" y="110" text-anchor="middle" fill="#3C3489">Tech / IA</text>
+<text class="ts" x="590" y="124" text-anchor="middle" fill="#3C3489">1990–20??</text>
+<text class="ts" x="86"  y="256" text-anchor="middle" opacity=".5">1780</text>
+<text class="ts" x="230" y="256" text-anchor="middle" opacity=".5">1840</text>
+<text class="ts" x="368" y="256" text-anchor="middle" opacity=".5">1890</text>
+<text class="ts" x="518" y="256" text-anchor="middle" opacity=".5">1940</text>
+<text class="ts" x="634" y="256" text-anchor="middle" opacity=".5">2024</text>
+<line x1="634" y1="32" x2="634" y2="240" stroke="var(--text-3)" stroke-width="1" stroke-dasharray="4 3" opacity=".2"/>
+<text class="ts" x="634" y="26" text-anchor="middle" opacity=".4">Aujourd'hui</text>
+<rect x="52" y="272" width="576" height="32" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="0.5" opacity=".6"/>
+<text class="ts" x="340" y="286" text-anchor="middle">Chaque vague dure ~40–60 ans : investissement → maturité → déclin → nouvelle vague</text>
+<text class="ts" x="340" y="300" text-anchor="middle" opacity=".6">Schumpeter : identifier la vague entrante avant qu'elle soit évidente = avantage structurel</text>
+</svg>
+<p class="fig-caption">Schumpeter — Les vagues de destruction créatrice (Cycles de Kondratiev)</p>
+</div>
+
+    <div class="sub">
+      <h3 class="sub-title">Hyman Minsky (1919–1996) — L'instabilité endogène</h3>
+      <p>Minsky est le grand ignoré de l'économie mainstream — jusqu'à 2008, où son nom est soudainement sur toutes les lèvres. Sa thèse centrale est contre-intuitive : <strong>la stabilité engendre l'instabilité.</strong> Plus les marchés restent calmes longtemps, plus les acteurs économiques prennent des risques — et plus le prochain choc sera violent.</p>
+      <p>Minsky décrit un cycle financier en trois phases : <strong>hedge</strong> (remboursement sain), <strong>spéculative</strong> (comptent sur le refinancement) et <strong>Ponzi</strong> (comptent sur la hausse des prix). Le « Minsky moment », c'est le point de bascule où les acteurs réalisent que les prix ne peuvent plus monter, et où la liquidation en cascade commence.</p>
+      <p>Pour l'investisseur, Minsky enseigne à se méfier des périodes de calme prolongé. Un VIX bas depuis plusieurs années, des spreads de crédit qui se compriment, des valorisations qui s'étendent au-delà des fondamentaux : autant de signaux que le système accumule des déséquilibres.</p>
+      <div class="callout yellow">À retenir pour la section suivante : Minsky explique structurellement POURQUOI les crises arrivent — pas seulement comment elles se déroulent. C'est le lien entre cette section et la section c.</div>
+    </div>
+<div class="module-figure">
+<svg width="100%" viewBox="0 0 680 350" style="display:block">
+<defs><marker id="arrow4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<line x1="52" y1="40" x2="52" y2="280" stroke="var(--text-3)" stroke-width="1" opacity=".35"/>
+<line x1="52" y1="280" x2="620" y2="280" stroke="var(--text-3)" stroke-width="1" opacity=".35"/>
+<text class="ts" x="36" y="44" text-anchor="middle" opacity=".5">Prix</text>
+<text class="ts" x="336" y="298" text-anchor="middle" opacity=".5">Temps</text>
+<rect x="52" y="40" width="172" height="240" fill="#1D9E75" opacity=".06" rx="0"/>
+<rect x="224" y="40" width="172" height="240" fill="#EF9F27" opacity=".07" rx="0"/>
+<rect x="396" y="40" width="224" height="240" fill="#E24B4A" opacity=".07" rx="0"/>
+<text class="th" x="138" y="60" text-anchor="middle" fill="#0F6E56">Hedge</text>
+<text class="ts" x="138" y="76" text-anchor="middle" fill="#0F6E56">remboursement sain</text>
+<text class="th" x="310" y="60" text-anchor="middle" fill="#854F0B">Spéculative</text>
+<text class="ts" x="310" y="76" text-anchor="middle" fill="#854F0B">refinancement requis</text>
+<text class="th" x="510" y="60" text-anchor="middle" fill="#A32D2D">Ponzi</text>
+<text class="ts" x="510" y="76" text-anchor="middle" fill="#A32D2D">hausse des prix requise</text>
+<line x1="224" y1="40" x2="224" y2="280" stroke="var(--text-3)" stroke-width="1" stroke-dasharray="4 3" opacity=".2"/>
+<line x1="396" y1="40" x2="396" y2="280" stroke="var(--text-3)" stroke-width="1" stroke-dasharray="4 3" opacity=".2"/>
+<path d="M 68 234 C 90 224, 120 207, 160 186 C 200 165, 210 148, 224 136 C 250 112, 280 92, 310 74 C 340 56, 370 50, 396 54 C 420 58, 440 70, 460 84 C 480 98, 490 110, 510 126 C 530 143, 540 154, 560 176 C 580 198, 598 228, 612 256" fill="none" stroke="#378ADD" stroke-width="2.5" stroke-linecap="round"/>
+<line x1="396" y1="54" x2="396" y2="280" stroke="#E24B4A" stroke-width="1.5" stroke-dasharray="5 3" opacity=".6"/>
+<circle cx="396" cy="54" r="6" fill="#E24B4A" opacity=".9"/>
+<text class="ts" x="410" y="51" fill="#A32D2D">Minsky moment</text>
+<rect x="60" y="236" width="120" height="26" rx="6" fill="#1D9E75" opacity=".12"/>
+<text class="ts" x="120" y="253" text-anchor="middle" fill="#0F6E56">VIX bas / spreads serrés</text>
+<rect x="236" y="132" width="110" height="26" rx="6" fill="#BA7517" opacity=".12"/>
+<text class="ts" x="291" y="148" text-anchor="middle" fill="#854F0B">spreads qui s'écartent</text>
+<rect x="440" y="178" width="130" height="26" rx="6" fill="#A32D2D" opacity=".12"/>
+<text class="ts" x="505" y="194" text-anchor="middle" fill="#A32D2D">liquidation en cascade</text>
+<line x1="120" y1="236" x2="150" y2="195" stroke="#1D9E75" opacity=".5" marker-end="url(#arrow4)"/>
+<line x1="270" y1="132" x2="295" y2="105" stroke="#BA7517" opacity=".5" marker-end="url(#arrow4)"/>
+<line x1="480" y1="178" x2="520" y2="155" stroke="#A32D2D" opacity=".5" marker-end="url(#arrow4)"/>
+<text class="ts" x="340" y="326" text-anchor="middle" opacity=".5">La stabilité engendre l'instabilité — Minsky</text>
+</svg>
+<p class="fig-caption">Le cycle de Minsky — de la phase hedge à l'instabilité Ponzi</p>
+</div>
+
+    <div class="sub">
+      <h3 class="sub-title">Friedrich Hayek (1899–1992) — Les limites de la planification</h3>
+      <p>Hayek est le grand contradicteur de Keynes. Son argument central : la connaissance économique est dispersée dans des millions d'acteurs individuels. Aucun planificateur central ne peut l'agréger entièrement. Quand une banque centrale fixe les taux « trop bas trop longtemps », elle envoie un signal erroné : le capital est bon marché, il faut investir. Des investissements non rentables à des taux normaux deviennent apparemment attractifs — ce que Hayek appelle le « mal investissement ».</p>
+      <p>Les taux zéro de 2009 à 2022 ont créé exactement ce que Hayek prédisait : une explosion des valorisations boursières, une bulle immobilière mondiale, un afflux de capitaux vers des actifs spéculatifs. Quand la Fed a relevé ses taux à partir de 2022, les corrections dans ces secteurs ont été brutales et prévisibles — pour qui avait lu Hayek.</p>
+    </div>
+<div class="module-figure">
+<svg width="100%" viewBox="0 0 680 340" style="display:block">
+<defs><marker id="arrow5" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<g class="node c-blue"><rect x="228" y="16" width="224" height="52" rx="8" stroke-width="0.5"/><text class="th" x="340" y="36" text-anchor="middle" dominant-baseline="central">Banque centrale</text><text class="ts" x="340" y="54" text-anchor="middle">taux directeurs bas (trop longtemps)</text></g>
+<line x1="270" y1="68" x2="156" y2="120" stroke="var(--text-3)" opacity=".3" marker-end="url(#arrow5)"/>
+<line x1="340" y1="68" x2="340" y2="120" stroke="var(--text-3)" opacity=".3" marker-end="url(#arrow5)"/>
+<line x1="410" y1="68" x2="524" y2="120" stroke="var(--text-3)" opacity=".3" marker-end="url(#arrow5)"/>
+<g class="node c-amber"><rect x="52" y="120" width="196" height="52" rx="8" stroke-width="0.5"/><text class="th" x="150" y="139" text-anchor="middle" dominant-baseline="central">Mal-investissement</text><text class="ts" x="150" y="157" text-anchor="middle">projets non rentables</text></g>
+<g class="node c-amber"><rect x="242" y="120" width="196" height="52" rx="8" stroke-width="0.5"/><text class="th" x="340" y="139" text-anchor="middle" dominant-baseline="central">Bulle d'actifs</text><text class="ts" x="340" y="157" text-anchor="middle">valorisations déconnectées</text></g>
+<g class="node c-amber"><rect x="432" y="120" width="196" height="52" rx="8" stroke-width="0.5"/><text class="th" x="530" y="139" text-anchor="middle" dominant-baseline="central">Dette excessive</text><text class="ts" x="530" y="157" text-anchor="middle">levier amplifié</text></g>
+<rect x="52" y="188" width="576" height="40" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="0.5" opacity=".5"/>
+<text class="ts" x="340" y="204" text-anchor="middle" opacity=".7">Exemple 2009–2022 : taux zéro → crypto, SPAC, tech non-profitable, bulle immobilière mondiale</text>
+<text class="ts" x="340" y="220" text-anchor="middle" opacity=".5">Hayek l'avait prédit : le capital bon marché finance l'illusion, pas la valeur réelle</text>
+<line x1="340" y1="228" x2="340" y2="252" stroke="#E24B4A" opacity=".4" marker-end="url(#arrow5)"/>
+<g class="node c-coral"><rect x="184" y="252" width="312" height="52" rx="8" stroke-width="0.5"/><text class="th" x="340" y="271" text-anchor="middle" dominant-baseline="central">Correction inévitable</text><text class="ts" x="340" y="289" text-anchor="middle">liquidation des mal-investissements</text></g>
+<rect x="52" y="316" width="576" height="22" rx="8" fill="#FCEBEB" stroke="#E24B4A" stroke-width="0.5" opacity=".6"/>
+<text class="ts" x="340" y="330" text-anchor="middle" fill="#A32D2D">2022 : Fed +525bp → –78% Nasdaq tech, –50% crypto — Prévisible pour qui avait lu Hayek</text>
+</svg>
+<p class="fig-caption">Hayek — Décisions des banques centrales et leurs effets pervers non voulus</p>
+</div>
   </section>
 
   <!-- SECTION B -->
-  <section class="section" id="xib">
+  <section class="section" id="section-b">
     <div class="section-label">Section B</div>
-    <h2 class="section-title">Métriques de Risque</h2>
-    <div class="section-intro"><em>Le risque n'est pas la volatilité. La volatilité est une mesure du risque — imparfaite, mais la plus utilisée.</em></div>
+    <h2 class="section-title">Économie classique — les fondamentaux</h2>
+    <div class="section-intro">Les économistes nous ont donné des lentilles. Maintenant, les outils. Les mécanismes économiques fondamentaux sont les variables que surveillent les institutionnels — et que la majorité des traders retail ignorent. Ce sont eux qui, en fin de compte, déterminent les niveaux de valorisation, les flux de capitaux entre classes d'actifs, et les décisions des banques centrales.</div>
 
     <div class="sub">
-      <h3 class="sub-title">Volatilité annualisée</h3>
-      <p>La volatilité annualisée est l'écart-type des rendements journaliers multiplié par la racine carrée de 252 (jours de bourse dans une année). Elle mesure la dispersion des rendements autour de leur moyenne.</p>
-      <div class="formula">
-        $$\sigma_{\text{ann}} = \sigma_{\text{daily}} \times \sqrt{252}$$
-        <div class="formula-vars">
-          <strong>σ_ann</strong> = volatilité annualisée &nbsp;·&nbsp; <strong>σ_daily</strong> = écart-type des rendements journaliers &nbsp;·&nbsp; <strong>252</strong> = jours de bourse par an
-        </div>
+      <h3 class="sub-title">Offre et demande</h3>
+      <p>Le mécanisme de l'offre et de la demande est le fondement de toute économie de marché. La sophistication vient de l'<strong>élasticité</strong>. La demande de pétrole est relativement inélastique à court terme : quand le prix monte, les gens continuent à conduire — il n'y a pas d'alternative immédiate. Mais à long terme, les prix élevés financent les véhicules électriques, l'isolation des bâtiments, les énergies renouvelables. L'élasticité s'ouvre avec le temps.</p>
+      <p>Pour l'investisseur, comprendre les élasticités sectorielles, c'est comprendre comment les chocs de prix se transmettent dans l'économie. Un choc d'offre sur les céréales crée des opportunités sur les engrais, les producteurs alternatifs, les semenciers. Un choc de demande sur les semi-conducteurs crée des opportunités sur les équipementiers et les fonderies.</p>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">L'inflation</h3>
+      <p>L'inflation est la hausse générale et durable des prix. Il est crucial de distinguer ses origines car elles n'ont pas les mêmes implications pour les marchés :</p>
+      <p><strong>L'inflation par la demande</strong> (demand-pull) survient quand l'économie tourne à plein régime et que les consommateurs ont plus d'argent à dépenser que de biens disponibles. <strong>L'inflation par les coûts</strong> (cost-push) vient d'un choc sur l'offre : hausse du prix de l'énergie, ruptures d'approvisionnement. <strong>L'inflation monétaire</strong> est la conséquence d'une création monétaire excessive. Le COVID a combiné les trois simultanément.</p>
+      <p>Pour les marchés, l'inflation érode la valeur réelle des obligations à taux fixe, favorise les actifs réels (matières premières, immobilier, or), pénalise les entreprises à forte dette et force les banques centrales à monter les taux — ce qui comprime les multiples de valorisation des actions de croissance.</p>
+      <p>Les indicateurs à surveiller : l'<strong>IPC</strong>, le <strong>PCE</strong> (préféré de la Fed), et l'<strong>IPP</strong> (indicateur avancé de l'IPC). Les surprises par rapport aux anticipations sont souvent plus importantes que les niveaux absolus.</p>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Les taux d'intérêt</h3>
+      <p>Le taux directeur des banques centrales est le levier le plus puissant sur les marchés financiers modernes. Quand les taux montent, le crédit devient plus cher, les actifs risqués moins attractifs par rapport aux placements sans risque, et les obligations existantes perdent de la valeur. Les actions de croissance sont particulièrement pénalisées car l'actualisation des profits futurs est plus sévère à taux élevé.</p>
+      <p>La <strong>courbe des taux</strong> — la représentation graphique des rendements obligataires en fonction de leur maturité — est l'un des indicateurs les plus suivis. Quand la courbe s'inverse (taux courts &gt; taux longs), c'est un signal d'alarme historiquement fiable : le marché anticipe une récession. Ce phénomène s'est produit avant chaque récession américaine depuis 50 ans.</p>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">La monnaie et la création monétaire</h3>
+      <p>Dans le système financier moderne, la majorité de la monnaie en circulation est créée par les banques commerciales lorsqu'elles accordent des crédits. Le Quantitative Easing (QE) est une politique non conventionnelle où la banque centrale achète directement des actifs pour injecter de la liquidité dans le système. Le bilan de la Fed est passé de 900 milliards en 2008 à 9 000 milliards en 2022 : une création monétaire sans précédent en temps de paix.</p>
+      <p>Pour l'investisseur, suivre la masse monétaire (M2) et le bilan des banques centrales est un outil d'anticipation des grandes tendances de marché. L'expansion du bilan de la Fed est historiquement corrélée à la performance des actifs risqués. Sa contraction (Quantitative Tightening) crée des tensions — comme en 2022.</p>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">Les indicateurs macroéconomiques à lire</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Indicateur</th><th>Type</th><th>Ce qu'il mesure</th><th>Point d'attention</th></tr></thead>
+          <tbody>
+            <tr><td><strong>PIB</strong></td><td>Retardé</td><td>Valeur totale des biens et services produits</td><td>Confirmé après 6–12 mois de récession ; les surprises vs consensus comptent plus que les chiffres absolus</td></tr>
+            <tr><td><strong>Marché du travail</strong></td><td>Retardé / Avancé</td><td>Taux de chômage, créations d'emploi, JOLTS</td><td>Les <em>initial claims</em> hebdomadaires sont un indicateur avancé utile</td></tr>
+            <tr><td><strong>PMI</strong></td><td>Avancé</td><td>Activité des directeurs d'achat</td><td>&gt;50 = expansion, &lt;50 = contraction ; disponible avant les données officielles</td></tr>
+            <tr><td><strong>Spreads de crédit</strong></td><td>Avancé</td><td>Écart haut rendement / souverain</td><td>Écartement brutal = stress systémique, signal de changement de régime</td></tr>
+          </tbody>
+        </table>
       </div>
-      <div class="callout yellow"><strong>La limite principale de la volatilité :</strong> elle pénalise également les mouvements à la hausse et à la baisse. Une stratégie qui monte régulièrement avec quelques fortes hausses aura une volatilité élevée — mais ce n'est pas un risque, c'est une opportunité. C'est précisément pour corriger cette limite que le Sortino Ratio a été développé.</div>
-    </div>
-
-    <div class="sub">
-      <h3 class="sub-title">Drawdown Maximum (MDD)</h3>
-      <p>Le MDD est le recul le plus important du portefeuille depuis son pic historique jusqu'à son point le plus bas. C'est la mesure la plus honnête du risque réel vécu par l'investisseur — et souvent celle qui détermine si une stratégie est psychologiquement tenable.</p>
-      <p>La relation non-linéaire perte/récupération s'applique directement : un MDD de 30% nécessite un gain de +42.9% pour être effacé. Un MDD de 50% nécessite un doublement. <strong>Le MDD historique n'est pas le pire scénario futur — il en est le minimum.</strong></p>
-    </div>
-
-    <div class="sub">
-      <h3 class="sub-title">L'Underwater curve : la durée compte autant que l'amplitude</h3>
-      <p>L'underwater curve représente l'évolution du drawdown dans le temps — la zone de valeur du portefeuille sous son pic historique. Elle révèle ce que le MDD seul ne montre pas : la durée pendant laquelle l'investisseur est resté sous son pic.</p>
-      <p>Un MDD de 20% récupéré en 3 semaines et un MDD de 20% récupéré en 18 mois représentent des expériences psychologiques et des implications pratiques totalement différentes. L'underwater curve rend visible cette dimension temporelle.</p>
-    </div>
-
-    <div class="module-figure">
-<svg width="100%" viewBox="0 0 680 300" style="display:block">
-<!-- Panel 1: Price & peak -->
-<text class="ts" x="64" y="18" style="font-weight:600;fill:#185FA5">Prix & pic historique</text>
-<line x1="60" y1="130" x2="620" y2="130" stroke="var(--text-2)" stroke-width="0.5" opacity=".15"/>
-<!-- Price path -->
-<path d="M 68,110 L 110,90 L 150,70 L 180,60 L 200,80 L 230,90 L 260,65 L 290,75 L 320,50 L 340,55 L 360,80 L 390,95 L 410,85 L 440,100 L 470,88 L 500,105 L 540,95 L 580,108 L 615,100" fill="none" stroke="#185FA5" stroke-width="2" stroke-linecap="round"/>
-<!-- Peak line -->
-<path d="M 68,110 L 110,90 L 150,70 L 180,60 L 260,60 L 320,50 L 340,50 L 620,50" fill="none" stroke="#E24B4A" stroke-width="1" stroke-dasharray="5 3" opacity=".6"/>
-<!-- Fill underwater zone -->
-<path d="M 340,50 L 360,80 L 390,95 L 410,85 L 440,100 L 470,88 L 500,105 L 540,95 L 580,108 L 615,100 L 615,50 L 340,50 Z" fill="#FCEBEB" opacity=".35"/>
-<text class="ts" x="480" y="45" fill="#A32D2D" style="font-size:11px">Pic historique</text>
-<text class="ts" x="450" y="90" fill="#A32D2D" style="font-size:11px">Zone underwater</text>
-
-<!-- Panel 2: Drawdown depth -->
-<line x1="60" y1="148" x2="620" y2="148" stroke="var(--text-2)" stroke-width="0.5" opacity=".2"/>
-<text class="ts" x="64" y="165" style="font-weight:600;fill:#A32D2D">Profondeur du drawdown</text>
-<path d="M 68,175 L 180,175 L 200,185 L 230,190 L 260,175 L 290,180 L 320,175 L 340,175 L 360,195 L 390,210 L 410,205 L 440,218 L 470,210 L 500,225 L 540,215 L 580,222 L 615,218" fill="none" stroke="#E24B4A" stroke-width="2" stroke-linecap="round"/>
-<path d="M 340,175 L 360,195 L 390,210 L 410,205 L 440,218 L 470,210 L 500,225 L 540,215 L 580,222 L 615,218 L 615,175 L 340,175 Z" fill="#FCEBEB" opacity=".35"/>
-<!-- MDD marker -->
-<line x1="500" y1="155" x2="500" y2="225" stroke="#A32D2D" stroke-width="1" stroke-dasharray="3 3" opacity=".5"/>
-<text class="ts" x="504" y="245" fill="#A32D2D">MDD max</text>
-<!-- Duration brace -->
-<line x1="340" y1="270" x2="615" y2="270" stroke="#A32D2D" stroke-width="1" opacity=".4"/>
-<line x1="340" y1="265" x2="340" y2="275" stroke="#A32D2D" stroke-width="1" opacity=".4"/>
-<line x1="615" y1="265" x2="615" y2="275" stroke="#A32D2D" stroke-width="1" opacity=".4"/>
-<text class="ts" x="478" y="286" text-anchor="middle" fill="#A32D2D">Durée de la période underwater</text>
-</svg>
-<p class="fig-caption">Fig. 1 — Underwater curve en deux panels. Haut : prix et pic historique, zone rouge = sous le peak. Bas : profondeur du drawdown dans le temps. La durée des périodes underwater est aussi révélatrice que leur amplitude maximale.</p>
-    </div>
-
-    <div class="sub">
-      <h3 class="sub-title">VaR et CVaR calculées sur l'historique réel</h3>
-      <p>Contrairement à la VaR paramétrique qui suppose une distribution normale, la <strong>VaR historique</strong> est calculée directement depuis les rendements réels observés — sans hypothèse sur leur distribution. Elle capture les vraies queues, y compris les événements extrêmes que le modèle gaussien ignorerait.</p>
-      <p>La <strong>CVaR (Expected Shortfall)</strong> complète la VaR en mesurant la perte moyenne au-delà du seuil VaR. Sur un historique réel, ces deux métriques donnent une image fidèle du risque de queue — incluant les cygnes noirs déjà vécus par la stratégie.</p>
     </div>
   </section>
 
   <!-- SECTION C -->
-  <section class="section" id="xic">
+  <section class="section" id="section-c">
     <div class="section-label">Section C</div>
-    <h2 class="section-title">Métriques Combinées Rendement / Risque</h2>
-    <div class="section-intro"><em>L'objectif n'est pas de maximiser le rendement. C'est de maximiser le rendement par unité de risque pris.</em></div>
+    <h2 class="section-title">Les grandes crises — les cycles se répètent</h2>
+    <div class="section-intro">L'histoire financière n'est pas une liste d'accidents malheureux. C'est un pattern récurrent : excès de crédit, euphorie, déni, retournement, contagion, puis intervention. Les circonstances changent — la technologie, les instruments financiers, les acteurs impliqués. Mais la structure profonde reste remarquablement stable.</div>
 
     <div class="sub">
-      <h3 class="sub-title">Sharpe Ratio</h3>
-      <p>Le Sharpe Ratio est la métrique la plus utilisée en finance pour comparer des stratégies sur une base ajustée du risque. Il mesure combien d'unités de rendement excédentaire (au-dessus du taux sans risque) sont générées pour chaque unité de risque total.</p>
-      <div class="formula">
-        $$\text{Sharpe} = \frac{R_p - R_f}{\sigma_p}$$
-        <div class="formula-vars">
-          <strong>R_p</strong> = rendement annualisé &nbsp;·&nbsp; <strong>R_f</strong> = taux sans risque (OAT 1 an, ~2–4%) &nbsp;·&nbsp; <strong>σ_p</strong> = volatilité annualisée<br>
-          Valeurs de référence : &lt; 0.5 médiocre · 0.5–1.0 acceptable · 1.0–2.0 bon · &gt; 2.0 excellent
-        </div>
-      </div>
-      <div class="callout red"><strong>Les limites critiques du Sharpe :</strong> suppose une distribution normale — sous-estime les queues épaisses. Pénalise la volatilité à la hausse autant qu'à la baisse. Un fonds qui vend des options nues a un Sharpe élevé et stable… jusqu'au jour où ça explose. Sensible à la fréquence de mesure.</div>
+      <h3 class="sub-title">1929 — La Grande Dépression</h3>
+      <p>La crise de 1929 reste la plus étudiée de l'histoire financière. Son déclencheur immédiat est le krach boursier d'octobre 1929, mais ses racines sont plus profondes : tout au long des années 1920, le crédit s'est développé de façon exponentielle via le <em>margin lending</em> — les investisseurs pouvaient acheter des actions avec seulement 10% de leur valeur en capital propre.</p>
+      <p>Quand les prix ont commencé à corriger, les appels de marge ont forcé des ventes, qui ont fait baisser les prix, qui ont déclenché de nouveaux appels de marge — la spirale déflationniste classique. Le système bancaire américain s'est effondré, la masse monétaire a contracté d'un tiers, le chômage a atteint 25%.</p>
+      <p><strong>Leçon fondamentale :</strong> le levier. Un actif acheté avec 10× de levier perd 100% de la mise initiale si sa valeur baisse de 10%. Comprendre le niveau d'endettement dans le système est un prérequis pour évaluer la fragilité du marché.</p>
     </div>
 
     <div class="sub">
-      <h3 class="sub-title">Sortino Ratio</h3>
-      <p>Le Sortino Ratio corrige la principale limite du Sharpe : il ne pénalise que la <strong>volatilité négative</strong> (downside deviation), pas la volatilité totale. C'est une mesure plus pertinente pour un investisseur qui ne se préoccupe que des pertes, pas des hausses.</p>
-      <div class="formula">
-        $$\text{Sortino} = \frac{R_p - R_f}{\sigma_{\text{downside}}}$$
-        <div class="formula-vars">
-          <strong>σ_downside</strong> = écart-type des rendements inférieurs au taux sans risque uniquement<br>
-          Quand <strong>Sortino &gt; Sharpe</strong> : la stratégie a plus de volatilité à la hausse qu'à la baisse — profil asymétrique favorable.
-        </div>
-      </div>
+      <h3 class="sub-title">2000 — La bulle dot-com</h3>
+      <p>La bulle internet est un cas d'école sur la relation entre narration et valorisation. La révolution technologique était réelle — mais le marché en a tiré une conclusion erronée : que toute entreprise ayant « .com » dans son nom valait des milliards, indépendamment de ses revenus ou de sa viabilité. Le Nasdaq a culminé en mars 2000 à des niveaux qu'il ne retrouvera qu'en 2015. La correction a été de –78% en deux ans.</p>
+      <p><strong>Leçon fondamentale :</strong> la valeur créée par les révolutions technologiques ne se distribue pas uniformément entre toutes les entreprises du secteur, et le prix payé reste déterminant. Amazon a perdu 95% de sa valeur entre 1999 et 2001 — avant de devenir l'une des entreprises les plus précieuses au monde. La thèse était correcte ; les valorisations ne l'étaient pas.</p>
     </div>
 
     <div class="sub">
-      <h3 class="sub-title">Calmar Ratio</h3>
-      <p>Le Calmar Ratio mesure le rendement annualisé par rapport au drawdown maximum historique. C'est la métrique la plus adaptée à l'évaluation de stratégies sur horizon long — elle pénalise directement les drawdowns extrêmes qui rendent une stratégie psychologiquement intenable.</p>
-      <div class="formula">
-        $$\text{Calmar} = \frac{\text{CAGR}}{|\text{MDD}|}$$
-        <div class="formula-vars">
-          Exemple : CAGR = 18%, MDD = −24% → Calmar = 18/24 = <strong>0.75</strong><br>
-          Valeurs de référence : &lt; 0.5 faible · 0.5–1.0 correct · &gt; 1.0 solide · &gt; 3.0 exceptionnel
-        </div>
-      </div>
+      <h3 class="sub-title">2008 — La crise des subprimes</h3>
+      <p>La crise de 2008 est la démonstration en grandeur réelle de la théorie de Minsky. Des années de taux bas ont poussé les acteurs financiers à chercher du rendement dans l'immobilier résidentiel américain. Les banques accordaient des prêts à des ménages à la solvabilité douteuse (subprimes), puis revendaient ces créances via des produits financiers complexes (CDO, RMBS). La sophistication des instruments avait rendu le risque invisible.</p>
+      <p>La faillite de Lehman Brothers en septembre 2008 a déclenché une crise de confiance systémique : le crédit interbancaire s'est gelé. La réponse des banques centrales (QE, taux zéro) a été sans précédent, et ses effets ont structuré les marchés pendant quinze ans.</p>
     </div>
 
     <div class="sub">
-      <h3 class="sub-title">Information Ratio</h3>
-      <p>L'Information Ratio mesure la régularité avec laquelle un portefeuille surperforme son benchmark. Un IR élevé signifie que la surperformance est régulière, pas due à la chance d'une bonne année.</p>
-      <div class="formula">
-        $$\text{IR} = \frac{R_p - R_b}{\text{TE}}$$
-        <div class="formula-vars">
-          <strong>R_b</strong> = rendement du benchmark &nbsp;·&nbsp; <strong>TE</strong> = Tracking Error = écart-type des rendements excédentaires \(R_p - R_b\)
-        </div>
-      </div>
+      <h3 class="sub-title">2020 — Le choc COVID</h3>
+      <p>Le COVID est un choc exogène, pas un déséquilibre endogène accumulé. En quelques semaines, l'économie mondiale a été mise à l'arrêt administratif. La réponse a été historique par son ampleur et sa rapidité : la Fed a baissé ses taux à zéro et relancé le QE à grande échelle. En quelques mois, la quantité de monnaie en circulation avait explosé.</p>
+      <p><strong>Leçon fondamentale :</strong> l'injection monétaire et budgétaire massive, dans un contexte de perturbations des chaînes d'approvisionnement mondiales, a créé exactement le scénario que Friedman aurait prédit : une inflation structurelle, qui a culminé à des niveaux inédits depuis 40 ans en 2022.</p>
     </div>
+    <div class="callout blue">Fil conducteur entre les crises : excès → euphorie → déni → retournement → contagion → intervention. Le calendrier change. Le schéma non.</div>
 
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>Métrique</th><th>Question posée</th><th>Numérateur</th><th>Dénominateur</th><th>Limite principale</th></tr></thead>
-        <tbody>
-          <tr><td><strong>Sharpe</strong></td><td>Rendement / risque total ?</td><td>R_p − R_f</td><td>Volatilité totale</td><td>Pénalise la volatilité haussière</td></tr>
-          <tr><td><strong>Sortino</strong></td><td>Rendement / risque baissier ?</td><td>R_p − R_f</td><td>Volatilité downside</td><td>Ignore la fréquence des drawdowns</td></tr>
-          <tr><td><strong>Calmar</strong></td><td>Rendement / pire drawdown ?</td><td>CAGR</td><td>MDD absolu</td><td>Sensible à un seul événement extrême</td></tr>
-          <tr><td><strong>Info. Ratio</strong></td><td>Alpha / régularité de l'alpha ?</td><td>R_p − R_b</td><td>Tracking Error</td><td>Dépend du choix du benchmark</td></tr>
-        </tbody>
-      </table>
-    </div>
+<div class="module-figure">
+<svg width="100%" viewBox="0 0 680 340" style="display:block">
+<defs><marker id="arrow6" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<rect x="52"  y="16" width="92" height="32" rx="6" fill="#534AB7" fill-opacity=".12" stroke="#534AB7" stroke-width="0.5" opacity=".6"/>
+<text class="ts" x="98"  y="36" text-anchor="middle" fill="#3C3489">Excès / levier</text>
+<line x1="144" y1="32" x2="160" y2="32" stroke="var(--text-3)" opacity=".3" marker-end="url(#arrow6)"/>
+<rect x="160" y="16" width="80" height="32" rx="6" fill="#EF9F27" fill-opacity=".12" stroke="#EF9F27" stroke-width="0.5" opacity=".6"/>
+<text class="ts" x="200" y="36" text-anchor="middle" fill="#633806">Euphorie</text>
+<line x1="240" y1="32" x2="256" y2="32" stroke="var(--text-3)" opacity=".3" marker-end="url(#arrow6)"/>
+<rect x="256" y="16" width="68" height="32" rx="6" fill="#B4B2A9" fill-opacity=".2" stroke="#888780" stroke-width="0.5" opacity=".6"/>
+<text class="ts" x="290" y="36" text-anchor="middle" fill="#444441">Déni</text>
+<line x1="324" y1="32" x2="340" y2="32" stroke="var(--text-3)" opacity=".3" marker-end="url(#arrow6)"/>
+<rect x="340" y="16" width="104" height="32" rx="6" fill="#E24B4A" fill-opacity=".12" stroke="#E24B4A" stroke-width="0.5" opacity=".6"/>
+<text class="ts" x="392" y="36" text-anchor="middle" fill="#A32D2D">Retournement</text>
+<line x1="444" y1="32" x2="460" y2="32" stroke="var(--text-3)" opacity=".3" marker-end="url(#arrow6)"/>
+<rect x="460" y="16" width="88" height="32" rx="6" fill="#1D9E75" fill-opacity=".12" stroke="#1D9E75" stroke-width="0.5" opacity=".6"/>
+<text class="ts" x="504" y="36" text-anchor="middle" fill="#085041">Intervention</text>
+<g><rect x="36" y="72" width="294" height="120" rx="10" fill="var(--surface)" stroke="var(--border)" stroke-width="0.5"/>
+<text class="th" x="56" y="96" fill="#A32D2D" dominant-baseline="central" style="font-size:22px">1929</text>
+<text class="ts" x="56" y="112" fill="#793535">Grande Dépression</text>
+<line x1="36" y1="122" x2="330" y2="122" stroke="var(--border)" stroke-width="0.5"/>
+<text class="ts" x="56" y="136">Déclencheur : levier massif (margin lending ×10)</text>
+<text class="ts" x="56" y="150">Mécanisme : spirale déflationniste, appels de marge</text>
+<text class="ts" x="56" y="164">Leçon : surveiller le levier dans le système</text></g>
+<g><rect x="350" y="72" width="294" height="120" rx="10" fill="var(--surface)" stroke="var(--border)" stroke-width="0.5"/>
+<text class="th" x="370" y="96" fill="#A32D2D" dominant-baseline="central" style="font-size:22px">2000</text>
+<text class="ts" x="370" y="112" fill="#793535">Bulle dot-com</text>
+<line x1="350" y1="122" x2="644" y2="122" stroke="var(--border)" stroke-width="0.5"/>
+<text class="ts" x="370" y="136">Déclencheur : narration &gt; fondamentaux</text>
+<text class="ts" x="370" y="150">Mécanisme : valorisations sans revenus</text>
+<text class="ts" x="370" y="164">Leçon : le prix payé reste déterminant</text></g>
+<g><rect x="36" y="204" width="294" height="120" rx="10" fill="var(--surface)" stroke="var(--border)" stroke-width="0.5"/>
+<text class="th" x="56" y="228" fill="#A32D2D" dominant-baseline="central" style="font-size:22px">2008</text>
+<text class="ts" x="56" y="244" fill="#793535">Subprimes</text>
+<line x1="36" y1="254" x2="330" y2="254" stroke="var(--border)" stroke-width="0.5"/>
+<text class="ts" x="56" y="268">Déclencheur : Minsky + titrisation opaque</text>
+<text class="ts" x="56" y="282">Mécanisme : risque invisible, contagion bancaire</text>
+<text class="ts" x="56" y="296">Leçon : lire les spreads et les bilans bancaires</text></g>
+<g><rect x="350" y="204" width="294" height="120" rx="10" fill="var(--surface)" stroke="var(--border)" stroke-width="0.5"/>
+<text class="th" x="370" y="228" fill="#A32D2D" dominant-baseline="central" style="font-size:22px">2020</text>
+<text class="ts" x="370" y="244" fill="#793535">Choc COVID</text>
+<line x1="350" y1="254" x2="644" y2="254" stroke="var(--border)" stroke-width="0.5"/>
+<text class="ts" x="370" y="268">Déclencheur : choc exogène (arrêt administratif)</text>
+<text class="ts" x="370" y="282">Mécanisme : QE illimité + ruptures chaînes</text>
+<text class="ts" x="370" y="296">Leçon : inflation différée prévisible (Friedman)</text></g>
+<text class="ts" x="340" y="330" text-anchor="middle" opacity=".45">Le calendrier change. Le schéma — excès → euphorie → déni → retournement → intervention — non.</text>
+</svg>
+<p class="fig-caption">Les quatre grandes crises — un schéma récurrent</p>
+</div>
   </section>
 
   <!-- SECTION D -->
-  <section class="section" id="xid">
+  <section class="section" id="section-d">
     <div class="section-label">Section D</div>
-    <h2 class="section-title">Benchmarks et Comparaison</h2>
-    <div class="section-intro"><em>Se comparer au mauvais benchmark peut faire paraître une stratégie excellente ou médiocre — indépendamment de sa qualité réelle.</em></div>
+    <h2 class="section-title">Naissance et évolution des marchés financiers modernes</h2>
+    <div class="section-intro">Comprendre d'où viennent les marchés, c'est comprendre leur logique profonde — et éviter les malentendus fréquents sur ce qu'on achète réellement quand on passe un ordre.</div>
 
     <div class="sub">
-      <h3 class="sub-title">Pourquoi le choix du benchmark est une décision stratégique</h3>
-      <p>Le benchmark doit refléter l'univers d'investissement réel de la stratégie et le risque systématique qu'elle supporte. Se comparer au CAC40 quand on trade des matières premières n'a aucun sens — les deux actifs n'ont pas les mêmes drivers fondamentaux, pas les mêmes régimes, pas le même profil de risque.</p>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Type de stratégie</th><th>Benchmark adapté</th><th>Justification</th></tr></thead>
-          <tbody>
-            <tr><td><strong>Position trading global macro</strong></td><td>MSCI World ou 60/40</td><td>Univers d'investissement global, risque systématique mondial</td></tr>
-            <tr><td><strong>Matières premières</strong></td><td>Bloomberg Commodity Index</td><td>Même classe d'actif, même exposition aux cycles commodités</td></tr>
-            <tr><td><strong>Devises (FX)</strong></td><td>DXY ou panier pondéré</td><td>Référence naturelle pour les positions de change</td></tr>
-            <tr><td><strong>Stratégie market neutral</strong></td><td>Taux sans risque (OAT 1 an)</td><td>Beta neutre = aucune exposition au marché</td></tr>
-            <tr><td><strong>Actions sectorielles</strong></td><td>ETF sectoriel correspondant</td><td>Isoler l'alpha intra-sectoriel du beta du secteur</td></tr>
-          </tbody>
-        </table>
-      </div>
+      <h3 class="sub-title">Des origines aux marchés électroniques</h3>
+      <p>Le premier marché financier organisé au monde est né à Amsterdam en 1602, avec la création de la VOC — la première société par actions de l'histoire. C'est la naissance simultanée de l'action, du marché primaire, et du marché secondaire.</p>
+      <p>La grande rupture du XXe siècle est l'abandon du système de Bretton Woods en 1971. En suspendant la convertibilité du dollar en or, Nixon a inauguré l'ère des changes flottants : les taux de change sont désormais déterminés par le marché, créant une nouvelle classe d'actif à part entière et une source permanente de volatilité.</p>
     </div>
 
     <div class="sub">
-      <h3 class="sub-title">Le portefeuille 60/40 comme benchmark de référence universelle</h3>
-      <p>Le portefeuille 60% actions monde / 40% obligations court terme est le benchmark que tout investisseur actif doit battre pour justifier ses efforts. Il est accessible à tous via deux ETF, sans analyse, sans surveillance quotidienne, avec des frais proches de zéro. Il produit historiquement 7 à 9% annualisé sur le long terme.</p>
-      <p>C'est le coût d'opportunité de la gestion active : si votre stratégie ne bat pas le 60/40 sur un horizon de 3 à 5 ans après frais, vous avez travaillé gratuitement — ou payé pour sous-performer.</p>
-      <div class="callout blue"><strong>La limite du 60/40 en période de corrélation positive :</strong> en 2022, actions et obligations ont chuté simultanément — le 60/40 a perdu −16%, sa pire année depuis 2008. Quand les banques centrales resserrent agressivement, la corrélation traditionnellement négative actions/obligations disparaît. C'est précisément l'environnement où un edge fondamental global macro se matérialise.</div>
+      <h3 class="sub-title">Marché primaire et marché secondaire — la distinction fondamentale</h3>
+      <p>Le <strong>marché primaire</strong> est celui de l'émission : une entreprise qui fait une IPO ou qui émet des obligations lève des capitaux directement auprès des investisseurs. L'argent va dans les caisses de l'entreprise. Le <strong>marché secondaire</strong> est celui de la revente : les investisseurs échangent entre eux des titres déjà émis. L'entreprise ne reçoit rien.</p>
+      <p>Concrètement : quand vous achetez des actions Apple sur votre application de courtage, vous n'apportez pas de capital à Apple — vous achetez des actions à un autre investisseur qui veut les vendre. Cette distinction change la façon dont on construit une thèse d'investissement : la question centrale n'est pas « est-ce une bonne entreprise ? » mais « est-ce une bonne entreprise à ce prix, comparé à ce que le marché va en penser dans 12, 24 ou 36 mois ? »</p>
+      <div class="callout blue">Cette distinction sera développée en détail dans le Module V — Lire &amp; Valoriser un Actif, notamment dans le contexte de la valorisation fondamentale et du rôle du marché dans la découverte du prix.</div>
+    </div>
+
+    <div class="sub">
+      <h3 class="sub-title">L'essor des institutionnels</h3>
+      <p>La réalité des marchés modernes est dominée par les investisseurs institutionnels : fonds de pension, compagnies d'assurance, fonds souverains, fonds communs de placement, hedge funds. Ces acteurs gèrent collectivement plusieurs dizaines de trillions de dollars — un ordre de grandeur sans commune mesure avec les capitaux retail.</p>
+      <p>Ces institutionnels ont des mandats spécifiques, des contraintes réglementaires, des horizons d'investissement et des objectifs qui leur sont propres. Ces contraintes créent des flux prévisibles — et des opportunités pour l'investisseur qui les comprend.</p>
     </div>
   </section>
 
   <!-- SECTION E -->
-  <section class="section" id="xie">
+  <section class="section" id="section-e">
     <div class="section-label">Section E</div>
-    <h2 class="section-title">Significativité Statistique et Taille d'Échantillon</h2>
-    <div class="section-intro"><em>Un Sharpe de 1.5 sur 15 trades peut être indistinguable de zéro sur le plan statistique. La confiance en un edge se mérite — elle s'achète avec du temps et du nombre de trades.</em></div>
+    <h2 class="section-title">Cycles et régimes de marché</h2>
+    <div class="section-intro">Le marché n'est pas dans le même état en permanence. Identifier le régime en cours n'est pas une activité de market timing au sens spéculatif — c'est un prérequis pour choisir la bonne stratégie et allouer son capital de façon cohérente avec l'environnement macro.</div>
 
     <div class="sub">
-      <h3 class="sub-title">Le problème fondamental : combien de trades pour avoir confiance ?</h3>
-      <p>L'intuition humaine surestime systématiquement ce qu'une petite série de trades permet de conclure. Un win rate de 60% sur 10 trades est statistiquement indistinguable d'un win rate de 50% — l'intervalle de confiance est trop large pour trancher. Il faut un grand nombre d'observations pour que la moyenne empirique converge vers l'espérance réelle.</p>
+      <h3 class="sub-title">Les trois grands régimes</h3>
+      <div class="regime-grid">
+        <div class="regime-card">
+          <div class="regime-dot bull"></div>
+          <div class="regime-name">Bull Market</div>
+          <div class="regime-desc">Tendance haussière prolongée, expansion économique, bénéfices en croissance, appétit pour le risque. Stratégie : rester exposé aux actifs risqués, laisser courir les positions gagnantes.</div>
+        </div>
+        <div class="regime-card">
+          <div class="regime-dot bear"></div>
+          <div class="regime-name">Bear Market</div>
+          <div class="regime-desc">Baisse d'au moins 20% depuis un sommet. La peur remplace la cupidité. Stratégie : réduire l'exposition, privilégier le cash et les actifs défensifs (obligations souveraines, or).</div>
+        </div>
+        <div class="regime-card">
+          <div class="regime-dot lateral"></div>
+          <div class="regime-name">Marché Latéral</div>
+          <div class="regime-desc">Pas de direction claire, volatilité intraday élevée, faux signaux fréquents. Stratégies adaptées : mean-reversion, ventes d'options, ou simplement l'attente.</div>
+        </div>
+      </div>
     </div>
 
-    <div class="module-figure">
-<svg width="100%" viewBox="0 0 680 220" style="display:block">
-<!-- Left panel: IC width vs sample size -->
-<text class="ts" x="170" y="18" text-anchor="middle" style="font-weight:600">IC 95% du Sharpe selon le nombre de trades</text>
-<line x1="60" y1="180" x2="280" y2="180" stroke="var(--text-2)" stroke-width="1" opacity=".2"/>
-<line x1="60" y1="30" x2="60" y2="180" stroke="var(--text-2)" stroke-width="1" opacity=".2"/>
-<!-- X labels -->
-<text class="ts" x="80" y="196" text-anchor="middle" opacity=".5">20</text>
-<text class="ts" x="130" y="196" text-anchor="middle" opacity=".5">50</text>
-<text class="ts" x="180" y="196" text-anchor="middle" opacity=".5">80</text>
-<text class="ts" x="240" y="196" text-anchor="middle" opacity=".5">120</text>
-<text class="ts" x="170" y="210" text-anchor="middle" opacity=".4">Nombre de trades</text>
-<!-- Zero line -->
-<line x1="60" y1="105" x2="280" y2="105" stroke="#E24B4A" stroke-width="1" stroke-dasharray="4 3" opacity=".5"/>
-<text class="ts" x="285" y="109" fill="#A32D2D" style="font-size:10px">Sharpe = 0</text>
-<!-- IC bands (wide at left, narrow at right) -->
-<path d="M 80,40 L 130,60 L 180,75 L 240,85" fill="none" stroke="#185FA5" stroke-width="1.5" stroke-linecap="round"/>
-<path d="M 80,170 L 130,150 L 180,135 L 240,125" fill="none" stroke="#185FA5" stroke-width="1.5" stroke-linecap="round"/>
-<path d="M 80,40 L 130,60 L 180,75 L 240,85 L 240,125 L 180,135 L 130,150 L 80,170 Z" fill="#E6F1FB" opacity=".4"/>
-<!-- Sharpe observed -->
-<line x1="60" y1="90" x2="280" y2="90" stroke="#3B6D11" stroke-width="1.5" stroke-dasharray="5 3" opacity=".7"/>
-<text class="ts" x="64" y="86" fill="#27500A" style="font-size:10px">Sharpe observé = 1.2</text>
-<!-- Significance threshold -->
-<line x1="180" y1="30" x2="180" y2="180" stroke="#854F0B" stroke-width="1" stroke-dasharray="3 3" opacity=".5"/>
-<text class="ts" x="182" y="44" fill="#633806" style="font-size:10px">~80 trades</text>
-<text class="ts" x="182" y="56" fill="#633806" style="font-size:10px">seuil sign.</text>
-<!-- Red zone label -->
-<rect x="62" y="32" width="116" height="20" rx="4" fill="#FCEBEB" opacity=".7"/>
-<text class="ts" x="120" y="45" text-anchor="middle" fill="#791F1F">IC inclut 0 → non significatif</text>
+    <div class="sub">
+      <h3 class="sub-title">Les 4 phases du cycle économique</h3>
+      <div class="phases">
+        <div class="phase-card">
+          <div class="phase-num">Phase 1</div>
+          <div class="phase-name">Expansion</div>
+          <div class="phase-desc">Croissance forte, chômage en baisse, bénéfices en progression. Le crédit est facile et peu cher.</div>
+          <div class="phase-assets">✦ Actifs cycliques, actions de croissance, matières premières industrielles, immobilier commercial</div>
+        </div>
+        <div class="phase-card">
+          <div class="phase-num">Phase 2</div>
+          <div class="phase-name">Pic du cycle</div>
+          <div class="phase-desc">L'économie est en surchauffe, l'inflation monte, les banques centrales resserrent leur politique monétaire.</div>
+          <div class="phase-assets">✦ Matières premières (énergie), réduction progressive des positions risquées</div>
+        </div>
+        <div class="phase-card">
+          <div class="phase-num">Phase 3</div>
+          <div class="phase-name">Récession</div>
+          <div class="phase-desc">L'activité contracte, le chômage monte, les bénéfices chutent. Cash is king.</div>
+          <div class="phase-assets">✦ Obligations souveraines, or, secteurs défensifs (santé, alimentation)</div>
+        </div>
+        <div class="phase-card">
+          <div class="phase-num">Phase 4</div>
+          <div class="phase-name">Reprise</div>
+          <div class="phase-desc">Les indicateurs avancés se retournent. Commandes industrielles remontent, crédit recommence à circuler.</div>
+          <div class="phase-assets">✦ Actifs cycliques — avant que la reprise ne soit visible dans les chiffres officiels</div>
+        </div>
+      </div>
+    </div>
 
-<!-- Separator -->
-<line x1="340" y1="10" x2="340" y2="210" stroke="var(--border)" stroke-width="1"/>
+    <div class="sub">
+      <h3 class="sub-title">Les indicateurs avancés pour anticiper les transitions</h3>
+      <p>L'enjeu n'est pas de savoir qu'une récession a eu lieu — c'est de l'anticiper. Les indicateurs avancés signalent un changement de régime probable dans les 6 à 18 mois qui suivent, mais la transition peut être retardée, avortée, ou plus rapide que prévu.</p>
+      <p>La <strong>courbe des taux</strong> est l'indicateur avancé le plus documenté. Quand les taux à 2 ans dépassent les taux à 10 ans (courbe inversée), cela traduit une anticipation de récession par le marché obligataire. Cela s'est produit avant chaque récession américaine depuis 50 ans, avec un délai de 6 à 18 mois.</p>
+      <p>Les <strong>PMI manufacturiers</strong> donnent une lecture mensuelle de l'activité industrielle. Un PMI qui croise la barre des 50 à la baisse est un signal d'alerte. Les <strong>spreads de crédit</strong> mesurent le stress du système financier : quand ils s'écartent brutalement, c'est que les investisseurs institutionnels perçoivent une augmentation du risque de défaut.</p>
+      <div class="callout yellow">À retenir : le bon actif au mauvais moment dans le cycle peut coûter cher. La lecture du régime macro est une compétence à part entière — elle sera approfondie dans les modules suivants.</div>
+    </div>
 
-<!-- Right panel: distributions -->
-<text class="ts" x="510" y="18" text-anchor="middle" style="font-weight:600">Distribution du Sharpe estimé</text>
-<!-- 20 trades: wide distribution -->
-<path d="M 360,170 L 380,168 L 400,160 L 420,140 L 440,110 L 460,90 L 480,110 L 500,140 L 520,160 L 540,168 L 560,170" fill="none" stroke="#E24B4A" stroke-width="1.5" stroke-linecap="round"/>
-<path d="M 360,170 L 380,168 L 400,160 L 420,140 L 440,110 L 460,90 L 480,110 L 500,140 L 520,160 L 540,168 L 560,170 L 560,170 L 360,170 Z" fill="#FCEBEB" opacity=".3"/>
-<text class="ts" x="555" y="105" fill="#A32D2D" style="font-size:11px">20 trades</text>
-<!-- 100 trades: narrow distribution -->
-<path d="M 420,170 L 435,168 L 450,155 L 460,130 L 467,100 L 472,75 L 477,60 L 480,52 L 483,60 L 488,75 L 495,100 L 502,130 L 512,155 L 527,168 L 545,170" fill="none" stroke="#185FA5" stroke-width="1.5" stroke-linecap="round"/>
-<path d="M 420,170 L 435,168 L 450,155 L 460,130 L 467,100 L 472,75 L 477,60 L 480,52 L 483,60 L 488,75 L 495,100 L 502,130 L 512,155 L 527,168 L 545,170 L 545,170 L 420,170 Z" fill="#E6F1FB" opacity=".4"/>
-<text class="ts" x="550" y="65" fill="#0C447C" style="font-size:11px">100 trades</text>
-<!-- Zero reference -->
-<line x1="390" y1="170" x2="390" y2="30" stroke="#E24B4A" stroke-width="1" stroke-dasharray="3 3" opacity=".4"/>
-<text class="ts" x="392" y="35" fill="#A32D2D" style="font-size:10px">0</text>
+<div class="module-figure">
+<svg width="100%" viewBox="0 0 680 340" style="display:block">
+<defs><marker id="arrow7" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<path d="M 60 210 C 100 200, 140 130, 180 88 C 220 46, 250 36, 280 40 C 310 44, 330 74, 360 126 C 390 178, 410 226, 440 244 C 470 262, 510 252, 540 226 C 570 200, 600 158, 620 130" fill="none" stroke="var(--text-3)" stroke-width="2" stroke-linecap="round" opacity=".2"/>
+<line x1="48" y1="28" x2="48" y2="278" stroke="var(--text-3)" stroke-width="1" opacity=".25"/>
+<line x1="48" y1="278" x2="644" y2="278" stroke="var(--text-3)" stroke-width="1" opacity=".25"/>
+<text class="ts" x="32" y="32" text-anchor="middle" opacity=".4">Activ.</text>
+<rect x="52"  y="32" width="150" height="246" fill="#1D9E75" fill-opacity=".06"/>
+<text class="th" x="127" y="52" text-anchor="middle" fill="#0F6E56">1. Expansion</text>
+<text class="ts" x="127" y="68" text-anchor="middle" fill="#0F6E56">croissance forte</text>
+<rect x="202" y="32" width="150" height="246" fill="#EF9F27" fill-opacity=".07"/>
+<text class="th" x="277" y="52" text-anchor="middle" fill="#854F0B">2. Pic</text>
+<text class="ts" x="277" y="68" text-anchor="middle" fill="#854F0B">surchauffe</text>
+<rect x="352" y="32" width="150" height="246" fill="#E24B4A" fill-opacity=".06"/>
+<text class="th" x="427" y="52" text-anchor="middle" fill="#A32D2D">3. Récession</text>
+<text class="ts" x="427" y="68" text-anchor="middle" fill="#A32D2D">contraction</text>
+<rect x="502" y="32" width="140" height="246" fill="#378ADD" fill-opacity=".06"/>
+<text class="th" x="572" y="52" text-anchor="middle" fill="#185FA5">4. Reprise</text>
+<text class="ts" x="572" y="68" text-anchor="middle" fill="#185FA5">retournement</text>
+<line x1="202" y1="32" x2="202" y2="278" stroke="var(--text-3)" stroke-width="1" stroke-dasharray="4 3" opacity=".15"/>
+<line x1="352" y1="32" x2="352" y2="278" stroke="var(--text-3)" stroke-width="1" stroke-dasharray="4 3" opacity=".15"/>
+<line x1="502" y1="32" x2="502" y2="278" stroke="var(--text-3)" stroke-width="1" stroke-dasharray="4 3" opacity=".15"/>
+<rect x="56" y="244" width="142" height="28" rx="6" fill="#1D9E75" fill-opacity=".12" stroke="#1D9E75" stroke-width="0.5"/>
+<text class="ts" x="127" y="262" text-anchor="middle" fill="#085041">Actions cycl. · Immo · MP</text>
+<rect x="206" y="244" width="142" height="28" rx="6" fill="#EF9F27" fill-opacity=".12" stroke="#EF9F27" stroke-width="0.5"/>
+<text class="ts" x="277" y="262" text-anchor="middle" fill="#633806">Énergie · Réduire risque</text>
+<rect x="356" y="244" width="142" height="28" rx="6" fill="#E24B4A" fill-opacity=".12" stroke="#E24B4A" stroke-width="0.5"/>
+<text class="ts" x="427" y="262" text-anchor="middle" fill="#791F1F">OAT · Or · Défensifs</text>
+<rect x="506" y="244" width="132" height="28" rx="6" fill="#378ADD" fill-opacity=".12" stroke="#378ADD" stroke-width="0.5"/>
+<text class="ts" x="572" y="262" text-anchor="middle" fill="#0C447C">Cycliques · Crédit</text>
+<text class="ts" x="127" y="140" text-anchor="middle" fill="#0F6E56" opacity=".7">PMI ↑</text>
+<text class="ts" x="127" y="155" text-anchor="middle" fill="#0F6E56" opacity=".7">Emploi ↑</text>
+<text class="ts" x="127" y="170" text-anchor="middle" fill="#0F6E56" opacity=".7">Bénéfices ↑</text>
+<text class="ts" x="277" y="140" text-anchor="middle" fill="#854F0B" opacity=".7">Inflation ↑</text>
+<text class="ts" x="277" y="155" text-anchor="middle" fill="#854F0B" opacity=".7">Taux ↑</text>
+<text class="ts" x="277" y="170" text-anchor="middle" fill="#854F0B" opacity=".7">Courbe plate</text>
+<text class="ts" x="427" y="140" text-anchor="middle" fill="#A32D2D" opacity=".7">PMI &lt; 50</text>
+<text class="ts" x="427" y="155" text-anchor="middle" fill="#A32D2D" opacity=".7">Chômage ↑</text>
+<text class="ts" x="427" y="170" text-anchor="middle" fill="#A32D2D" opacity=".7">Spreads ↑</text>
+<text class="ts" x="572" y="140" text-anchor="middle" fill="#185FA5" opacity=".7">Commandes ↑</text>
+<text class="ts" x="572" y="155" text-anchor="middle" fill="#185FA5" opacity=".7">PMI ↗</text>
+<text class="ts" x="572" y="170" text-anchor="middle" fill="#185FA5" opacity=".7">Crédit ↗</text>
+<text class="ts" x="340" y="318" text-anchor="middle" opacity=".45">Le bon actif au mauvais moment dans le cycle peut coûter cher</text>
 </svg>
-<p class="fig-caption">Fig. 2 — Intervalle de confiance 95% du Sharpe Ratio selon le nombre de trades. Sous ~80 trades, l'IC inclut 0 — le Sharpe observé est statistiquement non significatif. Plus l'échantillon est grand, plus la distribution se resserre.</p>
-    </div>
+<p class="fig-caption">Les 4 phases du cycle économique et les classes d'actifs associées</p>
+</div>
 
-    <div class="sub">
-      <h3 class="sub-title">L'intervalle de confiance du Sharpe Ratio</h3>
-      <div class="formula">
-        $$\sigma(\widehat{SR}) \approx \sqrt{\frac{1 + \widehat{SR}^2/2}{T}}$$
-        <div class="formula-vars">
-          <strong>σ(SR)</strong> = erreur standard du Sharpe estimé &nbsp;·&nbsp; <strong>T</strong> = nombre de périodes<br>
-          IC 95% : \(\widehat{SR} \pm 1.96 \times \sigma(\widehat{SR})\)<br>
-          Exemple : SR = 1.2 sur 20 trades → σ(SR) = 0.40 → IC 95% = [0.42 ; 1.98] — inclut des valeurs très faibles
-        </div>
-      </div>
-      <div class="callout purple">Règle pratique : il faut au minimum <strong>50–80 trades</strong> pour commencer à avoir confiance dans un Sharpe. Une stratégie fondamentale produisant 20 à 50 trades par an nécessite donc 2 à 5 ans de données pour tirer des conclusions robustes.</div>
-    </div>
-
-    <div class="sub">
-      <h3 class="sub-title">Le cas particulier de la stratégie fondamentale discrétionnaire</h3>
-      <p>Les méthodes statistiques supposent un nombre de trades suffisamment élevé. C'est réaliste pour un algorithme qui passe 500 trades par an — pas pour un position trader fondamental qui en passe 20 à 50.</p>
-      <p>Ce n'est pas une raison de ne pas mesurer — c'est une raison de mesurer avec humilité. Les métriques restent utiles pour détecter des dérives de comportement, comparer des périodes entre elles, et maintenir une discipline de suivi. La vraie validation d'une stratégie fondamentale passe moins par les métriques statistiques que par la <strong>cohérence du processus</strong> : les 3 filtres respectés, le plan documenté avant l'entrée, le sizing conforme aux règles.</p>
-    </div>
-  </section>
-
-  <!-- SECTION F -->
-  <section class="section" id="xif">
-    <div class="section-label">Section F</div>
-    <h2 class="section-title">Implémentation Pratique</h2>
-    <div class="section-intro"><em>Un dashboard de métriques n'a de valeur que s'il est mis à jour et lu régulièrement. La mesure sans action est du bruit.</em></div>
-
-    <div class="sub">
-      <h3 class="sub-title">Les 5 métriques minimales à suivre chaque mois</h3>
-      <ul class="styled-list">
-        <li><strong>CAGR depuis le début de l'année</strong> (ou depuis le lancement de la stratégie). Calcul : (valeur finale / valeur initiale)^(1/n_années) − 1, où la valeur est le capital total après chaque mois.</li>
-        <li><strong>MDD actuel et MDD maximum historique.</strong> Noter la valeur du portefeuille après chaque semaine, calculer le recul depuis le pic le plus récent.</li>
-        <li><strong>Sharpe Ratio glissant sur 12 mois.</strong> Moyenne des rendements mensuels moins le taux sans risque, divisée par l'écart-type des rendements mensuels, multiplié par √12. Surveiller sa tendance plus que son niveau absolu.</li>
-        <li><strong>Sortino Ratio glissant sur 12 mois.</strong> Même calcul que le Sharpe, mais le dénominateur n'utilise que les mois avec un rendement négatif. Si le Sortino diverge du Sharpe à la hausse, la stratégie génère des gains asymétriques.</li>
-        <li><strong>Calmar Ratio depuis le début.</strong> CAGR annualisé divisé par la valeur absolue du MDD maximum historique. Ne changer ses paramètres que si le Calmar descend durablement sous 0.5.</li>
-      </ul>
-    </div>
-
-    <div class="sub">
-      <h3 class="sub-title">MAE et MFE : les métriques les plus sous-utilisées</h3>
-      <p>Le <strong>Maximum Adverse Excursion (MAE)</strong> et le <strong>Maximum Favorable Excursion (MFE)</strong> sont des métriques par trade qui révèlent des patterns invisibles dans les métriques globales. Ils permettent d'améliorer le sizing et le timing de sortie sans changer la stratégie elle-même.</p>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Signal MAE/MFE</th><th>Diagnostic</th><th>Action corrective</th></tr></thead>
-          <tbody>
-            <tr><td><strong>MFE &gt;&gt; Réalisé sur la majorité des gagnants</strong></td><td>On sort systématiquement trop tôt</td><td>Élargir les objectifs ou utiliser un trailing stop</td></tr>
-            <tr><td><strong>MAE proche du stop sur les gagnants</strong></td><td>Stop trop serré — filtre les bons trades</td><td>Élargir le stop ou réduire le sizing pour compenser</td></tr>
-            <tr><td><strong>MAE &gt;&gt; Stop théorique sur les perdants</strong></td><td>Stop non respecté ou déplacé</td><td>Vérifier la discipline d'exécution</td></tr>
-            <tr><td><strong>MFE faible sur les gagnants</strong></td><td>La stratégie génère peu de tendance</td><td>Revoir les filtres d'entrée — chercher de meilleurs R/R</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="notion">
-        <div class="notion-title">Exemple chiffré — MAE/MFE sur 30 trades gagnants</div>
-        <p>MFE moyen = 2.8R, rendement réalisé moyen = 1.3R → on sort en moyenne à <strong>46% du potentiel maximum</strong> de chaque trade.</p>
-        <p>Diagnostic : sortie systématiquement trop précoce. Action : passer d'un objectif fixe à un trailing stop sur MM50.</p>
-        <p>MAE moyen = −0.82R sur les gagnants, stop théorique = −1R → 12 trades sur 30 auraient été stoppés si le stop était à −0.7R.</p>
-        <p>Diagnostic : stop trop serré. Action : élargir le stop à <strong>1.5× ATR(14)</strong> plutôt qu'à 1× ATR(14).</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- SECTION G -->
-  <section class="section" id="xig">
-    <div class="section-label">Section G</div>
-    <h2 class="section-title">Les Lettres Grecques</h2>
-    <div class="section-intro"><em>Connaître son alpha et son beta transforme 'j'ai fait +18% cette année' en 'j'ai fait +18% dont +12% venaient du marché et +6% de mon edge réel.'</em></div>
-
-    <div class="sub">
-      <h3 class="sub-title">Alpha (α) — La surperformance réelle</h3>
-      <p>L'alpha est le rendement excédentaire d'un portefeuille par rapport à ce que son niveau de risque (beta) prédit. C'est la seule mesure de valeur ajoutée réelle — la part de performance qui vient de l'investisseur, pas du marché.</p>
-      <div class="formula">
-        $$\alpha = R_p - \bigl[R_f + \beta\,(R_m - R_f)\bigr]$$
-        <div class="formula-vars">
-          <strong>α &gt; 0</strong> : valeur ajoutée réelle &nbsp;·&nbsp; <strong>α = 0</strong> : performance de marché pur &nbsp;·&nbsp; <strong>α &lt; 0</strong> : destruction de valeur
-        </div>
-      </div>
-    </div>
-
-    <div class="sub">
-      <h3 class="sub-title">Beta (β) — La corrélation au marché</h3>
-      <p>Le beta mesure la sensibilité du portefeuille aux mouvements du marché de référence. C'est la pente de la droite de régression des rendements du portefeuille sur les rendements du benchmark.</p>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Beta</th><th>Comportement</th><th>Profil de stratégie</th><th>Exemple</th></tr></thead>
-          <tbody>
-            <tr><td><strong>β &gt; 1</strong></td><td>Amplifie les mouvements du marché</td><td>Stratégie agressive / cyclique</td><td>β = 1.5 : +15% si marché +10%</td></tr>
-            <tr><td><strong>β = 1</strong></td><td>Suit le marché parfaitement</td><td>Réplication passive</td><td>ETF indiciel</td></tr>
-            <tr><td><strong>β &lt; 1</strong></td><td>Moins sensible que le marché</td><td>Stratégie défensive / low vol</td><td>β = 0.4 : +4% si marché +10%</td></tr>
-            <tr><td><strong>β = 0</strong></td><td>Indépendant du marché</td><td>Stratégie market neutral</td><td>Arbitrage, pairs trading</td></tr>
-            <tr><td><strong>β &lt; 0</strong></td><td>Inversement corrélé au marché</td><td>Couverture / contrariante</td><td>Or, obligations longues en crise</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="callout blue"><strong>Corrélation vs Beta — la confusion fréquente :</strong> une corrélation élevée ne signifie pas un beta élevé. La corrélation mesure la force de la relation linéaire. Le beta mesure l'amplitude de la réponse. Exemple : ρ = 0.90, σ_actif = 5%, σ_marché = 15% → β = 0.90 × (5/15) = 0.30. L'actif est très corrélé mais peu amplifié.</div>
-    </div>
-
-    <div class="sub">
-      <h3 class="sub-title">Gamma (γ) — La convexité du portefeuille</h3>
-      <p>Le gamma mesure dans quelle mesure le beta d'un portefeuille change en fonction des mouvements du marché. Un portefeuille avec un <strong>gamma positif</strong> voit son beta augmenter quand le marché monte et diminuer quand le marché baisse — il capture plus de la hausse et s'expose moins à la baisse.</p>
-      <div class="notion">
-        <div class="notion-title">Gamma positif en pratique</div>
-        <p>Marché monte de +10% : le portefeuille a renforcé ses positions en tendance → exposition effective +14% (beta monté à 1.4).</p>
-        <p>Marché baisse de −10% : le portefeuille a réduit ses positions via les stops → exposition effective −7% (beta descendu à 0.7).</p>
-        <p>La règle <em>'laisser courir les gagnants, couper vite les perdants'</em> (Module VII) est exactement une règle de gamma positif.</p>
-      </div>
-    </div>
-
-    <div class="sub">
-      <h3 class="sub-title">Vega (ν) — La sensibilité à la volatilité</h3>
-      <p>Le vega mesure la sensibilité de la valeur d'un portefeuille à une variation de la volatilité implicite du marché. Un portefeuille <strong>long vega</strong> bénéficie d'une hausse de la volatilité — il vaut plus quand les marchés deviennent agités.</p>
-      <p>Pour un position trader sans options, le vega s'exprime indirectement : l'or monte typiquement quand la volatilité des marchés actions augmente. Une position sur cet actif en crise est une position long vega déguisée.</p>
-      <div class="callout green"><strong>Vega et antifragilité :</strong> maintenir 5–10% du portefeuille en or physique ou ETF or crée une exposition long vega permanente. Lors d'un choc de marché (VIX &gt; 30) : l'or monte, les obligations montent — le vega du portefeuille génère un gain qui compense partiellement les pertes sur les positions directionnelles. Ce n'est pas de la diversification naïve — c'est une exposition délibérée à la volatilité comme source de rendement.</div>
-    </div>
-
-    <div class="sub">
-      <h3 class="sub-title">Theta (θ) — Le coût du temps</h3>
-      <p>Le theta mesure combien de valeur un portefeuille perd chaque jour qui passe, toutes choses égales par ailleurs. Il est principalement pertinent pour les positions en options : chaque jour qui passe érode la valeur temps — c'est le <em>theta decay</em>.</p>
-      <p>Pour un position trader fondamental sans options, le theta est quasi-inexistant sur les positions directionnelles classiques. Il devient central dès qu'on utilise des options comme couverture.</p>
-      <div class="callout yellow"><strong>Theta en pratique :</strong> si vous achetez un put sur le CAC40 à 3 mois pour couvrir votre portefeuille, et que le marché reste stable 2 mois, le put a perdu 60–70% de sa valeur par theta decay seul — sans que le marché ait bougé. Le theta est le coût de l'assurance : on ne peut pas être long vega (bénéficier d'un choc) sans payer le theta (perdre de la valeur chaque jour calme).</div>
-    </div>
-
-    <div class="sub">
-      <h3 class="sub-title">Construire une stratégie autour de ses grecques</h3>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Objectif</th><th>Beta cible</th><th>Vega</th><th>Exemple concret</th></tr></thead>
-          <tbody>
-            <tr><td><strong>Alpha pur, sans exposition marché</strong></td><td>β = 0</td><td>Neutre</td><td>Long TotalEnergies / Short ETF énergie — seul l'alpha sectoriel reste</td></tr>
-            <tr><td><strong>Réduction risque en incertitude</strong></td><td>β = 0.3–0.6</td><td>Neutre</td><td>Alléger les positions cycliques, renforcer le cash</td></tr>
-            <tr><td><strong>Amplification en bull market</strong></td><td>β &gt; 1.2</td><td>Neutre</td><td>Surpondérer les actifs cycliques à fort levier opérationnel</td></tr>
-            <tr><td><strong>Protection contre crise</strong></td><td>β &lt; 0</td><td>Long</td><td>Or, obligations longues, puts sur indices</td></tr>
-            <tr><td><strong>Rendement régulier, faible vol.</strong></td><td>β = 0.5–0.8</td><td>Neutre</td><td>Architecture Core/Satellite équilibrée (Module IX)</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="notion">
-        <div class="notion-title">La stratégie beta neutre — exemple concret</div>
-        <p>Objectif : s'exposer uniquement à l'alpha — être indépendant de la direction du marché.</p>
-        <p>Mécanique : pour chaque position longue de beta β_L et taille T_L, ajouter une position courte dont β_court × T_court = β_L × T_L.</p>
-        <p>Exemple : Long TotalEnergies (β = 0.85, 10 000€) + Short ETF CAC40 (β = 1.0) de 8 500€ → <strong>beta net = 0.85 × 10 000 − 1.0 × 8 500 = 0.</strong></p>
-        <p>Ce qui reste une fois le beta neutralisé : l'alpha pur de la thèse sur Total — indépendant du marché.</p>
-      </div>
-    </div>
+<div class="module-figure">
+<svg width="100%" viewBox="0 0 680 330" style="display:block">
+<defs><marker id="arrow8" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<line x1="72" y1="24" x2="72" y2="240" stroke="var(--text-3)" stroke-width="1" opacity=".3"/>
+<line x1="72" y1="240" x2="620" y2="240" stroke="var(--text-3)" stroke-width="1" opacity=".3"/>
+<text class="ts" x="40" y="28" text-anchor="middle" opacity=".45">Rendement</text>
+<text class="ts" x="346" y="258" text-anchor="middle" opacity=".45">Maturité</text>
+<text class="ts" x="72"  y="253" text-anchor="middle" opacity=".45">3M</text>
+<text class="ts" x="182" y="253" text-anchor="middle" opacity=".45">2A</text>
+<text class="ts" x="346" y="253" text-anchor="middle" opacity=".45">5A</text>
+<text class="ts" x="510" y="253" text-anchor="middle" opacity=".45">10A</text>
+<text class="ts" x="620" y="253" text-anchor="middle" opacity=".45">30A</text>
+<line x1="182" y1="238" x2="182" y2="243" stroke="var(--text-3)" opacity=".3"/>
+<line x1="346" y1="238" x2="346" y2="243" stroke="var(--text-3)" opacity=".3"/>
+<line x1="510" y1="238" x2="510" y2="243" stroke="var(--text-3)" opacity=".3"/>
+<text class="ts" x="60" y="240" text-anchor="end" opacity=".45">0%</text>
+<text class="ts" x="60" y="178" text-anchor="end" opacity=".45">2%</text>
+<text class="ts" x="60" y="116" text-anchor="end" opacity=".45">4%</text>
+<text class="ts" x="60" y="54"  text-anchor="end" opacity=".45">6%</text>
+<line x1="68" y1="178" x2="620" y2="178" stroke="var(--text-3)" stroke-width="0.5" stroke-dasharray="3 4" opacity=".12"/>
+<line x1="68" y1="116" x2="620" y2="116" stroke="var(--text-3)" stroke-width="0.5" stroke-dasharray="3 4" opacity=".12"/>
+<path d="M 72 196 C 130 188, 160 162, 182 148 C 220 126, 280 106, 346 96 C 420 86, 480 80, 620 76" fill="none" stroke="#1D9E75" stroke-width="2.5" stroke-linecap="round"/>
+<path d="M 72 116 C 120 120, 150 132, 182 142 C 230 158, 290 172, 346 180 C 420 190, 480 196, 620 200" fill="none" stroke="#E24B4A" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="8 4"/>
+<path d="M 72 156 C 160 156, 260 158, 346 158 C 430 158, 530 160, 620 160" fill="none" stroke="#EF9F27" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="4 4" opacity=".7"/>
+<circle cx="182" cy="142" r="5" fill="#E24B4A" opacity=".8"/>
+<line x1="182" y1="137" x2="182" y2="114" stroke="#E24B4A" opacity=".5" marker-end="url(#arrow8)"/>
+<text class="ts" x="188" y="110" fill="#A32D2D">2A &gt; 10A</text>
+<text class="ts" x="188" y="125" fill="#A32D2D" opacity=".7">signal d'alarme</text>
+<line x1="72"  y1="272" x2="112" y2="272" stroke="#1D9E75" stroke-width="2.5" stroke-linecap="round"/>
+<text class="ts" x="120" y="276" fill="#085041">Courbe normale (prime de risque temporel)</text>
+<line x1="72"  y1="290" x2="112" y2="290" stroke="#E24B4A" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="7 3"/>
+<text class="ts" x="120" y="294" fill="#A32D2D">Courbe inversée → signal de récession (délai 6–18M)</text>
+<line x1="72"  y1="308" x2="112" y2="308" stroke="#EF9F27" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="4 3" opacity=".8"/>
+<text class="ts" x="120" y="312" fill="#633806" opacity=".9">Courbe plate → pic du cycle, vigilance</text>
+<rect x="390" y="268" width="222" height="50" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="0.5"/>
+<text class="ts" x="501" y="285" text-anchor="middle" opacity=".7">Fiabilité historique</text>
+<text class="ts" x="501" y="300" text-anchor="middle">100% des récessions US</text>
+<text class="ts" x="501" y="315" text-anchor="middle" opacity=".6">précédées d'une inversion (50 ans)</text>
+</svg>
+<p class="fig-caption">La courbe des taux — signal avancé de récession</p>
+</div>
   </section>
 
   <!-- SYNTHESIS -->
   <div class="synthesis">
-    <h2 class="synthesis-title">Résumé du Module XI</h2>
-    <p>Ce module a fourni les outils pour mesurer objectivement ce qu'un système de trading produit réellement. Le CAGR et le TWR mesurent le rendement honnêtement. Le MDD et l'underwater curve mesurent le risque vécu. Le Sharpe, le Sortino et le Calmar combinent rendement et risque pour permettre des comparaisons rigoureuses.</p>
-    <p>La section sur la significativité statistique rappelle une vérité inconfortable : la plupart des historiques de trading sont trop courts pour conclure quoi que ce soit avec confiance. Il faut 80 à 100 trades minimum pour qu'un Sharpe de 1.2 soit statistiquement significatif. Le MAE et le MFE sont les métriques les plus sous-utilisées — elles révèlent des patterns d'amélioration concrets sans changer la stratégie.</p>
-    <p>Les lettres grecques clôturent la formation sur son niveau le plus sophistiqué : comprendre précisément à quoi son portefeuille est exposé et construire une stratégie autour d'un objectif d'exposition défini. L'alpha mesure la valeur ajoutée réelle. Le beta mesure l'exposition au marché. Piloter ces deux paramètres ensemble est l'aboutissement de tout ce que la formation ARK a construit.</p>
-    <div class="summary-grid">
-      <div class="summary-card"><div class="summary-section">XI.a — Rendement</div><div class="summary-concept">CAGR = seule mesure honnête. Rendement géométrique ≠ arithmétique. TWR pour la stratégie, MWR pour l'investisseur.</div><div class="summary-tool">CAGR, TWR, MWR</div></div>
-      <div class="summary-card"><div class="summary-section">XI.b — Risque</div><div class="summary-concept">MDD + underwater curve : amplitude ET durée. VaR historique sur rendements réels — sans hypothèse de distribution.</div><div class="summary-tool">MDD, Underwater curve, VaR/CVaR</div></div>
-      <div class="summary-card"><div class="summary-section">XI.c — Combinées</div><div class="summary-concept">Sharpe (risque total), Sortino (downside uniquement), Calmar (drawdown max), IR (régularité vs benchmark).</div><div class="summary-tool">Sharpe, Sortino, Calmar, IR</div></div>
-      <div class="summary-card"><div class="summary-section">XI.d — Benchmarks</div><div class="summary-concept">Le benchmark doit refléter l'univers réel. Le 60/40 est le coût d'opportunité de la gestion active.</div><div class="summary-tool">60/40, benchmark sectoriel</div></div>
-      <div class="summary-card"><div class="summary-section">XI.e — Significativité</div><div class="summary-concept">80–100 trades minimum pour un Sharpe significatif. En fondamental discrétionnaire : mesurer avec humilité.</div><div class="summary-tool">IC du Sharpe, hold-out, walk-forward</div></div>
-      <div class="summary-card"><div class="summary-section">XI.f — Pratique</div><div class="summary-concept">5 métriques mensuelles. MAE/MFE par trade pour détecter sortie trop précoce et stop trop serré.</div><div class="summary-tool">MAE, MFE, dashboard mensuel</div></div>
-      <div class="summary-card"><div class="summary-section">XI.g — Grecques</div><div class="summary-concept">Alpha = valeur ajoutée réelle. Beta = exposition au marché. Gamma, Vega, Theta pour les profils avancés.</div><div class="summary-tool">α, β, γ, ν, θ</div></div>
-    </div>
-    <div class="prev-module">Fin de la formation — <strong>11 modules complétés.</strong> Du cadre de pensée à la mesure rigoureuse de la performance : comprendre le monde → lire la valeur → prendre position → protéger le capital → mesurer l'edge.</div>
+    <h2 class="synthesis-title">Synthèse du module</h2>
+    <p>Le Module II construit les fondations intellectuelles de l'investisseur fondamental. Il ne s'agit pas d'acquérir une culture économique générale — il s'agit de se doter d'un arsenal d'outils opérationnels.</p>
+    <p>Les économistes de la section a ont été vos lentilles : Keynes pour lire les crises et les réponses étatiques, Friedman pour anticiper l'inflation, Minsky pour détecter les excès, Schumpeter pour identifier les grandes transitions sectorielles, Hayek pour comprendre les effets pervers des politiques interventionnistes. Aucun d'entre eux n'a raison tout le temps. Tous sont utiles dans certains contextes.</p>
+    <p>Les mécanismes de la section b (offre/demande, inflation, taux, monnaie, indicateurs) sont les variables que vous allez suivre au quotidien. Les crises de la section c vous rappellent que les schémas se répètent — et que la reconnaissance de ces schémas est un avantage compétitif réel.</p>
+    <p>La distinction marché primaire/secondaire de la section d et la lecture des cycles de la section e complètent le cadre. À ce stade, vous avez les outils pour comprendre le monde économique dans lequel vous opérez.</p>
+    <div class="next-module">Module suivant — <strong>Module III : Comment tourne le monde.</strong> Nous allons y apprendre la réalité économique du monde et comment cela forme la géopolitique.</div>
   </div>
 
+  <!-- NAVIGATION -->
   <div class="module-nav">
-    <button class="nav-btn" onclick="window.parent.postMessage({type:'navigate',index:9,markDone:false},'*')">← Module 10</button>
-    <button class="nav-btn primary" onclick="window.parent.postMessage({type:'navigate',index:11,markDone:true},'*')">Module 12 →</button>
+    <button class="nav-btn" onclick="window.parent.postMessage({type:'navigate',index:0,markDone:false},'*')">← Module 01</button>
+    <button class="nav-btn primary" onclick="window.parent.postMessage({type:'navigate',index:2,markDone:true},'*')">Module 03 →</button>
   </div>
 
 </div>
