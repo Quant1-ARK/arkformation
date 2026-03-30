@@ -644,9 +644,11 @@ body {
     <div id="rev-quiz">
       <div class="grid2-1">
         <div class="card" id="quiz-container-card" style="overflow:hidden;">
-          <div id="quiz-container" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:280px;gap:10px;color:var(--text-tertiary);font-size:14px;font-weight:300;">
-            <div style="font-size:32px;">&#128203;</div>
-            <div>S&#233;lectionne un module pour commencer</div>
+          <div id="quiz-container" style="display:flex;flex-direction:column;min-height:280px;">
+            <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;gap:10px;color:var(--text-tertiary);font-size:14px;font-weight:300;">
+              <div style="font-size:32px;">&#128203;</div>
+              <div>S&#233;lectionne un module pour commencer</div>
+            </div>
           </div>
         </div>
         <div class="col">
@@ -933,6 +935,12 @@ async function loadQuiz(url, clickedItem) {
       }
     }
     container.innerHTML = doc.body.innerHTML;
+    // Forcer quiz-wrap à occuper tout le container
+    var qwrap = container.querySelector('#quiz-wrap');
+    if (qwrap) {
+      qwrap.style.minHeight = container.offsetHeight + 'px';
+      qwrap.style.width = '100%';
+    }
     container.querySelectorAll('script').forEach(function(oldScript) {
       var s = document.createElement('script');
       s.textContent = oldScript.textContent;
