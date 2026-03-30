@@ -43,7 +43,7 @@
   .sidebar{width:var(--sidebar-w);flex-shrink:0;border-right:1px solid var(--border);background:var(--accent);display:flex;flex-direction:column;overflow:hidden;transition:width .25s ease,opacity .25s ease}
   .sidebar.collapsed{width:0;opacity:0;border-right:none}
   .sidebar-header{padding:20px 20px 14px 52px;border-bottom:1px solid var(--border);flex-shrink:0}
-  .sidebar-eyebrow{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-w);margin-bottom:4px}
+  .sidebar-eyebrow{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(-w);margin-bottom:4px}
   .sidebar-title{font-size:14px;font-weight:600}
   .sidebar-list{overflow-y:auto;flex:1;padding:10px 0}
   .sidebar-list::-webkit-scrollbar{width:4px}
@@ -56,10 +56,10 @@
   .sidebar-item.active::before{content:'';position:absolute;left:0;top:6px;bottom:6px;width:2px;background:var(--accent);border-radius:1px}
   .sidebar-item.done .item-index{color:#30d158}
   .sidebar-item.done .item-index::after{content:'✓';font-size:9px}
-  .item-index{font-size:10px;font-weight:600;color:var(--text-w);letter-spacing:.04em;width:22px;flex-shrink:0;transition:color .15s}
+  .item-index{font-size:10px;font-weight:600;color:var(-w);letter-spacing:.04em;width:22px;flex-shrink:0;transition:color .15s}
   .sidebar-item.active .item-index{color:var(--accent)}
   .item-info{flex:1;min-width:0}
-  .item-name{font-size:13px;font-weight:500;color:var(--text-w);line-height:1.3;transition:color .15s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .item-name{font-size:13px;font-weight:500;color:var(-w);line-height:1.3;transition:color .15s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .sidebar-item:hover .item-name,.sidebar-item.active .item-name{color:var(--text-w)}
   .item-dot{width:6px;height:6px;border-radius:50%;border:1px solid var(--text-w);flex-shrink:0;transition:all .15s}
   .sidebar-item.active .item-dot{background:var(--accent);border-color:var(--accent)}
@@ -72,7 +72,7 @@
   .welcome-screen{padding:64px clamp(24px,5vw,80px) 80px;animation:fadeIn .4s ease;overflow-y:auto}
   .welcome-kicker{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:16px}
   .welcome-title{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(32px,5vw,52px);line-height:1.1;margin-bottom:20px}
-  .welcome-sub{font-size:16px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:40px;max-width:520px}
+  .welcome-sub{font-size:16px;font-weight:300;color:var(--text-1);line-height:1.7;margin-bottom:40px;max-width:520px}
   .welcome-start-btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;font-size:15px;font-weight:500;padding:14px 24px;border-radius:12px;cursor:pointer;border:none;font-family:inherit;transition:all .2s}
   .welcome-start-btn:hover{background:#0077ed;transform:translateY(-1px);box-shadow:0 8px 24px rgba(0,113,227,.3)}
 
@@ -115,7 +115,7 @@
       <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
     </div>
     <a href="ark_dashboard.html" class="btn-back">← Retour</a>
-    <button onclick="ARK.logout()" style="font-size:12px;color:var(--text-2);background:none;border:none;cursor:pointer;font-family:inherit;padding:0;transition:color .15s" onmouseover="this.style.color='#ED2A05'" onmouseout="this.style.color='var(--text-2)'">Déconnexion</button>
+    <button onclick="ARK.logout()" style="font-size:12px;color:var(--accent);background:none;border:none;cursor:pointer;font-family:inherit;padding:0;transition:color .15s" onmouseover="this.style.color='#ED2A05'" onmouseout="this.style.color='var(--text-2)'">Déconnexion</button>
   </div>
 </div>
 
