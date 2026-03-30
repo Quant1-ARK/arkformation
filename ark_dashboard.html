@@ -1,4 +1,4 @@
-=<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
@@ -264,8 +264,8 @@ body {
 .quiz-score { font-size: 12px; color: var(--text-tertiary); margin-left: auto; font-weight: 300; }
 
 /* BONUS */
-.bonus-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; flex:1; align-content: start; }
-.bonus-card { display: flex; flex-direction: column; background: var(--white); border-radius: var(--radius); border: 1px solid var(--border); padding: 20px; display: flex; flex-direction: column; gap: 10px; cursor: pointer; transition: all .2s; }
+.bonus-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+.bonus-card { background: var(--white); border-radius: var(--radius); border: 1px solid var(--border); padding: 20px; display: flex; flex-direction: column; gap: 10px; cursor: pointer; transition: all .2s; }
 .bonus-card:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(0,0,0,0.08); }
 .bonus-card.locked { opacity: .5; pointer-events: none; }
 .bonus-ico { font-size: 26px; }
@@ -354,7 +354,7 @@ body {
 .divider { height: 1px; background: var(--mid-gray); margin: 14px 0; }
 
 /* GRIDS */
-.grid2   { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: stretch; }
+.grid2   { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
 .grid2-1 { display: grid; grid-template-columns: 2fr 1fr; gap: 18px; }
 .col { display: flex; flex-direction: column; gap: 18px; }
 
@@ -709,7 +709,7 @@ body {
       <button onclick="goToMembre()" style="font-size:14px;font-weight:500;background:#fff;color:var(--text-primary);padding:10px 20px;border-radius:980px;border:none;cursor:pointer;font-family:inherit;">★ Deviens membre</button>
     </div>
 
-    <div class="bonus-grid" id="bonus-grid" style="flex:1;">
+    <div class="bonus-grid" id="bonus-grid">
       <div class="bonus-card"><span class="badge new">Nouveau</span><div class="bonus-ico">📊</div><div class="bonus-title">Template Journal de Trading</div><div class="bonus-desc">Excel/Notion pour suivre tes positions, calculer ton expectancy et analyser tes biais.</div></div>
       <div class="bonus-card"><span class="badge exclu">Exclusif</span><div class="bonus-ico">🌐</div><div class="bonus-title">Guide COT Report</div><div class="bonus-desc">Comment lire le rapport COT pour anticiper les retournements institutionnels.</div></div>
       <div class="bonus-card"><span class="badge new">Nouveau</span><div class="bonus-ico">📉</div><div class="bonus-title">Simulateur Monte Carlo</div><div class="bonus-desc">Outil interactif pour simuler tes scénarios de drawdown selon win rate et R/R.</div></div>
@@ -725,8 +725,8 @@ body {
     <div class="page-header">
       <div><div class="page-welcome">Réglages</div><div class="page-welcome-sub">Préférences et informations de compte</div></div>
     </div>
-    <div class="grid2" style="flex:1;align-items:stretch;">
-      <div class="card" style="flex:1;">
+    <div class="grid2">
+      <div class="card">
         <div class="card-title" style="margin-bottom:14px;">Préférences</div>
         <div class="set-row"><div><div class="set-name">Notifications de progression</div><div class="set-desc">Rappels hebdomadaires et jalons</div></div><button class="toggle on" onclick="this.classList.toggle('on')"></button></div>
         <div class="set-row"><div><div class="set-name">Lecture automatique</div><div class="set-desc">Passer au chapitre suivant</div></div><button class="toggle" onclick="this.classList.toggle('on')"></button></div>
@@ -734,7 +734,7 @@ body {
         <div class="set-row"><div><div class="set-name">Vitesse de lecture</div><div class="set-desc">Par défaut pour les vidéos</div></div><select class="sel"><option>1.0×</option><option selected>1.25×</option><option>1.5×</option><option>2.0×</option></select></div>
       </div>
       <div class="col">
-        <div class="card" style="flex:1;">
+        <div class="card">
           <div class="card-title" style="margin-bottom:14px;">Mon compte</div>
           <div class="set-row"><div><div class="set-name">Nom</div><div class="set-desc" id="settings-name">…</div></div><button class="sml-btn">Modifier</button></div>
           <div class="set-row"><div><div class="set-name">Accès</div><div class="set-desc">Fondateur · Accès à vie</div></div><span style="font-size:11px;font-weight:600;color:var(--green);background:rgba(52,199,89,0.1);padding:4px 10px;border-radius:980px;">Actif</span></div>
