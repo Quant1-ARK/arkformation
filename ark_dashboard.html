@@ -900,43 +900,41 @@ window.saveQuizScore = saveQuizScore;
 
 // ── Quiz ──
 async function loadQuiz(url, clickedItem) {
-  document.querySelectorAll('.mod-pill').forEach(function(el) {
-    el.style.border = '1.5px solid var(--mid-gray)';
-    el.style.background = 'var(--white)';
-    el.style.color = 'var(--text-secondary)';
-    el.style.fontWeight = '500';
+  // Reset tous les mod-items
+  document.querySelectorAll('.mod-item').forEach(function(el) {
+    el.style.background = '';
+    el.style.color = '';
+    el.style.fontWeight = '';
   });
+  document.querySelectorAll('.mod-num').forEach(function(el) {
+    el.classList.remove('cur');
+  });
+  // Surligner le module cliqué
   if (clickedItem) {
-    clickedItem.style.border = '1.5px solid var(--accent)';
     clickedItem.style.background = 'var(--accent-light)';
-    clickedItem.style.color = 'var(--accent)';
-    clickedItem.style.fontWeight = '600';
+    var numEl = clickedItem.querySelector('.mod-num');
+    if (numEl) numEl.classList.add('cur');
   }
-  const container = document.getElementById('quiz-container');
+  var container = document.getElementById('quiz-container');
   if (!container) return;
-  container.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;min-height:280px;color:var(--text-tertiary);font-size:14px;">Chargement...</div>';
+  container.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;min-height:200px;color:var(--text-tertiary);font-size:14px;">Chargement...</div>';
   try {
-    const resp = await fetch(url);
-    const text = await resp.text();
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(text, 'text/html');
+    var resp = await fetch(url);
+    var text = await resp.text();
+    var parser = new DOMParser();
+    var doc = parser.parseFromString(text, 'text/html');
     if (!document.getElementById('quiz-css')) {
-      const styleEl = doc.querySelector('style');
+      var styleEl = doc.querySelector('style');
       if (styleEl) {
-        const style = document.createElement('style');
+        var style = document.createElement('style');
         style.id = 'quiz-css';
         style.textContent = styleEl.textContent;
         document.head.appendChild(style);
       }
     }
     container.innerHTML = doc.body.innerHTML;
-    // Forcer le contenu à occuper toute la hauteur du container
-    container.style.alignItems = 'stretch';
-    container.style.justifyContent = 'flex-start';
-    var qwrap = container.querySelector('#quiz-wrap');
-    if (qwrap) { qwrap.style.height = '100%'; qwrap.style.display = 'flex'; qwrap.style.flexDirection = 'column'; }
-    container.querySelectorAll('script').forEach(oldScript => {
-      const s = document.createElement('script');
+    container.querySelectorAll('script').forEach(function(oldScript) {
+      var s = document.createElement('script');
       s.textContent = oldScript.textContent;
       oldScript.replaceWith(s);
     });
@@ -944,7 +942,6 @@ async function loadQuiz(url, clickedItem) {
     container.innerHTML = '<div style="padding:20px;color:#d93025;font-size:13px;">Erreur de chargement.</div>';
   }
 }
-
 // ── Progression ──
 function getLocalProgress() {
   try { return JSON.parse(localStorage.getItem('ark_progress')) || { current: 0, done: [] }; }
