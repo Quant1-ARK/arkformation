@@ -1,0 +1,1641 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alpha & Bêta — Finance de Marché</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+  :root {
+    --white: #ffffff;
+    --off-white: #fbfbfd;
+    --light-gray: #f5f5f7;
+    --mid-gray: #e8e8ed;
+    --text-primary: #1d1d1f;
+    --text-secondary: #6e6e73;
+    --text-tertiary: #aeaeb2;
+    --accent: #0071e3;
+    --accent-hover: #0077ed;
+    --accent-light: rgba(0,113,227,0.09);
+    --border: rgba(0,0,0,0.08);
+    --radius: 16px;
+    --radius-lg: 22px;
+    --green: #34c759;
+    --green-light: rgba(52,199,89,0.10);
+    --orange: #ff9500;
+    --orange-light: rgba(255,149,0,0.10);
+    --red: #ff3b30;
+    --red-light: rgba(255,59,48,0.08);
+    /* semantic aliases for alpha/beta content */
+    --accent-alpha: var(--green);
+    --accent-beta: var(--accent);
+    --accent-warn: var(--orange);
+    --muted: var(--text-tertiary);
+    --font-mono: 'SF Mono', 'Fira Code', 'Fira Mono', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+
+  body {
+    background: var(--off-white);
+    color: var(--text-primary);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+
+  /* HERO */
+  .hero {
+    padding: 56px 0 40px;
+    border-bottom: 1px solid var(--mid-gray);
+  }
+  .hero-tag {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-size: clamp(40px, 6vw, 72px);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    margin-bottom: 16px;
+    color: var(--text-primary);
+  }
+  .hero h1 .alpha { color: var(--green); }
+  .hero h1 .beta { color: var(--accent); }
+  .hero-subtitle {
+    font-size: 17px;
+    color: var(--text-secondary);
+    max-width: 560px;
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  /* NAV */
+  .nav {
+    display: flex;
+    gap: 6px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--mid-gray);
+    flex-wrap: wrap;
+  }
+  .nav a {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-decoration: none;
+    padding: 7px 16px;
+    border: 1px solid var(--mid-gray);
+    border-radius: 980px;
+    transition: all 0.15s;
+    background: var(--white);
+  }
+  .nav a:hover { border-color: var(--accent); color: var(--accent); }
+  .nav a.alpha { color: var(--text-secondary); border-color: var(--mid-gray); background: var(--white); }
+  .nav a.beta  { color: var(--text-secondary); border-color: var(--mid-gray); background: var(--white); }
+
+  /* SECTIONS */
+  .section { padding: 56px 0; border-bottom: 1px solid var(--mid-gray); }
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 8px;
+  }
+  .section h2 {
+    font-size: clamp(26px, 4vw, 38px);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin-bottom: 28px;
+    color: var(--text-primary);
+  }
+
+  /* CARDS */
+  .card-base {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    padding: 24px;
+  }
+
+  /* DEFINITION CARDS */
+  .def-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .def-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  .def-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0;
+    width: 100%; height: 3px;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  }
+  .def-card.alpha-card::before { background: var(--green); }
+  .def-card.beta-card::before  { background: var(--accent); }
+  .def-card-symbol {
+    font-size: 80px;
+    line-height: 1;
+    opacity: 0.06;
+    position: absolute;
+    top: 16px; right: 20px;
+    font-weight: 600;
+    color: var(--text-primary);
+    font-style: italic;
+    font-family: 'Times New Roman', serif;
+  }
+  .def-card h3 {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    margin-bottom: 12px;
+  }
+  .alpha-card h3 { color: var(--green); }
+  .beta-card h3  { color: var(--accent); }
+  .def-card p { color: var(--text-secondary); font-size: 14px; line-height: 1.7; margin-bottom: 12px; font-weight: 300; }
+  .formula {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    background: var(--light-gray);
+    border: 1px solid var(--mid-gray);
+    padding: 12px 16px;
+    border-radius: 10px;
+    margin-top: 16px;
+    color: var(--text-primary);
+  }
+  .formula span { color: var(--orange); }
+
+  /* KEY CONCEPTS */
+  .concepts-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .concept-pill {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .concept-pill:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.07); }
+  .concept-pill .icon { font-size: 22px; margin-bottom: 10px; display: block; }
+  .concept-pill h4 { font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--text-primary); }
+  .concept-pill p  { font-size: 12px; color: var(--text-secondary); line-height: 1.6; font-weight: 300; }
+
+  /* CHART WRAP */
+  .chart-wrap {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    margin-top: 20px;
+  }
+  .chart-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .chart-controls label { font-size: 12px; color: var(--text-tertiary); font-weight: 500; }
+  .ctrl-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--light-gray);
+    border: 1px solid var(--mid-gray);
+    border-radius: 10px;
+    padding: 9px 14px;
+  }
+  .ctrl-group input[type=range] {
+    -webkit-appearance: none;
+    width: 110px;
+    height: 4px;
+    background: var(--mid-gray);
+    border-radius: 2px;
+    outline: none;
+  }
+  .ctrl-group input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  }
+  .alpha-ctrl input[type=range]::-webkit-slider-thumb { background: var(--green); }
+  .beta-ctrl  input[type=range]::-webkit-slider-thumb { background: var(--accent); }
+  .ctrl-val { font-family: var(--font-mono); font-size: 12px; min-width: 36px; text-align: right; font-weight: 500; }
+  .alpha-val { color: var(--green); }
+  .beta-val  { color: var(--accent); }
+
+  canvas { border-radius: 4px; }
+
+  /* STATS ROW */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    margin-bottom: 20px;
+    background: var(--mid-gray);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .stat-box {
+    background: var(--off-white);
+    padding: 16px;
+    text-align: center;
+  }
+  .stat-box .label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-tertiary); margin-bottom: 5px; }
+  .stat-box .value { font-family: var(--font-mono); font-size: 20px; font-weight: 600; color: var(--text-primary); }
+
+  /* RESULT BADGES */
+  .result-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 16px;
+    border-radius: 980px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 500;
+    margin-top: 14px;
+  }
+  .badge-pos     { background: var(--green-light);  color: #1a7f35; }
+  .badge-neg     { background: var(--red-light);    color: #c0392b; }
+  .badge-neutral { background: var(--accent-light); color: #0050a0; }
+
+  /* BETA TABLE */
+  .beta-table { width: 100%; border-collapse: collapse; font-size: 14px; margin-top: 20px; }
+  .beta-table th { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-tertiary); padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--mid-gray); }
+  .beta-table td { padding: 13px 14px; border-bottom: 1px solid var(--light-gray); color: var(--text-primary); }
+  .beta-table tr:last-child td { border-bottom: none; }
+  .beta-table tr:hover td { background: var(--off-white); }
+  .beta-table .ticker { font-family: var(--font-mono); font-weight: 600; font-size: 13px; }
+  .beta-bar-cell { width: 160px; }
+  .beta-bar-wrap { background: var(--light-gray); border-radius: 980px; height: 6px; overflow: visible; position: relative; }
+  .beta-bar { height: 6px; border-radius: 980px; transition: width 0.3s; }
+  .beta-line { position: absolute; top: -3px; width: 2px; height: 12px; background: var(--text-tertiary); opacity: 0.5; }
+
+  /* FOOTER */
+  .footer {
+    padding: 32px 0;
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-tertiary);
+    font-weight: 300;
+    border-top: 1px solid var(--mid-gray);
+  }
+
+  /* UNIFIED SIMULATOR */
+  .uparam { margin-bottom: 16px; }
+  .uparam-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
+  .uparam-row label { font-size: 13px; color: var(--text-secondary); font-weight: 400; }
+  .uparam-val { font-family: var(--font-mono); font-size: 13px; font-weight: 600; }
+  .uslider { -webkit-appearance: none; width: 100%; height: 4px; border-radius: 2px; outline: none; }
+  .uslider::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; cursor: pointer; box-shadow: 0 1px 4px rgba(0,0,0,0.2); }
+  .slider-alpha { background: rgba(52,199,89,0.2); }
+  .slider-alpha::-webkit-slider-thumb { background: var(--green); }
+  .slider-beta  { background: rgba(0,113,227,0.15); }
+  .slider-beta::-webkit-slider-thumb  { background: var(--accent); }
+  .slider-warn  { background: rgba(255,149,0,0.15); }
+  .slider-warn::-webkit-slider-thumb  { background: var(--orange); }
+  .slider-muted { background: var(--mid-gray); }
+  .slider-muted::-webkit-slider-thumb { background: var(--text-tertiary); }
+  #sim-validate-btn:hover { background: var(--accent-hover) !important; }
+  .preset-btn:hover { border-color: var(--accent) !important; color: var(--accent) !important; background: var(--accent-light) !important; }
+
+  @media (max-width: 768px) {
+    .def-grid { grid-template-columns: 1fr; }
+    .concepts-grid { grid-template-columns: 1fr; }
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+    .hero { padding: 36px 0 28px; }
+  }
+  @media (max-width: 900px) {
+    #sim-alpha > div[style*="grid-template-columns: 340px"] { grid-template-columns: 1fr !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- HERO -->
+  <div class="hero">
+    <p class="hero-tag">ARK Investissement · Finance de marché · Concepts fondamentaux</p>
+    <h1><span class="alpha">Alpha</span> &amp; <span class="beta">Bêta</span></h1>
+    <p class="hero-subtitle">Deux métriques essentielles pour mesurer la performance ajustée au risque et la sensibilité d'un portefeuille au marché.</p>
+  </div>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="#definitions">Définitions</a>
+    <a href="#alpha-graph" class="alpha">Graphique Alpha</a>
+    <a href="#beta-graph" class="beta">Graphique Bêta</a>
+    <a href="#sim-alpha" class="alpha">Simulateur α &amp; β</a>
+    <a href="#exemples" class="beta">Exemples réels</a>
+    <a href="#strategies">Anatomie des stratégies</a>
+  </nav>
+
+  <!-- DEFINITIONS -->
+  <section class="section" id="definitions">
+    <p class="section-label">01 — Définitions</p>
+    <h2>Les bases théoriques</h2>
+
+    <div class="def-grid">
+      <div class="def-card alpha-card">
+        <span class="def-card-symbol">α</span>
+        <h3>Alpha (α)</h3>
+        <p>L'alpha mesure la <strong>surperformance</strong> d'un actif ou d'un portefeuille par rapport à son rendement attendu selon le modèle CAPM. C'est la valeur ajoutée par le gérant, indépendante du marché.</p>
+        <p>Un alpha positif signifie que le gestionnaire a <em>battu le marché</em> après ajustement du risque. Un alpha nul indique une performance exactement conforme aux attentes.</p>
+        <div class="formula">
+          α = R<sub>p</sub> − [R<sub>f</sub> + β × (<span>R<sub>m</sub> − R<sub>f</sub></span>)]
+        </div>
+        <div style="margin-top:14px; display:flex; flex-direction:column; gap:5px;">
+          <p style="font-size:12px; color:var(--text-secondary); font-style:italic; line-height:1.6;"><b style="font-style:normal; font-weight:500; color:var(--text-primary);">R<sub>p</sub></b> — Rendement réalisé du portefeuille sur la période</p>
+          <p style="font-size:12px; color:var(--text-secondary); font-style:italic; line-height:1.6;"><b style="font-style:normal; font-weight:500; color:var(--text-primary);">R<sub>f</sub></b> — Taux sans risque (ex. OAT 10 ans, T-Bill américain)</p>
+          <p style="font-size:12px; color:var(--text-secondary); font-style:italic; line-height:1.6;"><b style="font-style:normal; font-weight:500; color:var(--text-primary);">β</b> — Sensibilité du portefeuille aux mouvements du marché</p>
+          <p style="font-size:12px; color:var(--text-secondary); font-style:italic; line-height:1.6;"><b style="font-style:normal; font-weight:500; color:var(--orange);">R<sub>m</sub> − R<sub>f</sub></b> — Prime de risque de marché : surperformance du marché vs l'actif sans risque</p>
+          <p style="font-size:12px; color:var(--green); font-style:italic; line-height:1.6; font-weight:500;">→ α mesure ce que le gérant a gagné <em style="color:var(--text-secondary); font-weight:400;">au-delà</em> de ce que son exposition au risque justifiait.</p>
+        </div>
+      </div>
+
+      <div class="def-card beta-card">
+        <span class="def-card-symbol">β</span>
+        <h3>Bêta (β)</h3>
+        <p>Le bêta mesure la <strong>sensibilité</strong> d'un actif aux mouvements du marché. Il quantifie le risque systématique, c'est-à-dire le risque non diversifiable lié au marché dans son ensemble.</p>
+        <p>Un bêta de 1 signifie que l'actif évolue <em>exactement comme le marché</em>. Au-delà de 1, il amplifie les mouvements. En dessous, il les atténue.</p>
+        <div class="formula">
+          β = <span>Cov(R<sub>p</sub>, R<sub>m</sub>)</span> / Var(R<sub>m</sub>)
+        </div>
+        <div style="margin-top:14px; display:flex; flex-direction:column; gap:5px;">
+          <p style="font-size:12px; color:var(--text-secondary); font-style:italic; line-height:1.6;"><b style="font-style:normal; font-weight:500; color:var(--orange);">Cov(R<sub>p</sub>, R<sub>m</sub>)</b> — Covariance entre les rendements du portefeuille et ceux du marché : mesure à quel point ils évoluent ensemble</p>
+          <p style="font-size:12px; color:var(--text-secondary); font-style:italic; line-height:1.6;"><b style="font-style:normal; font-weight:500; color:var(--text-primary);">Var(R<sub>m</sub>)</b> — Variance du marché : dispersion des rendements du marché autour de sa moyenne</p>
+          <p style="font-size:12px; color:var(--text-secondary); font-style:italic; line-height:1.6;"><b style="font-style:normal; font-weight:500; color:var(--text-primary);">R<sub>p</sub></b> — Rendement du portefeuille</p>
+          <p style="font-size:12px; color:var(--text-secondary); font-style:italic; line-height:1.6;"><b style="font-style:normal; font-weight:500; color:var(--text-primary);">R<sub>m</sub></b> — Rendement du marché de référence (benchmark)</p>
+          <p style="font-size:12px; color:var(--accent); font-style:italic; line-height:1.6; font-weight:500;">→ β = 1 : suit le marché. β &gt; 1 : amplifie. β &lt; 1 : atténue. β &lt; 0 : inverse.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- KEY CONCEPTS -->
+    <div class="concepts-grid" style="margin-top: 16px;">
+      <div class="concept-pill">
+        <span class="icon">📐</span>
+        <h4>CAPM</h4>
+        <p>Le Capital Asset Pricing Model est le cadre qui relie rendement attendu et risque systématique. Alpha et Bêta en sont les composantes centrales.</p>
+      </div>
+      <div class="concept-pill">
+        <span class="icon">🎯</span>
+        <h4>Risque systématique vs spécifique</h4>
+        <p>Le bêta capture le risque de marché (non diversifiable). L'alpha reflète la performance liée au risque spécifique géré activement.</p>
+      </div>
+      <div class="concept-pill">
+        <span class="icon">📊</span>
+        <h4>Taux sans risque (R<sub>f</sub>)</h4>
+        <p>Rendement d'un actif théoriquement sans risque (ex. OAT 10 ans). Il sert de référence pour calculer la prime de risque du marché.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ALPHA GRAPH -->
+  <section class="section" id="alpha-graph">
+    <p class="section-label">02 — Visualisation interactive</p>
+    <h2 style="color: var(--green);">Comprendre l'Alpha</h2>
+    <p style="color: var(--text-secondary); margin-bottom: 8px;">Ajustez les paramètres pour voir comment l'alpha se matérialise sur un portefeuille vs. son benchmark.</p>
+
+    <div class="chart-wrap">
+      <div class="chart-controls">
+        <div class="ctrl-group alpha-ctrl">
+          <label>Alpha annualisé</label>
+          <input type="range" id="alpha-val" min="-8" max="15" step="0.5" value="4">
+          <span class="ctrl-val alpha-val" id="alpha-display">+4.0%</span>
+        </div>
+        <div class="ctrl-group">
+          <label>Rendement marché</label>
+          <input type="range" id="market-return" min="-20" max="30" step="1" value="10">
+          <span class="ctrl-val" id="market-display" style="color: var(--orange);">+10%</span>
+        </div>
+        <div class="ctrl-group">
+          <label>Volatilité</label>
+          <input type="range" id="volatility" min="5" max="35" step="1" value="15">
+          <span class="ctrl-val" id="vol-display" style="color: var(--text-secondary);">15%</span>
+        </div>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-box">
+          <div class="label">Rend. Portefeuille</div>
+          <div class="value alpha-val" id="stat-port">—</div>
+        </div>
+        <div class="stat-box">
+          <div class="label">Rend. Benchmark</div>
+          <div class="value" style="color: var(--orange);" id="stat-bench">—</div>
+        </div>
+        <div class="stat-box">
+          <div class="label">Alpha réalisé</div>
+          <div class="value alpha-val" id="stat-alpha">—</div>
+        </div>
+        <div class="stat-box">
+          <div class="label">Sharpe Ratio</div>
+          <div class="value" style="color: var(--text-secondary);" id="stat-sharpe">—</div>
+        </div>
+      </div>
+
+      <div style="position: relative; width: 100%; height: 320px;">
+        <canvas id="alphaChart"></canvas>
+      </div>
+      <p style="font-size: 12px; color: var(--text-secondary); margin-top: 12px; font-family: var(--font-mono);">
+        Simulation sur 36 mois — Portefeuille (vert) vs Benchmark (jaune) — β = 1 supposé
+      </p>
+    </div>
+  </section>
+
+  <!-- BETA GRAPH -->
+  <section class="section" id="beta-graph">
+    <p class="section-label">03 — Visualisation interactive</p>
+    <h2 style="color: var(--accent);">Comprendre le Bêta</h2>
+    <p style="color: var(--text-secondary); margin-bottom: 8px;">Le bêta est la pente de la droite de régression entre les rendements du portefeuille et ceux du marché.</p>
+
+    <div class="chart-wrap">
+      <div class="chart-controls">
+        <div class="ctrl-group beta-ctrl">
+          <label>Bêta (β)</label>
+          <input type="range" id="beta-val" min="-0.5" max="3" step="0.1" value="1.2">
+          <span class="ctrl-val beta-val" id="beta-display">1.2</span>
+        </div>
+        <div class="ctrl-group">
+          <label>Bruit (R²)</label>
+          <input type="range" id="noise-val" min="0" max="80" step="5" value="20">
+          <span class="ctrl-val" style="color: var(--text-secondary);" id="noise-display">R²≈80%</span>
+        </div>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-box">
+          <div class="label">Bêta estimé</div>
+          <div class="value beta-val" id="beta-stat">—</div>
+        </div>
+        <div class="stat-box">
+          <div class="label">Interprétation</div>
+          <div class="value" style="font-size: 14px; color: var(--text-secondary);" id="beta-interp">—</div>
+        </div>
+        <div class="stat-box">
+          <div class="label">Marché +10%</div>
+          <div class="value beta-val" id="beta-up">—</div>
+        </div>
+        <div class="stat-box">
+          <div class="label">Marché −10%</div>
+          <div class="value" style="color: var(--red);" id="beta-down">—</div>
+        </div>
+      </div>
+
+      <div style="position: relative; width: 100%; height: 340px;">
+        <canvas id="betaChart"></canvas>
+      </div>
+      <p style="font-size: 12px; color: var(--text-secondary); margin-top: 12px; font-family: var(--font-mono);">
+        Nuage de points — Rend. Marché (x) vs Rend. Actif (y) — La droite = β × x + α
+      </p>
+    </div>
+
+    <!-- CORRELATION TIME SERIES -->
+    <div class="chart-wrap" style="margin-top: 16px;">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px; margin-bottom: 20px;">
+        <div>
+          <p style="font-size: 13px; font-family: var(--font-mono); color: var(--text-secondary); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px;">Corrélation dans le temps</p>
+          <p style="font-size: 14px; color: var(--text-secondary);">Évolution de la stratégie (bleu) vs benchmark (jaune) — le bêta dicte l'amplitude des écarts.</p>
+        </div>
+        <div style="display: flex; gap: 20px; align-items: center; font-size: 13px; font-family: var(--font-mono);">
+          <span style="display:flex;align-items:center;gap:6px;"><span style="width:24px;height:2px;background:#0071e3;display:inline-block;border-radius:2px;"></span>Stratégie</span>
+          <span style="display:flex;align-items:center;gap:6px;"><span style="width:24px;height:2px;background:#ff9500;display:inline-block;border-radius:2px;border-top: 2px dashed #fcd34d;background:none;"></span>Benchmark</span>
+          <span style="display:flex;align-items:center;gap:6px;"><span style="width:10px;height:10px;border-radius:50%;background:rgba(247,107,107,0.5);display:inline-block;"></span>Divergences</span>
+        </div>
+      </div>
+
+      <div class="stats-row" style="margin-bottom: 20px;">
+        <div class="stat-box">
+          <div class="label">Corrélation (ρ)</div>
+          <div class="value beta-val" id="corr-stat">—</div>
+        </div>
+        <div class="stat-box">
+          <div class="label">Tracking Error</div>
+          <div class="value" style="color: var(--orange);" id="te-stat">—</div>
+        </div>
+        <div class="stat-box">
+          <div class="label">Max Divergence</div>
+          <div class="value" style="color: var(--red);" id="maxdiv-stat">—</div>
+        </div>
+        <div class="stat-box">
+          <div class="label">Mois corrélés</div>
+          <div class="value" style="color: var(--text-secondary);" id="corrmois-stat">—</div>
+        </div>
+      </div>
+
+      <div style="position: relative; width: 100%; height: 300px;">
+        <canvas id="corrChart"></canvas>
+      </div>
+
+      <div style="position: relative; width: 100%; height: 140px; margin-top: 8px;">
+        <canvas id="diffChart"></canvas>
+      </div>
+      <p style="font-size: 12px; color: var(--text-secondary); margin-top: 10px; font-family: var(--font-mono);">
+        Haut : performance cumulée sur 36 mois (base 100) — Bas : écart mensuel stratégie − benchmark
+      </p>
+    </div>
+  </section>
+
+  <!-- SIMULATEUR UNIFIÉ -->
+  <section class="section" id="sim-alpha">
+    <p class="section-label">04 — Simulateur</p>
+    <h2>Simulateur α &amp; β</h2>
+    <p style="color: var(--text-secondary); margin-bottom: 28px;">Paramétrez votre stratégie, validez — la courbe se génère et tous les indicateurs se calculent automatiquement.</p>
+
+    <div style="display: grid; grid-template-columns: 340px 1fr; gap: 20px; align-items: start;">
+
+      <!-- PANNEAU PARAMÈTRES -->
+      <div style="background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 28px; position: sticky; top: 20px;">
+        <p style="font-size: 11px; font-family: var(--font-mono); color: var(--text-secondary); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 22px;">Paramètres de la stratégie</p>
+
+        <!-- PRESETS -->
+        <p style="font-size: 11px; font-family: var(--font-mono); color: var(--text-secondary); margin-bottom: 8px; letter-spacing: 0.08em;">PRÉRÉGLAGES RAPIDES</p>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 24px;">
+          <button class="preset-btn" onclick="applyPreset('index')" style="font-size:11px; padding:7px 10px; background:var(--light-gray); border:1px solid var(--border); border-radius:6px; color:var(--text-secondary); cursor:pointer; font-family:var(--font-mono); text-align:left; transition:all 0.15s;">ETF Indiciel</button>
+          <button class="preset-btn" onclick="applyPreset('growth')" style="font-size:11px; padding:7px 10px; background:var(--light-gray); border:1px solid var(--border); border-radius:6px; color:var(--text-secondary); cursor:pointer; font-family:var(--font-mono); text-align:left; transition:all 0.15s;">Growth offensif</button>
+          <button class="preset-btn" onclick="applyPreset('defensive')" style="font-size:11px; padding:7px 10px; background:var(--light-gray); border:1px solid var(--border); border-radius:6px; color:var(--text-secondary); cursor:pointer; font-family:var(--font-mono); text-align:left; transition:all 0.15s;">Défensif</button>
+          <button class="preset-btn" onclick="applyPreset('marketneutral')" style="font-size:11px; padding:7px 10px; background:var(--light-gray); border:1px solid var(--border); border-radius:6px; color:var(--text-secondary); cursor:pointer; font-family:var(--font-mono); text-align:left; transition:all 0.15s;">Market Neutral</button>
+          <button class="preset-btn" onclick="applyPreset('alphagen')" style="font-size:11px; padding:7px 10px; background:var(--light-gray); border:1px solid var(--border); border-radius:6px; color:var(--text-secondary); cursor:pointer; font-family:var(--font-mono); text-align:left; transition:all 0.15s;">Alpha pur</button>
+          <button class="preset-btn" onclick="applyPreset('bear')" style="font-size:11px; padding:7px 10px; background:var(--light-gray); border:1px solid var(--border); border-radius:6px; color:var(--text-secondary); cursor:pointer; font-family:var(--font-mono); text-align:left; transition:all 0.15s;">Short / Bear</button>
+          <button onclick="applyPreset('priceaction')" style="font-size:11px; padding:8px 10px; background:var(--red-light); border:1px solid rgba(255,59,48,0.35); border-radius:6px; color:var(--red); cursor:pointer; font-family:var(--font-mono); text-align:left; transition:all 0.15s; grid-column:1/-1; font-weight:600; letter-spacing:0.03em;">⚠ Stratégie YT — Price Action</button>
+        </div>
+
+        <div style="height:1px; background:var(--border); margin-bottom:22px;"></div>
+
+        <!-- SLIDERS -->
+        <div class="uparam">
+          <div class="uparam-row">
+            <label>Alpha annualisé (α)</label>
+            <span class="uparam-val" id="u-alpha-disp" style="color:var(--green);">+2%</span>
+          </div>
+          <input type="range" id="u-alpha" min="-10" max="20" step="0.5" value="2" class="uslider slider-alpha" oninput="syncDisplay('u-alpha','u-alpha-disp','%',true)">
+        </div>
+
+        <div class="uparam">
+          <div class="uparam-row">
+            <label>Bêta (β)</label>
+            <span class="uparam-val" id="u-beta-disp" style="color:var(--accent);">1.0</span>
+          </div>
+          <input type="range" id="u-beta" min="-0.5" max="3" step="0.1" value="1.0" class="uslider slider-beta" oninput="syncDisplay('u-beta','u-beta-disp','',false)">
+        </div>
+
+        <div class="uparam">
+          <div class="uparam-row">
+            <label>Rendement marché (R<sub>m</sub>)</label>
+            <span class="uparam-val" id="u-rm-disp" style="color:var(--orange);">+10%</span>
+          </div>
+          <input type="range" id="u-rm" min="-20" max="30" step="1" value="10" class="uslider slider-warn" oninput="syncDisplay('u-rm','u-rm-disp','%',true)">
+        </div>
+
+        <div class="uparam">
+          <div class="uparam-row">
+            <label>Taux sans risque (R<sub>f</sub>)</label>
+            <span class="uparam-val" id="u-rf-disp" style="color:var(--text-secondary);">3%</span>
+          </div>
+          <input type="range" id="u-rf" min="0" max="8" step="0.1" value="3" class="uslider slider-muted" oninput="syncDisplay('u-rf','u-rf-disp','%',false)">
+        </div>
+
+        <div class="uparam">
+          <div class="uparam-row">
+            <label>Volatilité idiosyncratique</label>
+            <span class="uparam-val" id="u-vol-disp" style="color:var(--text-secondary);">12%</span>
+          </div>
+          <input type="range" id="u-vol" min="2" max="40" step="1" value="12" class="uslider slider-muted" oninput="syncDisplay('u-vol','u-vol-disp','%',false)">
+        </div>
+
+        <div class="uparam">
+          <div class="uparam-row">
+            <label>Durée de simulation</label>
+            <span class="uparam-val" id="u-dur-disp" style="color:var(--text-secondary);">36 mois</span>
+          </div>
+          <input type="range" id="u-dur" min="12" max="120" step="12" value="36" class="uslider slider-muted" oninput="document.getElementById('u-dur-disp').textContent=this.value+' mois'">
+        </div>
+
+        <button id="sim-validate-btn" onclick="runSimulator()" style="width:100%; margin-top:20px; padding:14px; background:var(--accent-beta); border:none; border-radius:10px; color:#ffffff; font-family:var(--font-mono); font-size:14px; font-weight:500; cursor:pointer; letter-spacing:0.05em; transition:opacity 0.2s;">
+          ▶ Lancer la simulation
+        </button>
+      </div>
+
+      <!-- RÉSULTATS -->
+      <div id="sim-results">
+        <!-- KPIs -->
+        <div style="display:grid; grid-template-columns: repeat(3,1fr); gap:10px; margin-bottom:16px;">
+          <div class="stat-box"><div class="label">Rend. stratégie</div><div class="value" id="sr-rp" style="color:var(--green);">—</div></div>
+          <div class="stat-box"><div class="label">Rend. attendu CAPM</div><div class="value" id="sr-capm" style="color:var(--orange);">—</div></div>
+          <div class="stat-box"><div class="label">Alpha réalisé</div><div class="value" id="sr-alpha" style="color:var(--green);">—</div></div>
+          <div class="stat-box"><div class="label">Bêta</div><div class="value" id="sr-beta" style="color:var(--accent);">—</div></div>
+          <div class="stat-box"><div class="label">Sharpe ratio</div><div class="value" id="sr-sharpe" style="color:var(--text-secondary);">—</div></div>
+          <div class="stat-box"><div class="label">Vol. annualisée</div><div class="value" id="sr-vol" style="color:var(--text-secondary);">—</div></div>
+        </div>
+
+        <!-- FORMULE -->
+        <div style="background:var(--white); border:1px solid var(--border); border-radius:10px; padding:16px 20px; margin-bottom:16px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+          <span style="font-family:var(--font-mono); font-size:13px; color:var(--text-secondary);" id="sr-formula">—</span>
+          <span id="sr-badge" class="result-badge badge-neutral">—</span>
+        </div>
+
+        <!-- COURBE PRINCIPALE -->
+        <div style="background:var(--white); border:1px solid var(--border); border-radius:12px; padding:24px; margin-bottom:12px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:8px;">
+            <p style="font-size:12px; font-family:var(--font-mono); color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.1em;">Performance cumulée (base 100)</p>
+            <div style="display:flex; gap:16px; font-size:12px; font-family:var(--font-mono); color:var(--text-secondary);">
+              <span style="display:flex;align-items:center;gap:5px;"><span style="width:16px;height:2px;background:var(--green-light);display:inline-block;border-radius:2px;"></span>Stratégie</span>
+              <span style="display:flex;align-items:center;gap:5px;"><span style="width:16px;height:2px;display:inline-block;border-top:2px dashed #fcd34d;"></span>Benchmark</span>
+              <span style="display:flex;align-items:center;gap:5px;"><span style="width:16px;height:2px;background:rgba(147,197,253,0.4);display:inline-block;border-radius:2px;"></span>CAPM attendu</span>
+            </div>
+          </div>
+          <div style="position:relative; width:100%; height:320px;">
+            <canvas id="simMainChart"></canvas>
+          </div>
+        </div>
+
+        <!-- GRAPHIQUES SECONDAIRES -->
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+          <div style="background:var(--white); border:1px solid var(--border); border-radius:12px; padding:20px;">
+            <p style="font-size:11px; font-family:var(--font-mono); color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:12px;">Rendements mensuels</p>
+            <div style="position:relative; width:100%; height:180px;">
+              <canvas id="simBarChart"></canvas>
+            </div>
+          </div>
+          <div style="background:var(--white); border:1px solid var(--border); border-radius:12px; padding:20px;">
+            <p style="font-size:11px; font-family:var(--font-mono); color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:12px;">Décomposition du rendement</p>
+            <div style="position:relative; width:100%; height:180px;">
+              <canvas id="simDonutChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- INTERPRETATION -->
+        <div id="sim-interp-box" style="background:var(--white); border:1px solid var(--border); border-radius:10px; padding:20px; margin-top:12px;">
+          <p style="font-size:11px; font-family:var(--font-mono); color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:10px;">Interprétation</p>
+          <p style="font-size:14px; color:var(--text-primary); line-height:1.7;" id="sim-interp-text">Configurez les paramètres et lancez la simulation pour voir l'analyse.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXAMPLES -->
+  <section class="section" id="exemples">
+    <p class="section-label">05 — Exemples réels</p>
+    <h2>Bêta d'actions connues</h2>
+    <p style="color: var(--text-secondary); margin-bottom: 8px;">Bêtas approximatifs par rapport au S&amp;P 500 (valeurs indicatives, moyennes historiques).</p>
+
+    <table class="beta-table">
+      <thead>
+        <tr>
+          <th>Ticker</th>
+          <th>Entreprise</th>
+          <th>Secteur</th>
+          <th>Bêta (β)</th>
+          <th class="beta-bar-cell">Visualisation</th>
+          <th>Profil</th>
+        </tr>
+      </thead>
+      <tbody id="beta-table-body"></tbody>
+    </table>
+
+    <div style="margin-top: 28px; background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 24px;">
+      <p style="font-size: 13px; font-family: var(--font-mono); color: var(--text-secondary); margin-bottom: 12px;">LECTURE DES BÊTAS</p>
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; font-size: 13px;">
+        <div style="padding: 12px; background: var(--light-gray); border-radius: 8px; border-left: 3px solid var(--red);">
+          <div style="color: var(--red); font-family: var(--font-mono); font-weight: 500; margin-bottom: 4px;">β &lt; 0</div>
+          <div style="color: var(--text-secondary);">Évolue à l'inverse du marché. Ex: certains fonds short.</div>
+        </div>
+        <div style="padding: 12px; background: var(--light-gray); border-radius: 8px; border-left: 3px solid var(--green);">
+          <div style="color: var(--green); font-family: var(--font-mono); font-weight: 500; margin-bottom: 4px;">0 &lt; β &lt; 1</div>
+          <div style="color: var(--text-secondary);">Moins volatile que le marché. Actif défensif.</div>
+        </div>
+        <div style="padding: 12px; background: var(--light-gray); border-radius: 8px; border-left: 3px solid var(--orange);">
+          <div style="color: var(--orange); font-family: var(--font-mono); font-weight: 500; margin-bottom: 4px;">β = 1</div>
+          <div style="color: var(--text-secondary);">Évolue parfaitement avec le marché.</div>
+        </div>
+        <div style="padding: 12px; background: var(--light-gray); border-radius: 8px; border-left: 3px solid var(--accent);">
+          <div style="color: var(--accent); font-family: var(--font-mono); font-weight: 500; margin-bottom: 4px;">β &gt; 1</div>
+          <div style="color: var(--text-secondary);">Plus volatile que le marché. Actif offensif.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STRATEGY EXAMPLES -->
+  <section class="section" id="strategies">
+    <p class="section-label">06 — Anatomie des stratégies</p>
+    <h2>Ce qui crée (ou détruit) l'alpha et le bêta</h2>
+    <p style="color: var(--text-secondary); max-width: 680px; margin-bottom: 40px;">Un portefeuille n'a pas d'alpha ou de bêta par hasard. Chaque choix de construction génère — ou supprime — ces expositions. Voici pourquoi.</p>
+
+    <!-- BETA STRATEGIES -->
+    <div style="margin-bottom: 48px;">
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom:24px;">
+        <span style="font-family:'Times New Roman', Georgia, serif; font-size:36px; color:var(--accent); line-height:1;">β</span>
+        <div>
+          <p style="font-size:18px; font-weight:500;">Stratégies selon le Bêta</p>
+          <p style="font-size:14px; color:var(--text-secondary);">Comment construire un portefeuille avec le bêta désiré</p>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns: repeat(3,1fr); gap:16px;">
+
+        <!-- Beta Neutre -->
+        <div style="background:var(--white); border:1px solid var(--border); border-radius:12px; overflow:hidden;">
+          <div style="background:var(--accent-light); border-bottom:1px solid var(--border); padding:20px 24px;">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+              <div>
+                <p style="font-family:var(--font-mono); font-size:11px; color:var(--accent); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:6px;">β ≈ 0</p>
+                <h3 style="font-family:'Times New Roman', Georgia, serif; font-size:22px; color:var(--text-primary);">Market Neutral</h3>
+              </div>
+              <span style="font-family:var(--font-mono); font-size:28px; color:var(--accent); opacity:0.4;">0.0</span>
+            </div>
+          </div>
+          <div style="padding:20px 24px;">
+            <p style="font-size:13px; color:var(--text-secondary); line-height:1.7; margin-bottom:16px;">Le portefeuille est construit pour être <strong style="color:var(--text-primary);">insensible aux mouvements du marché</strong>. Chaque position longue est compensée par une position courte de même exposition bêta.</p>
+            <p style="font-size:12px; font-family:var(--font-mono); color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px;">Comment ?</p>
+            <ul style="font-size:13px; color:var(--text-secondary); line-height:1.8; padding-left:16px;">
+              <li>Long/Short actions du même secteur</li>
+              <li>Utilisation de futures sur indice pour hedger</li>
+              <li>Pairs trading (ex: long LVMH / short Kering)</li>
+              <li>Rebalancement continu du β net</li>
+            </ul>
+            <div style="margin-top:16px; background:var(--light-gray); border-radius:8px; padding:12px 14px; font-size:12px;">
+              <span style="color:var(--green); font-family:var(--font-mono);">Exemples :</span>
+              <span style="color:var(--text-secondary);"> Fonds d'arbitrage stat, hedge funds L/S equity neutres (ex: Renaissance Medallion)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Beta > 1 -->
+        <div style="background:var(--white); border:1px solid var(--border); border-radius:12px; overflow:hidden;">
+          <div style="background:rgba(255,149,0,0.06); border-bottom:1px solid var(--border); padding:20px 24px;">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+              <div>
+                <p style="font-family:var(--font-mono); font-size:11px; color:var(--orange); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:6px;">β &gt; 1</p>
+                <h3 style="font-family:'Times New Roman', Georgia, serif; font-size:22px; color:var(--text-primary);">Beta Offensif</h3>
+              </div>
+              <span style="font-family:var(--font-mono); font-size:28px; color:var(--orange); opacity:0.4;">1.6</span>
+            </div>
+          </div>
+          <div style="padding:20px 24px;">
+            <p style="font-size:13px; color:var(--text-secondary); line-height:1.7; margin-bottom:16px;">Le portefeuille <strong style="color:var(--text-primary);">amplifie les hausses comme les baisses</strong> du marché. Adapté aux phases de bull market, mais exposé en cas de retournement.</p>
+            <p style="font-size:12px; font-family:var(--font-mono); color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px;">Comment ?</p>
+            <ul style="font-size:13px; color:var(--text-secondary); line-height:1.8; padding-left:16px;">
+              <li>Surpondérer les secteurs cycliques (tech, luxe, semis)</li>
+              <li>Utiliser du levier financier (marge)</li>
+              <li>ETF leveraged (×2 ou ×3 sur le S&amp;P)</li>
+              <li>Concentration sur des small/mid caps volatiles</li>
+            </ul>
+            <div style="margin-top:16px; background:var(--light-gray); border-radius:8px; padding:12px 14px; font-size:12px;">
+              <span style="color:var(--orange); font-family:var(--font-mono);">Exemples :</span>
+              <span style="color:var(--text-secondary);"> ARK Innovation ETF (β ~1.7), fonds tech agressifs, ETF ProShares Ultra S&amp;P500</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Beta defensif -->
+        <div style="background:var(--white); border:1px solid var(--border); border-radius:12px; overflow:hidden;">
+          <div style="background: var(--green-light); border-bottom:1px solid var(--border); padding:20px 24px;">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+              <div>
+                <p style="font-family:var(--font-mono); font-size:11px; color:var(--green); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:6px;">0 &lt; β &lt; 0.7</p>
+                <h3 style="font-family:'Times New Roman', Georgia, serif; font-size:22px; color:var(--text-primary);">Beta Défensif</h3>
+              </div>
+              <span style="font-family:var(--font-mono); font-size:28px; color:var(--green); opacity:0.4;">0.4</span>
+            </div>
+          </div>
+          <div style="padding:20px 24px;">
+            <p style="font-size:13px; color:var(--text-secondary); line-height:1.7; margin-bottom:16px;">Le portefeuille <strong style="color:var(--text-primary);">amortit les chocs de marché</strong>. Rend moins en bull market, mais protège le capital en bear market.</p>
+            <p style="font-size:12px; font-family:var(--font-mono); color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px;">Comment ?</p>
+            <ul style="font-size:13px; color:var(--text-secondary); line-height:1.8; padding-left:16px;">
+              <li>Surpondérer utilities, santé, consommation de base</li>
+              <li>Allouer aux obligations et actifs réels</li>
+              <li>Inclure de l'or comme actif refuge</li>
+              <li>Stratégie Low Volatility / Minimum Variance</li>
+            </ul>
+            <div style="margin-top:16px; background:var(--light-gray); border-radius:8px; padding:12px 14px; font-size:12px;">
+              <span style="color:var(--green); font-family:var(--font-mono);">Exemples :</span>
+              <span style="color:var(--text-secondary);"> iShares MSCI Min Vol, fonds infrastructure, portefeuille 60/40 traditionnel</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ALPHA STRATEGIES -->
+    <div>
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom:24px;">
+        <span style="font-family:'Times New Roman', Georgia, serif; font-size:36px; color:var(--green); line-height:1; font-style:italic;">α</span>
+        <div>
+          <p style="font-size:18px; font-weight:500;">Avec et sans Alpha — la différence concrète</p>
+          <p style="font-size:14px; color:var(--text-secondary);">Pourquoi certains gérants créent de la valeur, d'autres pas</p>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:24px;">
+
+        <!-- Sans alpha -->
+        <div style="background:var(--white); border:1px solid rgba(247,107,107,0.2); border-radius:12px; overflow:hidden;">
+          <div style="padding:20px 24px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <p style="font-family:var(--font-mono); font-size:11px; color:var(--red); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:4px;">α ≈ 0</p>
+              <h3 style="font-family:'Times New Roman', Georgia, serif; font-size:20px;">Gestion passive / sans alpha</h3>
+            </div>
+            <span style="font-size:28px;">📦</span>
+          </div>
+          <div style="padding:20px 24px;">
+            <p style="font-size:13px; color:var(--text-secondary); line-height:1.7; margin-bottom:16px;">Le portefeuille se contente de répliquer le marché. Sa performance est entièrement expliquée par son exposition bêta. <strong style="color:var(--text-primary);">Le gérant n'ajoute pas de valeur</strong> au-delà de la prime de marché.</p>
+            <p style="font-size:12px; font-family:var(--font-mono); color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:10px;">Pourquoi pas d'alpha ?</p>
+            <div style="display:flex; flex-direction:column; gap:8px;">
+              <div style="display:flex; gap:10px; align-items:flex-start;">
+                <span style="color:var(--red); font-size:16px; line-height:1.4;">×</span>
+                <p style="font-size:13px; color:var(--text-secondary); line-height:1.5;">Aucune sélection active de titres (stock-picking)</p>
+              </div>
+              <div style="display:flex; gap:10px; align-items:flex-start;">
+                <span style="color:var(--red); font-size:16px; line-height:1.4;">×</span>
+                <p style="font-size:13px; color:var(--text-secondary); line-height:1.5;">Pas de market timing — investi en permanence</p>
+              </div>
+              <div style="display:flex; gap:10px; align-items:flex-start;">
+                <span style="color:var(--red); font-size:16px; line-height:1.4;">×</span>
+                <p style="font-size:13px; color:var(--text-secondary); line-height:1.5;">Frais de gestion réduits → pas d'érosion non plus</p>
+              </div>
+              <div style="display:flex; gap:10px; align-items:flex-start;">
+                <span style="color:var(--red); font-size:16px; line-height:1.4;">×</span>
+                <p style="font-size:13px; color:var(--text-secondary); line-height:1.5;">Portefeuille = pondération marché → β ≈ 1 par construction</p>
+              </div>
+            </div>
+            <div style="margin-top:16px; background:var(--light-gray); border-radius:8px; padding:12px 14px; font-size:12px;">
+              <span style="color:var(--red); font-family:var(--font-mono);">Exemples :</span>
+              <span style="color:var(--text-secondary);"> SPY, QQQ, MSCI World ETF, Vanguard Total Market. Frais : 0.03–0.20%/an.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Avec alpha -->
+        <div style="background:var(--white); border:1px solid rgba(110,231,183,0.25); border-radius:12px; overflow:hidden;">
+          <div style="padding:20px 24px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <p style="font-family:var(--font-mono); font-size:11px; color:var(--green); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:4px;">α &gt; 0</p>
+              <h3 style="font-family:'Times New Roman', Georgia, serif; font-size:20px;">Gestion active / avec alpha</h3>
+            </div>
+            <span style="font-size:28px;">🎯</span>
+          </div>
+          <div style="padding:20px 24px;">
+            <p style="font-size:13px; color:var(--text-secondary); line-height:1.7; margin-bottom:16px;">Le portefeuille génère un rendement <strong style="color:var(--text-primary);">supérieur à ce que son bêta prédit</strong>. La surperformance vient d'une compétence (ou chance) du gérant, indépendante des mouvements du marché.</p>
+            <p style="font-size:12px; font-family:var(--font-mono); color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:10px;">Ce qui crée l'alpha :</p>
+            <div style="display:flex; flex-direction:column; gap:8px;">
+              <div style="display:flex; gap:10px; align-items:flex-start;">
+                <span style="color:var(--green); font-size:16px; line-height:1.4;">✓</span>
+                <p style="font-size:13px; color:var(--text-secondary); line-height:1.5;"><strong style="color:var(--text-primary);">Information edge</strong> — analyse fondamentale supérieure, données alternatives</p>
+              </div>
+              <div style="display:flex; gap:10px; align-items:flex-start;">
+                <span style="color:var(--green); font-size:16px; line-height:1.4;">✓</span>
+                <p style="font-size:13px; color:var(--text-secondary); line-height:1.5;"><strong style="color:var(--text-primary);">Timing de marché</strong> — rotation sectorielle au bon moment</p>
+              </div>
+              <div style="display:flex; gap:10px; align-items:flex-start;">
+                <span style="color:var(--green); font-size:16px; line-height:1.4;">✓</span>
+                <p style="font-size:13px; color:var(--text-secondary); line-height:1.5;"><strong style="color:var(--text-primary);">Facteurs de style</strong> — Value, Quality, Momentum (smart beta)</p>
+              </div>
+              <div style="display:flex; gap:10px; align-items:flex-start;">
+                <span style="color:var(--green); font-size:16px; line-height:1.4;">✓</span>
+                <p style="font-size:13px; color:var(--text-secondary); line-height:1.5;"><strong style="color:var(--text-primary);">Arbitrage</strong> — exploiter des inefficiences de marché temporaires</p>
+              </div>
+            </div>
+            <div style="margin-top:16px; background:var(--light-gray); border-radius:8px; padding:12px 14px; font-size:12px;">
+              <span style="color:var(--green); font-family:var(--font-mono);">Exemples :</span>
+              <span style="color:var(--text-secondary);"> Fonds Magellan (Fidelity), Berkshire Hathaway, hedge funds quantitatifs. Frais : 1–2% + 20% perf.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Matrice 2x2 -->
+      <div style="background:var(--white); border:1px solid var(--border); border-radius:12px; padding:28px;">
+        <p style="font-size:13px; font-family:var(--font-mono); color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:20px;">Matrice Alpha × Bêta — Les 4 profils de stratégie</p>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+          <div style="padding:20px; background:var(--light-gray); border-radius:10px; border-left:3px solid var(--green);">
+            <div style="font-family:var(--font-mono); font-size:12px; color:var(--green); margin-bottom:8px;">α+ / β bas</div>
+            <p style="font-size:14px; font-weight:500; margin-bottom:6px;">Alpha pur — Market Neutral</p>
+            <p style="font-size:13px; color:var(--text-secondary); line-height:1.6;">Performance indépendante du marché. Le Graal de la gestion : gains même en bear market. Ex : fonds d'arbitrage, stratégies quant long/short.</p>
+          </div>
+          <div style="padding:20px; background:var(--light-gray); border-radius:10px; border-left:3px solid var(--orange);">
+            <div style="font-family:var(--font-mono); font-size:12px; color:var(--orange); margin-bottom:8px;">α+ / β élevé</div>
+            <p style="font-size:14px; font-weight:500; margin-bottom:6px;">Double moteur</p>
+            <p style="font-size:13px; color:var(--text-secondary); line-height:1.6;">Le gérant bénéficie de la hausse du marché ET crée de la valeur en plus. Rare et instable. Ex : certaines périodes de Berkshire Hathaway.</p>
+          </div>
+          <div style="padding:20px; background:var(--light-gray); border-radius:10px; border-left:3px solid var(--red);">
+            <div style="font-family:var(--font-mono); font-size:12px; color:var(--red); margin-bottom:8px;">α− / β bas</div>
+            <p style="font-size:14px; font-weight:500; margin-bottom:6px;">Défensif sous-performant</p>
+            <p style="font-size:13px; color:var(--text-secondary); line-height:1.6;">Protège contre les baisses mais érode le capital via les frais et les mauvais choix. Fréquent chez les fonds actifs coûteux à faible conviction.</p>
+          </div>
+          <div style="padding:20px; background:var(--light-gray); border-radius:10px; border-left:3px solid var(--accent);">
+            <div style="font-family:var(--font-mono); font-size:12px; color:var(--accent); margin-bottom:8px;">α≈0 / β ≈ 1</div>
+            <p style="font-size:14px; font-weight:500; margin-bottom:6px;">Réplication passive</p>
+            <p style="font-size:13px; color:var(--text-secondary); line-height:1.6;">Performance = marché. Pas de valeur ajoutée par le gérant mais pas de destruction non plus. La majorité des fonds actifs finissent ici après frais.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer">
+    <span>α &amp; β — Finance de Marché · Support pédagogique · 6 sections</span>
+  </div>
+
+</div><!-- /container -->
+
+<script>
+// ─── SEEDED RNG ────────────────────────────────────────────────────
+function seededRNG(seed) {
+  let s = seed;
+  return function() {
+    s = (s * 1664525 + 1013904223) & 0xffffffff;
+    return (s >>> 0) / 0xffffffff;
+  };
+}
+
+// ─── ALPHA CHART ───────────────────────────────────────────────────
+let alphaChart, betaChart;
+const MONTHS = 36;
+
+function buildAlphaData(alphaPct, marketReturn, vol) {
+  const rng = seededRNG(42);
+  const monthlyAlpha = alphaPct / 100 / 12;
+  const monthlyMarket = marketReturn / 100 / 12;
+  const monthlyVol = vol / 100 / Math.sqrt(12);
+
+  let port = 100, bench = 100;
+  const portVals = [100], benchVals = [100];
+  for (let i = 0; i < MONTHS; i++) {
+    const shock = (rng() - 0.5) * 2 * monthlyVol;
+    bench *= (1 + monthlyMarket + shock * 0.6);
+    port *= (1 + monthlyMarket + monthlyAlpha + shock);
+    benchVals.push(+bench.toFixed(2));
+    portVals.push(+port.toFixed(2));
+  }
+  return { portVals, benchVals };
+}
+
+function updateAlphaStats(alphaPct, marketReturn, vol) {
+  const rf = 3;
+  const expected = rf + 1 * (marketReturn - rf);
+  const actual = expected + alphaPct;
+  const sharpe = ((actual - rf) / vol).toFixed(2);
+
+  document.getElementById('stat-port').textContent = (actual >= 0 ? '+' : '') + actual.toFixed(1) + '%';
+  document.getElementById('stat-bench').textContent = (marketReturn >= 0 ? '+' : '') + marketReturn.toFixed(0) + '%';
+  document.getElementById('stat-alpha').textContent = (alphaPct >= 0 ? '+' : '') + alphaPct.toFixed(1) + '%';
+  document.getElementById('stat-sharpe').textContent = sharpe;
+}
+
+function initAlphaChart() {
+  const ctx = document.getElementById('alphaChart').getContext('2d');
+  const labels = Array.from({length: MONTHS+1}, (_, i) => i === 0 ? 'T0' : 'M'+i);
+  const data = buildAlphaData(4, 10, 15);
+
+  alphaChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: 'Portefeuille',
+          data: data.portVals,
+          borderColor: '#34c759',
+          backgroundColor: 'rgba(52,199,89,0.07)',
+          borderWidth: 2,
+          pointRadius: 0,
+          fill: true,
+          tension: 0.3
+        },
+        {
+          label: 'Benchmark',
+          data: data.benchVals,
+          borderColor: '#ff9500',
+          backgroundColor: 'rgba(252,211,77,0.03)',
+          borderWidth: 1.5,
+          pointRadius: 0,
+          fill: false,
+          tension: 0.3,
+          borderDash: [4, 4]
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: {
+          ticks: { color: '#6e6e73', font: { size: 11, family: 'Inter, monospace' }, maxTicksLimit: 12 },
+          grid: { color: 'rgba(0,0,0,0.04)' }
+        },
+        y: {
+          ticks: { color: '#6e6e73', font: { size: 11, family: 'Inter, monospace' }, callback: v => v.toFixed(0) },
+          grid: { color: 'rgba(0,0,0,0.04)' }
+        }
+      }
+    }
+  });
+
+  updateAlphaStats(4, 10, 15);
+}
+
+function updateAlphaChart() {
+  const alphaPct = +document.getElementById('alpha-val').value;
+  const marketReturn = +document.getElementById('market-return').value;
+  const vol = +document.getElementById('volatility').value;
+
+  document.getElementById('alpha-display').textContent = (alphaPct >= 0 ? '+' : '') + alphaPct.toFixed(1) + '%';
+  document.getElementById('market-display').textContent = (marketReturn >= 0 ? '+' : '') + marketReturn + '%';
+  document.getElementById('vol-display').textContent = vol + '%';
+
+  const data = buildAlphaData(alphaPct, marketReturn, vol);
+  alphaChart.data.datasets[0].data = data.portVals;
+  alphaChart.data.datasets[1].data = data.benchVals;
+  alphaChart.update('none');
+  updateAlphaStats(alphaPct, marketReturn, vol);
+}
+
+document.getElementById('alpha-val').addEventListener('input', updateAlphaChart);
+document.getElementById('market-return').addEventListener('input', updateAlphaChart);
+document.getElementById('volatility').addEventListener('input', updateAlphaChart);
+
+// ─── BETA CHART ────────────────────────────────────────────────────
+function buildBetaScatter(beta, noise) {
+  const rng = seededRNG(77);
+  const points = [];
+  for (let i = 0; i < 60; i++) {
+    const x = (rng() - 0.5) * 30;
+    const eps = (rng() - 0.5) * noise * 0.3;
+    const y = beta * x + eps;
+    points.push({ x: +x.toFixed(2), y: +y.toFixed(2) });
+  }
+  return points;
+}
+
+function buildBetaLine(beta) {
+  return [-15, 15].map(x => ({ x, y: +(beta * x).toFixed(2) }));
+}
+
+function updateBetaStats(beta) {
+  document.getElementById('beta-stat').textContent = beta.toFixed(1);
+  const up = (beta * 10).toFixed(1);
+  const down = (beta * -10).toFixed(1);
+  document.getElementById('beta-up').textContent = (beta * 10 >= 0 ? '+' : '') + up + '%';
+  document.getElementById('beta-down').textContent = (parseFloat(down) <= 0 ? '' : '+') + down + '%';
+
+  let interp = '';
+  if (beta < 0) interp = 'Inverse du marché';
+  else if (beta < 0.5) interp = 'Très défensif';
+  else if (beta < 0.8) interp = 'Défensif';
+  else if (beta < 1.2) interp = 'Neutre';
+  else if (beta < 1.5) interp = 'Légèrement offensif';
+  else if (beta < 2) interp = 'Offensif';
+  else interp = 'Très offensif';
+  document.getElementById('beta-interp').textContent = interp;
+}
+
+function initBetaChart() {
+  const ctx = document.getElementById('betaChart').getContext('2d');
+  const beta = 1.2;
+  const points = buildBetaScatter(beta, 20);
+  const line = buildBetaLine(beta);
+
+  betaChart = new Chart(ctx, {
+    data: {
+      datasets: [
+        {
+          type: 'scatter',
+          label: 'Observations',
+          data: points,
+          backgroundColor: 'rgba(0,113,227,0.15)',
+          pointRadius: 5,
+          pointHoverRadius: 7
+        },
+        {
+          type: 'line',
+          label: 'Droite β',
+          data: line,
+          borderColor: '#34c759',
+          borderWidth: 2,
+          pointRadius: 0,
+          fill: false,
+          tension: 0
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: {
+          type: 'linear',
+          title: { display: true, text: 'Rendement marché (%)', color: '#6e6e73', font: { size: 11, family: 'Inter, monospace' } },
+          ticks: { color: '#6e6e73', font: { size: 11, family: 'Inter, monospace' } },
+          grid: { color: 'rgba(0,0,0,0.04)' },
+          min: -18, max: 18
+        },
+        y: {
+          title: { display: true, text: 'Rendement actif (%)', color: '#6e6e73', font: { size: 11, family: 'Inter, monospace' } },
+          ticks: { color: '#6e6e73', font: { size: 11, family: 'Inter, monospace' } },
+          grid: { color: 'rgba(0,0,0,0.04)' },
+          min: -30, max: 30
+        }
+      }
+    }
+  });
+
+  updateBetaStats(beta);
+}
+
+function updateBetaChart() {
+  const beta = +document.getElementById('beta-val').value;
+  const noise = +document.getElementById('noise-val').value;
+
+  document.getElementById('beta-display').textContent = beta.toFixed(1);
+  const r2 = Math.round(100 - noise);
+  document.getElementById('noise-display').textContent = 'R²≈' + r2 + '%';
+
+  const points = buildBetaScatter(beta, noise);
+  const line = buildBetaLine(beta);
+  betaChart.data.datasets[0].data = points;
+  betaChart.data.datasets[1].data = line;
+  betaChart.update('none');
+  updateBetaStats(beta);
+}
+
+document.getElementById('beta-val').addEventListener('input', updateBetaChart);
+document.getElementById('noise-val').addEventListener('input', updateBetaChart);
+
+// ─── CORRELATION TIME SERIES ───────────────────────────────────────
+let corrChart, diffChart;
+
+function buildCorrData(beta, noise) {
+  const rng = seededRNG(55);
+  const monthlyMarket = 0.008;
+  const monthlyVol = 0.04;
+  const noiseScale = (noise / 80) * 0.025;
+
+  let bench = 100, strat = 100;
+  const benchVals = [100], stratVals = [100], diffVals = [];
+  const labels = ['T0'];
+
+  for (let i = 0; i < 36; i++) {
+    const shock = (rng() - 0.5) * 2 * monthlyVol;
+    const eps = (rng() - 0.5) * 2 * noiseScale;
+    const benchRet = monthlyMarket + shock;
+    const stratRet = beta * benchRet + eps;
+
+    bench *= (1 + benchRet);
+    strat *= (1 + stratRet);
+
+    benchVals.push(+bench.toFixed(2));
+    stratVals.push(+strat.toFixed(2));
+    diffVals.push(+(stratRet * 100 - benchRet * 100).toFixed(2));
+    labels.push('M' + (i + 1));
+  }
+
+  // stats
+  const benchRets = benchVals.slice(1).map((v, i) => v / benchVals[i] - 1);
+  const stratRets = stratVals.slice(1).map((v, i) => v / stratVals[i] - 1);
+  const n = benchRets.length;
+  const meanB = benchRets.reduce((a, b) => a + b, 0) / n;
+  const meanS = stratRets.reduce((a, b) => a + b, 0) / n;
+  const cov = benchRets.reduce((acc, b, i) => acc + (b - meanB) * (stratRets[i] - meanS), 0) / n;
+  const stdB = Math.sqrt(benchRets.reduce((a, b) => a + (b - meanB) ** 2, 0) / n);
+  const stdS = Math.sqrt(stratRets.reduce((a, b) => a + (b - meanS) ** 2, 0) / n);
+  const corr = stdB && stdS ? +(cov / (stdB * stdS)).toFixed(2) : 1;
+  const te = +(stdS * Math.sqrt(12) * 100).toFixed(1);
+  const maxDiv = +Math.max(...diffVals.map(Math.abs)).toFixed(1);
+  const corrMois = diffVals.filter(d => Math.abs(d) < 2).length;
+
+  return { labels, benchVals, stratVals, diffVals, corr, te, maxDiv, corrMois };
+}
+
+function updateCorrStats(data) {
+  document.getElementById('corr-stat').textContent = data.corr.toFixed(2);
+  document.getElementById('te-stat').textContent = data.te.toFixed(1) + '%';
+  document.getElementById('maxdiv-stat').textContent = (data.maxDiv > 0 ? '+' : '') + data.maxDiv.toFixed(1) + 'pp';
+  document.getElementById('corrmois-stat').textContent = data.corrMois + '/36';
+}
+
+function initCorrChart() {
+  const beta = 1.2, noise = 20;
+  const data = buildCorrData(beta, noise);
+
+  // upper chart
+  const ctx1 = document.getElementById('corrChart').getContext('2d');
+  corrChart = new Chart(ctx1, {
+    type: 'line',
+    data: {
+      labels: data.labels,
+      datasets: [
+        {
+          label: 'Stratégie',
+          data: data.stratVals,
+          borderColor: '#0071e3',
+          backgroundColor: 'rgba(0,113,227,0.06)',
+          borderWidth: 2,
+          pointRadius: 0,
+          fill: true,
+          tension: 0.35
+        },
+        {
+          label: 'Benchmark',
+          data: data.benchVals,
+          borderColor: '#ff9500',
+          backgroundColor: 'transparent',
+          borderWidth: 1.5,
+          pointRadius: 0,
+          fill: false,
+          tension: 0.35,
+          borderDash: [5, 4]
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#ffffff',
+          borderColor: 'rgba(0,0,0,0.08)',
+          borderWidth: 1,
+          titleColor: '#aeaeb2',
+          bodyColor: '#1d1d1f',
+          titleFont: { family: 'Inter, monospace', size: 11 },
+          bodyFont: { family: 'Inter, monospace', size: 12 },
+          callbacks: {
+            label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(1)}`
+          }
+        }
+      },
+      scales: {
+        x: {
+          ticks: { color: '#6e6e73', font: { size: 10, family: 'Inter, monospace' }, maxTicksLimit: 12 },
+          grid: { color: 'rgba(0,0,0,0.04)' }
+        },
+        y: {
+          ticks: { color: '#6e6e73', font: { size: 10, family: 'Inter, monospace' }, callback: v => v.toFixed(0) },
+          grid: { color: 'rgba(0,0,0,0.04)' }
+        }
+      }
+    }
+  });
+
+  // lower diff chart
+  const ctx2 = document.getElementById('diffChart').getContext('2d');
+  const diffColors = data.diffVals.map(v => v >= 0 ? 'rgba(110,231,183,0.55)' : 'rgba(247,107,107,0.55)');
+  diffChart = new Chart(ctx2, {
+    type: 'bar',
+    data: {
+      labels: data.labels.slice(1),
+      datasets: [{
+        label: 'Écart mensuel (pp)',
+        data: data.diffVals,
+        backgroundColor: diffColors,
+        borderColor: diffColors,
+        borderWidth: 0,
+        borderRadius: 2
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#ffffff',
+          borderColor: 'rgba(0,0,0,0.08)',
+          borderWidth: 1,
+          titleColor: '#aeaeb2',
+          bodyColor: '#1d1d1f',
+          titleFont: { family: 'Inter, monospace', size: 10 },
+          bodyFont: { family: 'Inter, monospace', size: 11 },
+          callbacks: {
+            label: ctx => ` Écart: ${ctx.parsed.y >= 0 ? '+' : ''}${ctx.parsed.y.toFixed(2)}pp`
+          }
+        }
+      },
+      scales: {
+        x: {
+          ticks: { color: '#6e6e73', font: { size: 9, family: 'Inter, monospace' }, maxTicksLimit: 12 },
+          grid: { display: false }
+        },
+        y: {
+          ticks: { color: '#6e6e73', font: { size: 9, family: 'Inter, monospace' }, callback: v => v.toFixed(1) + 'pp' },
+          grid: { color: 'rgba(0,0,0,0.04)' }
+        }
+      }
+    }
+  });
+
+  updateCorrStats(data);
+}
+
+function refreshCorrChart() {
+  const beta = +document.getElementById('beta-val').value;
+  const noise = +document.getElementById('noise-val').value;
+  const data = buildCorrData(beta, noise);
+
+  corrChart.data.labels = data.labels;
+  corrChart.data.datasets[0].data = data.stratVals;
+  corrChart.data.datasets[1].data = data.benchVals;
+  corrChart.update('none');
+
+  const diffColors = data.diffVals.map(v => v >= 0 ? 'rgba(110,231,183,0.55)' : 'rgba(247,107,107,0.55)');
+  diffChart.data.labels = data.labels.slice(1);
+  diffChart.data.datasets[0].data = data.diffVals;
+  diffChart.data.datasets[0].backgroundColor = diffColors;
+  diffChart.update('none');
+
+  updateCorrStats(data);
+}
+
+document.getElementById('beta-val').addEventListener('input', refreshCorrChart);
+document.getElementById('noise-val').addEventListener('input', refreshCorrChart);
+
+// ─── UNIFIED SIMULATOR ────────────────────────────────────────────
+let simMainChart, simBarChart, simDonutChart;
+
+const PRESETS = {
+  index:         { alpha: 0,    beta: 1.0,  rm: 10, rf: 3, vol: 5  },
+  growth:        { alpha: 1,    beta: 1.8,  rm: 12, rf: 3, vol: 20 },
+  defensive:     { alpha: 0.5,  beta: 0.4,  rm: 10, rf: 3, vol: 8  },
+  marketneutral: { alpha: 5,    beta: 0.0,  rm: 10, rf: 3, vol: 10 },
+  alphagen:      { alpha: 8,    beta: 0.5,  rm: 10, rf: 3, vol: 15 },
+  bear:          { alpha: 2,    beta: -0.8, rm: 10, rf: 3, vol: 18 },
+  priceaction:   { alpha: 0.3,  beta: 0.95, rm: 10, rf: 3, vol: 22 }
+};
+
+function syncDisplay(sliderId, displayId, suffix, forceSign) {
+  const val = +document.getElementById(sliderId).value;
+  const disp = forceSign ? (val >= 0 ? '+' : '') + val.toFixed(sliderId === 'u-beta' ? 1 : 0) + suffix
+                         : val.toFixed(sliderId === 'u-beta' ? 1 : 0) + suffix;
+  document.getElementById(displayId).textContent = disp;
+}
+
+function applyPreset(key) {
+  const p = PRESETS[key];
+  document.getElementById('u-alpha').value = p.alpha;
+  document.getElementById('u-beta').value = p.beta;
+  document.getElementById('u-rm').value = p.rm;
+  document.getElementById('u-rf').value = p.rf;
+  document.getElementById('u-vol').value = p.vol;
+  syncDisplay('u-alpha','u-alpha-disp','%',true);
+  syncDisplay('u-beta','u-beta-disp','',false);
+  syncDisplay('u-rm','u-rm-disp','%',true);
+  syncDisplay('u-rf','u-rf-disp','%',false);
+  syncDisplay('u-vol','u-vol-disp','%',false);
+  runSimulator();
+}
+
+function runSimulator() {
+  const alpha  = +document.getElementById('u-alpha').value;
+  const beta   = +document.getElementById('u-beta').value;
+  const rm     = +document.getElementById('u-rm').value;
+  const rf     = +document.getElementById('u-rf').value;
+  const vol    = +document.getElementById('u-vol').value;
+  const months = +document.getElementById('u-dur').value;
+
+  const rng = seededRNG(99);
+  const monthlyAlpha  = alpha / 100 / 12;
+  const monthlyRm     = rm / 100 / 12;
+  const monthlyRf     = rf / 100 / 12;
+  const monthlyVol    = vol / 100 / Math.sqrt(12);
+  const monthlyMktVol = 0.04;
+
+  let strat = 100, bench = 100, capm = 100;
+  const stratVals = [100], benchVals = [100], capmVals = [100];
+  const monthlyStrat = [], monthlyBench = [];
+  const labels = ['T0'];
+
+  for (let i = 0; i < months; i++) {
+    const mktShock  = (rng() - 0.5) * 2 * monthlyMktVol;
+    const idioShock = (rng() - 0.5) * 2 * monthlyVol;
+    const benchRet  = monthlyRm + mktShock;
+    const stratRet  = monthlyAlpha + beta * benchRet + idioShock;
+    const capmRet   = monthlyRf + beta * (monthlyRm - monthlyRf);
+
+    bench *= (1 + benchRet);
+    strat *= (1 + stratRet);
+    capm  *= (1 + capmRet);
+
+    benchVals.push(+bench.toFixed(2));
+    stratVals.push(+strat.toFixed(2));
+    capmVals.push(+capm.toFixed(2));
+    monthlyStrat.push(+(stratRet * 100).toFixed(2));
+    monthlyBench.push(+(benchRet * 100).toFixed(2));
+    labels.push(i % 12 === 11 ? 'A' + Math.ceil((i+1)/12) : (i % 3 === 2 ? 'Q'+ Math.ceil((i+1)/3) : ''));
+  }
+
+  // KPIs
+  const annStrat = ((strat / 100) ** (12 / months) - 1) * 100;
+  const annCapm  = rf + beta * (rm - rf);
+  const realAlpha = annStrat - annCapm;
+  const annVol    = vol;
+  const sharpe    = ((annStrat - rf) / annVol).toFixed(2);
+
+  document.getElementById('sr-rp').textContent    = (annStrat >= 0 ? '+' : '') + annStrat.toFixed(1) + '%';
+  document.getElementById('sr-capm').textContent  = (annCapm >= 0 ? '+' : '') + annCapm.toFixed(1) + '%';
+  document.getElementById('sr-alpha').textContent = (realAlpha >= 0 ? '+' : '') + realAlpha.toFixed(1) + '%';
+  document.getElementById('sr-beta').textContent  = beta.toFixed(1);
+  document.getElementById('sr-sharpe').textContent= sharpe;
+  document.getElementById('sr-vol').textContent   = annVol.toFixed(0) + '%';
+
+  document.getElementById('sr-formula').textContent =
+    `R = ${rf}% + ${beta.toFixed(1)} × (${rm}% − ${rf}%) + ${alpha >= 0 ? '+' : ''}${alpha.toFixed(1)}% = ${annCapm.toFixed(1)}% + α`;
+  const badge = document.getElementById('sr-badge');
+  badge.textContent = realAlpha >= 1 ? `α = +${realAlpha.toFixed(1)}% ✓` : realAlpha <= -1 ? `α = ${realAlpha.toFixed(1)}% ✗` : `α ≈ 0`;
+  badge.className = 'result-badge ' + (realAlpha > 0.5 ? 'badge-pos' : realAlpha < -0.5 ? 'badge-neg' : 'badge-neutral');
+
+  // Interprétation
+  let interp = '';
+  if (beta < 0.1 && beta > -0.1) interp = `Stratégie market neutral — le bêta de ${beta.toFixed(1)} signifie que les mouvements du marché n'expliquent presque pas la performance. Le rendement de ${annStrat.toFixed(1)}% est quasi-entièrement dû à l'alpha de ${realAlpha.toFixed(1)}% généré par la compétence du gérant, indépendamment des conditions de marché.`;
+  else if (beta < 0) interp = `Stratégie short / inverse — le bêta négatif (${beta.toFixed(1)}) signifie que le portefeuille monte quand le marché baisse. Utile comme couverture, mais coûteux en bull market. L'alpha de ${realAlpha.toFixed(1)}% s'ajoute (ou retranche) à cette exposition inverse.`;
+  else if (beta > 1.5) interp = `Stratégie offensive — le bêta de ${beta.toFixed(1)} amplifie les mouvements du marché. Chaque +1% du marché génère +${beta.toFixed(1)}% pour la stratégie. ${realAlpha > 0 ? `L'alpha de +${realAlpha.toFixed(1)}% indique que le gérant crée de la valeur en plus de cette exposition.` : realAlpha < -1 ? `L'alpha de ${realAlpha.toFixed(1)}% montre que le gérant détruit de la valeur une fois le bêta pris en compte.` : `L'alpha est nul : la surperformance s'explique entièrement par le bêta élevé.`}`;
+  else interp = `Stratégie standard — bêta de ${beta.toFixed(1)}, rendement annualisé de ${annStrat.toFixed(1)}% vs ${annCapm.toFixed(1)}% attendu par le CAPM. ${Math.abs(realAlpha) < 1 ? `L'alpha est quasi-nul (${realAlpha.toFixed(1)}%) : difficile de conclure à une compétence réelle vs. la chance.` : realAlpha > 0 ? `Alpha positif de +${realAlpha.toFixed(1)}% : le gérant a ajouté de la valeur au-delà de la prime de risque.` : `Alpha négatif de ${realAlpha.toFixed(1)}% : les frais ou les mauvais choix ont érodé la performance attendue.`}`;
+  document.getElementById('sim-interp-text').textContent = interp;
+
+  // Thin label list for bar chart
+  const barLabels = Array.from({length: months}, (_, i) => {
+    if (i % 6 === 0) return 'M' + (i + 1);
+    return '';
+  });
+
+  // Draw / update charts
+  if (!simMainChart) {
+    const ctx = document.getElementById('simMainChart').getContext('2d');
+    simMainChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels,
+        datasets: [
+          { label: 'Stratégie', data: stratVals, borderColor: '#34c759', backgroundColor: 'rgba(52,199,89,0.07)', borderWidth: 2, pointRadius: 0, fill: true, tension: 0.3 },
+          { label: 'Benchmark', data: benchVals, borderColor: '#ff9500', backgroundColor: 'transparent', borderWidth: 1.5, pointRadius: 0, fill: false, tension: 0.3, borderDash: [5,4] },
+          { label: 'CAPM attendu', data: capmVals, borderColor: 'rgba(0,113,227,0.4)', backgroundColor: 'transparent', borderWidth: 1, pointRadius: 0, fill: false, tension: 0.1, borderDash: [2,4] }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+          legend: { display: false },
+          tooltip: { backgroundColor: '#ffffff', borderColor: 'rgba(0,0,0,0.08)', borderWidth: 1, titleColor: '#aeaeb2', bodyColor: '#1d1d1f', titleFont: { family: 'Inter, monospace', size: 11 }, bodyFont: { family: 'Inter, monospace', size: 12 }, callbacks: { label: c => ` ${c.dataset.label}: ${c.parsed.y.toFixed(1)}` } }
+        },
+        scales: {
+          x: { ticks: { color: '#6e6e73', font: { size: 10, family: 'Inter, monospace' }, maxTicksLimit: 15 }, grid: { color: 'rgba(0,0,0,0.04)' } },
+          y: { ticks: { color: '#6e6e73', font: { size: 10, family: 'Inter, monospace' }, callback: v => v.toFixed(0) }, grid: { color: 'rgba(0,0,0,0.04)' } }
+        }
+      }
+    });
+  } else {
+    simMainChart.data.labels = labels;
+    simMainChart.data.datasets[0].data = stratVals;
+    simMainChart.data.datasets[1].data = benchVals;
+    simMainChart.data.datasets[2].data = capmVals;
+    simMainChart.update('none');
+  }
+
+  // Bar chart
+  const barColors = monthlyStrat.map(v => v >= 0 ? 'rgba(52,199,89,0.6)' : 'rgba(255,59,48,0.6)');
+  if (!simBarChart) {
+    const ctx2 = document.getElementById('simBarChart').getContext('2d');
+    simBarChart = new Chart(ctx2, {
+      type: 'bar',
+      data: { labels: barLabels, datasets: [{ label: 'Rendement mensuel', data: monthlyStrat, backgroundColor: barColors, borderRadius: 2, borderWidth: 0 }] },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false }, tooltip: { backgroundColor: '#ffffff', borderColor: 'rgba(0,0,0,0.08)', borderWidth: 1, titleColor: '#aeaeb2', bodyColor: '#1d1d1f', callbacks: { label: c => ` ${c.parsed.y >= 0 ? '+' : ''}${c.parsed.y.toFixed(2)}%` } } },
+        scales: {
+          x: { ticks: { color: '#6e6e73', font: { size: 9, family: 'Inter, monospace' } }, grid: { display: false } },
+          y: { ticks: { color: '#6e6e73', font: { size: 9, family: 'Inter, monospace' }, callback: v => v.toFixed(1) + '%' }, grid: { color: 'rgba(0,0,0,0.04)' } }
+        }
+      }
+    });
+  } else {
+    simBarChart.data.labels = barLabels;
+    simBarChart.data.datasets[0].data = monthlyStrat;
+    simBarChart.data.datasets[0].backgroundColor = barColors;
+    simBarChart.update('none');
+  }
+
+  // Donut decomposition
+  const betaContrib = Math.abs(beta * (rm - rf));
+  const rfContrib   = Math.abs(rf);
+  const alphaAbs    = Math.abs(alpha);
+  const total       = betaContrib + rfContrib + alphaAbs + 0.01;
+  const donutData   = [
+    +(rfContrib / total * 100).toFixed(1),
+    +(betaContrib / total * 100).toFixed(1),
+    +(alphaAbs / total * 100).toFixed(1)
+  ];
+
+  if (!simDonutChart) {
+    const ctx3 = document.getElementById('simDonutChart').getContext('2d');
+    simDonutChart = new Chart(ctx3, {
+      type: 'doughnut',
+      data: {
+        labels: ['Taux sans risque (Rf)', 'Prime de marché (β)', 'Alpha (α)'],
+        datasets: [{ data: donutData, backgroundColor: ['rgba(174,174,178,0.6)', 'rgba(0,113,227,0.7)', 'rgba(52,199,89,0.8)'], borderColor: '#ffffff', borderWidth: 3, hoverOffset: 4 }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false, cutout: '62%',
+        plugins: {
+          legend: { display: true, position: 'right', labels: { color: '#6e6e73', font: { size: 10, family: 'Inter, monospace' }, boxWidth: 10, padding: 8 } },
+          tooltip: { backgroundColor: '#ffffff', borderColor: 'rgba(0,0,0,0.08)', borderWidth: 1, titleColor: '#aeaeb2', bodyColor: '#1d1d1f', callbacks: { label: c => ` ${c.label}: ${c.parsed.toFixed(1)}%` } }
+        }
+      }
+    });
+  } else {
+    simDonutChart.data.datasets[0].data = donutData;
+    simDonutChart.update('none');
+  }
+}
+
+// ─── BETA TABLE ────────────────────────────────────────────────────
+const betas = [
+  { ticker: 'NVDA', name: 'Nvidia', sector: 'Technologie', beta: 2.1 },
+  { ticker: 'TSLA', name: 'Tesla', sector: 'Automobiles', beta: 1.85 },
+  { ticker: 'META', name: 'Meta Platforms', sector: 'Tech / Réseaux', beta: 1.4 },
+  { ticker: 'AAPL', name: 'Apple', sector: 'Technologie', beta: 1.2 },
+  { ticker: 'SPY', name: 'S&P 500 ETF', sector: 'Indice', beta: 1.0 },
+  { ticker: 'MSFT', name: 'Microsoft', sector: 'Technologie', beta: 0.9 },
+  { ticker: 'JNJ', name: 'Johnson & Johnson', sector: 'Santé', beta: 0.55 },
+  { ticker: 'PG', name: 'Procter & Gamble', sector: 'Consommation', beta: 0.45 },
+  { ticker: 'GLD', name: 'Gold ETF (Or)', sector: 'Matières premières', beta: 0.1 },
+];
+
+function buildBetaTable() {
+  const tbody = document.getElementById('beta-table-body');
+  const maxBeta = 2.5;
+  const benchPct = (1 / maxBeta) * 100;
+
+  betas.forEach(row => {
+    const pct = Math.abs(row.beta) / maxBeta * 100;
+    let color = '#34c759';
+    if (row.beta > 1.5) color = '#0071e3';
+    else if (row.beta > 1) color = '#ff9500';
+    else if (row.beta < 0) color = '#f87171';
+
+    let profile = '';
+    if (row.beta < 0) profile = '↕ Inverse';
+    else if (row.beta < 0.6) profile = '🛡 Défensif';
+    else if (row.beta < 1.2) profile = '⚖ Neutre';
+    else profile = '⚡ Offensif';
+
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td class="ticker" style="color:${color}; font-family:var(--font-mono);">${row.ticker}</td>
+      <td>${row.name}</td>
+      <td style="color:var(--text-secondary); font-size:13px;">${row.sector}</td>
+      <td style="font-family:var(--font-mono); font-weight:500; color:${color};">${row.beta.toFixed(2)}</td>
+      <td class="beta-bar-cell">
+        <div class="beta-bar-wrap">
+          <div class="beta-line" style="left:${benchPct}%;"></div>
+          <div class="beta-bar" style="width:${pct}%; background:${color}; opacity:0.7;"></div>
+        </div>
+      </td>
+      <td style="font-size:13px; color:var(--text-secondary);">${profile}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+// ─── INIT ──────────────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', () => {
+  initAlphaChart();
+  initBetaChart();
+  initCorrChart();
+  buildBetaTable();
+  // Init simulator display values
+  syncDisplay('u-alpha','u-alpha-disp','%',true);
+  syncDisplay('u-beta','u-beta-disp','',false);
+  syncDisplay('u-rm','u-rm-disp','%',true);
+  syncDisplay('u-rf','u-rf-disp','%',false);
+  syncDisplay('u-vol','u-vol-disp','%',false);
+  runSimulator();
+});
+</script>
+</body>
+</html>
