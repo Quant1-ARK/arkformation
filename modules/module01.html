@@ -3,129 +3,180 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Module 01 — Introduction : Le Cadre de Pensée</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swapdisplay=swap" rel="stylesheet">
+<title>ARK — Module 01 · Introduction : Le Cadre de Pensée</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root{--bg:#f5f5f5;--surface:#fff;--border:rgba(19,18,18,.1);--text-1:#0a0a0a;--text-2:#3d3d3a;--text-3:#6b6b67;--accent:#0071e3;--accent-soft:rgba(0,113,227,.07)}
+  :root{
+    --white:#ffffff;--off-white:#fbfbfd;--mid-gray:#e8e8ed;
+    --text-1:#1d1d1f;--text-2:#6e6e73;--text-3:#aeaeb2;
+    --accent:#0071e3;--accent-hover:#0077ed;--accent-soft:rgba(0,113,227,.09);
+    --border:rgba(0,0,0,.08);--radius:16px;--radius-lg:22px;
+    --bg:var(--off-white);--surface:var(--white);
+  }
   *{box-sizing:border-box;margin:0;padding:0}
-  h1,h2,h3,h4,h5,h6{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;font-weight:600}
   html{scroll-behavior:smooth}
-  body{background:var(--bg);color:var(--text-1);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;font-size:15px;line-height:1.75;-webkit-font-smoothing:antialiased}
-  .page{max-width:100%;margin:0 auto;padding:48px 48px 120px}
-
-  /* Header */
+  body{background:var(--off-white);color:var(--text-1);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;font-size:15px;line-height:1.75;-webkit-font-smoothing:antialiased}
+  .page{max-width:100%;margin:0 auto;padding:48px 72px 120px}
   .mod-header{margin-bottom:40px;padding-bottom:32px;border-bottom:1px solid var(--border)}
-  .mod-kicker{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
-  .mod-title{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;font-size:clamp(28px,4vw,40px);font-weight:600;line-height:1.15;letter-spacing:-0.02em;margin-bottom:14px}
-  .mod-sub{font-size:15px;color:var(--text-2);font-style:italic;margin-bottom:20px}
-  .mod-objective{background:var(--accent-soft);border-left:3px solid var(--accent);border-radius:0 10px 10px 0;padding:16px 20px;font-size:14px;color:var(--text-2);line-height:1.65}
-
-  /* Objectives & concepts */
-  .mod-section-label{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:16px;margin-top:32px}
+  .mod-kicker{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+  .mod-title{font-size:clamp(28px,4vw,44px);font-weight:600;letter-spacing:-0.025em;line-height:1.1;margin-bottom:14px}
+  .mod-sub{font-size:15px;color:var(--text-2);font-style:italic;margin-bottom:20px;font-weight:300}
+  .mod-objective{background:var(--accent-soft);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:16px 20px;font-size:14px;color:var(--text-2);line-height:1.65;font-weight:300}
+  .mod-section-label{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);margin-bottom:16px;margin-top:32px}
   .mod-objectives{list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:32px}
-  .mod-objectives li{display:flex;align-items:flex-start;gap:12px;font-size:14px;color:var(--text-2);line-height:1.6}
-  .obj-check{width:18px;height:18px;border-radius:50%;border:1px solid var(--border);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--text-3)}
+  .mod-objectives li{display:flex;align-items:flex-start;gap:12px;font-size:14px;color:var(--text-2);line-height:1.6;font-weight:300}
+  .obj-check{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--mid-gray);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--text-3)}
   .mod-concepts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:32px}
-  .concept-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;transition:border-color .2s}
+  .concept-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:16px;transition:border-color .2s}
   .concept-card:hover{border-color:rgba(0,113,227,.3)}
   .concept-icon{font-size:20px;margin-bottom:8px}
-  .concept-name{font-size:13px;font-weight:600;color:var(--text-1);margin-bottom:4px}
-  .concept-desc{font-size:12px;color:var(--text-2);line-height:1.5}
-
-  /* Quote */
-  .mod-quote-block{background:rgba(201,168,76,.07);border:1px solid rgba(201,168,76,.18);border-radius:14px;padding:20px 24px;margin-bottom:40px}
-  .mod-quote-text{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;font-size:16px;font-weight:300;line-height:1.6;color:#b8922e;font-style:italic;margin-bottom:6px}
+  .concept-name{font-size:13px;font-weight:600;color:var(--text-1);margin-bottom:4px;letter-spacing:-0.01em}
+  .concept-desc{font-size:12px;color:var(--text-2);line-height:1.5;font-weight:300}
+  .mod-quote-block{background:rgba(201,168,76,.07);border:1px solid rgba(201,168,76,.18);border-radius:var(--radius-lg);padding:20px 24px;margin-bottom:40px}
+  .mod-quote-text{font-size:16px;font-weight:300;line-height:1.65;color:#b8922e;font-style:italic;margin-bottom:6px}
   .mod-quote-source{font-size:11px;color:var(--text-3);letter-spacing:.05em;text-transform:uppercase}
-
-  /* TOC */
-  .toc{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px 28px;margin-bottom:56px}
-  .toc-title{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:16px}
+  .toc{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px 28px;margin-bottom:32px}
+  .toc-title{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);margin-bottom:16px}
   .toc-list{list-style:none;display:flex;flex-direction:column;gap:6px}
-  .toc-list li a{display:flex;align-items:baseline;gap:10px;text-decoration:none;color:var(--text-2);font-size:13.5px;transition:color .15s}
+  .toc-list li a{display:flex;align-items:baseline;gap:10px;text-decoration:none;color:var(--text-2);font-size:13.5px;transition:color .15s;font-weight:400}
   .toc-list li a:hover{color:var(--accent)}
-  .toc-letter{font-size:10px;font-weight:700;color:var(--accent);background:var(--accent-soft);border-radius:4px;padding:1px 6px;flex-shrink:0}
-
-  /* Sections */
-  .section{margin-bottom:64px}
-  .section-label{display:inline-flex;align-items:center;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);border-radius:6px;padding:4px 10px;margin-bottom:18px}
-  .section-title{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;font-size:clamp(20px,3vw,26px);font-weight:600;letter-spacing:-0.015em;line-height:1.2;margin-bottom:24px}
-  .section-intro{font-size:15px;color:var(--text-2);line-height:1.75;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid var(--border)}
-
-  /* Sub-sections */
+  .toc-letter{font-size:10px;font-weight:700;color:var(--accent);background:var(--accent-soft);border-radius:6px;padding:1px 6px;flex-shrink:0}
+  .section{margin-bottom:24px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:32px 36px}
+  .section-label{display:inline-flex;align-items:center;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);border-radius:6px;padding:4px 10px;margin-bottom:18px}
+  .section-title{font-size:clamp(20px,3vw,26px);font-weight:600;letter-spacing:-0.02em;line-height:1.2;margin-bottom:20px}
+  .section-intro{font-size:14.5px;color:var(--text-2);line-height:1.75;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid var(--border);font-weight:300}
   .sub{margin-bottom:36px;border-left:3px solid var(--accent);padding-left:20px}
-  .sub-title{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;font-size:16px;font-weight:600;letter-spacing:-0.01em;margin-bottom:14px;color:var(--text-1)}
-  .sub p{color:var(--text-2);margin-bottom:12px;font-size:14.5px;line-height:1.72}
+  .sub-title{font-size:16px;font-weight:600;letter-spacing:-0.01em;margin-bottom:14px;color:var(--text-1)}
+  .sub p{color:var(--text-2);margin-bottom:12px;font-size:14.5px;line-height:1.72;font-weight:300}
   .sub p:last-child{margin-bottom:0}
-  .sub strong{color:var(--text-1)}
-  .sub h3{font-size:15px;font-weight:600;color:var(--text-1);margin:20px 0 10px}
-
-  /* Callouts */
-  .callout{border-radius:0 10px 10px 0;border-left:3px solid;padding:14px 18px;margin:18px 0;font-size:13.5px;line-height:1.65}
+  .sub strong{color:var(--text-1);font-weight:500}
+  .styled-list{list-style:none;margin:12px 0 16px;display:flex;flex-direction:column;gap:8px}
+  .styled-list li{color:var(--text-2);font-size:14px;line-height:1.65;padding-left:14px;position:relative;font-weight:300}
+  .styled-list li::before{content:'—';color:var(--accent);position:absolute;left:0;font-size:13px}
+  .styled-list li strong{color:var(--text-1);font-weight:500}
+  .callout{border-radius:0 12px 12px 0;border-left:3px solid;padding:14px 18px;margin:18px 0;font-size:13.5px;line-height:1.65}
   .callout.yellow{background:#FAEEDA;border-color:#854F0B;color:#412402}
   .callout.blue{background:#E6F1FB;border-color:#185FA5;color:#042C53}
   .callout.green{background:#EAF3DE;border-color:#3B6D11;color:#173404}
   .callout.red{background:#FCEBEB;border-color:#A32D2D;color:#501313}
-  .callout.orange{background:rgba(255,149,0,.08);border-color:rgba(255,149,0,.6);color:#6b3a00}
+  .callout.purple{background:#EEEDFE;border-color:#534AB7;color:#26215C}
   .callout strong{color:inherit}
-
-  /* Notion / profile boxes */
-  .notion{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px 22px;margin:18px 0}
-  .notion-title{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px}
-  .notion p,.notion li{color:var(--text-1);font-size:13.5px;line-height:1.7;margin-bottom:6px}
-  .notion p:last-child{margin-bottom:0}
-  .notion strong{color:var(--text-1)}
-  .notion-meta{font-size:11.5px;color:var(--accent);font-style:italic;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
-
-  /* Formula box */
-  .formula{background:var(--accent-soft);border:1px solid rgba(0,113,227,.15);border-radius:10px;padding:16px 24px;margin:16px 0;font-size:14px;font-weight:500;font-style:italic;line-height:1.7}
-  .formula small{font-size:12px;opacity:.7;font-weight:400;font-style:normal}
-
-  /* Lists in sub */
-  .styled-list{list-style:none;margin:12px 0 16px;display:flex;flex-direction:column;gap:8px}
-  .styled-list li{position:relative;padding-left:20px;color:var(--text-2);font-size:14px;line-height:1.65}
-  .styled-list li::before{content:'—';color:var(--accent);font-size:13px;position:absolute;left:0;top:0;line-height:1.65}
-  .styled-list li strong{color:var(--text-1)}
-
-  /* Tables */
-  .table-wrap{overflow-x:auto;margin:18px 0 24px;border-radius:12px;border:1px solid var(--border)}
+  .notion{background:var(--off-white);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px;margin:18px 0}
+  .notion-title{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px}
+  .notion p,.notion li{color:var(--text-1);font-size:13.5px;line-height:1.7;margin-bottom:6px;font-weight:400}
+  .notion p:last-child,.notion li:last-child{margin-bottom:0}
+  .notion ul{list-style:none;display:flex;flex-direction:column;gap:4px;padding-left:0}
+  .notion strong{color:var(--text-1);font-weight:500}
+  .notion code{font-family:monospace;background:var(--white);padding:1px 5px;border-radius:4px;font-size:12.5px;color:var(--text-1);border:1px solid var(--border)}
+  .table-wrap{overflow-x:auto;margin:18px 0 24px;border-radius:var(--radius);border:1px solid var(--border)}
   table{width:100%;border-collapse:collapse;font-size:13px}
-  thead tr{background:#f0efe8}
-  thead th{padding:10px 14px;text-align:left;font-size:11px;font-weight:700;letter-spacing:.05em;color:var(--text-1);white-space:nowrap}
+  thead tr{background:var(--off-white)}
+  thead th{padding:10px 14px;text-align:left;font-size:11px;font-weight:600;letter-spacing:.04em;color:var(--text-1);white-space:nowrap}
   tbody tr{border-top:1px solid var(--border)}
-  tbody tr:hover{background:rgba(0,0,0,.02)}
-  tbody td{padding:10px 14px;color:var(--text-2);vertical-align:top;line-height:1.55}
-  tbody td strong{color:var(--text-1)}
-
-  /* Synthesis */
-  .synthesis{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px;margin-top:48px}
-  .synthesis-title{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;font-size:20px;font-weight:600;letter-spacing:-0.015em;margin-bottom:18px}
-  .synthesis p{color:var(--text-2);margin-bottom:12px;line-height:1.75;font-size:14.5px}
-  .synthesis .summary-box{background:rgba(201,168,76,.07);border:1px solid rgba(201,168,76,.18);border-radius:12px;padding:16px 20px;margin-top:20px;font-size:14px;font-style:italic;color:var(--text-2);line-height:1.7}
-  .synthesis .summary-box strong{color:var(--text-1);font-style:normal}
-  .next-module{margin-top:20px;padding-top:18px;border-top:1px solid var(--border);font-size:13px;color:var(--text-3);font-style:italic}
-  .next-module strong{color:var(--accent);font-style:normal}
-
-  /* Nav */
+  tbody tr:hover{background:rgba(0,0,0,.015)}
+  tbody td{padding:10px 14px;color:var(--text-2);vertical-align:top;line-height:1.55;font-weight:300}
+  tbody td strong{color:var(--text-1);font-weight:500}
+  .module-figure{margin:24px 0 32px;background:var(--off-white);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;padding:16px}
+  .module-figure svg{width:100%;display:block}
+  .fig-caption{margin-top:10px;font-size:12px;color:var(--text-3);font-style:italic;text-align:center;font-weight:300}
+  .checklist{background:var(--off-white);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px;margin:18px 0}
+  .checklist-title{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3);margin-bottom:14px}
+  .check-item{display:flex;align-items:flex-start;gap:10px;padding:7px 0;border-bottom:1px solid var(--border);font-size:13.5px;color:var(--text-2);font-weight:300}
+  .check-item:last-child{border-bottom:none}
+  .check-box{width:16px;height:16px;border:1.5px solid var(--mid-gray);border-radius:4px;flex-shrink:0;margin-top:3px}
+  .check-num{font-size:11px;font-weight:700;color:var(--accent);background:var(--accent-soft);border-radius:6px;padding:2px 7px;flex-shrink:0;margin-top:2px}
+  .cas-pratique{background:#f0fbff;border:1px solid #a8d8f0;border-left:3px solid var(--accent);border-radius:var(--radius);padding:20px 24px;margin:18px 0}
+  .cas-pratique-header{display:flex;align-items:center;gap:8px;margin-bottom:14px}
+  .cas-pratique-tag{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#0369a1;background:#bae6fd;border-radius:980px;padding:3px 10px;flex-shrink:0}
+  .cas-pratique-title{font-size:14px;font-weight:600;color:#0c4a6e;letter-spacing:-0.01em}
+  .cas-pratique p{color:#0c4a6e;font-size:14px;line-height:1.7;margin-bottom:12px;font-weight:300}
+  .cas-pratique p:last-child{margin-bottom:0}
+  .steps{display:flex;flex-direction:column;gap:10px;margin:16px 0}
+  .step{display:flex;gap:12px;align-items:flex-start}
+  .step-num{font-size:11px;font-weight:700;color:var(--accent);background:var(--accent-soft);border-radius:6px;padding:3px 8px;flex-shrink:0;height:fit-content;margin-top:2px;letter-spacing:.05em}
+  .step-title{font-weight:600;font-size:14px;margin-bottom:6px;color:var(--text-1)}
+  .step-desc{font-size:13.5px;color:var(--text-2);line-height:1.65;font-weight:300}
+  .summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0}
+  @media(max-width:560px){.summary-grid{grid-template-columns:1fr}}
+  .summary-card{background:var(--off-white);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px}
+  .summary-section{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:4px}
+  .summary-concept{font-weight:600;font-size:13.5px;color:var(--text-1);margin-bottom:4px;letter-spacing:-0.01em}
+  .summary-tool{font-size:12.5px;color:var(--text-2);font-weight:300}
+  .synthesis{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:32px;margin-top:24px}
+  .synthesis-title{font-size:20px;font-weight:600;letter-spacing:-0.02em;margin-bottom:18px}
+  .synthesis p{color:var(--text-2);margin-bottom:12px;line-height:1.75;font-size:14.5px;font-weight:300}
+  .synthesis p:last-child{margin-bottom:0}
+  .next-module{margin-top:20px;padding-top:18px;border-top:1px solid var(--border);font-size:13px;color:var(--text-3);font-style:italic;font-weight:300}
+  .next-module strong{color:var(--accent);font-style:normal;font-weight:500}
   .module-nav{display:flex;justify-content:space-between;align-items:center;margin-top:56px;padding-top:28px;border-top:1px solid var(--border);gap:12px}
-  .nav-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:10px;border:1px solid var(--border);font-size:13.5px;font-weight:500;font-family:inherit;cursor:pointer;transition:all .2s;background:var(--surface);color:var(--text-1)}
-  .nav-btn:hover:not(:disabled){border-color:var(--accent);color:var(--accent)}
-  .nav-btn:disabled{opacity:.35;cursor:default}
+  .nav-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:980px;border:1px solid var(--mid-gray);font-size:13.5px;font-weight:500;font-family:inherit;cursor:pointer;transition:all .2s;background:var(--white);color:var(--text-1)}
+  .nav-btn:hover{border-color:var(--accent);color:var(--accent)}
   .nav-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
-  .nav-btn.primary:hover{background:#0077ed}
-  .nav-label{font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em}
+  .nav-btn.primary:hover{background:var(--accent-hover)}
+  .nav-btn:disabled{opacity:.4;cursor:not-allowed}
+  .node{cursor:pointer}.node:hover{opacity:.85}
+  svg text{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;fill:var(--text-1)}
+  svg .t{font-size:14px;font-weight:400;fill:var(--text-1)}
+  svg .ts{font-size:12px;font-weight:400;fill:var(--text-2)}
+  svg .th{font-size:14px;font-weight:600;fill:var(--text-1)}
+  .arr{stroke:var(--text-3);stroke-width:1.5;fill:none}
+  .leader{stroke:var(--text-3);stroke-width:0.5;stroke-dasharray:3 3;fill:none}
+  .c-blue rect,.c-blue circle,.c-blue ellipse{fill:#E6F1FB;stroke:#185FA5}
+  .c-blue .th,.c-blue .t{fill:#0C447C}.c-blue .ts{fill:#185FA5}
+  .c-teal rect,.c-teal circle,.c-teal ellipse{fill:#E1F5EE;stroke:#0F6E56}
+  .c-teal .th,.c-teal .t{fill:#085041}.c-teal .ts{fill:#0F6E56}
+  .c-purple rect,.c-purple circle,.c-purple ellipse{fill:#EEEDFE;stroke:#534AB7}
+  .c-purple .th,.c-purple .t{fill:#3C3489}.c-purple .ts{fill:#534AB7}
+  .c-amber rect,.c-amber circle,.c-amber ellipse{fill:#FAEEDA;stroke:#854F0B}
+  .c-amber .th,.c-amber .t{fill:#633806}.c-amber .ts{fill:#854F0B}
+  .c-coral rect,.c-coral circle,.c-coral ellipse{fill:#FAECE7;stroke:#993C1D}
+  .c-coral .th,.c-coral .t{fill:#712B13}.c-coral .ts{fill:#993C1D}
+  .c-green rect,.c-green circle,.c-green ellipse{fill:#EAF3DE;stroke:#3B6D11}
+  .c-green .th,.c-green .t{fill:#27500A}.c-green .ts{fill:#3B6D11}
+  .c-gray rect,.c-gray circle,.c-gray ellipse{fill:#F1EFE8;stroke:#5F5E5A}
+  .c-gray .th,.c-gray .t{fill:#444441}.c-gray .ts{fill:#5F5E5A}
+
+  /* Module 01 specific */
+  .mod-number{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .mod-number::before{content:'';display:inline-block;width:20px;height:1px;background:var(--accent)}
+  .mod-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:28px}
+  .mod-tag{font-size:11px;font-weight:500;color:var(--accent);background:var(--accent-soft);padding:3px 10px;border-radius:980px;border:1px solid rgba(0,113,227,.15)}
+  .mod-divider{height:1px;background:var(--border);margin:28px 0}
+  .mod-intro{font-size:17px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:36px;font-style:italic;border-left:2px solid var(--accent);padding-left:20px}
+  .mod-section-title{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);margin-bottom:16px}
+  .mod-quote{background:rgba(201,168,76,.07);border:1px solid rgba(201,168,76,.18);border-radius:var(--radius-lg);padding:20px 24px;margin-bottom:40px}
+  .mod-quote-text{font-size:16px;font-weight:300;line-height:1.65;color:#b8922e;font-style:italic;margin-bottom:6px}
+  .mod-quote-source{font-size:11px;color:var(--text-3);letter-spacing:.05em;text-transform:uppercase}
+  .mod-body{margin-top:40px}
+  .mod-body h2{font-size:20px;font-weight:600;letter-spacing:-0.02em;color:var(--text-1);margin:44px 0 14px;padding-top:12px;border-top:1px solid var(--border)}
+  .mod-body h3{font-size:15px;font-weight:600;color:var(--text-1);margin:28px 0 10px}
+  .mod-body p{font-size:15px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:16px}
+  .mod-body ul,.mod-body ol{margin:0 0 20px;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+  .mod-body li{position:relative;padding-left:22px;font-size:14px;font-weight:300;color:var(--text-2);line-height:1.7}
+  .mod-body li::before{content:'—';color:var(--accent);font-size:13px;position:absolute;left:0;top:0;line-height:1.7}
+  .mod-body li strong,.mod-body strong{color:var(--text-1);font-weight:600}
+  .mod-body blockquote{border-left:2px solid var(--accent);padding:10px 0 10px 20px;margin:20px 0;font-style:italic;font-weight:300;color:var(--text-2);font-size:14px;line-height:1.7}
+  .profile-block{background:var(--off-white);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin:16px 0}
+  .profile-block h3{margin-top:0}
+  .profile-meta{font-size:12px;color:var(--accent);font-style:italic;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
 </style>
+
 </head>
 <body>
 <div class="page">
 
-  <header class="mod-header">
-    <div class="mod-kicker">Module 01 · ARK Investor Program</div>
-    <h1 class="mod-title">Introduction : Le Cadre de Pensée</h1>
-    <p class="mod-sub">Investisseur, Trader, Spéculateur : qui êtes-vous vraiment, et que cherchez-vous à construire ?</p>
-    <div class="mod-objective">Avant d'apprendre à lire un bilan ou anticiper un mouvement macro, il faut répondre à cette question fondamentale — elle conditionne tout : votre méthode, votre horizon de temps, votre gestion du risque, et votre état d'esprit face à l'incertitude.</div>
-  </header>
+  <div class="mod-number">Module 01</div>
+  <h1 class="mod-title">Introduction : Le Cadre de Pensée</h1>
+  <div class="mod-tags">
+    <span class="mod-tag">Profils d'investisseurs</span>
+    <span class="mod-tag">Retail vs Institutionnel</span>
+    <span class="mod-tag">Taux horaire réel</span>
+    <span class="mod-tag">Intérêts composés</span>
+    <span class="mod-tag">Classes d'actifs</span>
+  </div>
+  <p class="mod-intro">Investisseur, Trader, Spéculateur : qui êtes-vous vraiment, et que cherchez-vous à construire ? Avant d'apprendre à lire un bilan ou anticiper un mouvement macro, il faut répondre à cette question fondamentale — elle conditionne tout : votre méthode, votre horizon de temps, votre gestion du risque, et votre état d'esprit face à l'incertitude.</p>
 
-  <div class="mod-section-label">Ce que tu vas apprendre</div>
+  <div class="mod-section-title">Ce que tu vas apprendre</div>
   <ul class="mod-objectives">
     <li><div class="obj-check">○</div><span>Distinguer les trois profils d'intervenants : investisseur, trader et spéculateur — et identifier lequel vous êtes</span></li>
     <li><div class="obj-check">○</div><span>Comprendre les différences structurelles entre trader retail et institutionnel, et exploiter vos vrais avantages</span></li>
@@ -135,7 +186,9 @@
     <li><div class="obj-check">○</div><span>Découvrir les grandes classes d'actifs sur lesquelles s'applique la méthode</span></li>
   </ul>
 
-  <div class="mod-section-label">Concepts clés</div>
+  <div class="mod-divider"></div>
+
+  <div class="mod-section-title">Concepts clés</div>
   <div class="mod-concepts-grid">
     <div class="concept-card"><div class="concept-icon">🧭</div><div class="concept-name">Les 3 profils</div><div class="concept-desc">Investisseur (valeur long terme), Trader (thèse macro), Spéculateur (flux court terme) — trois logiques incompatibles si mélangées</div></div>
     <div class="concept-card"><div class="concept-icon">⚖️</div><div class="concept-name">Retail vs Institutionnel</div><div class="concept-desc">Agilité et liberté du retail face à l'infrastructure et aux contraintes des fonds. Votre edge : l'analyse, la patience, la discipline</div></div>
@@ -143,248 +196,142 @@
     <div class="concept-card"><div class="concept-icon">📈</div><div class="concept-name">Intérêts composés</div><div class="concept-desc">Capital final = Capital initial × (1 + r)ⁿ — le temps est votre actif le plus précieux, pas le capital de départ</div></div>
   </div>
 
-  <div class="mod-quote-block">
+  <div class="mod-quote">
     <div class="mod-quote-text">"Votre edge n'est pas la vitesse, ni le volume : c'est l'analyse, la patience et la discipline."</div>
     <div class="mod-quote-source">— ARK — Module 01</div>
   </div>
 
-  <nav class="toc">
-    <div class="toc-title">Sommaire</div>
-    <ul class="toc-list">
-      <li><a href="#s1"><span class="toc-letter">1</span>Les trois profils : état des lieux</a></li>
-      <li><a href="#s2"><span class="toc-letter">2</span>Trader Retail vs Trader Institutionnel</a></li>
-      <li><a href="#s3"><span class="toc-letter">3</span>Réfléchir en taux horaire</a></li>
-      <li><a href="#s4"><span class="toc-letter">4</span>Pourquoi la majorité des particuliers échouent</a></li>
-      <li><a href="#s5"><span class="toc-letter">5</span>Capital, objectifs et attentes réalistes</a></li>
-      <li><a href="#s6"><span class="toc-letter">6</span>Les classes d'actifs : un panorama rapide</a></li>
+  <div class="mod-body">
+
+    <h2>1. Les trois profils : état des lieux</h2>
+    <p>Il existe trois grands profils d'intervenants sur les marchés financiers. Cette formation se concentre sur le profil du trader — c'est celui que vous allez construire. Les deux autres profils sont présentés ici pour que vous sachiez exactement où vous vous situez, et pourquoi le trading représente une voie distincte avec ses propres exigences.</p>
+
+    <div class="profile-block">
+      <h3>L'investisseur</h3>
+      <p>L'investisseur achète de la valeur. Il s'intéresse à ce qu'un actif vaut fondamentalement — ses flux futurs, sa position compétitive, les dynamiques macro qui l'entourent — et parie sur la convergence entre prix et valeur sur un horizon long (plusieurs mois à plusieurs années). Il bouge peu, paie peu de frais, et laisse le temps travailler pour lui. La stratégie Buy and Hold, dont la rentabilité historique est solidement documentée, est l'expression la plus pure de cette approche. Exemples : Warren Buffett et Charlie Munger (Berkshire Hathaway), Peter Lynch avec le Fonds Magellan.</p>
+      <div class="profile-meta">Horizon : mois à années · Outil central : modélisation de valeur · Rapport au prix : secondaire</div>
+    </div>
+
+    <div class="profile-block">
+      <h3>Le trader — le profil que ce cours vous forme à développer</h3>
+      <p>Le trader construit des thèses fondamentales — macro, géopolitique, cycle sectoriel — et les exprime via des positions tenues de quelques jours à quelques mois. Il ne cherche pas à capter chaque mouvement, mais à se positionner sur des tendances de fond avant qu'elles ne soient pleinement intégrées par le marché. Son travail est de développer et d'exécuter des stratégies capables de battre le marché de façon répétable et documentée. C'est une activité hybride : mi-analyste, mi-gestionnaire de risque, et toujours ancrée dans une vision macro du monde. Exemples : George Soros (pari contre la livre sterling en 1992), Stanley Druckenmiller, Ray Dalio.</p>
+      <div class="profile-meta">Horizon : jours à mois · Outil central : thèse macro + timing d'entrée · Rapport au prix : point d'entrée et de sortie</div>
+    </div>
+
+    <div class="profile-block">
+      <h3>Le spéculateur</h3>
+      <p>Le spéculateur trade le prix, pas la valeur. Il cherche à profiter des déséquilibres à court terme : réactions à des annonces, flux de liquidité, microstructure de marché. C'est une activité légitime, mais qui requiert une infrastructure, une discipline d'exécution et une gestion du risque que la plupart des particuliers ne possèdent pas. Exemple : Paul Tudor Jones sur certaines stratégies court terme, ou les desks propriétaires des grandes banques d'investissement.</p>
+      <div class="profile-meta">Horizon : secondes à jours · Outil central : lecture du flux et du prix · Rapport à la valeur : inexistant ou marginal</div>
+    </div>
+
+    <h2>2. Trader Retail vs Trader Institutionnel</h2>
+    <p>Avant d'apprendre à trader, il faut comprendre dans quel environnement vous évoluez — et en quoi il diffère radicalement de celui des acteurs institutionnels. Cette distinction n'est pas anodine : elle conditionne votre stratégie, vos outils, vos horizons de temps, et surtout vos avantages et limitations réels. Confondre les deux, c'est s'imposer des standards inaccessibles, ou à l'inverse, ignorer des avantages que vous seul possédez.</p>
+
+    <h3>L'infrastructure : un monde radicalement différent</h3>
+    <p>Un trader institutionnel opère depuis une salle des marchés dotée d'une infrastructure technologique de pointe : connexions co-localisées aux bourses (latence inférieure à la milliseconde), flux de données Bloomberg et Reuters en temps réel, accès direct au marché (DMA), outils de risk management automatisés, et parfois des algorithmes d'exécution propriétaires. Le coût annuel d'une telle infrastructure se chiffre en centaines de milliers, voire en millions d'euros.</p>
+    <p>En tant que trader retail, votre infrastructure se résume à un ordinateur, une connexion internet correcte, un courtier en ligne, et un accès à des données publiques (TradingView, FRED, les sites des banques centrales, les rapports SEC). C'est peu — mais c'est suffisant, à condition de l'utiliser intelligemment. La révolution de l'information a considérablement réduit l'avantage informationnel des institutionnels sur les données macro publiques.</p>
+
+    <h3>Le capital et les attentes de performance</h3>
+    <p>Un fonds institutionnel gère des volumes qui rendent impossible toute agilité tactique. Un hedge fund gérant 5 milliards de dollars ne peut pas prendre une position sur une small cap sans déplacer le marché lui-même. Ses attentes de performance sont également contraintes : un fonds doit justifier ses frais de gestion (typiquement 2 % de l'actif géré + 20 % de la performance), respecter ses mandats, et rendre des comptes trimestriels à ses investisseurs.</p>
+    <p>Vous, en tant que retail trader, pouvez entrer et sortir d'une position en quelques secondes, sur n'importe quel actif liquide, sans impact sur le cours. C'est un avantage structurel considérable. Vous n'avez de comptes à rendre à personne, pas de mandat restrictif, pas de drawdown maximum contractuel qui vous force à liquider au pire moment. Votre seul critère de performance : la vérité de votre compte.</p>
+
+    <h3>Les limitations du trader retail</h3>
+    <ul>
+      <li><strong>Le coût du capital :</strong> vous tradez votre propre argent, ce qui crée une pression psychologique absente chez un employé de banque qui risque le capital de son établissement.</li>
+      <li><strong>L'absence de flux propriétaire :</strong> les institutionnels voient les ordres avant leur exécution (order flow), ce qui leur confère une lecture de la microstructure du marché inaccessible au retail.</li>
+      <li><strong>La fiscalité :</strong> en France, les plus-values de cession sont imposées à la flat tax de 30 % (ou au barème progressif), ce qui nécessite une gestion rigoureuse de votre enveloppe fiscale.</li>
+      <li><strong>Le levier limité :</strong> la réglementation ESMA plafonne le levier disponible pour les retail traders européens sur CFD (5:1 sur les indices, 2:1 sur les cryptos), là où un institutionnel peut accéder à des leviers bien supérieurs via des produits dérivés.</li>
     </ul>
-  </nav>
 
-  <!-- SECTION 1 -->
-  <section class="section" id="s1">
-    <div class="section-label">Section 1</div>
-    <h2 class="section-title">Les trois profils : état des lieux</h2>
-    <div class="section-intro">Il existe trois grands profils d'intervenants sur les marchés financiers. Cette formation se concentre sur le profil du trader — c'est celui que vous allez construire. Les deux autres profils sont présentés ici pour que vous sachiez exactement où vous vous situez, et pourquoi le trading représente une voie distincte avec ses propres exigences.</div>
+    <h3>Les avantages structurels du trader retail</h3>
+    <ul>
+      <li><strong>L'agilité :</strong> vous pouvez vous positionner sur des opportunités que les gros fonds ne peuvent physiquement pas toucher — les actifs à faible capitalisation, les marchés de niche, les situations spéciales.</li>
+      <li><strong>L'absence de contrainte de mandat :</strong> vous pouvez vendre à découvert un actif survalorisé, investir dans les cryptos, les matières premières, les devises émergentes, sans restriction.</li>
+      <li><strong>L'absence de pression de reporting :</strong> vous n'avez pas à montrer une performance positive chaque trimestre — ce qui vous permet de tenir des positions plus longtemps et d'éviter le forced selling.</li>
+      <li><strong>Un objectif personnel de rendement différent :</strong> 15 % annualisé sur 50 000 € peut transformer votre vie — ce même rendement serait insuffisant pour un fonds qui doit couvrir ses frais structurels.</li>
+    </ul>
 
-    <div class="sub">
-      <h3 class="sub-title">L'investisseur</h3>
-      <p>L'investisseur achète de la valeur. Il s'intéresse à ce qu'un actif vaut fondamentalement — ses flux futurs, sa position compétitive, les dynamiques macro qui l'entourent — et parie sur la convergence entre prix et valeur sur un horizon long (plusieurs mois à plusieurs années). Il bouge peu, paie peu de frais, et laisse le temps travailler pour lui. La stratégie Buy and Hold, dont la rentabilité historique est solidement documentée, est l'expression la plus pure de cette approche.</p>
-      <div class="notion">
-        <div class="notion-title">Exemples emblématiques</div>
-        <p>Warren Buffett et Charlie Munger (Berkshire Hathaway), Peter Lynch avec le Fonds Magellan.</p>
-        <div class="notion-meta">Horizon : mois à années · Outil central : modélisation de valeur · Rapport au prix : secondaire</div>
-      </div>
+    <h3>La psychologie et la gestion du risque : des logiques opposées</h3>
+    <p>La gestion du risque institutionnelle est systématique et codée : Value at Risk (VaR), limites de concentration par actif, stress tests réglementaires, risk officers indépendants du trading desk. Le trader retail n'a rien de tout ça — il est juge et partie. C'est à la fois sa force (flexibilité totale) et son premier risque (aucun garde-fou extérieur).</p>
+    <blockquote>En résumé : vous n'êtes pas un institutionnel en miniature. Vous êtes un acteur différent, avec des contraintes différentes, des avantages différents — et une stratégie qui doit en tenir compte. Votre edge n'est pas la vitesse, ni le volume : c'est l'analyse, la patience et la discipline.</blockquote>
+
+    <h2>3. Réfléchir en taux horaire</h2>
+    <p>Voici une vérité que les formateurs de trading ne vous diront pas : il n'existe aucune relation entre le nombre d'heures passées à ouvrir des positions et l'argent généré. Au contraire, plus vous tradez, plus vous payez de frais et plus vous vous exposez au bruit du marché.</p>
+    <div class="formula-box">
+      Taux horaire réel = Revenus mensuels ÷ (Heures travaillées/semaine × 4,33)<br>
+      <small style="font-size:12px;opacity:.7;font-weight:300">Le 4,33 correspond au nombre moyen de semaines par mois : 52 ÷ 12 = 4,33</small>
     </div>
+    <p>Prenons un exemple concret. Supposons que vous gagnez 5 000 € par mois grâce au trading actif, en travaillant 40 heures par semaine :</p>
+    <blockquote>5 000 € ÷ (40h × 4,33) = 5 000 € ÷ 173h ≈ <strong>28,9 €/heure</strong> — soit environ le salaire médian français.</blockquote>
+    <p>À l'inverse, un investisseur passif qui génère les mêmes 5 000 € par mois en consacrant 1 heure par semaine à son portefeuille a un taux horaire démentiel — et dort mieux la nuit. L'objectif n'est pas de passer le plus de temps possible sur les marchés. C'est de construire un processus de décision robuste qui vous permette de dégager du temps, pas d'en consommer.</p>
 
-    <div class="sub">
-      <h3 class="sub-title">Le trader — le profil que ce cours vous forme à développer</h3>
-      <p>Le trader construit des thèses fondamentales — macro, géopolitique, cycle sectoriel — et les exprime via des positions tenues de quelques jours à quelques mois. Il ne cherche pas à capter chaque mouvement, mais à se positionner sur des tendances de fond avant qu'elles ne soient pleinement intégrées par le marché. Son travail est de développer et d'exécuter des stratégies capables de battre le marché de façon répétable et documentée. C'est une activité hybride : mi-analyste, mi-gestionnaire de risque, et toujours ancrée dans une vision macro du monde.</p>
-      <div class="notion">
-        <div class="notion-title">Exemples emblématiques</div>
-        <p>George Soros (pari contre la livre sterling en 1992), Stanley Druckenmiller, Ray Dalio.</p>
-        <div class="notion-meta">Horizon : jours à mois · Outil central : thèse macro + timing d'entrée · Rapport au prix : point d'entrée et de sortie</div>
-      </div>
+    <h2>4. Pourquoi la majorité des particuliers échouent</h2>
+    <p>Avant d'apprendre comment bien faire, comprendre pourquoi la plupart échouent vous donnera un avantage immédiat. Les causes d'échec sont systématiques et prévisibles :</p>
+    <ul>
+      <li><strong>Absence de profil clair :</strong> confondre trading et investissement</li>
+      <li><strong>Frais et fiscalité ignorés :</strong> sous-estimer les frais de transaction qui rongent silencieusement la performance</li>
+      <li><strong>Overtrading émotionnel :</strong> trader trop souvent, trop vite, sous l'influence des émotions</li>
+      <li><strong>Biais cognitifs :</strong> couper les bonnes positions trop tôt, laisser courir les mauvaises trop longtemps</li>
+      <li><strong>Survivorship bias :</strong> s'inspirer des success stories sans voir les milliers de parcours similaires qui ont échoué</li>
+      <li><strong>Absence de méthode :</strong> ne pas avoir de processus documenté ni de critères d'entrée/sortie définis à l'avance</li>
+      <li><strong>Le piège du scalping et du day-trading :</strong> multiplier les trades augmente mécaniquement le stress, expose davantage au bruit du marché et fait exploser les frais de transaction. Chaque aller-retour coûte un spread, une commission, parfois un financement overnight. Nous privilégions le swing trading et le position trading : moins de positions, mieux construites, tenues le temps que la thèse fondamentale se réalise.</li>
+      <li><strong>Méthodes miracles :</strong> croire à des approches comme le SMC (Smart Money Concept) ou l'ICT, présentées comme des systèmes universels. Ces approches reposent souvent sur des concepts non falsifiables et une esthétique de la complexité qui donne l'illusion de maîtrise. Ce cours ne vous vend pas un système — il vous construit une méthode robuste d'analyse fondamentale et macro, applicable à n'importe quel actif et n'importe quel cycle de marché.</li>
+    </ul>
+
+    <h2>5. Capital, objectifs et attentes réalistes</h2>
+    <p>Toute stratégie d'investissement sérieuse commence par une question honnête : avec quel capital je travaille, et quel rendement est réaliste ? La vraie variable, ce n'est pas le capital de départ — c'est le temps et la discipline.</p>
+
+    <h3>La puissance des intérêts composés</h3>
+    <div class="formula-box">
+      Capital final = Capital initial × (1 + r)ⁿ<br>
+      <small style="font-size:12px;opacity:.7;font-weight:300">où r = rendement annuel, n = nombre d'années</small>
     </div>
+    <ul>
+      <li>10 000 € investis à 12 % / an pendant 20 ans = <strong>96 462 €</strong> — soit presque 10× sans jamais rajouter un euro</li>
+      <li>Le même capital à 15 % / an pendant 20 ans = <strong>163 665 €</strong> — 3 points de rendement supplémentaires font plus que doubler le résultat final</li>
+      <li>Rajouter 500 € par mois à ce même portefeuille à 12 % sur 20 ans donne environ <strong>494 000 €</strong></li>
+    </ul>
+    <p>La conclusion est simple : le temps est votre actif le plus précieux, et un rendement régulier et documenté bat presque toujours une performance spectaculaire mais erratique.</p>
 
-    <div class="sub">
-      <h3 class="sub-title">Le spéculateur</h3>
-      <p>Le spéculateur trade le prix, pas la valeur. Il cherche à profiter des déséquilibres à court terme : réactions à des annonces, flux de liquidité, microstructure de marché. C'est une activité légitime, mais qui requiert une infrastructure, une discipline d'exécution et une gestion du risque que la plupart des particuliers ne possèdent pas.</p>
-      <div class="notion">
-        <div class="notion-title">Exemples emblématiques</div>
-        <p>Paul Tudor Jones sur certaines stratégies court terme, ou les desks propriétaires des grandes banques d'investissement.</p>
-        <div class="notion-meta">Horizon : secondes à jours · Outil central : lecture du flux et du prix · Rapport à la valeur : inexistant ou marginal</div>
-      </div>
-    </div>
+    <h3>Le levier financier</h3>
+    <p>Si le temps long vous semble insuffisant, il existe des mécanismes pour accélérer le processus. Le principal est le levier financier : emprunter du capital pour amplifier l'exposition à un actif, et donc les rendements potentiels. Un exemple simplifié : avec 10 000 € et un levier de 3×, vous contrôlez une position de 30 000 €. Un mouvement de +10 % sur l'actif vous rapporte 3 000 € — soit 30 % de votre capital initial.</p>
+    <div class="warning-box">⚠️ Le levier amplifie les pertes exactement de la même façon qu'il amplifie les gains. Le même mouvement de −10 % efface 30 % de votre capital. C'est un outil puissant, pas une solution miracle. Nous lui consacrerons un module entier.</div>
 
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>Profil</th><th>Horizon</th><th>Outil central</th><th>Rapport au prix</th></tr></thead>
-        <tbody>
-          <tr><td><strong>Investisseur</strong></td><td>Mois à années</td><td>Modélisation de valeur (DCF, comparables)</td><td>Secondaire — la valeur prime</td></tr>
-          <tr><td><strong>Trader</strong></td><td>Jours à mois</td><td>Thèse macro + timing d'entrée</td><td>Point d'entrée et de sortie défini</td></tr>
-          <tr><td><strong>Spéculateur</strong></td><td>Secondes à jours</td><td>Lecture du flux et du prix</td><td>Central — la valeur est ignorée</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
+    <h3>Repères de capital pour calibrer vos objectifs</h3>
+    <ul>
+      <li><strong>2 000 – 10 000 € :</strong> vous apprenez et testez votre méthode en conditions réelles, avec un risque maîtrisé</li>
+      <li><strong>10 000 – 50 000 € :</strong> vous construisez un vrai portefeuille et commencez à voir les effets de la capitalisation</li>
+      <li><strong>50 000 €+ :</strong> vous gérez réellement un patrimoine et pouvez envisager des stratégies plus sophistiquées</li>
+    </ul>
+    <p>Le point de départ importe moins que la régularité et la rigueur du processus. Un investisseur avec 5 000 € et une méthode solide surpassera presque toujours un investisseur avec 100 000 € qui improvise.</p>
 
-  <!-- SECTION 2 -->
-  <section class="section" id="s2">
-    <div class="section-label">Section 2</div>
-    <h2 class="section-title">Trader Retail vs Trader Institutionnel</h2>
-    <div class="section-intro">Avant d'apprendre à trader, il faut comprendre dans quel environnement vous évoluez — et en quoi il diffère radicalement de celui des acteurs institutionnels. Confondre les deux, c'est s'imposer des standards inaccessibles, ou à l'inverse, ignorer des avantages que vous seul possédez.</div>
+    <h2>6. Les classes d'actifs : un panorama rapide</h2>
+    <p>La méthode que vous allez apprendre dans ce cours s'applique à l'ensemble des marchés financiers. Voici les grandes familles d'actifs que vous rencontrerez :</p>
+    <ul>
+      <li><strong>Actions :</strong> les entreprises cotées en bourse. L'actif le plus connu, et celui sur lequel la modélisation fondamentale est la plus directement applicable.</li>
+      <li><strong>Obligations :</strong> titres de dette émis par des États ou des entreprises. Très sensibles aux taux d'intérêt et aux cycles macro — un outil clé pour lire l'état de l'économie mondiale.</li>
+      <li><strong>Matières premières :</strong> pétrole, gaz, métaux, matières agricoles. Directement liées aux dynamiques géopolitiques et aux cycles d'offre/demande mondiaux.</li>
+      <li><strong>Forex :</strong> paires de devises comme EUR/USD ou USD/JPY. Le marché le plus liquide au monde, piloté par les politiques monétaires et les flux de capitaux internationaux.</li>
+      <li><strong>Indices et ETF :</strong> paniers d'actifs qui répliquent un indice (S&P 500, CAC 40…) ou une thématique. Utiles pour exprimer une thèse macro sans choisir un titre spécifique.</li>
+      <li><strong>Cryptomonnaies :</strong> Bitcoin, Ethereum et autres. Un marché jeune, volatil, mais de plus en plus intégré aux flux macro institutionnels.</li>
+    </ul>
 
-    <div class="sub">
-      <h3 class="sub-title">L'infrastructure : un monde radicalement différent</h3>
-      <p>Un trader institutionnel opère depuis une salle des marchés dotée d'une infrastructure technologique de pointe : connexions co-localisées aux bourses (latence inférieure à la milliseconde), flux de données Bloomberg et Reuters en temps réel, accès direct au marché (DMA), outils de risk management automatisés, et parfois des algorithmes d'exécution propriétaires. Le coût annuel d'une telle infrastructure se chiffre en centaines de milliers, voire en millions d'euros.</p>
-      <p>En tant que trader retail, votre infrastructure se résume à un ordinateur, une connexion internet correcte, un courtier en ligne, et un accès à des données publiques (TradingView, FRED, les sites des banques centrales, les rapports SEC). C'est peu — mais c'est suffisant, à condition de l'utiliser intelligemment. La révolution de l'information a considérablement réduit l'avantage informationnel des institutionnels sur les données macro publiques.</p>
-    </div>
-
-    <div class="sub">
-      <h3 class="sub-title">Le capital et les attentes de performance</h3>
-      <p>Un fonds institutionnel gère des volumes qui rendent impossible toute agilité tactique. Un hedge fund gérant 5 milliards de dollars ne peut pas prendre une position sur une small cap sans déplacer le marché lui-même. Ses attentes de performance sont également contraintes : un fonds doit justifier ses frais de gestion (typiquement 2 % de l'actif géré + 20 % de la performance), respecter ses mandats, et rendre des comptes trimestriels à ses investisseurs.</p>
-      <p>Vous, en tant que retail trader, pouvez entrer et sortir d'une position en quelques secondes, sur n'importe quel actif liquide, sans impact sur le cours. Vous n'avez de comptes à rendre à personne, pas de mandat restrictif, pas de drawdown maximum contractuel qui vous force à liquider au pire moment. Votre seul critère de performance : la vérité de votre compte.</p>
-    </div>
-
-    <div class="sub">
-      <h3 class="sub-title">Les limitations du trader retail</h3>
-      <ul class="styled-list">
-        <li><strong>Le coût du capital :</strong> vous tradez votre propre argent, ce qui crée une pression psychologique absente chez un employé de banque qui risque le capital de son établissement.</li>
-        <li><strong>L'absence de flux propriétaire :</strong> les institutionnels voient les ordres avant leur exécution (order flow), ce qui leur confère une lecture de la microstructure du marché inaccessible au retail.</li>
-        <li><strong>La fiscalité :</strong> en France, les plus-values de cession sont imposées à la flat tax de 30 % (ou au barème progressif), ce qui nécessite une gestion rigoureuse de votre enveloppe fiscale.</li>
-        <li><strong>Le levier limité :</strong> la réglementation ESMA plafonne le levier disponible pour les retail traders européens sur CFD (5:1 sur les indices, 2:1 sur les cryptos), là où un institutionnel peut accéder à des leviers bien supérieurs via des produits dérivés.</li>
-      </ul>
-    </div>
-
-    <div class="sub">
-      <h3 class="sub-title">Les avantages structurels du trader retail</h3>
-      <ul class="styled-list">
-        <li><strong>L'agilité :</strong> vous pouvez vous positionner sur des opportunités que les gros fonds ne peuvent physiquement pas toucher — les actifs à faible capitalisation, les marchés de niche, les situations spéciales.</li>
-        <li><strong>L'absence de contrainte de mandat :</strong> vous pouvez vendre à découvert un actif survalorisé, investir dans les cryptos, les matières premières, les devises émergentes, sans restriction.</li>
-        <li><strong>L'absence de pression de reporting :</strong> vous n'avez pas à montrer une performance positive chaque trimestre — ce qui vous permet de tenir des positions plus longtemps et d'éviter le forced selling.</li>
-        <li><strong>Un objectif personnel de rendement différent :</strong> 15 % annualisé sur 50 000 € peut transformer votre vie — ce même rendement serait insuffisant pour un fonds qui doit couvrir ses frais structurels.</li>
-      </ul>
-    </div>
-
-    <div class="sub">
-      <h3 class="sub-title">La psychologie et la gestion du risque : des logiques opposées</h3>
-      <p>La gestion du risque institutionnelle est systématique et codée : Value at Risk (VaR), limites de concentration par actif, stress tests réglementaires, risk officers indépendants du trading desk. Le trader retail n'a rien de tout ça — il est juge et partie. C'est à la fois sa force (flexibilité totale) et son premier risque (aucun garde-fou extérieur).</p>
-      <div class="callout blue">En résumé : vous n'êtes pas un institutionnel en miniature. Vous êtes un acteur différent, avec des contraintes différentes, des avantages différents — et une stratégie qui doit en tenir compte. Votre edge n'est pas la vitesse, ni le volume : c'est l'analyse, la patience et la discipline.</div>
-    </div>
-  </section>
-
-  <!-- SECTION 3 -->
-  <section class="section" id="s3">
-    <div class="section-label">Section 3</div>
-    <h2 class="section-title">Réfléchir en taux horaire</h2>
-    <div class="section-intro">Voici une vérité que les formateurs de trading ne vous diront pas : il n'existe aucune relation entre le nombre d'heures passées à ouvrir des positions et l'argent généré. Au contraire, plus vous tradez, plus vous payez de frais et plus vous vous exposez au bruit du marché.</div>
-
-    <div class="sub">
-      <h3 class="sub-title">La formule</h3>
-      <div class="formula">
-        Taux horaire réel = Revenus mensuels ÷ (Heures travaillées/semaine × 4,33)<br>
-        <small>Le 4,33 correspond au nombre moyen de semaines par mois : 52 ÷ 12 = 4,33</small>
-      </div>
-      <p>Prenons un exemple concret. Supposons que vous gagnez 5 000 € par mois grâce au trading actif, en travaillant 40 heures par semaine :</p>
-      <div class="callout blue">5 000 € ÷ (40h × 4,33) = 5 000 € ÷ 173h ≈ <strong>28,9 €/heure</strong> — soit environ le salaire médian français.</div>
-      <p>À l'inverse, un investisseur passif qui génère les mêmes 5 000 € par mois en consacrant 1 heure par semaine à son portefeuille a un taux horaire démentiel — et dort mieux la nuit. L'objectif n'est pas de passer le plus de temps possible sur les marchés. C'est de construire un processus de décision robuste qui vous permette de dégager du temps, pas d'en consommer.</p>
-    </div>
-  </section>
-
-  <!-- SECTION 4 -->
-  <section class="section" id="s4">
-    <div class="section-label">Section 4</div>
-    <h2 class="section-title">Pourquoi la majorité des particuliers échouent</h2>
-    <div class="section-intro">Avant d'apprendre comment bien faire, comprendre pourquoi la plupart échouent vous donnera un avantage immédiat. Les causes d'échec sont systématiques et prévisibles.</div>
-
-    <div class="sub">
-      <h3 class="sub-title">Les causes d'échec systématiques</h3>
-      <ul class="styled-list">
-        <li><strong>Absence de profil clair :</strong> confondre trading et investissement</li>
-        <li><strong>Frais et fiscalité ignorés :</strong> sous-estimer les frais de transaction qui rongent silencieusement la performance</li>
-        <li><strong>Overtrading émotionnel :</strong> trader trop souvent, trop vite, sous l'influence des émotions</li>
-        <li><strong>Biais cognitifs :</strong> couper les bonnes positions trop tôt, laisser courir les mauvaises trop longtemps</li>
-        <li><strong>Survivorship bias :</strong> s'inspirer des success stories sans voir les milliers de parcours similaires qui ont échoué</li>
-        <li><strong>Absence de méthode :</strong> ne pas avoir de processus documenté ni de critères d'entrée/sortie définis à l'avance</li>
-      </ul>
-    </div>
-
-    <div class="sub">
-      <h3 class="sub-title">Le piège du scalping et du day-trading</h3>
-      <p>Multiplier les trades augmente mécaniquement le stress, expose davantage au bruit du marché et fait exploser les frais de transaction. Chaque aller-retour coûte un spread, une commission, parfois un financement overnight. Nous privilégions le swing trading et le position trading : moins de positions, mieux construites, tenues le temps que la thèse fondamentale se réalise.</p>
-    </div>
-
-    <div class="sub">
-      <h3 class="sub-title">Le piège des méthodes miracles</h3>
-      <p>Méfiez-vous des approches comme le SMC (Smart Money Concept) ou l'ICT, présentées comme des systèmes universels. Ces approches reposent souvent sur des concepts non falsifiables et une esthétique de la complexité qui donne l'illusion de maîtrise.</p>
-      <div class="callout yellow">Ce cours ne vous vend pas un système — il vous construit une méthode robuste d'analyse fondamentale et macro, applicable à n'importe quel actif et n'importe quel cycle de marché.</div>
-    </div>
-  </section>
-
-  <!-- SECTION 5 -->
-  <section class="section" id="s5">
-    <div class="section-label">Section 5</div>
-    <h2 class="section-title">Capital, objectifs et attentes réalistes</h2>
-    <div class="section-intro">Toute stratégie d'investissement sérieuse commence par une question honnête : avec quel capital je travaille, et quel rendement est réaliste ? La vraie variable, ce n'est pas le capital de départ — c'est le temps et la discipline.</div>
-
-    <div class="sub">
-      <h3 class="sub-title">La puissance des intérêts composés</h3>
-      <div class="formula">
-        Capital final = Capital initial × (1 + r)ⁿ<br>
-        <small>où r = rendement annuel, n = nombre d'années</small>
-      </div>
-      <ul class="styled-list">
-        <li>10 000 € investis à 12 % / an pendant 20 ans = <strong>96 462 €</strong> — soit presque 10× sans jamais rajouter un euro</li>
-        <li>Le même capital à 15 % / an pendant 20 ans = <strong>163 665 €</strong> — 3 points de rendement supplémentaires font plus que doubler le résultat final</li>
-        <li>Rajouter 500 € par mois à ce même portefeuille à 12 % sur 20 ans donne environ <strong>494 000 €</strong></li>
-      </ul>
-      <p>La conclusion est simple : le temps est votre actif le plus précieux, et un rendement régulier et documenté bat presque toujours une performance spectaculaire mais erratique.</p>
-    </div>
-
-    <div class="sub">
-      <h3 class="sub-title">Le levier financier</h3>
-      <p>Si le temps long vous semble insuffisant, il existe des mécanismes pour accélérer le processus. Le principal est le levier financier : emprunter du capital pour amplifier l'exposition à un actif, et donc les rendements potentiels. Un exemple simplifié : avec 10 000 € et un levier de 3×, vous contrôlez une position de 30 000 €. Un mouvement de +10 % sur l'actif vous rapporte 3 000 € — soit 30 % de votre capital initial.</p>
-      <div class="callout orange">⚠️ <strong>Le levier amplifie les pertes exactement de la même façon qu'il amplifie les gains.</strong> Le même mouvement de −10 % efface 30 % de votre capital. C'est un outil puissant, pas une solution miracle. Nous lui consacrerons un module entier.</div>
-    </div>
-
-    <div class="sub">
-      <h3 class="sub-title">Repères de capital pour calibrer vos objectifs</h3>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Capital</th><th>Phase</th><th>Objectif</th></tr></thead>
-          <tbody>
-            <tr><td><strong>2 000 – 10 000 €</strong></td><td>Apprentissage</td><td>Tester la méthode en conditions réelles, avec un risque maîtrisé</td></tr>
-            <tr><td><strong>10 000 – 50 000 €</strong></td><td>Construction</td><td>Bâtir un vrai portefeuille et commencer à voir les effets de la capitalisation</td></tr>
-            <tr><td><strong>50 000 €+</strong></td><td>Gestion patrimoniale</td><td>Gérer réellement un patrimoine et envisager des stratégies plus sophistiquées</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p>Le point de départ importe moins que la régularité et la rigueur du processus. Un investisseur avec 5 000 € et une méthode solide surpassera presque toujours un investisseur avec 100 000 € qui improvise.</p>
-    </div>
-  </section>
-
-  <!-- SECTION 6 -->
-  <section class="section" id="s6">
-    <div class="section-label">Section 6</div>
-    <h2 class="section-title">Les classes d'actifs : un panorama rapide</h2>
-    <div class="section-intro">La méthode que vous allez apprendre dans ce cours s'applique à l'ensemble des marchés financiers. Voici les grandes familles d'actifs que vous rencontrerez.</div>
-
-    <div class="sub">
-      <h3 class="sub-title">Les grandes familles d'actifs</h3>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Classe d'actif</th><th>Description</th><th>Lien avec la méthode</th></tr></thead>
-          <tbody>
-            <tr><td><strong>Actions</strong></td><td>Entreprises cotées en bourse</td><td>La modélisation fondamentale est la plus directement applicable</td></tr>
-            <tr><td><strong>Obligations</strong></td><td>Titres de dette (États, entreprises)</td><td>Très sensibles aux taux — outil clé pour lire l'état de l'économie mondiale</td></tr>
-            <tr><td><strong>Matières premières</strong></td><td>Pétrole, gaz, métaux, agricoles</td><td>Liées aux dynamiques géopolitiques et aux cycles d'offre/demande mondiaux</td></tr>
-            <tr><td><strong>Forex</strong></td><td>Paires de devises (EUR/USD, USD/JPY…)</td><td>Le marché le plus liquide au monde, piloté par les politiques monétaires</td></tr>
-            <tr><td><strong>Indices &amp; ETF</strong></td><td>Paniers (S&amp;P 500, CAC 40…)</td><td>Utiles pour exprimer une thèse macro sans choisir un titre spécifique</td></tr>
-            <tr><td><strong>Cryptomonnaies</strong></td><td>Bitcoin, Ethereum et autres</td><td>Marché jeune et volatil, de plus en plus intégré aux flux macro institutionnels</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </section>
-
-  <!-- SYNTHESIS -->
-  <div class="synthesis">
-    <h2 class="synthesis-title">Ce que vous allez construire dans ce cours</h2>
-    <p>À l'issue de cette formation, vous aurez un cadre de pensée complet et personnel. Chaque module est un outil supplémentaire dans ce cadre — gardez toujours en tête le fil conducteur.</p>
-    <ul class="styled-list" style="margin-top:12px">
+    <h2>Ce que vous allez construire dans ce cours</h2>
+    <p>À l'issue de cette formation, vous aurez un cadre de pensée complet et personnel :</p>
+    <ul>
       <li>Une compréhension des mécanismes économiques et géopolitiques qui meuvent les marchés</li>
       <li>La capacité à modéliser la valeur d'un actif et à construire une thèse chiffrée</li>
       <li>Un processus de prise de position, de dimensionnement et de gestion du risque</li>
       <li>Une discipline psychologique pour tenir vos convictions et accepter vos erreurs</li>
     </ul>
-    <div class="summary-box">Comprendre le monde → lire la valeur → prendre position → protéger le capital. <strong>C'est le fil conducteur de toute la formation ARK.</strong></div>
-    <div class="next-module">Module suivant — <strong>Module II : Économie &amp; Histoire Financière.</strong> Les mécanismes économiques fondamentaux et les grandes crises qui se répètent.</div>
+    <div class="summary-box">Chaque module de ce cours est un outil supplémentaire dans ce cadre. Gardez toujours en tête le fil conducteur : <strong>comprendre le monde → lire la valeur → prendre position → protéger le capital.</strong></div>
+
   </div>
 
-  <div class="module-nav">
-    <button class="nav-btn" disabled>← Précédent</button>
-    <span class="nav-label">1 / 12</span>
-    <button class="nav-btn primary" onclick="window.parent.postMessage({type:'navigate',index:1,markDone:true},'*')">Module 02 →</button>
+  <div class="mod-nav">
+    <button class="mod-nav-btn" disabled>← Précédent</button>
+    <span class="mod-nav-label">1 / 12</span>
+    <button class="mod-nav-btn" onclick="window.parent.postMessage({type:'navigate',index:1,markDone:true},'*')">Module 02 →</button>
   </div>
 
 </div>
