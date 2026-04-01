@@ -117,6 +117,19 @@
   .nav-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
   .nav-btn.primary:hover{background:#0077ed}
 
+  /* Cas pratique */
+  .cas-pratique{background:#f0fbff;border:1px solid #a8d8f0;border-left:3px solid var(--accent);border-radius:var(--radius);padding:20px 24px;margin:18px 0}
+  .cas-pratique-header{display:flex;align-items:center;gap:8px;margin-bottom:14px}
+  .cas-pratique-tag{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#0369a1;background:#bae6fd;border-radius:980px;padding:3px 10px;flex-shrink:0}
+  .cas-pratique-title{font-size:14px;font-weight:600;color:#0c4a6e;letter-spacing:-0.01em}
+  .cas-pratique p{color:#0c4a6e;font-size:14px;line-height:1.7;margin-bottom:12px;font-weight:300}
+  .cas-pratique p:last-child{margin-bottom:0}
+  .cas-pratique .case-table{width:100%;border-collapse:collapse;margin:12px 0 16px;font-size:13.5px}
+  .cas-pratique .case-table tr{border-top:1px solid #bae6fd}
+  .cas-pratique .case-table tr:first-child{border-top:none}
+  .cas-pratique .case-table td:first-child{font-weight:600;color:#0c4a6e;padding:12px 16px 12px 0;width:120px;vertical-align:top;font-size:11px;letter-spacing:.04em;text-transform:uppercase}
+  .cas-pratique .case-table td:last-child{color:#075985;padding:12px 0;line-height:1.65;font-weight:300}
+
   /* Objectives & concepts */
   .mod-section-label{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-tertiary,var(--text-3));margin-bottom:16px;margin-top:32px}
   .mod-objectives{list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:32px}
@@ -797,8 +810,11 @@
       <div class="check-item"><div class="check-box"></div>Je comprends les risques spécifiques : liquidité, risque de change, risque réglementaire</div>
     </div>
 
-    <div class="sub">
-      <h3 class="sub-title">Cas pratique — Thèse Cameco / Uranium (fil rouge Module II)</h3>
+    <div class="cas-pratique">
+      <div class="cas-pratique-header">
+        <span class="cas-pratique-tag">Cas pratique</span>
+        <span class="cas-pratique-title">Thèse Cameco / Uranium — fil rouge Module II</span>
+      </div>
       <table class="case-table">
         <tr><td>CATALYSEUR</td><td>COP28 (22 pays pro-nucléaire) + SMR Trump + contrats Microsoft/Google/Amazon pour datacenters IA → demande additionnelle sur marché déjà en déficit <span class="verdict v-green">Multiple · Institutionnel · Difficilement réversible</span></td></tr>
         <tr><td>VALORISATION</td><td>Coût marginal production = 50–60$/lb. Prix spot 2020 = 28$/lb (sous le coût de production). Risk/Reward estimé à 4:1 <span class="verdict v-green">Décote 40–50% sur valeur cible</span></td></tr>
