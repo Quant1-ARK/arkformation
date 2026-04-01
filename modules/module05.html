@@ -4,38 +4,43 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Module 05 — Lire et Valoriser un Actif</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root{--bg:#f5f5f5;--surface:#fff;--border:rgba(19,18,18,.1);--text-1:#0a0a0a;--text-2:#3d3d3a;--text-3:#6b6b67;--accent:#0071e3;--accent-soft:rgba(0,113,227,.07)}
+  :root{
+    --bg:#fbfbfd;--surface:#ffffff;--border:rgba(0,0,0,.08);
+    --text-1:#1d1d1f;--text-2:#6e6e73;--text-3:#aeaeb2;
+    --accent:#0071e3;--accent-soft:rgba(0,113,227,.09);
+    --mid-gray:#e8e8ed;--radius:16px;--radius-lg:22px;
+  }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
-  body{background:var(--bg);color:var(--text-1);font-family:'DM Sans',-apple-system,sans-serif;font-size:15px;line-height:1.75;-webkit-font-smoothing:antialiased}
+  body{background:var(--bg);color:var(--text-1);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;font-size:15px;line-height:1.75;-webkit-font-smoothing:antialiased}
   .page{max-width:100%;margin:0 auto;padding:48px 24px 120px}
 
   .mod-header{margin-bottom:56px;padding-bottom:40px;border-bottom:1px solid var(--border)}
-  .mod-kicker{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
-  .mod-title{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(30px,5vw,46px);line-height:1.1;margin-bottom:14px}
-  .mod-sub{font-size:15px;color:var(--text-2);font-style:italic;margin-bottom:20px}
-  .mod-objective{background:var(--accent-soft);border-left:3px solid var(--accent);border-radius:0 10px 10px 0;padding:16px 20px;font-size:14px;color:var(--text-2);line-height:1.65}
+  .mod-kicker{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+  .mod-title{font-family:'Inter',-apple-system,sans-serif;font-size:clamp(28px,5vw,44px);font-weight:600;letter-spacing:-0.025em;line-height:1.1;margin-bottom:14px}
+  .mod-sub{font-size:15px;color:var(--text-2);font-style:italic;margin-bottom:20px;font-weight:300}
+  .mod-objective{background:var(--accent-soft);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:16px 20px;font-size:14px;color:var(--text-2);line-height:1.65;font-weight:300}
 
-  .toc{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px 28px;margin-bottom:56px}
-  .toc-title{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:16px}
+  .toc{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px 28px;margin-bottom:56px}
+  .toc-title{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);margin-bottom:16px}
   .toc-list{list-style:none;display:flex;flex-direction:column;gap:6px}
-  .toc-list li a{display:flex;align-items:baseline;gap:10px;text-decoration:none;color:var(--text-2);font-size:13.5px;transition:color .15s}
+  .toc-list li a{display:flex;align-items:baseline;gap:10px;text-decoration:none;color:var(--text-2);font-size:13.5px;transition:color .15s;font-weight:400}
   .toc-list li a:hover{color:var(--accent)}
-  .toc-letter{font-size:10px;font-weight:700;color:var(--accent);background:var(--accent-soft);border-radius:4px;padding:1px 6px;flex-shrink:0}
+  .toc-letter{font-size:10px;font-weight:700;color:var(--accent);background:var(--accent-soft);border-radius:6px;padding:1px 6px;flex-shrink:0}
 
-  .section{margin-bottom:64px}
-  .section-label{display:inline-flex;align-items:center;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);border-radius:6px;padding:4px 10px;margin-bottom:18px}
-  .section-title{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(22px,3.5vw,30px);line-height:1.2;margin-bottom:24px}
-  .section-intro{font-size:15px;color:var(--text-2);line-height:1.75;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid var(--border)}
+  .section{margin-bottom:24px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:32px 36px}
+  .section-label{display:inline-flex;align-items:center;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);border-radius:6px;padding:4px 10px;margin-bottom:18px}
+  .section-title{font-family:'Inter',-apple-system,sans-serif;font-size:clamp(20px,3.5vw,26px);font-weight:600;letter-spacing:-0.02em;line-height:1.2;margin-bottom:20px}
+  .section-intro{font-size:14.5px;color:var(--text-2);line-height:1.75;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid var(--border);font-weight:300}
 
   /* Sub-sections with continuous left bar */
   .sub{margin-bottom:36px;border-left:3px solid var(--accent);padding-left:20px}
-  .sub-title{font-family:'DM Serif Display',Georgia,serif;font-size:19px;margin-bottom:14px;color:var(--text-1)}
-  .sub p{color:var(--text-2);margin-bottom:12px;font-size:14.5px;line-height:1.72}
+  .sub-title{font-family:'Inter',-apple-system,sans-serif;font-size:17px;font-weight:600;letter-spacing:-0.015em;margin-bottom:14px;color:var(--text-1)}
+  .sub p{color:var(--text-2);margin-bottom:12px;font-size:14.5px;line-height:1.72;font-weight:300}
   .sub p:last-child{margin-bottom:0}
-  .sub strong{color:var(--text-1)}
+  .sub strong{color:var(--text-1);font-weight:500}
 
   /* Lists — single bar via .sub */
   .styled-list{list-style:none;margin:12px 0 16px;display:flex;flex-direction:column;gap:8px}
@@ -51,72 +56,88 @@
   .callout.purple{background:#EEEDFE;border-color:#534AB7;color:#26215C}
   .callout strong{color:inherit}
 
-  /* Notion/formula boxes — light surface, black text */
-  .notion{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px 22px;margin:18px 0}
-  .notion-title{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px}
-  .notion p,.notion li{color:var(--text-1);font-size:13.5px;line-height:1.7;margin-bottom:6px}
+  /* Notion/formula boxes */
+  .notion{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px;margin:18px 0}
+  .notion-title{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px}
+  .notion p,.notion li{color:var(--text-1);font-size:13.5px;line-height:1.7;margin-bottom:6px;font-weight:400}
   .notion p:last-child,.notion li:last-child{margin-bottom:0}
   .notion ul{list-style:none;display:flex;flex-direction:column;gap:4px;padding-left:0}
-  .notion strong{color:var(--text-1)}
-  .notion code{font-family:monospace;background:#f0efe8;padding:1px 5px;border-radius:4px;font-size:12.5px;color:var(--text-1)}
+  .notion strong{color:var(--text-1);font-weight:500}
+  .notion code{font-family:monospace;background:var(--surface);padding:1px 5px;border-radius:4px;font-size:12.5px;color:var(--text-1);border:1px solid var(--border)}
 
   /* Tables */
-  .table-wrap{overflow-x:auto;margin:18px 0 24px;border-radius:12px;border:1px solid var(--border)}
+  .table-wrap{overflow-x:auto;margin:18px 0 24px;border-radius:var(--radius);border:1px solid var(--border)}
   table{width:100%;border-collapse:collapse;font-size:13px}
-  thead tr{background:#f0efe8}
-  thead th{padding:10px 14px;text-align:left;font-size:11px;font-weight:700;letter-spacing:.05em;color:var(--text-1);white-space:nowrap}
+  thead tr{background:var(--bg)}  thead th{padding:10px 14px;text-align:left;font-size:11px;font-weight:600;letter-spacing:.04em;color:var(--text-1);white-space:nowrap}
   tbody tr{border-top:1px solid var(--border)}
-  tbody tr:hover{background:rgba(0,0,0,.02)}
-  tbody td{padding:10px 14px;color:var(--text-2);vertical-align:top;line-height:1.55}
-  tbody td strong{color:var(--text-1)}
+  tbody tr:hover{background:rgba(0,0,0,.015)}
+  tbody td{padding:10px 14px;color:var(--text-2);vertical-align:top;line-height:1.55;font-weight:300}
+  tbody td strong{color:var(--text-1);font-weight:500}
 
   /* Figures */
-  .module-figure{margin:24px 0 32px;background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;padding:16px}
+  .module-figure{margin:24px 0 32px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;padding:16px}
   .module-figure svg{width:100%;display:block}
-  .fig-caption{margin-top:10px;font-size:12px;color:var(--text-3);font-style:italic;text-align:center}
+  .fig-caption{margin-top:10px;font-size:12px;color:var(--text-3);font-style:italic;text-align:center;font-weight:300}
 
   /* Checklist */
-  .checklist{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px 22px;margin:18px 0}
-  .checklist-title{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3);margin-bottom:14px}
-  .check-item{display:flex;align-items:flex-start;gap:10px;padding:7px 0;border-bottom:1px solid var(--border);font-size:13.5px;color:var(--text-1)}
+  .checklist{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px;margin:18px 0}
+  .checklist-title{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3);margin-bottom:14px}
+  .check-item{display:flex;align-items:flex-start;gap:10px;padding:7px 0;border-bottom:1px solid var(--border);font-size:13.5px;color:var(--text-2);font-weight:300}
   .check-item:last-child{border-bottom:none}
-  .check-box{width:16px;height:16px;border:1.5px solid var(--border);border-radius:4px;flex-shrink:0;margin-top:3px}
+  .check-box{width:16px;height:16px;border:1.5px solid var(--mid-gray);border-radius:4px;flex-shrink:0;margin-top:3px}
 
   /* Case study table */
   .case-table{width:100%;border-collapse:collapse;margin:18px 0;font-size:13.5px}
   .case-table tr{border-top:1px solid var(--border)}
   .case-table tr:first-child{border-top:none}
-  .case-table td:first-child{font-weight:700;color:var(--text-1);padding:12px 16px 12px 0;width:120px;vertical-align:top}
-  .case-table td:last-child{color:var(--text-2);padding:12px 0;line-height:1.65}
-  .case-table .verdict{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:5px;margin-left:8px;vertical-align:middle}
+  .case-table td:first-child{font-weight:600;color:var(--text-1);padding:12px 16px 12px 0;width:120px;vertical-align:top;font-size:11px;letter-spacing:.04em;text-transform:uppercase}
+  .case-table td:last-child{color:var(--text-2);padding:12px 0;line-height:1.65;font-weight:300}
+  .case-table .verdict{display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:980px;margin-left:8px;vertical-align:middle}
   .case-table .v-green{background:#EAF3DE;color:#27500A}
   .case-table .v-blue{background:#E6F1FB;color:#0C447C}
 
   /* Summary grid */
   .summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0}
   @media(max-width:560px){.summary-grid{grid-template-columns:1fr}}
-  .summary-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px}
+  .summary-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px}
   .summary-section{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:4px}
-  .summary-concept{font-weight:600;font-size:13.5px;color:var(--text-1);margin-bottom:4px}
-  .summary-tool{font-size:12.5px;color:var(--text-2)}
+  .summary-concept{font-weight:600;font-size:13.5px;color:var(--text-1);margin-bottom:4px;letter-spacing:-0.01em}
+  .summary-tool{font-size:12.5px;color:var(--text-2);font-weight:300}
 
-  .synthesis{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px;margin-top:48px}
-  .synthesis-title{font-family:'DM Serif Display',Georgia,serif;font-size:22px;margin-bottom:18px}
-  .synthesis p{color:var(--text-2);margin-bottom:12px;line-height:1.75;font-size:14.5px}
+  .synthesis{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:32px;margin-top:48px}
+  .synthesis-title{font-family:'Inter',-apple-system,sans-serif;font-size:20px;font-weight:600;letter-spacing:-0.02em;margin-bottom:18px}
+  .synthesis p{color:var(--text-2);margin-bottom:12px;line-height:1.75;font-size:14.5px;font-weight:300}
   .synthesis p:last-child{margin-bottom:0}
-  .next-module{margin-top:20px;padding-top:18px;border-top:1px solid var(--border);font-size:13px;color:var(--text-3);font-style:italic}
-  .next-module strong{color:var(--accent);font-style:normal}
+  .next-module{margin-top:20px;padding-top:18px;border-top:1px solid var(--border);font-size:13px;color:var(--text-3);font-style:italic;font-weight:300}
+  .next-module strong{color:var(--accent);font-style:normal;font-weight:500}
 
   .module-nav{display:flex;justify-content:space-between;align-items:center;margin-top:56px;padding-top:28px;border-top:1px solid var(--border);gap:12px}
-  .nav-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:10px;border:1px solid var(--border);font-size:13.5px;font-weight:500;font-family:inherit;cursor:pointer;transition:all .2s;background:var(--surface);color:var(--text-1)}
+  .nav-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:980px;border:1px solid var(--mid-gray);font-size:13.5px;font-weight:500;font-family:inherit;cursor:pointer;transition:all .2s;background:var(--surface);color:var(--text-1)}
   .nav-btn:hover{border-color:var(--accent);color:var(--accent)}
   .nav-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
   .nav-btn.primary:hover{background:#0077ed}
 
+  /* Objectives & concepts */
+  .mod-section-label{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-tertiary,var(--text-3));margin-bottom:16px;margin-top:32px}
+  .mod-objectives{list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:32px}
+  .mod-objectives li{display:flex;align-items:flex-start;gap:12px;font-size:14px;color:var(--text-2);line-height:1.6;font-weight:300}
+  .obj-check{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--mid-gray);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--text-3)}
+  .mod-concepts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:32px}
+  .concept-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:16px;transition:border-color .2s}
+  .concept-card:hover{border-color:rgba(0,113,227,.3)}
+  .concept-icon{font-size:20px;margin-bottom:8px}
+  .concept-name{font-size:13px;font-weight:600;color:var(--text-1);margin-bottom:4px;letter-spacing:-0.01em}
+  .concept-desc{font-size:12px;color:var(--text-2);line-height:1.5;font-weight:300}
+
+  /* Quote */
+  .mod-quote-block{background:rgba(201,168,76,.07);border:1px solid rgba(201,168,76,.18);border-radius:var(--radius-lg);padding:20px 24px;margin-bottom:40px}
+  .mod-quote-text{font-size:16px;font-weight:300;line-height:1.65;color:#b8922e;font-style:italic;margin-bottom:6px}
+  .mod-quote-source{font-size:11px;color:var(--text-3);letter-spacing:.05em;text-transform:uppercase}
+
   /* SVG */
   .node{cursor:pointer}.node:hover{opacity:.85}
   .arr{stroke:var(--text-3);stroke-width:1.5;fill:none}
-  svg text{font-family:'DM Sans',-apple-system,sans-serif;fill:var(--text-1)}
+  svg text{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;fill:var(--text-1)}
   svg .t{font-size:14px;font-weight:400;fill:var(--text-1)}
   svg .ts{font-size:12px;font-weight:400;fill:var(--text-2)}
   svg .th{font-size:14px;font-weight:600;fill:var(--text-1)}
@@ -143,6 +164,29 @@
     <p class="mod-sub">Un actif n'a pas de valeur parce qu'il monte. Il monte parce qu'il avait de la valeur.</p>
     <div class="mod-objective">Ce module est le cœur analytique de la formation. Comprendre le monde, l'économie et la géopolitique donne le contexte macro. Mais pour prendre une décision d'investissement, il faut répondre à une seule question fondamentale : cet actif est-il bon marché ou trop cher par rapport à ce qu'il vaut vraiment ?</div>
   </header>
+
+  <div class="mod-section-label">Ce que tu vas apprendre</div>
+  <ul class="mod-objectives">
+    <li><div class="obj-check">○</div><span>Distinguer le prix de marché et la valeur intrinsèque — et exploiter les écarts comme source d'opportunité</span></li>
+    <li><div class="obj-check">○</div><span>Lire et interpréter les états financiers d'une entreprise : compte de résultat, bilan, flux de trésorerie</span></li>
+    <li><div class="obj-check">○</div><span>Appliquer les trois méthodes de valorisation : comparables sectoriels, DCF, et coût marginal pour les matières premières</span></li>
+    <li><div class="obj-check">○</div><span>Valoriser une devise à travers les différentiels de taux et la parité de pouvoir d'achat (PPA)</span></li>
+    <li><div class="obj-check">○</div><span>Utiliser les outils quantitatifs (exposant de Hurst, AR) pour confirmer le timing d'une thèse fondamentale</span></li>
+    <li><div class="obj-check">○</div><span>Construire une thèse complète en 4 piliers : Catalyseur · Valorisation · Timing · Risques</span></li>
+  </ul>
+
+  <div class="mod-section-label">Concepts clés</div>
+  <div class="mod-concepts-grid">
+    <div class="concept-card"><div class="concept-icon">⚖️</div><div class="concept-name">Prix ≠ Valeur</div><div class="concept-desc">Le prix reflète les émotions du marché à court terme. La valeur intrinsèque est ce que l'actif vaut réellement</div></div>
+    <div class="concept-card"><div class="concept-icon">🛡️</div><div class="concept-name">Marge de sécurité</div><div class="concept-desc">N'acheter qu'avec une décote de 20–30% sur la valeur estimée. Elle absorbe les erreurs d'analyse et les chocs imprévus</div></div>
+    <div class="concept-card"><div class="concept-icon">📊</div><div class="concept-name">DCF & Comparables</div><div class="concept-desc">Deux lentilles complémentaires : l'une projette les flux futurs actualisés, l'autre ancre la valeur dans les multiples du secteur</div></div>
+    <div class="concept-card"><div class="concept-icon">🎯</div><div class="concept-name">Risk/Reward</div><div class="concept-desc">Gain potentiel / Perte potentielle. Aucune position sans ratio ≥ 2:1. Les meilleures thèses offrent 4:1 à 10:1</div></div>
+  </div>
+
+  <div class="mod-quote-block">
+    <div class="mod-quote-text">"Le prix est ce que tu paies. La valeur est ce que tu obtiens. Ces deux choses sont rarement identiques — et c'est précisément de là que vient tout le profit."</div>
+    <div class="mod-quote-source">— Warren Buffett, d'après Benjamin Graham</div>
+  </div>
 
   <nav class="toc">
     <div class="toc-title">Sommaire</div>
