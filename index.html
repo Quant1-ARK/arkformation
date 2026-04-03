@@ -20,7 +20,7 @@
     --r: 18px;
     --r-lg: 28px;
     --section-pad: 20px;
-    --card-gap: 20px;
+    --card-gap: 12px;
   }
 
   *{box-sizing:border-box;margin:0;padding:0}
@@ -63,7 +63,7 @@
   .section{padding:80px 20px}
   .section-center{text-align:center}
   .section-bg{background:var(--light-gray)}
-  .inner{max-width:100%;margin:0 auto}
+  .inner{max-width:1000px;margin:0 auto}
   .inner-sm{max-width:680px;margin:0 auto}
   .section-eyebrow{font-size:12px;font-weight:500;color:var(--accent);letter-spacing:.04em;margin-bottom:10px}
   .section-title{font-size:clamp(26px,5vw,56px);font-weight:600;letter-spacing:-.025em;line-height:1.08;margin-bottom:14px}
@@ -81,47 +81,48 @@
   .manifesto-quote strong{font-weight:600}
   .manifesto-body{font-size:clamp(14px,1.8vw,17px);color:var(--text-2);line-height:1.75;font-weight:300}
 
-  /* PROGRAMME SLIDER — système Apple exact */
-  /* 1. Wrapper casse hors du padding .inner → pleine largeur viewport */
-  .programme-slider-wrap{
-    margin-top:48px;
-    position:relative;
-    margin-left:calc(-1 * var(--section-pad));
-    margin-right:calc(-1 * var(--section-pad));
-    overflow:hidden;
-  }
-  .programme-track{ overflow:visible; }
+  /* PROGRAMME SLIDER */
+  :root { --gallery-pad: 20px; }
 
-  /* 2. Grid scrollable — exactement comme Apple :
-        - largeur totale du grid = viewport (wrapper est full-bleed)
-        - cardW = 100vw - 2×section-pad  (centrage symétrique)
-        - gap = 20px
-        - padding-left = padding-right = section-pad
-        - scroll-snap-align:center
-        Résultat : peek à droite = section-pad - gap = 20 - 20 = 0 → bord arrondi visible */
+  /* Container : pleine largeur, sort du padding de .section */
+  .programme-slider-wrap{
+    margin-top:28px;
+    margin-left:-20px;
+    margin-right:-20px;
+  }
+
+  /* Scroll container : flex row, overflow-x auto, centré verticalement */
   .prog-card-grid{
-    display:grid;
-    grid-template-columns:repeat(3, calc(100vw - 2 * var(--section-pad)));
-    gap:20px;
-    padding-left:var(--section-pad);
-    padding-right:var(--section-pad);
-    overflow-x:scroll;
+    width:100%;
+    height:500px;
+    display:flex;
+    overflow-x:auto;
+    overflow-y:hidden;
+    align-items:center;
     scroll-snap-type:x mandatory;
-    -webkit-overflow-scrolling:touch;
     scrollbar-width:none;
-    /* largeur = viewport entier (wrapper est full-bleed) */
-    width:100vw;
-    box-sizing:border-box;
   }
   .prog-card-grid::-webkit-scrollbar{ display:none; }
+
+  /* Group : flex row, gap entre cartes, padding latéral = gallery-pad */
+  .prog-card-inner{
+    display:flex;
+    align-items:center;
+    justify-content:flex-start;
+    gap:20px;
+    padding:0 20px;
+  }
+
+  /* Card : largeur fixe, hauteur fixe, snap */
   .prog-card{
+    width:calc(97vw - 2 * var(--gallery-pad));
+    height:400px;
+    flex-shrink:0;
     scroll-snap-align:center;
     background:#0a0a0a;
     border-radius:24px;
-    min-height:600px;
     display:flex;
-    flex-direction:column;
-    justify-content:flex-start;
+    flex-direction:row;
     position:relative;
     overflow:hidden;
   }
@@ -133,13 +134,14 @@
     pointer-events:none;
     z-index:2;
   }
-  /* Text block — top of card like Apple */
   .prog-card-content{
     position:relative;z-index:1;
-    padding:40px 44px 0;
-    flex-shrink:0;
+    padding:40px 44px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    flex:1;
   }
-  /* Gradient blobs per card — fills bottom half */
   .prog-bg{
     position:absolute;bottom:0;left:0;right:0;
     height:65%;
@@ -163,6 +165,7 @@
   .prog-card-desc{font-size:clamp(13px,1.6vw,16px);font-weight:300;color:rgba(255,255,255,.65);line-height:1.7;max-width:520px}
   .prog-card-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:20px}
   .prog-card-tag{font-size:11px;font-weight:500;color:rgba(255,255,255,.6);background:rgba(255,255,255,.08);padding:4px 11px;border-radius:980px;border:1px solid rgba(255,255,255,.1)}
+
 
   /* SLIDER CONTROLS */
   .slider-controls{display:flex;align-items:center;justify-content:center;gap:17px;margin-top:28px}
@@ -344,10 +347,12 @@
   <div class="inner">
     <div class="section-eyebrow reveal">Programme</div>
     <h2 class="section-title reveal" style="max-width:480px">Ce que tu vas apprendre</h2>
+  </div>
 
-    <div class="programme-slider-wrap reveal">
+  <div class="programme-slider-wrap reveal">
       <div class="programme-track" id="progTrack">
         <div class="prog-card-grid" id="progCardGrid">
+          <div class="prog-card-inner">
 
         <!-- Card 1 : Macroéconomie -->
         <div class="prog-card prog-card-macro">
@@ -397,6 +402,7 @@
           </div>
         </div>
 
+          </div><!-- /prog-card-inner -->
         </div><!-- /prog-card-grid -->
       </div><!-- /track -->
 
@@ -415,7 +421,6 @@
       </div>
 
     </div><!-- /slider-wrap -->
-  </div>
 </section>
 
 <section class="section section-bg section-center">
