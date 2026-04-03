@@ -1,0 +1,77 @@
+/* ============================================================
+   ARK Formation — global.css
+   Contient UNIQUEMENT : variables CSS + reset minimal
+   Les composants sont dans leurs fichiers dédiés
+   ============================================================ */
+
+/* ── 1. VARIABLES ────────────────────────────────────────── */
+:root {
+  --white:       #ffffff;
+  --off-white:   #fbfbfd;
+  --light-gray:  #f5f5f7;
+  --mid-gray:    #e8e8ed;
+  --surface:     #ffffff;
+  --bg:          #f5f5f7;
+
+  --text-1:         #1d1d1f;
+  --text-2:         #6e6e73;
+  --text-3:         #aeaeb2;
+  --text-primary:   #1d1d1f;
+  --text-secondary: #6e6e73;
+  --text-tertiary:  #aeaeb2;
+  --text-w:         #ffffff;
+  --muted:          #aeaeb2;
+
+  --accent:       #0071e3;
+  --accent-h:     #0077ed;
+  --accent-hover: #0077ed;
+  --accent-light: rgba(0,113,227,0.09);
+  --accent-soft:  rgba(0,113,227,0.09);
+
+  --green:        #34c759;
+  --green-light:  rgba(52,199,89,0.10);
+  --orange:       #ff9500;
+  --orange-light: rgba(255,149,0,0.10);
+  --red:          #ff3b30;
+  --red-light:    rgba(255,59,48,0.08);
+  --gold:         #b8922e;
+  --gold-soft:    rgba(201,168,76,0.08);
+  --gold-border:  rgba(201,168,76,0.2);
+
+  --accent-alpha: #34c759;
+  --accent-beta:  #0071e3;
+  --accent-warn:  #ff9500;
+
+  --border:    rgba(0,0,0,0.08);
+  --r:         18px;
+  --r-lg:      28px;
+  --radius:    16px;
+  --radius-lg: 22px;
+
+  --section-pad: 20px;
+  --card-gap:    12px;
+  --gallery-pad: 20px;
+  --sidebar-w:   220px;
+
+  --font-mono: 'SF Mono', 'Fira Code', 'Fira Mono', monospace;
+}
+
+/* ── 2. RESET MINIMAL ────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── 3. ANIMATIONS GLOBALES ──────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
