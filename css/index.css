@@ -4,6 +4,59 @@
    Dépend de : global.css
    ============================================================ */
 
+/* ── BASE ────────────────────────────────────────────────── */
+html { scroll-behavior: smooth; }
+body {
+  background: var(--white);
+  color: var(--text-1);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 17px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ── NAV ─────────────────────────────────────────────────── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: 52px; display: flex; align-items: center;
+  justify-content: space-between; padding: 0 20px;
+  background: rgba(255,255,255,.88);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo { font-size: 16px; font-weight: 600; letter-spacing: -.01em; }
+.nav-links { display: flex; gap: 24px; list-style: none; }
+.nav-links a { font-size: 13px; color: var(--text-2); text-decoration: none; transition: color .15s; }
+.nav-links a:hover { color: var(--text-1); }
+.nav-cta { font-size: 13px; font-weight: 500; color: var(--accent); text-decoration: none; white-space: nowrap; }
+
+/* ── SECTIONS ────────────────────────────────────────────── */
+.section { padding: 80px 20px; }
+.section-center { text-align: center; }
+.section-bg { background: var(--light-gray); }
+.inner    { max-width: 680px; margin: 0 auto; }
+.inner-sm { max-width: 680px; margin: 0 auto; }
+.section-eyebrow { font-size: 12px; font-weight: 500; color: var(--accent); letter-spacing: .04em; margin-bottom: 10px; }
+.section-title { font-size: clamp(26px, 5vw, 56px); font-weight: 600; letter-spacing: -.025em; line-height: 1.08; margin-bottom: 14px; }
+.section-sub { font-size: clamp(15px, 2vw, 19px); font-weight: 300; color: var(--text-2); line-height: 1.6; max-width: 520px; margin: 0 auto; }
+
+/* ── FOOTER ──────────────────────────────────────────────── */
+footer { padding: 20px; border-top: 1px solid var(--mid-gray); text-align: center; }
+footer p { font-size: 11px; color: var(--text-3); font-weight: 300; line-height: 1.8; }
+
+/* ── BOUTONS ─────────────────────────────────────────────── */
+.btn-primary {
+  font-size: 16px; font-weight: 500; background: var(--accent); color: #fff;
+  padding: 14px 26px; border-radius: 980px; text-decoration: none;
+  transition: all .2s; display: inline-block; white-space: nowrap;
+}
+.btn-primary:hover { background: var(--accent-h); transform: scale(1.02); }
+.btn-ghost { font-size: 16px; font-weight: 500; color: var(--accent); text-decoration: none; }
+.btn-ghost::after { content: ' →'; }
+.btn-ghost:hover { opacity: .7; }
+
 /* ── ARK LOGO ────────────────────────────────────────────── */
 #ark-logo {
   font-family: 'Times New Roman', serif;
@@ -390,16 +443,3 @@ footer p { font-size: 11px; color: var(--text-3); font-weight: 300; line-height:
   .hero-title { font-size: 30px; }
   .section-title { font-size: 24px; }
 }
-
-/* ── BASE (spécifique landing) ───────────────────────────── */
-html { scroll-behavior: smooth; }
-body {
-  background: var(--white);
-  color: var(--text-1);
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 17px;
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
-}
-a { color: var(--accent); text-decoration: none; }
