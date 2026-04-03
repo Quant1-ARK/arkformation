@@ -170,10 +170,10 @@
   /* SLIDER CONTROLS */
   .slider-controls{display:flex;align-items:center;justify-content:center;gap:17px;margin-top:28px}
   .slider-dots-bar{display:flex;align-items:center;gap:8px;background:rgba(0,0,0,.06);border-radius:980px;padding:14px 20px}
-  .slider-dot{width:10px;height:10px;border-radius:50%;background:rgba(0,0,0,.18);border:none;cursor:pointer;padding:0;transition:width .35s cubic-bezier(.4,0,.2,1),border-radius .35s;flex-shrink:0;position:relative;overflow:hidden}
+  .slider-dot{width:10px;height:10px;border-radius:50%;background:rgba(0,0,0,.18);border:none;cursor:pointer;padding:0;transition:width .45s cubic-bezier(.4,0,.2,1),border-radius .45s;flex-shrink:0;position:relative;overflow:hidden}
   .slider-dot.active{width:73px;border-radius:6px;background:rgba(0,0,0,.15)}
   .slider-dot-fill{position:absolute;top:0;left:0;height:100%;width:0%;background:rgba(0,0,0,.65);border-radius:6px;pointer-events:none}
-  .slider-play-btn{width:38px;height:38px;border-radius:50%;background:rgba(0,0,0,.08);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s;color:var(--text-1)}
+  .slider-play-btn{width:38px;height:38px;border-radius:50%;background:rgba(0,0,0,.08);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s;color:var(--text-1)}
   .slider-play-btn:hover{background:rgba(0,0,0,.14)}
   .slider-play-btn svg{width:13px;height:13px;fill:currentColor}
   .slider-play-wrap{flex-shrink:0}
@@ -568,7 +568,7 @@
   /* ---- PROGRAMME SLIDER — système Apple exact ---- */
   /* Scroll natif CSS Grid + scroll-snap, JS uniquement pour dots/timer */
   (function(){
-    const DURATION = 20000;
+    const DURATION = 11000;
     const TOTAL = 3;
     const grid = document.getElementById('progCardGrid');
     const dots  = document.querySelectorAll('.slider-dot');
@@ -596,7 +596,7 @@
       const cardLeft = padL + idx * (cardW + gap);
       // on veut que le centre de la carte soit au centre du grid
       const targetLeft = cardLeft - (gridW - cardW) / 2;
-      grid.scrollTo({ left: Math.max(0, targetLeft), behavior: 'smooth' });
+      grid.scrollTo({ left: Math.max(0, targetLeft), behavior:'smooth' });
     }
 
     function goTo(idx, resetTimer){
