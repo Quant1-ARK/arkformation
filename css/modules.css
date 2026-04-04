@@ -389,6 +389,23 @@ tbody td strong { color: var(--text-1); font-weight: 500; }
 .disclaimer { margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--border); font-size: 12px; color: var(--text-3); line-height: 1.7; font-style: italic; font-weight: 300; }
 
 /* ── NAVIGATION ──────────────────────────────────────────── */
+
+/* Style mod-nav (module01) */
+.mod-nav {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--border); gap: 12px;
+}
+.mod-nav-btn {
+  display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px;
+  border-radius: 980px; border: 1px solid var(--mid-gray); font-size: 13.5px;
+  font-weight: 500; font-family: inherit; cursor: pointer; transition: all .2s;
+  background: var(--white); color: var(--text-1);
+}
+.mod-nav-btn:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+.mod-nav-btn:disabled { opacity: .4; cursor: not-allowed; }
+.mod-nav-label { font-size: 13px; color: var(--text-3); font-weight: 300; }
+
+/* Style module-nav (modules 02–12) */
 .module-nav {
   display: flex; justify-content: space-between; align-items: center;
   margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--border); gap: 12px;
