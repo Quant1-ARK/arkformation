@@ -5,6 +5,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ARK — Dashboard</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+// Traitement du lien de confirmation email
+(async () => {
+  const hash = window.location.hash;
+  if (!hash || !hash.includes('access_token')) return;
+  const params = new URLSearchParams(hash.slice(1));
+  const access_token = params.get('access_token');
+  const refresh_token = params.get('refresh_token');
+  if (!access_token || !refresh_token) return;
+  const db = window.supabase.createClient(
+    'https://wlwwkqijedhxmwjktqvj.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indsd3drcWlqZWRoeG13amt0cXZqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1NDY0NDcsImV4cCI6MjA5MDEyMjQ0N30.x4nGTPYfLbkPz0tAejhde_RO4Oto5scGSW8H72FwKOU',
+    { auth: { persistSession: true, storageKey: 'ark_session' } }
+  );
+  await db.auth.setSession({ access_token, refresh_token });
+  window.history.replaceState(null, '', window.location.pathname);
+})();
+</script>
 
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/global.css">
