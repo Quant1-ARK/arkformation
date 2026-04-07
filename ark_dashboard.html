@@ -1089,11 +1089,7 @@ async function goToFormation() {
   if (data) {
     window.location.href = 'ark_platform.html';
   } else {
-    nav('cours', document.querySelectorAll('.nav-item')[1]);
-    const container = document.getElementById('formation-container');
-    if (!container) return;
-    container.style.display = 'flex';
-    container.innerHTML = '<iframe src="ark_formation.html" style="width:100%;border:none;min-height:900px;" onload="this.style.height=this.contentDocument.body.scrollHeight+\'px\'"></iframe>';
+    window.location.href = 'ark_formation.html';
   }
 }
 
