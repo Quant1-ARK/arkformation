@@ -1089,21 +1089,11 @@ async function goToFormation() {
   if (data) {
     window.location.href = 'ark_platform.html';
   } else {
-    // Charger la page de présentation via fetch dans l'onglet cours
     nav('cours', document.querySelectorAll('.nav-item')[1]);
     const container = document.getElementById('formation-container');
     if (!container) return;
     container.style.display = 'flex';
-    container.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;min-height:200px;color:var(--text-tertiary);font-size:14px;">Chargement...</div>';
-    try {
-      const resp = await fetch('ark_formation.html');
-      const text = await resp.text();
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(text, 'text/html');
-      container.innerHTML = doc.body.innerHTML;
-    } catch(e) {
-      container.innerHTML = '<div style="padding:20px;color:#d93025;font-size:13px;">Erreur de chargement.</div>';
-    }
+    container.innerHTML = '<iframe src="ark_formation.html" style="width:100%;border:none;min-height:900px;" onload="this.style.height=this.contentDocument.body.scrollHeight+\'px\'"></iframe>';
   }
 }
 
