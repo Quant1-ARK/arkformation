@@ -1232,6 +1232,20 @@ window.addEventListener('load', async () => {
     window.history.replaceState(null, '', window.location.pathname);
     nav('reglages', document.getElementById('nav-reglages'));
   }
+  const hashMap = {
+    '#dashboard': ['dashboard', 0],
+    '#cours':     ['cours',     1],
+    '#revision':  ['revision',  2],
+    '#bonus':     ['bonus',     3],
+    '#membre':    ['membre',    document.getElementById('nav-membre')],
+  };
+  const h = window.location.hash;
+  if (h && hashMap[h]) {
+    window.history.replaceState(null, '', window.location.pathname);
+    const [id, el] = hashMap[h];
+    const navEl = typeof el === 'number' ? document.querySelectorAll('.nav-item')[el] : el;
+    nav(id, navEl);
+  }
 });
 </script>
 </body>
