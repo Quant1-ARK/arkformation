@@ -44,7 +44,7 @@
     <div class="nav-label">Contenu</div>
     <div class="nav-item" onclick="nav('bonus',this)"><span class="nav-icon">✦</span> Bonus <span class="nav-pill">2</span></div>
     <div class="nav-item" id="nav-membre" onclick="nav('membre',this)"><span class="nav-icon">★</span> Deviens membre</div>
-    <div class="nav-item" id="nav-formation" style="display:none;" onclick="nav('formation',this)"><span class="nav-icon">🎓</span> La Formation</div>
+
     <div class="nav-label">Compte</div>
     <div class="nav-item" id="nav-reglages" onclick="nav('reglages',this)"><span class="nav-icon">◎</span> Réglages</div>
     <div class="nav-item" onclick="window.location.href='index.html'"><span class="nav-icon">⤶</span> Sortir</div>
@@ -192,6 +192,9 @@
 
     <!-- BANNIÈRE EN COURS (dynamique) -->
     <div id="cours-banner" style="background:#0a1f44;border-radius:var(--radius-lg);padding:20px 26px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+
+    <!-- CONTENEUR PAGE FORMATION (chargé via fetch pour les comptes gratuits) -->
+    <div id="formation-container" style="display:none;flex-direction:column;gap:20px;"></div>
       <div>
         <div id="cours-banner-title" style="font-size:16px;font-weight:600;color:#fff;">🚀 Chargement…</div>
         <div id="cours-banner-sub" style="font-size:13px;color:rgba(255,255,255,0.42);font-weight:300;margin-top:3px;"></div>
@@ -223,7 +226,7 @@
               <span style="font-weight:600;color:var(--accent);">Fondateur</span>
               <span style="color:var(--text-tertiary);font-weight:300;">12 modules</span>
             </div>
-            <button onclick="goToFormation()" style="display:flex;align-items:center;justify-content:center;gap:7px;background:var(--accent);color:#fff;font-size:13px;font-weight:600;padding:11px 18px;border-radius:10px;border:none;cursor:pointer;margin-top:4px;width:100%;font-family:inherit;transition:background .15s" onmouseover="this.style.background='#0077ed'" onmouseout="this.style.background='var(--accent)'">▶ Accéder à la formation</button>
+            <button id="btn-formation" onclick="goToFormation()" style="display:flex;align-items:center;justify-content:center;gap:7px;background:var(--accent);color:#fff;font-size:13px;font-weight:600;padding:11px 18px;border-radius:10px;border:none;cursor:pointer;margin-top:4px;width:100%;font-family:inherit;transition:background .15s" onmouseover="this.style.background='#0077ed'" onmouseout="this.style.background='var(--accent)'">▶ Accéder à la formation</button>
           </div>
         </div>
 
@@ -537,136 +540,6 @@
     </div>
 
   </div><!-- /membre -->
-
-
-  <!-- ════ LA FORMATION (comptes gratuits uniquement) ════ -->
-  <div class="content" id="page-formation">
-
-    <div class="page-header">
-      <div>
-        <div class="page-welcome">🎓 ARK Macro Program</div>
-        <div class="page-welcome-sub">Maîtrise l'analyse macro de zéro jusqu'au niveau institutionnel</div>
-      </div>
-    </div>
-
-    <!-- Encadré checkout -->
-    <div style="background:var(--accent);border-radius:var(--radius-lg);padding:32px 28px;">
-      <div style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:10px;">Accès complet inclus</div>
-      <div style="font-size:22px;font-weight:700;color:#fff;letter-spacing:-0.02em;margin-bottom:20px;">Tu as accès à :</div>
-      <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:28px;">
-        <div style="display:flex;align-items:center;gap:14px;">
-          <div style="width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;">▶</div>
-          <div>
-            <div style="font-size:15px;font-weight:600;color:#fff;">20 heures de vidéos</div>
-            <div style="font-size:12px;color:rgba(255,255,255,.5);font-weight:300;margin-top:2px;">12 modules progressifs du contexte global à l'exécution</div>
-          </div>
-        </div>
-        <div style="display:flex;align-items:center;gap:14px;">
-          <div style="width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;">📋</div>
-          <div>
-            <div style="font-size:15px;font-weight:600;color:#fff;">10+ Cas concrets</div>
-            <div style="font-size:12px;color:rgba(255,255,255,.5);font-weight:300;margin-top:2px;">Thèses macro réelles, analyses de marché et études de positions</div>
-          </div>
-        </div>
-        <div style="display:flex;align-items:center;gap:14px;">
-          <div style="width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;">🏆</div>
-          <div>
-            <div style="font-size:15px;font-weight:600;color:#fff;">Accès à vie</div>
-            <div style="font-size:12px;color:rgba(255,255,255,.5);font-weight:300;margin-top:2px;">Mises à jour incluses, contenu bonus et futures formations</div>
-          </div>
-        </div>
-      </div>
-      <a href="https://whop.com/checkout/plan_cFNOqJx8tV6rj" target="_blank"
-         style="display:inline-flex;align-items:center;gap:8px;background:#fff;color:var(--accent);font-size:15px;font-weight:700;padding:14px 28px;border-radius:980px;text-decoration:none;transition:opacity .15s;"
-         onmouseover="this.style.opacity='.88'" onmouseout="this.style.opacity='1'">
-        ★ Acheter la formation →
-      </a>
-      <div style="margin-top:10px;font-size:12px;color:rgba(255,255,255,.3);font-weight:300;">Paiement sécurisé via Whop</div>
-    </div>
-
-    <!-- Programme des 12 modules -->
-    <div style="background:var(--white);border-radius:var(--radius-lg);border:1px solid var(--border);padding:28px 26px;">
-      <div style="font-size:18px;font-weight:700;letter-spacing:-0.02em;margin-bottom:4px;">📋 Les 12 modules du programme</div>
-      <div style="font-size:13px;color:var(--text-tertiary);font-weight:300;margin-bottom:24px;">Un parcours structuré du contexte global à l'exécution</div>
-
-      <div style="display:flex;flex-direction:column;gap:2px;">
-
-        <div style="display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:10px;background:var(--off-white);">
-          <div style="width:28px;height:28px;border-radius:8px;background:var(--accent-light);color:var(--accent);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">01</div>
-          <div style="flex:1;"><div style="font-size:14px;font-weight:600;">Introduction : Le Cadre de Pensée</div><div style="font-size:12px;color:var(--text-tertiary);font-weight:300;margin-top:2px;">Comprendre les marchés, les acteurs institutionnels et la logique macro</div></div>
-          <div style="font-size:11px;color:var(--text-tertiary);font-weight:300;white-space:nowrap;">~3h</div>
-        </div>
-
-        <div style="display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:10px;">
-          <div style="width:28px;height:28px;border-radius:8px;background:var(--accent-light);color:var(--accent);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">02</div>
-          <div style="flex:1;"><div style="font-size:14px;font-weight:600;">Les Marchés Financiers</div><div style="font-size:12px;color:var(--text-tertiary);font-weight:300;margin-top:2px;">Structure des marchés, microstructure et flux institutionnels</div></div>
-          <div style="font-size:11px;color:var(--text-tertiary);font-weight:300;white-space:nowrap;">~3h</div>
-        </div>
-
-        <div style="display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:10px;background:var(--off-white);">
-          <div style="width:28px;height:28px;border-radius:8px;background:var(--accent-light);color:var(--accent);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">03</div>
-          <div style="flex:1;"><div style="font-size:14px;font-weight:600;">Analyse Macroéconomique</div><div style="font-size:12px;color:var(--text-tertiary);font-weight:300;margin-top:2px;">Cycles économiques, banques centrales, inflation et politiques monétaires</div></div>
-          <div style="font-size:11px;color:var(--text-tertiary);font-weight:300;white-space:nowrap;">~4h</div>
-        </div>
-
-        <div style="display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:10px;">
-          <div style="width:28px;height:28px;border-radius:8px;background:var(--accent-light);color:var(--accent);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">04</div>
-          <div style="flex:1;"><div style="font-size:14px;font-weight:600;">Analyse des Actifs</div><div style="font-size:12px;color:var(--text-tertiary);font-weight:300;margin-top:2px;">Actions, obligations, devises, matières premières et crypto</div></div>
-          <div style="font-size:11px;color:var(--text-tertiary);font-weight:300;white-space:nowrap;">~3h</div>
-        </div>
-
-        <div style="display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:10px;background:var(--off-white);">
-          <div style="width:28px;height:28px;border-radius:8px;background:var(--accent-light);color:var(--accent);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">05</div>
-          <div style="flex:1;"><div style="font-size:14px;font-weight:600;">Construction d'une Thèse</div><div style="font-size:12px;color:var(--text-tertiary);font-weight:300;margin-top:2px;">Méthodologie pour construire et valider une thèse macro solide</div></div>
-          <div style="font-size:11px;color:var(--text-tertiary);font-weight:300;white-space:nowrap;">~4h</div>
-        </div>
-
-        <div style="display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:10px;">
-          <div style="width:28px;height:28px;border-radius:8px;background:var(--accent-light);color:var(--accent);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">06</div>
-          <div style="flex:1;"><div style="font-size:14px;font-weight:600;">Analyse Technique Appliquée</div><div style="font-size:12px;color:var(--text-tertiary);font-weight:300;margin-top:2px;">L'AT au service de la macro — entrées, niveaux clés et confluences</div></div>
-          <div style="font-size:11px;color:var(--text-tertiary);font-weight:300;white-space:nowrap;">~3h</div>
-        </div>
-
-        <div style="display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:10px;background:var(--off-white);">
-          <div style="width:28px;height:28px;border-radius:8px;background:var(--accent-light);color:var(--accent);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">07</div>
-          <div style="flex:1;"><div style="font-size:14px;font-weight:600;">Prise de Position</div><div style="font-size:12px;color:var(--text-tertiary);font-weight:300;margin-top:2px;">Exécution, sizing, levier et gestion des positions ouvertes</div></div>
-          <div style="font-size:11px;color:var(--text-tertiary);font-weight:300;white-space:nowrap;">~3h</div>
-        </div>
-
-        <div style="display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:10px;">
-          <div style="width:28px;height:28px;border-radius:8px;background:var(--accent-light);color:var(--accent);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">08</div>
-          <div style="flex:1;"><div style="font-size:14px;font-weight:600;">Gestion du Risque</div><div style="font-size:12px;color:var(--text-tertiary);font-weight:300;margin-top:2px;">Drawdown, stop-loss, Kelly criterion et préservation du capital</div></div>
-          <div style="font-size:11px;color:var(--text-tertiary);font-weight:300;white-space:nowrap;">~3h</div>
-        </div>
-
-        <div style="display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:10px;background:var(--off-white);">
-          <div style="width:28px;height:28px;border-radius:8px;background:var(--accent-light);color:var(--accent);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">09</div>
-          <div style="flex:1;"><div style="font-size:14px;font-weight:600;">Management de Portfolio</div><div style="font-size:12px;color:var(--text-tertiary);font-weight:300;margin-top:2px;">Allocation, diversification et construction d'un portefeuille cohérent</div></div>
-          <div style="font-size:11px;color:var(--text-tertiary);font-weight:300;white-space:nowrap;">~3h</div>
-        </div>
-
-        <div style="display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:10px;">
-          <div style="width:28px;height:28px;border-radius:8px;background:var(--accent-light);color:var(--accent);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">10</div>
-          <div style="flex:1;"><div style="font-size:14px;font-weight:600;">Psychologie & Discipline</div><div style="font-size:12px;color:var(--text-tertiary);font-weight:300;margin-top:2px;">Biais cognitifs, routine du trader et gestion émotionnelle</div></div>
-          <div style="font-size:11px;color:var(--text-tertiary);font-weight:300;white-space:nowrap;">~3h</div>
-        </div>
-
-        <div style="display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:10px;background:var(--off-white);">
-          <div style="width:28px;height:28px;border-radius:8px;background:var(--accent-light);color:var(--accent);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">11</div>
-          <div style="flex:1;"><div style="font-size:14px;font-weight:600;">Métriques de Trading</div><div style="font-size:12px;color:var(--text-tertiary);font-weight:300;margin-top:2px;">Win rate, expectancy, Sharpe ratio et analyse de performance</div></div>
-          <div style="font-size:11px;color:var(--text-tertiary);font-weight:300;white-space:nowrap;">~3h</div>
-        </div>
-
-        <div style="display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:10px;">
-          <div style="width:28px;height:28px;border-radius:8px;background:var(--accent-light);color:var(--accent);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">12</div>
-          <div style="flex:1;"><div style="font-size:14px;font-weight:600;">Fiscalité & Cadre Juridique</div><div style="font-size:12px;color:var(--text-tertiary);font-weight:300;margin-top:2px;">Structure juridique, imposition des plus-values et optimisation fiscale</div></div>
-          <div style="font-size:11px;color:var(--text-tertiary);font-weight:300;white-space:nowrap;">~3h</div>
-        </div>
-
-      </div>
-    </div>
-
-  </div><!-- /formation -->
 
 
 </div><!-- /main -->
@@ -1008,9 +881,9 @@ function setBannerMode(hasAccess) {
     }
   }
 
-  // Onglet "La Formation" — visible uniquement pour les comptes gratuits
-  const navFormation = document.getElementById('nav-formation');
-  if (navFormation) navFormation.style.display = hasAccess ? 'none' : 'flex';
+  // Texte du bouton formation dans la card cours
+  const btnFormation = document.getElementById('btn-formation');
+  if (btnFormation) btnFormation.textContent = hasAccess ? '▶ Accéder à la formation' : 'ℹ Voir le programme';
 
   // Bonus
   const bonusBanner = document.getElementById('bonus-locked-banner');
@@ -1216,7 +1089,21 @@ async function goToFormation() {
   if (data) {
     window.location.href = 'ark_platform.html';
   } else {
-    nav('formation', document.getElementById('nav-formation'));
+    // Charger la page de présentation via fetch dans l'onglet cours
+    nav('cours', document.querySelectorAll('.nav-item')[1]);
+    const container = document.getElementById('formation-container');
+    if (!container) return;
+    container.style.display = 'flex';
+    container.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;min-height:200px;color:var(--text-tertiary);font-size:14px;">Chargement...</div>';
+    try {
+      const resp = await fetch('ark_formation.html');
+      const text = await resp.text();
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(text, 'text/html');
+      container.innerHTML = doc.body.innerHTML;
+    } catch(e) {
+      container.innerHTML = '<div style="padding:20px;color:#d93025;font-size:13px;">Erreur de chargement.</div>';
+    }
   }
 }
 
