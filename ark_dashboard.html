@@ -427,8 +427,7 @@ const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFz
 const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON, { auth: { persistSession: true, storageKey: 'ark_session' } });
 
 let currentUser = null;
-let promoValid = false;
-let promoTimer = null;
+
 let hasFormationAccess = false;
 
 const MODULE_NAMES = [
@@ -917,48 +916,14 @@ async function loadAccessStatus() {
 
     const desc = document.createElement('div');
     desc.style.cssText = 'font-size:13px;color:var(--text-secondary);font-weight:300;margin-bottom:16px;line-height:1.5;';
-    desc.textContent = "Tu n'as pas encore accès à la formation. Entre ton code ci-dessous.";
+    desc.textContent = "Tu n'as pas encore accès à la formation.";
     el.appendChild(desc);
 
-    const segRow = document.createElement('div');
-    segRow.style.cssText = 'display:flex;align-items:center;gap:8px;margin-bottom:12px;';
-
-    const seg1 = document.createElement('input');
-    seg1.id = 'seg1'; seg1.className = 'promo-seg'; seg1.maxLength = 3; seg1.placeholder = 'XXX';
-    seg1.oninput = () => onSegInput(seg1, 1); seg1.onkeydown = e => onSegKey(e, 1);
-
-    const sep1 = document.createElement('span');
-    sep1.textContent = '—'; sep1.style.cssText = 'color:var(--text-tertiary);font-size:18px;';
-
-    const seg2 = document.createElement('input');
-    seg2.id = 'seg2'; seg2.className = 'promo-seg'; seg2.maxLength = 3; seg2.placeholder = 'XXX';
-    seg2.oninput = () => onSegInput(seg2, 2); seg2.onkeydown = e => onSegKey(e, 2);
-
-    const sep2 = document.createElement('span');
-    sep2.textContent = '—'; sep2.style.cssText = 'color:var(--text-tertiary);font-size:18px;';
-
-    const seg3 = document.createElement('input');
-    seg3.id = 'seg3'; seg3.className = 'promo-seg'; seg3.maxLength = 3; seg3.placeholder = 'XXX';
-    seg3.oninput = () => onSegInput(seg3, 3); seg3.onkeydown = e => onSegKey(e, 3);
-
-    const status = document.createElement('span');
-    status.id = 'code-status'; status.style.cssText = 'font-size:18px;width:24px;text-align:center;flex-shrink:0;';
-
-    segRow.appendChild(seg1); segRow.appendChild(sep1);
-    segRow.appendChild(seg2); segRow.appendChild(sep2);
-    segRow.appendChild(seg3); segRow.appendChild(status);
-    el.appendChild(segRow);
-
-    const btn = document.createElement('button');
-    btn.id = 'activate-btn'; btn.textContent = 'Activer →';
-    btn.style.cssText = 'width:100%;padding:10px;background:var(--accent);color:#fff;font-size:13px;font-weight:600;border:none;border-radius:980px;cursor:pointer;font-family:inherit;';
-    btn.onclick = activateCode;
+    const btn = document.createElement('a');
+    btn.href = 'ark_formation.html';
+    btn.textContent = 'Accéder à la formation →';
+    btn.style.cssText = 'display:block;width:100%;padding:10px;background:var(--accent);color:#fff;font-size:13px;font-weight:600;border:none;border-radius:980px;cursor:pointer;font-family:inherit;text-align:center;text-decoration:none;box-sizing:border-box;';
     el.appendChild(btn);
-
-    const alertDiv = document.createElement('div');
-    alertDiv.id = 'acces-alert'; alertDiv.style.display = 'none';
-    alertDiv.style.cssText = 'margin-top:10px;padding:10px 14px;border-radius:8px;font-size:12px;line-height:1.5;';
-    el.appendChild(alertDiv);
   }
 }
 
@@ -971,109 +936,6 @@ async function goToFormation() {
   } else {
     window.location.href = 'ark_formation.html';
   }
-}
-
-// ── Segments code promo ──
-function onSegInput(input, seg) {
-  input.value = input.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
-  if (input.value.length === 3 && seg < 3) {
-    document.getElementById('seg' + (seg + 1)).focus();
-  }
-  checkFullCode();
-}
-
-function onSegKey(event, seg) {
-  if (event.key === 'Backspace' && event.target.value === '' && seg > 1) {
-    document.getElementById('seg' + (seg - 1)).focus();
-  }
-  if (event.key === 'Enter') activateCode();
-}
-
-function checkFullCode() {
-  const s1 = (document.getElementById('seg1') || {}).value || '';
-  const s2 = (document.getElementById('seg2') || {}).value || '';
-  const s3 = (document.getElementById('seg3') || {}).value || '';
-  const statusEl = document.getElementById('code-status');
-  if (!statusEl) return;
-
-  if (s1.length === 3 && s2.length === 3 && s3.length === 3) {
-    statusEl.textContent = '…';
-    clearTimeout(promoTimer);
-    promoTimer = setTimeout(async () => {
-      const code = s1 + '-' + s2 + '-' + s3;
-      const ok = await verifyPromo(code);
-      promoValid = ok;
-      const color = ok ? '#34c759' : '#ff3b30';
-      ['seg1','seg2','seg3'].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.style.borderColor = color;
-      });
-      statusEl.textContent = ok ? '✓' : '✗';
-    }, 400);
-  } else {
-    promoValid = false;
-    if (statusEl) statusEl.textContent = '';
-    ['seg1','seg2','seg3'].forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.style.borderColor = 'var(--mid-gray)';
-    });
-  }
-}
-
-async function verifyPromo(code) {
-  const { data, error } = await db.from('promo_codes')
-    .select('id, max_uses, used_count, expires_at')
-    .eq('code', code).eq('active', true).single();
-  if (error || !data) return false;
-  if (data.expires_at && new Date(data.expires_at) < new Date()) return false;
-  if (data.max_uses !== null && data.used_count >= data.max_uses) return false;
-  return true;
-}
-
-async function activateCode() {
-  const s1 = (document.getElementById('seg1') || {}).value || '';
-  const s2 = (document.getElementById('seg2') || {}).value || '';
-  const s3 = (document.getElementById('seg3') || {}).value || '';
-  const code = s1 + '-' + s2 + '-' + s3;
-  const alertEl = document.getElementById('acces-alert');
-  const btn = document.getElementById('activate-btn');
-
-  if (!promoValid) {
-    if (alertEl) {
-      alertEl.textContent = 'Code invalide, expiré ou déjà utilisé.';
-      alertEl.style.display = 'block';
-      alertEl.style.cssText = 'display:block;margin-top:10px;padding:10px 14px;border-radius:8px;font-size:12px;line-height:1.5;background:rgba(255,59,48,.08);color:#d93025;border:1px solid rgba(255,59,48,.15);';
-    }
-    return;
-  }
-
-  if (btn) { btn.disabled = true; btn.textContent = 'Activation…'; }
-
-  const { data: promoData } = await db.from('promo_codes')
-    .select('id, used_count').eq('code', code).single();
-  if (promoData) {
-    await db.from('promo_codes')
-      .update({ used_count: promoData.used_count + 1 }).eq('id', promoData.id);
-  }
-
-  const { error } = await db.from('user_access').insert({
-    user_id: currentUser.id, email: currentUser.email, promo_code: code, active: true,
-  });
-
-  if (error && error.code !== '23505') {
-    if (btn) { btn.disabled = false; btn.textContent = 'Activer →'; }
-    if (alertEl) {
-      alertEl.textContent = 'Erreur : ' + error.message;
-      alertEl.style.display = 'block';
-    }
-    return;
-  }
-
-  // Vider la progression du localStorage pour repartir de zéro
-  localStorage.removeItem('ark_progress');
-  await loadAccessStatus();
-  loadQuizScores();
-  updateDashboard({ current: 0, done: [] });
 }
 
 // ── Init ──
