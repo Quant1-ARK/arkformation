@@ -90,15 +90,6 @@
       <div style="margin-top:10px;font-size:12px;color:rgba(255,255,255,.3);font-weight:300;">Paiement sécurisé via Whop</div>
     </div>
 
-    <!-- Code d'accès -->
-    <div class="card">
-      <div class="card-title" style="margin-bottom:4px;">🔑 Tu as un code d'accès ?</div>
-      <div class="card-sub" style="margin-bottom:20px;">Entre ton code pour débloquer la formation directement</div>
-      <div id="acces-content">
-        <div style="font-size:13px;color:var(--text-secondary);">Chargement…</div>
-      </div>
-    </div>
-
     <!-- Programme des 12 modules -->
     <div style="background:var(--white);border-radius:var(--radius-lg);border:1px solid var(--border);padding:28px 26px;">
       <div style="font-size:18px;font-weight:700;letter-spacing:-0.02em;margin-bottom:4px;">📋 Les 12 modules du programme</div>
@@ -207,121 +198,7 @@ window.addEventListener('load', async () => {
   const elAv = document.getElementById('user-av');
   if (elAv) elAv.textContent = name.charAt(0).toUpperCase();
 
-  // Charger le bloc code promo
-  renderPromoForm(session.user);
 });
-
-let promoValid = false;
-let promoTimer = null;
-
-function renderPromoForm(user) {
-  const el = document.getElementById('acces-content');
-  if (!el) return;
-  el.innerHTML = '';
-
-  const segRow = document.createElement('div');
-  segRow.style.cssText = 'display:flex;align-items:center;gap:8px;margin-bottom:14px;';
-
-  function makeSegInput(id) {
-    const inp = document.createElement('input');
-    inp.id = id; inp.maxLength = 3; inp.type = 'text';
-    inp.style.cssText = 'width:72px;padding:10px;border:1.5px solid var(--mid-gray);border-radius:10px;font-size:16px;font-weight:600;text-align:center;font-family:monospace;letter-spacing:.1em;outline:none;transition:border-color .15s;';
-    inp.oninput = () => onSegInput(inp, parseInt(id.replace('seg','')));
-    inp.onkeydown = (e) => onSegKey(e, parseInt(id.replace('seg','')));
-    return inp;
-  }
-  function makeSep() {
-    const s = document.createElement('span');
-    s.textContent = '—'; s.style.cssText = 'color:var(--text-tertiary);font-size:18px;';
-    return s;
-  }
-
-  const seg1 = makeSegInput('seg1');
-  const seg2 = makeSegInput('seg2');
-  const seg3 = makeSegInput('seg3');
-  const sep1 = makeSep(); const sep2 = makeSep();
-  const status = document.createElement('span');
-  status.id = 'code-status'; status.style.cssText = 'font-size:18px;width:24px;text-align:center;flex-shrink:0;';
-
-  segRow.appendChild(seg1); segRow.appendChild(sep1);
-  segRow.appendChild(seg2); segRow.appendChild(sep2);
-  segRow.appendChild(seg3); segRow.appendChild(status);
-  el.appendChild(segRow);
-
-  const btn = document.createElement('button');
-  btn.id = 'activate-btn'; btn.textContent = 'Activer →';
-  btn.style.cssText = 'width:100%;padding:10px;background:var(--accent);color:#fff;font-size:13px;font-weight:600;border:none;border-radius:980px;cursor:pointer;font-family:inherit;';
-  btn.onclick = () => activateCode(user);
-  el.appendChild(btn);
-
-  const alertDiv = document.createElement('div');
-  alertDiv.id = 'acces-alert'; alertDiv.style.display = 'none';
-  alertDiv.style.cssText = 'margin-top:10px;padding:10px 14px;border-radius:8px;font-size:12px;line-height:1.5;';
-  el.appendChild(alertDiv);
-}
-
-function onSegInput(input, seg) {
-  input.value = input.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
-  if (input.value.length === 3 && seg < 3) document.getElementById('seg' + (seg + 1)).focus();
-  checkFullCode();
-}
-function onSegKey(event, seg) {
-  if (event.key === 'Backspace' && event.target.value === '' && seg > 1) document.getElementById('seg' + (seg - 1)).focus();
-  if (event.key === 'Enter') activateCode();
-}
-function checkFullCode() {
-  const s1 = (document.getElementById('seg1')||{}).value||'';
-  const s2 = (document.getElementById('seg2')||{}).value||'';
-  const s3 = (document.getElementById('seg3')||{}).value||'';
-  const statusEl = document.getElementById('code-status');
-  if (!statusEl) return;
-  if (s1.length===3 && s2.length===3 && s3.length===3) {
-    statusEl.textContent = '…';
-    clearTimeout(promoTimer);
-    promoTimer = setTimeout(async () => {
-      const code = s1+'-'+s2+'-'+s3;
-      const ok = await verifyPromo(code);
-      promoValid = ok;
-      const color = ok ? '#34c759' : '#ff3b30';
-      ['seg1','seg2','seg3'].forEach(id => { const el = document.getElementById(id); if (el) el.style.borderColor = color; });
-      statusEl.textContent = ok ? '✓' : '✗';
-    }, 400);
-  } else {
-    promoValid = false;
-    const statusEl = document.getElementById('code-status');
-    if (statusEl) statusEl.textContent = '';
-    ['seg1','seg2','seg3'].forEach(id => { const el = document.getElementById(id); if (el) el.style.borderColor = 'var(--mid-gray)'; });
-  }
-}
-async function verifyPromo(code) {
-  const { data, error } = await db.from('promo_codes').select('id, max_uses, used_count, expires_at').eq('code', code).eq('active', true).single();
-  if (error || !data) return false;
-  if (data.expires_at && new Date(data.expires_at) < new Date()) return false;
-  if (data.max_uses !== null && data.used_count >= data.max_uses) return false;
-  return true;
-}
-async function activateCode(user) {
-  const s1 = (document.getElementById('seg1')||{}).value||'';
-  const s2 = (document.getElementById('seg2')||{}).value||'';
-  const s3 = (document.getElementById('seg3')||{}).value||'';
-  const code = s1+'-'+s2+'-'+s3;
-  const alertEl = document.getElementById('acces-alert');
-  const btn = document.getElementById('activate-btn');
-  if (!promoValid) {
-    if (alertEl) { alertEl.textContent = 'Code invalide, expiré ou déjà utilisé.'; alertEl.style.cssText = 'display:block;margin-top:10px;padding:10px 14px;border-radius:8px;font-size:12px;line-height:1.5;background:rgba(255,59,48,.08);color:#d93025;border:1px solid rgba(255,59,48,.15);'; }
-    return;
-  }
-  if (btn) { btn.disabled = true; btn.textContent = 'Activation…'; }
-  const { data: promoData } = await db.from('promo_codes').select('id, used_count').eq('code', code).single();
-  if (promoData) await db.from('promo_codes').update({ used_count: promoData.used_count + 1 }).eq('id', promoData.id);
-  const { error } = await db.from('user_access').insert({ user_id: user.id, email: user.email, promo_code: code, active: true });
-  if (error && error.code !== '23505') {
-    if (btn) { btn.disabled = false; btn.textContent = 'Activer →'; }
-    if (alertEl) { alertEl.textContent = 'Erreur : ' + error.message; alertEl.style.display = 'block'; }
-    return;
-  }
-  window.location.href = 'ark_platform.html';
-}
 </script>
 </body>
 </html>
